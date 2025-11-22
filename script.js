@@ -75,10 +75,13 @@ document.addEventListener("DOMContentLoaded", () => {
     let targetMouseX = -100;
     let targetMouseY = -100;
 
-    // Throttling for ~20 FPS (cinematic Matrix feel + battery saving)
+    // Throttling for ~15 FPS (slower, cinematic Matrix feel + battery saving)
     let lastTime = 0;
-    const fps = 20;
+    const fps = 15;
     const interval = 1000 / fps;
+
+    // Mobile detection for reduced red glow radius
+    const isMobile = window.innerWidth < 768;
 
     window.addEventListener("mousemove", (e) => {
       targetMouseX = e.clientX;
@@ -125,17 +128,21 @@ document.addEventListener("DOMContentLoaded", () => {
         // Calculate distance to mouse for interaction
         const dist = Math.hypot(x - mouseX, y - mouseY);
 
-        // MOUSE AREA: Larger interaction radius (300px) with gradient effect
-        if (dist < 300) {
-          // Intensity based on distance - closer = brighter
-          const intensity = 1 - dist / 300;
+        // MOUSE AREA: Reduced radius on mobile (150px vs 300px desktop)
+        const maxRadius = isMobile ? 150 : 300;
+        const innerRadius = isMobile ? 50 : 100;
+        const midRadius = isMobile ? 90 : 180;
 
-          if (dist < 100) {
+        if (dist < maxRadius) {
+          // Intensity based on distance - closer = brighter
+          const intensity = 1 - dist / maxRadius;
+
+          if (dist < innerRadius) {
             // Very close - bright red with strong glow effect
             ctx.fillStyle = `rgba(255, 31, 31, ${0.95 + intensity * 0.05})`;
             ctx.shadowColor = "#FF1F1F";
             ctx.shadowBlur = 20 * intensity;
-          } else if (dist < 180) {
+          } else if (dist < midRadius) {
             // Medium distance - visible red
             ctx.fillStyle = `rgba(255, 31, 31, ${0.6 + intensity * 0.35})`;
             ctx.shadowColor = "#FF1F1F";
