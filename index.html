@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>DominDev | WordPress High-Performance</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=Space+Grotesk:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- MATRIX BACKGROUND CANVAS -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- Scroll Progress & Back to Top -->
+    <div class="progress-wrap" id="progress-wrap">
+      <svg
+        class="progress-circle svg-content"
+        width="100%"
+        height="100%"
+        viewBox="-1 -1 102 102"
+      >
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+      </svg>
+      <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Chatbot Trigger Button -->
+    <div class="chatbot-trigger" id="chatbot-trigger">
+      <i class="fa-solid fa-robot"></i>
+    </div>
+
+    <!-- Chatbot Window -->
+    <div class="chatbot-window" id="chatbot-window">
+      <div class="chatbot-header">
+        <div class="chatbot-header-info">
+          <div class="chatbot-avatar">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div class="chatbot-header-text">
+            <span class="chatbot-name">DominDev Bot</span>
+            <span class="chatbot-status">Online</span>
+          </div>
+        </div>
+        <button class="chatbot-close" id="chatbot-close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="chatbot-messages" id="chatbot-messages">
+        <div class="chat-message bot">
+          <div class="message-content">
+            Cześć! Jestem asystentem DominDev. W czym mogę Ci pomóc?
+          </div>
+        </div>
+      </div>
+
+      <div class="chatbot-input-area">
+        <input
+          type="text"
+          class="chatbot-input"
+          id="chatbot-input"
+          placeholder="Napisz wiadomość..."
+          autocomplete="off"
+        />
+        <button class="chatbot-send" id="chatbot-send">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+
+    <nav>
+      <div class="container nav-container">
+        <div class="logo">Domin<span>Dev</span>.</div>
+
+        <ul class="nav-links">
+          <li><a href="#about">O mnie</a></li>
+
+          <li><a href="#portfolio">Projekty</a></li>
+
+          <li><a href="#process">Proces</a></li>
+
+          <li><a href="#services">Usługi</a></li>
+
+          <li><a href="#contact">Kontakt</a></li>
+        </ul>
+
+        <div class="hamburger" id="hamburger-menu">
+          <span></span>
+
+          <span></span>
+
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <div class="fullscreen-menu" id="fullscreen-menu">
+      <ul>
+        <li><a href="#about">O MNIE</a></li>
+
+        <li><a href="#portfolio">PROJEKTY</a></li>
+
+        <li><a href="#process">PROCES</a></li>
+
+        <li><a href="#services">USŁUGI</a></li>
+
+        <li><a href="#contact">KONTAKT</a></li>
+      </ul>
+
+      <div class="menu-social">
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#"><i class="fa-brands fa-github"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <section id="hero">
+      <div class="container hero-content">
+        <span class="hero-subtitle">WordPress High-Performance</span>
+
+        <h1 class="hero-title">
+          Building Digital<br /><span class="accent">Momentum</span>.
+        </h1>
+
+        <p class="hero-desc">
+          Akceleruj swoją obecność online. WordPress Development dla liderów
+          rynku. Szybkość, efektywność, agresywny progres.
+        </p>
+
+        <div class="hero-btns">
+          <a href="#contact" class="btn">Rozpocznij Projekt</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack Marquee -->
+    <div class="tech-strip">
+      <div class="marquee-content">
+        <span class="tech-item">WORDPRESS</span>
+        <span class="tech-item">WOOCOMMERCE</span>
+        <span class="tech-item">PHP 8.2</span>
+        <span class="tech-item">JAVASCRIPT</span>
+        <span class="tech-item">REACT</span>
+        <span class="tech-item">HTML5</span>
+        <span class="tech-item">CSS3</span>
+        <span class="tech-item">ACF PRO</span>
+        <span class="tech-item">SEO</span>
+        <span class="tech-item">CYBERSECURITY</span>
+        <!-- Duplikaty dla płynnej pętli -->
+        <span class="tech-item">WORDPRESS</span>
+        <span class="tech-item">WOOCOMMERCE</span>
+        <span class="tech-item">PHP 8.2</span>
+        <span class="tech-item">JAVASCRIPT</span>
+        <span class="tech-item">REACT</span>
+        <span class="tech-item">HTML5</span>
+        <span class="tech-item">CSS3</span>
+        <span class="tech-item">ACF PRO</span>
+        <span class="tech-item">SEO</span>
+        <span class="tech-item">CYBERSECURITY</span>
+      </div>
+    </div>
+
+    <section id="about" class="section-padding">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-text reveal">
+            <h2 class="accent">01. O MNIE</h2>
+
+            <h3>Nie tylko koduję.<br />Rozwiązuję problemy.</h3>
+
+            <p class="text-muted margin-bottom-30">
+              Jako DominDev, łączę inżynieryjne podejście z artystycznym
+              zacięciem. Cukrzyca typu 1 nauczyła mnie żelaznej dyscypliny i
+              analitycznego myślenia.
+
+              <br /><br />
+
+              W świecie, gdzie uwaga użytkownika trwa sekundy, Twoja strona musi
+              być szybka jak cios boksera i precyzyjna jak kod bankowy.
+            </p>
+
+            <ul class="check-list">
+              <li>
+                <i class="fa-solid fa-check accent"></i> Certyfikowany Fullstack
+                Dev
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check accent"></i> Doświadczenie w IT
+                Security
+              </li>
+
+              <li>
+                <i class="fa-solid fa-check accent"></i> Obsesja na punkcie
+                optymalizacji
+              </li>
+            </ul>
+          </div>
+
+          <div class="about-img-wrapper reveal">
+            <img
+              src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070&auto=format&fit=crop"
+              alt="Coding Setup"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="portfolio" class="section-padding">
+      <div class="container">
+        <h2 class="accent reveal">02. REALIZACJE</h2>
+
+        <h3 class="reveal header-margin">Wybrane Projekty</h3>
+
+        <div class="portfolio-grid">
+          <div class="project-card reveal">
+            <img
+              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop"
+              alt="Project 1"
+            />
+
+            <div class="project-overlay">
+              <h4>FinTech Dashboard</h4>
+
+              <p class="accent">WordPress / React</p>
+            </div>
+          </div>
+
+          <div class="project-card reveal">
+            <img
+              src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=2070&auto=format&fit=crop"
+              alt="Project 2"
+            />
+
+            <div class="project-overlay">
+              <h4>E-Commerce Sport</h4>
+
+              <p class="accent">WooCommerce / ACF</p>
+            </div>
+          </div>
+
+          <div class="project-card reveal">
+            <img
+              src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop"
+              alt="Project 3"
+            />
+
+            <div class="project-overlay">
+              <h4>CyberSecurity Agency</h4>
+
+              <p class="accent">Custom Theme</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="process" class="section-padding">
+      <div class="container">
+        <h2 class="accent reveal">03. PROCES</h2>
+
+        <h3 class="reveal header-margin">Jak działam?</h3>
+
+        <div class="timeline reveal">
+          <div class="timeline__line"></div>
+
+          <div class="timeline__item">
+            <div class="timeline__dot"></div>
+            <div class="timeline__content">
+              <h4>01. Strategiczny Brief</h4>
+              <p>
+                Analizuję Twój biznes. Nie pytam "jaki kolor", pytam "jaki cel
+                biznesowy".
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline__item">
+            <div class="timeline__dot"></div>
+            <div class="timeline__content">
+              <h4>02. Design & UX</h4>
+              <p>
+                Projektuję interfejsy, które prowadzą użytkownika za rękę
+                prosto do przycisku "Kup".
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline__item">
+            <div class="timeline__dot"></div>
+            <div class="timeline__content">
+              <h4>03. Hardcore Dev</h4>
+              <p>
+                Czysty kod. Semantyka. SEO techniczne. Szybkość ładowania
+                poniżej 1s.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline__item">
+            <div class="timeline__dot"></div>
+            <div class="timeline__content">
+              <h4>04. Review & Testy</h4>
+              <p>
+                Twoja weryfikacja. Testy bezpieczeństwa i wydajności.
+                Szlifujemy diament.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline__item">
+            <div class="timeline__dot"></div>
+            <div class="timeline__content">
+              <h4>05. Deploy</h4>
+              <p>
+                Startujemy. Podpinam analitykę, szkolę Cię z obsługi CMS.
+                Jesteś online.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section-padding dark-bg">
+      <div class="container">
+        <h2 class="accent reveal">04. USŁUGI</h2>
+
+        <h3 class="reveal header-margin">Oferta</h3>
+
+        <div class="services-grid reveal">
+          <div class="service-card">
+            <i class="fa-solid fa-rocket"></i>
+
+            <h4>Landing Page</h4>
+
+            <p>
+              Strona jednej akcji. Idealna dla kampanii reklamowych. Skupiona na
+              maksymalnej konwersji i szybkości ładowania.
+            </p>
+
+            <button class="btn-secondary">Wybieram</button>
+          </div>
+
+          <div class="service-card highlight">
+            <i class="fa-solid fa-layer-group"></i>
+
+            <h4>Strona Wizytówka</h4>
+
+            <p>
+              Kompleksowa strona firmowa. Wiele podstron, blog, system
+              zarządzania treścią (CMS). Fundament Twojej marki.
+            </p>
+
+            <button class="btn-secondary">Wybieram</button>
+          </div>
+
+          <div class="service-card">
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            <h4>E-Commerce</h4>
+
+            <p>
+              Zaawansowany sklep na WooCommerce. Integracja płatności, kurierów
+              i automatyzacja sprzedaży.
+            </p>
+
+            <button class="btn-secondary">Wybieram</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section-padding">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info reveal">
+            <h2 class="accent">05. KONTAKT</h2>
+            <h3 class="big-text">
+              Gotowy na<br /><span class="accent">skok jakości?</span>
+            </h3>
+            <p class="text-muted margin-bottom-30">
+              Wypełnij formularz. Odezwie się konkret, a nie handlowiec.
+            </p>
+
+            <div class="contact-details">
+              <a href="mailto:kontakt@domindev.pl" class="contact-link"
+                >kontakt@domindev.pl</a
+              >
+              <div class="contact-social">
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-wrapper reveal">
+            <form id="contactForm" class="contact-form">
+              <div class="form-group">
+                <label for="name">Imię i Nazwisko *</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  placeholder="Jan Kowalski"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email">E-mail *</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  placeholder="jan@firma.pl"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="company">Firma (Opcjonalnie)</label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  placeholder="Twoja Firma Sp. z o.o."
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="service">Czego potrzebujesz?</label>
+                <select id="service" name="service">
+                  <option value="wordpress">Strona WordPress</option>
+                  <option value="shop">Sklep E-Commerce</option>
+                  <option value="webapp">Aplikacja Webowa (React)</option>
+                  <option value="audit">Audyt / Optymalizacja</option>
+                  <option value="other">Inne / Niestandardowe</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="budget"
+                  >Budżet: <span id="budgetValue" class="accent">Partnerstwo | Win-Win</span></label
+                >
+                <input
+                  type="range"
+                  id="budget"
+                  name="budget"
+                  min="0"
+                  max="25000"
+                  step="250"
+                  value="0"
+                />
+                <div class="range-labels">
+                  <span>Partnerstwo</span>
+                  <span>25k+ (No Limits)</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Wiadomość *</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows="4"
+                  placeholder="Opisz krótko swój projekt..."
+                ></textarea>
+              </div>
+
+              <div class="form-group checkbox-group">
+                <input type="checkbox" id="rodo" name="rodo" required />
+                <label for="rodo"
+                  >Akceptuję zasady przetwarzania danych (RODO). Wiem, że moje
+                  dane są bezpieczne.</label
+                >
+              </div>
+
+              <button type="submit" class="btn btn-full">
+                WYŚLIJ ZAPYTANIE
+              </button>
+              <div id="formMessage" class="form-message"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="logo">Domin<span>Dev</span>.</div>
+
+            <p class="text-muted margin-top-20 footer-desc">
+              Agresywny Web Development dla liderów rynku. Wrocław, Polska.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="margin-bottom-20">Menu</h4>
+
+            <ul class="footer-links">
+              <li><a href="#about">O mnie</a></li>
+
+              <li><a href="#portfolio">Portfolio</a></li>
+
+              <li><a href="#services">Usługi</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="margin-bottom-20">Social</h4>
+
+            <div class="social-icons">
+              <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+
+              <a href="#"><i class="fa-brands fa-github"></i></a>
+
+              <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="copyright">
+          &copy; 2025 DominDev. Wszelkie prawa zastrzeżone.
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
