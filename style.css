@@ -24,12 +24,27 @@
 
 * {
   margin: 0;
-
   padding: 0;
-
   box-sizing: border-box;
-
   cursor: default;
+}
+
+/* Fix: Restore proper cursors for interactive elements */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="search"],
+textarea {
+  cursor: text;
+}
+
+input[type="range"] {
+  cursor: grab;
+}
+
+input[type="range"]:active {
+  cursor: grabbing;
 }
 
 html {
