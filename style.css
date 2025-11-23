@@ -276,7 +276,7 @@ nav {
 
   padding: 20px 0;
 
-  z-index: 100;
+  z-index: 2000; /* Nawigacja zawsze najwyżej */
 
   transition: var(--transition);
 
@@ -357,7 +357,7 @@ nav {
 
   cursor: pointer;
 
-  z-index: 101;
+  z-index: 2001; /* Najwyżej - żeby zawsze dało się zamknąć menu */
 
   flex-direction: column;
 
@@ -423,7 +423,7 @@ nav {
 
   transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s ease;
 
-  z-index: 99;
+  z-index: 1999; /* Pod hamburgerem (2001), ale nad chatbotem (999) */
 }
 
 .fullscreen-menu.active {
@@ -1216,7 +1216,7 @@ footer {
   color: white;
   /* Neonowy cień */
   box-shadow: 0 0 20px rgba(255, 31, 31, 0.6);
-  z-index: 99;
+  z-index: 990; /* Pod menu (1999), ale nad resztą */
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Sprężysty efekt */
   /* Przywracamy pulsowanie - wabi użytkownika */
@@ -1277,7 +1277,7 @@ footer {
     0 0 30px rgba(255, 31, 31, 0.15);
   display: flex;
   flex-direction: column;
-  z-index: 100;
+  z-index: 999; /* Wysoko, ale pod menu (1999) */
   opacity: 0;
   visibility: hidden;
   transform: translateY(20px) scale(0.95);
@@ -1366,27 +1366,32 @@ footer {
   }
 }
 
-/* --- CHATBOT CLOSE BUTTON --- */
+/* --- CHATBOT CLOSE BUTTON (Minimalist Style) --- */
 
 .chatbot-close {
-  width: 32px;
-  height: 32px;
+  /* Reset stylu przycisku */
+  width: 40px;
+  height: 40px;
   background: transparent;
-  border: 1px solid transparent;
-  border-radius: 50%;
-  color: #888;
-  font-size: 1rem;
+  border: none;
+
+  /* Styl ikony - upodabniamy do Hamburgera */
+  color: rgba(255, 255, 255, 0.8); /* Lekka przezroczystość jak w menu */
+  font-size: 1.5rem; /* Większy, wyraźniejszy X */
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s ease;
+
+  /* Wyśrodkowanie */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .chatbot-close:hover {
-  color: white;
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--primary); /* Na hover czerwony akcent */
+  background: transparent;
+  border: none;
+  transform: rotate(90deg); /* Obrót przy najechaniu - fajny mikro-efekt */
 }
 
 /* --- CHATBOT MESSAGES --- */
