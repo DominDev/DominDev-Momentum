@@ -2522,13 +2522,6 @@ body.cursor-hidden .cursor-outline {
   color: var(--primary);
   font-weight: 900;
   text-transform: uppercase;
-  text-shadow: 0 0 20px rgba(255, 31, 31, 0.8);
-}
-
-@media (max-width: 768px) {
-  .typewriter-text {
-    text-shadow: 0 0 15px rgba(255, 31, 31, 0.65);
-  }
 }
 
 .typewriter-cursor {
