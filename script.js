@@ -158,23 +158,23 @@ document.addEventListener("DOMContentLoaded", () => {
           const rand = Math.random();
 
           if (isMobile) {
-            // MOBILE: Jaśniejszy ambient - widoczny bez klikania
-            if (rand > 0.94) {
-              // Jasne błyski (6% szans)
+            // MOBILE: Znacznie jaśniejszy ambient - wyraźnie widoczny bez klikania
+            if (rand > 0.90) {
+              // Jasne błyski (10% szans)
+              ctx.fillStyle = "#999";
+              ctx.shadowColor = "#aaa";
+              ctx.shadowBlur = 5;
+            } else if (rand > 0.75) {
+              // Średnie błyski (15% szans)
               ctx.fillStyle = "#777";
-              ctx.shadowColor = "#888";
-              ctx.shadowBlur = 4;
-            } else if (rand > 0.85) {
-              // Średnie błyski (9% szans)
-              ctx.fillStyle = "#555";
               ctx.shadowBlur = 0;
-            } else if (rand > 0.70) {
-              // Delikatne błyski (15% szans)
-              ctx.fillStyle = "#444";
+            } else if (rand > 0.50) {
+              // Delikatne błyski (25% szans)
+              ctx.fillStyle = "#5a5a5a";
               ctx.shadowBlur = 0;
             } else {
               // Podstawowy kolor - jaśniejszy na mobile
-              ctx.fillStyle = "#333";
+              ctx.fillStyle = "#454545";
               ctx.shadowBlur = 0;
             }
           } else {
