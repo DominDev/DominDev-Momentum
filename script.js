@@ -154,25 +154,45 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         } else {
           // AMBIENT: Delikatna animacja wszędzie - zawsze widoczna
+          // Mobile ma jaśniejsze kolory dla lepszej widoczności bez interakcji
           const rand = Math.random();
 
-          if (rand > 0.97) {
-            // Losowe jasne błyski (3% szans)
-            ctx.fillStyle = "#555";
-            ctx.shadowColor = "#666";
-            ctx.shadowBlur = 3;
-          } else if (rand > 0.92) {
-            // Średnie błyski (5% szans)
-            ctx.fillStyle = "#3a3a3a";
-            ctx.shadowBlur = 0;
-          } else if (rand > 0.85) {
-            // Delikatne błyski (7% szans)
-            ctx.fillStyle = "#2a2a2a";
-            ctx.shadowBlur = 0;
+          if (isMobile) {
+            // MOBILE: Jaśniejszy ambient - widoczny bez klikania
+            if (rand > 0.94) {
+              // Jasne błyski (6% szans)
+              ctx.fillStyle = "#777";
+              ctx.shadowColor = "#888";
+              ctx.shadowBlur = 4;
+            } else if (rand > 0.85) {
+              // Średnie błyski (9% szans)
+              ctx.fillStyle = "#555";
+              ctx.shadowBlur = 0;
+            } else if (rand > 0.70) {
+              // Delikatne błyski (15% szans)
+              ctx.fillStyle = "#444";
+              ctx.shadowBlur = 0;
+            } else {
+              // Podstawowy kolor - jaśniejszy na mobile
+              ctx.fillStyle = "#333";
+              ctx.shadowBlur = 0;
+            }
           } else {
-            // Podstawowy kolor - ciemny ale widoczny
-            ctx.fillStyle = "#1e1e1e";
-            ctx.shadowBlur = 0;
+            // DESKTOP: Standardowy ambient
+            if (rand > 0.97) {
+              ctx.fillStyle = "#555";
+              ctx.shadowColor = "#666";
+              ctx.shadowBlur = 3;
+            } else if (rand > 0.92) {
+              ctx.fillStyle = "#3a3a3a";
+              ctx.shadowBlur = 0;
+            } else if (rand > 0.85) {
+              ctx.fillStyle = "#2a2a2a";
+              ctx.shadowBlur = 0;
+            } else {
+              ctx.fillStyle = "#1e1e1e";
+              ctx.shadowBlur = 0;
+            }
           }
         }
 
