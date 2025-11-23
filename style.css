@@ -5,7 +5,7 @@
 
   --bg-card: #0f0f0f;
 
-  --primary: #ff1f1f; /* Agresywna czerwień */
+  --primary: #ff1f1f;
 
   --primary-dark: #cc0000;
 
@@ -558,7 +558,7 @@ nav {
 .hero-title {
   font-size: 4.5rem;
 
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 
   line-height: 1.2;
 
@@ -572,9 +572,11 @@ nav {
 
   color: var(--text-muted);
 
-  margin-bottom: 40px;
+  margin-bottom: 25px;
 
   max-width: 600px;
+
+  line-height: 1;
 
   opacity: 0;
 
@@ -1285,9 +1287,7 @@ footer {
   border-left: 3px solid var(--primary); /* Pogrubiony akcent z lewej */
   border-radius: 2px;
   /* CIEŃ: Głęboka czerń pod spodem + neonowy ambient */
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.95),
-    0 0 30px rgba(255, 31, 31, 0.15);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(255, 31, 31, 0.15);
   display: flex;
   flex-direction: column;
   z-index: 999; /* Wysoko, ale pod menu (1999) */
@@ -2463,7 +2463,12 @@ footer {
 
 /* Ukrywamy systemowy kursor tylko na Desktopie */
 @media (min-width: 1024px) {
-  body, a, button, input, textarea, select {
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select {
     cursor: none;
   }
 }
@@ -2481,7 +2486,8 @@ footer {
 }
 
 @media (min-width: 1024px) {
-  .cursor-dot, .cursor-outline {
+  .cursor-dot,
+  .cursor-outline {
     display: block;
   }
 }
@@ -2515,7 +2521,6 @@ body.cursor-hidden .cursor-outline {
   opacity: 0;
 }
 
-
 /* --- TYPEWRITER EFFECT (HERO) --- */
 
 .typewriter-text {
@@ -2533,6 +2538,11 @@ body.cursor-hidden .cursor-outline {
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
