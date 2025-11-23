@@ -354,7 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // === CENY ===
     price: [
-      "💰 Ceny zależą od zakresu projektu. Orientacyjnie:<br><br>• Landing Page: od 1500 zł<br>• Strona Wizytówka: od 3000 zł<br>• Sklep E-Commerce: od 5000 zł<br><br>Każdy projekt wyceniam indywidualnie. Napisz na <strong>kontakt@domindev.pl</strong> z opisem, a przygotuję dokładną wycenę.",
+      "💰 Ceny zależą od zakresu projektu. Orientacyjnie:<br><br>• Landing Page: od 1500 PLN<br>• Strona Firmowa: od 3500 PLN<br>• Sklep E-Commerce: od 6000 PLN<br><br>Każdy projekt wyceniam indywidualnie. Napisz na <strong>kontakt@domindev.pl</strong> z opisem, a przygotuję dokładną wycenę.",
       "Ceny są ustalane indywidualnie - zależą od liczby podstron, funkcjonalności i złożoności projektu. Napisz mi więcej o swoim pomyśle, a przygotuję bezpłatną wycenę!",
     ],
 
@@ -1611,6 +1611,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const budgetValue = document.getElementById("budgetValue");
   const contactForm = document.getElementById("contactForm");
   const formMessage = document.getElementById("formMessage");
+  const serviceSelect = document.getElementById("service");
 
   if (budgetInput && budgetValue) {
     budgetInput.addEventListener("input", (e) => {
@@ -1621,6 +1622,41 @@ document.addEventListener("DOMContentLoaded", () => {
         budgetValue.innerText = "Bez Limitu (25k+)";
       } else {
         budgetValue.innerText = val.toLocaleString("pl-PL") + " PLN";
+      }
+    });
+  }
+
+  /* --- SMART FORM LOGIC (Auto-update budget on select change) --- */
+  const serviceBudgets = {
+    "landing": 1500,
+    "business": 3500,
+    "ecommerce": 6000,
+    "audit": 500,
+    "speed": 800,
+    "integration": 400,
+    "webapp": 8000,
+    "other": 0
+  };
+
+  if (serviceSelect && budgetInput && budgetValue) {
+    serviceSelect.addEventListener("change", (e) => {
+      const selectedService = e.target.value;
+      const suggestedBudget = serviceBudgets[selectedService];
+
+      if (suggestedBudget !== undefined) {
+        budgetInput.value = suggestedBudget;
+
+        if (suggestedBudget === 0) {
+          budgetValue.innerText = "Partnerstwo | Win-Win";
+        } else {
+          budgetValue.innerText = suggestedBudget.toLocaleString("pl-PL") + " PLN";
+        }
+
+        // Efekt wizualny - mignięcie przy zmianie
+        budgetValue.style.color = "#fff";
+        setTimeout(() => {
+          budgetValue.style.color = "";
+        }, 300);
       }
     });
   }
@@ -1700,4 +1736,32 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.classList.remove("cursor-hidden");
     });
   }
+
+  /* --- FORM PREFILL LOGIC (Auto-uzupełnianie z przycisków) --- */
+  window.prefillForm = function(serviceType, budgetValue) {
+    const serviceSelect = document.getElementById("service");
+    const budgetInput = document.getElementById("budget");
+    const budgetLabel = document.getElementById("budgetValue");
+
+    // 1. Ustaw usługę
+    if (serviceSelect) {
+      serviceSelect.value = serviceType;
+    }
+
+    // 2. Ustaw budżet
+    if (budgetInput && budgetLabel) {
+      // Jeśli budżet to 0, to znaczy "Inne/Partnerstwo"
+      if (budgetValue === 0) {
+        budgetInput.value = 0;
+        budgetLabel.innerText = "Partnerstwo | Win-Win";
+      } else {
+        // Ustawiamy wartość suwaka (max 25000)
+        budgetInput.value = budgetValue;
+        budgetLabel.innerText = budgetValue.toLocaleString("pl-PL") + " PLN";
+      }
+    }
+
+    // 3. Smooth scroll do kontaktu (opcjonalne, bo href="#contact" to robi, ale JS jest pewniejszy)
+    document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
+  };
 });

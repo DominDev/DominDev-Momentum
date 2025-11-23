@@ -362,35 +362,136 @@
     <section id="services" class="section-padding dark-bg">
       <div class="container">
         <h2 class="accent reveal">04. USŁUGI</h2>
-        <h3 class="reveal header-margin">Oferta</h3>
+        <h3 class="reveal header-margin">Wybierz Swój Moduł</h3>
 
-        <div class="services-grid reveal">
+        <div class="services-label reveal">CORE SYSTEMS (BUILD)</div>
+        <div class="services-grid core-grid reveal">
+
           <div class="service-card">
-            <i class="fa-solid fa-rocket"></i>
-            <h4>Landing Page</h4>
-            <p>
-              Strona jednej akcji. Skupiona na maksymalnej konwersji (sprzedaży lub leadach). Idealna pod kampanie Google Ads i FB Ads.
-            </p>
-            <button class="btn-secondary">Wybieram</button>
+            <div class="card-icon"><i class="fa-solid fa-rocket"></i></div>
+            <div class="card-content">
+              <h4>Landing Page</h4>
+              <ul class="service-features">
+                <li><i class="fa-solid fa-check"></i> Konwersja & Sprzedaż</li>
+                <li><i class="fa-solid fa-check"></i> Copywriting sprzedażowy</li>
+                <li><i class="fa-solid fa-check"></i> Szybkość < 1s</li>
+              </ul>
+              <p class="service-desc">Idealny do kampanii Ads i szybkich startów produktu.</p>
+            </div>
+            <div class="card-footer">
+              <div class="price">od 1500 PLN <span class="netto">netto</span></div>
+              <a href="#contact" class="btn-secondary full-width center-text" onclick="prefillForm('landing', 1500)">Chcę Konwersji</a>
+            </div>
           </div>
 
           <div class="service-card highlight">
-            <i class="fa-solid fa-layer-group"></i>
-            <h4>Business Hub</h4>
-            <p>
-              Coś więcej niż "strona wizytówka". Kompleksowa platforma firmowa z CMS, blogiem i integracjami. Fundament Twojej marki w sieci.
-            </p>
-            <button class="btn-secondary">Wybieram</button>
+            <div class="best-choice">REKOMENDOWANE</div>
+            <div class="card-icon"><i class="fa-solid fa-layer-group"></i></div>
+            <div class="card-content">
+              <h4>Business Hub</h4>
+              <ul class="service-features">
+                <li><i class="fa-solid fa-check"></i> CMS (Edycja treści)</li>
+                <li><i class="fa-solid fa-check"></i> Blog & SEO Structure</li>
+                <li><i class="fa-solid fa-check"></i> Integracja Social Media</li>
+                <li><i class="fa-solid fa-check"></i> <strong>1 msc Opieki Gratis</strong></li>
+              </ul>
+              <p class="service-desc">Cyfrowa siedziba Twojej firmy. Skalowalna i profesjonalna.</p>
+            </div>
+            <div class="card-footer">
+              <div class="price">od 3500 PLN <span class="netto">netto</span></div>
+              <a href="#contact" class="btn-secondary full-width center-text" onclick="prefillForm('business', 3500)">Buduj Markę</a>
+            </div>
           </div>
 
           <div class="service-card">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <h4>E-Commerce Pro</h4>
-            <p>
-              Zaawansowany sklep na WooCommerce. Szybki, bezpieczny i zautomatyzowany. Od płatności, przez kurierów, aż po fakturowanie.
-            </p>
-            <button class="btn-secondary">Wybieram</button>
+            <div class="card-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+            <div class="card-content">
+              <h4>E-Commerce Pro</h4>
+              <ul class="service-features">
+                <li><i class="fa-solid fa-check"></i> WooCommerce Custom</li>
+                <li><i class="fa-solid fa-check"></i> Płatności (BLIK/Karty)</li>
+                <li><i class="fa-solid fa-check"></i> Kurierzy & Paczkomaty</li>
+                <li><i class="fa-solid fa-check"></i> <strong>1 msc Opieki Gratis</strong></li>
+              </ul>
+              <p class="service-desc">Sklep odporny na duży ruch. Zautomatyzowany i bezpieczny.</p>
+            </div>
+            <div class="card-footer">
+              <div class="price">od 6000 PLN <span class="netto">netto</span></div>
+              <a href="#contact" class="btn-secondary full-width center-text" onclick="prefillForm('ecommerce', 6000)">Zacznij Sprzedawać</a>
+            </div>
           </div>
+
+          <div class="service-card">
+            <div class="card-icon"><i class="fa-brands fa-react"></i></div>
+            <div class="card-content">
+              <h4>Web App / React</h4>
+              <ul class="service-features">
+                <li><i class="fa-solid fa-check"></i> React / Next.js</li>
+                <li><i class="fa-solid fa-check"></i> Dashboardy & CRM</li>
+                <li><i class="fa-solid fa-check"></i> Custom Logic</li>
+                <li><i class="fa-solid fa-check"></i> Skalowalność API</li>
+              </ul>
+              <p class="service-desc">Dedykowane oprogramowanie webowe dla wymagających procesów.</p>
+            </div>
+            <div class="card-footer">
+              <div class="price">od 8000 PLN <span class="netto">netto</span></div>
+              <a href="#contact" class="btn-secondary full-width center-text" onclick="prefillForm('webapp', 8000)">Stwórz System</a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="services-label reveal margin-top-large">OPTIMIZATION & SUPPORT</div>
+        <div class="services-grid micro-grid reveal">
+
+          <div class="micro-card">
+            <div class="micro-header">
+              <i class="fa-solid fa-stethoscope accent"></i>
+              <h4>Audyt & Ratunek WP</h4>
+            </div>
+            <p>Strona wolno działa? Wirusy? Błędy? Zdiagnozuję i naprawię problem.</p>
+            <div class="micro-footer">
+              <span class="micro-price">300-500 PLN</span>
+              <a href="#contact" class="micro-link" onclick="prefillForm('audit', 500)">Zamów <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <div class="micro-card">
+            <div class="micro-header">
+              <i class="fa-solid fa-bolt accent"></i>
+              <h4>Speed Boost Pack</h4>
+            </div>
+            <p>Optymalizacja Core Web Vitals. Wynik 90+ na Mobile gwarantowany.</p>
+            <div class="micro-footer">
+              <span class="micro-price">od 800 PLN</span>
+              <a href="#contact" class="micro-link" onclick="prefillForm('speed', 800)">Przyspiesz <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <div class="micro-card">
+            <div class="micro-header">
+              <i class="fa-solid fa-plug accent"></i>
+              <h4>Integracje API</h4>
+            </div>
+            <p>Newsletter, CRM, Chatbot, Płatności. Łączę systemy w całość.</p>
+            <div class="micro-footer">
+              <span class="micro-price">od 400 PLN</span>
+              <a href="#contact" class="micro-link" onclick="prefillForm('integration', 400)">Wdróż <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
+          <div class="micro-card highlight-micro">
+            <div class="micro-header">
+              <i class="fa-solid fa-handshake accent"></i>
+              <h4>Partnerstwo Win-Win</h4>
+            </div>
+            <p>Masz ciekawy pomysł, ale ograniczony budżet? Jestem otwarty na negocjacje.</p>
+            <div class="micro-footer">
+              <span class="micro-price">0 PLN (Invest)</span>
+              <a href="#contact" class="micro-link" onclick="prefillForm('other', 0)">Zaproponuj <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -456,11 +557,14 @@
               <div class="form-group">
                 <label for="service">Czego potrzebujesz?</label>
                 <select id="service" name="service">
-                  <option value="wordpress">Strona WordPress</option>
-                  <option value="shop">Sklep E-Commerce</option>
-                  <option value="webapp">Aplikacja Webowa (React)</option>
-                  <option value="audit">Audyt / Optymalizacja</option>
-                  <option value="other">Inne / Niestandardowe</option>
+                  <option value="landing">Landing Page (od 1500 PLN)</option>
+                  <option value="business">Business Hub (od 3500 PLN)</option>
+                  <option value="ecommerce">E-Commerce Pro (od 6000 PLN)</option>
+                  <option value="webapp">Web App / React (od 8000 PLN)</option>
+                  <option value="audit">Audyt & Ratunek WP (300-500 PLN)</option>
+                  <option value="speed">Speed Boost Pack (od 800 PLN)</option>
+                  <option value="integration">Integracje API (od 400 PLN)</option>
+                  <option value="other">Partnerstwo Win-Win</option>
                 </select>
               </div>
 

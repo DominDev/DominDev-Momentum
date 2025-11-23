@@ -837,68 +837,292 @@ nav {
   line-height: 1.6;
 }
 
-/* --- SERVICES (Card Grid) --- */
+/* --- NEW SERVICES SECTION (Tech-Menu Style) --- */
 
-.services-grid {
-  display: grid;
-
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-
-  gap: 30px;
+.services-label {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  border-left: 3px solid var(--primary);
+  text-transform: uppercase;
+  opacity: 0.8;
 }
 
+.margin-top-large {
+  margin-top: 80px;
+}
+
+/* CORE GRID & MICRO GRID - UNIFIED SYSTEM */
+.services-grid,
+.micro-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* CORE CARD STYLING */
 .service-card {
-  background: var(--bg-card);
-
-  padding: 30px;
-
-  border: 1px solid rgba(255, 255, 255, 0.05);
-
+  background: rgba(15, 15, 15, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 35px 30px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   transition: var(--transition);
-
-  text-align: left;
-
   display: flex;
-
   flex-direction: column;
-
-  justify-content: space-between;
+  position: relative;
 }
 
 .service-card.highlight {
   border-color: var(--primary);
-
   background: rgba(255, 31, 31, 0.03);
+  box-shadow: 0 0 30px rgba(255, 31, 31, 0.05);
+  transform: scale(1.03);
+  z-index: 2;
+}
+
+.best-choice {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 .service-card:hover {
-  border-color: var(--primary);
-
   transform: translateY(-10px);
-
-  background: rgba(255, 31, 31, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(20, 20, 20, 0.8);
 }
 
-.service-card i {
+.service-card.highlight:hover {
+  transform: scale(1.03) translateY(-10px);
+  border-color: var(--primary);
+}
+
+.card-icon {
   font-size: 2.5rem;
-
   color: var(--primary);
-
-  margin-bottom: 20px;
-
-  display: block;
+  margin-bottom: 25px;
 }
 
 .service-card h4 {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: white;
+}
+
+/* Lista cech z "ptaszkami" */
+.service-features {
+  margin-bottom: 25px;
+  padding: 0;
+  list-style: none;
+}
+
+.service-features li {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  color: #ddd;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.service-features li i {
+  color: var(--primary);
+  font-size: 0.8rem;
+}
+
+.service-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 30px;
+  line-height: 1.5;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+}
+
+/* Sekcja Ceny i Przycisku */
+.card-footer {
+  margin-top: auto;
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.netto {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.full-width {
+  width: 100%;
+  text-align: center;
+  padding: 15px 0;
+}
+
+/* === MICRO SERVICES STYLING === */
+
+.micro-card {
+  background: rgba(10, 10, 10, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.micro-card:hover {
+  border-color: var(--primary);
+  background: rgba(20, 20, 20, 0.9);
+  transform: translateY(-5px);
+}
+
+/* Styl dla karty Partnerstwa - Subtelne wyróżnienie */
+.micro-card.highlight-micro {
+  border-color: rgba(255, 255, 255, 0.1); /* Lekko jaśniejsza ramka */
+  background: rgba(20, 20, 20, 0.6); /* Subtelny tint zamiast gradientu */
+}
+
+.micro-card.highlight-micro:hover {
+  border-color: #fff; /* Biały hover (neutralny) zamiast czerwonego */
+  transform: translateY(-5px);
+}
+
+.micro-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
   margin-bottom: 15px;
 }
 
-.service-card p {
-  color: var(--text-muted);
+.micro-header i {
+  font-size: 1.2rem;
+}
+
+.micro-header h4 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.micro-card p {
   font-size: 0.9rem;
-  flex-grow: 1;
+  color: var(--text-muted);
   margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.micro-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 15px;
+}
+
+.micro-price {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.micro-link {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: gap 0.3s;
+}
+
+.micro-link:hover {
+  gap: 10px;
+}
+
+/* --- SERVICES RESPONSIVENESS --- */
+
+/* Laptopy i mniejsze desktopy (poniżej 1400px) - Zmiana na 2x2 */
+@media (max-width: 1400px) {
+  .services-grid,
+  .micro-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+
+  .service-card.highlight {
+    transform: scale(1);
+  }
+
+  .service-card.highlight:hover {
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .services-grid,
+  .micro-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .micro-grid {
+    gap: 20px;
+  }
+
+  .margin-top-large {
+    margin-top: 60px;
+  }
+}
+
+/* --- FIXES FOR SERVICES --- */
+
+/* Naprawa przycisku, który teraz jest <a> */
+a.btn-secondary {
+  display: block;
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+.center-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Odsunięcie etykiety "Rekomendowane" od krawędzi na mobile */
+@media (max-width: 768px) {
+  .best-choice {
+    top: -10px;
+    font-size: 0.65rem;
+    padding: 3px 10px;
+  }
+
+  .service-card.highlight {
+    margin-top: 15px;
+  }
 }
 
 /* --- CONTACT SECTION --- */
