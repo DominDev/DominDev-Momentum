@@ -3129,7 +3129,7 @@ body {
   text-shadow: 0 0 10px rgba(74, 222, 128, 0.2);
 }
 
-/* --- MODAL CLOSE BUTTON (Glass + Hamburger-Style X) --- */
+/* --- MODAL CLOSE BUTTON (Hamburger-Style X) --- */
 .modal-close {
   position: absolute;
   top: 20px;
@@ -3137,23 +3137,22 @@ body {
   right: auto;
 
   /* Touch Target (min 44px) */
-  width: 44px;
-  height: 44px;
+  width: 30px;
+  height: 20px;
 
-  /* Dark background for contrast */
-  background: #000;
-  border: 1px solid var(--primary);
-  border-radius: 50%;
+  /* BEZ tła i bordera - jak hamburger */
+  background: transparent;
+  border: none;
 
   /* Centrowanie X wewnątrz */
-  padding: 12px 10px;
+  padding: 0;
 
   cursor: pointer;
   z-index: 10;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: background 0.3s ease, border-color 0.3s ease;
+  transition: var(--transition);
 }
 
 .modal-close span {
@@ -3214,7 +3213,7 @@ body {
     flex-direction: column;
   }
   .modal-image-container {
-    height: 200px;
+    height: 300px;
   }
   /* Animacja dla mobile - od góry do dołu (z poprawną wysokością) */
   .modal-image-container img.scrolling {
@@ -3248,18 +3247,18 @@ body {
 @keyframes scroll-screenshot-mobile {
   0% { transform: translateY(0); }
   20% { transform: translateY(0); }
-  100% { transform: translateY(calc(-100% + 200px)); }
+  100% { transform: translateY(calc(-100% + 300px)); }
 }
 
 @keyframes scroll-screenshot-small {
   0% { transform: translateY(0); }
   20% { transform: translateY(0); }
-  100% { transform: translateY(calc(-100% + 180px)); }
+  100% { transform: translateY(calc(-100% + 250px)); }
 }
 
 @media (max-width: 480px) {
   .modal-image-container {
-    height: 180px;
+    height: 250px;
   }
   .modal-image-container img.scrolling {
     animation: scroll-screenshot-small 15s ease-in-out infinite alternate;
