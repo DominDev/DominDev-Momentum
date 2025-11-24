@@ -1385,8 +1385,9 @@ footer {
 
 .copyright {
   text-align: center;
-  color: #333;
+  color: var(--text-muted);
   font-size: 0.8rem;
+  padding-top: 20px;
 }
 
 /* --- FLOATING UI --- */
