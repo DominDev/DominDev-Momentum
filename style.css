@@ -2037,9 +2037,9 @@ footer {
   /* Chatbot */
   .chatbot-window {
     width: 320px;
-    height: 450px;
+    height: 420px;
     left: 20px;
-    bottom: 100px;
+    bottom: 110px; /* Nad chatbot-trigger */
   }
 
   .chatbot-trigger {
@@ -2217,12 +2217,12 @@ footer {
 
   /* Chatbot */
   .chatbot-window {
-    left: 15px; /* Więcej oddechu od krawędzi */
+    left: 15px;
     right: 15px;
-    bottom: 90px;
+    bottom: 110px; /* Nad chatbot-trigger (50px) + jego wysokość (45px) + margines */
     width: auto;
-    height: calc(100vh - 150px);
-    max-height: 500px;
+    height: calc(100vh - 180px); /* Więcej miejsca na górze */
+    max-height: 450px;
   }
 
   .chatbot-header {
@@ -2574,10 +2574,11 @@ footer {
   .chatbot-window {
     left: 5px;
     right: 5px;
-    bottom: 65px;
-    height: calc(100vh - 100px);
-    max-height: 450px;
-    border-radius: 10px;
+    bottom: 105px; /* Nad chatbot-trigger (50px) + jego wysokość (42px) + margines */
+    width: auto;
+    height: calc(100vh - 160px);
+    max-height: 400px; /* Mniejszy na małych ekranach */
+    border-radius: 8px;
   }
 
   .chatbot-header {
