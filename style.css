@@ -11,7 +11,7 @@
 
   --text-main: #ffffff;
 
-  --text-muted: #a0a0a0;
+  --text-muted: #c0c0c0; /* Jaśniejszy szary dla lepszego kontrastu */
 
   --font-main: "Space Grotesk", sans-serif;
 
