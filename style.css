@@ -1394,7 +1394,7 @@ footer {
 .progress-wrap {
   position: fixed;
   right: 30px;
-  bottom: 30px;
+  bottom: 50px; /* Podniesione nad System Bar */
   height: 50px;
   width: 50px;
   cursor: pointer;
@@ -1438,7 +1438,7 @@ footer {
 .chatbot-trigger {
   position: fixed;
   left: 30px;
-  bottom: 30px;
+  bottom: 50px; /* Podniesione nad System Bar */
   /* Dopasowany rozmiar do scroll-to-top (50x50) */
   width: 50px;
   height: 50px;
@@ -2043,7 +2043,7 @@ footer {
 
   .chatbot-trigger {
     left: 20px;
-    bottom: 20px;
+    bottom: 50px; /* Podniesione nad System Bar */
     width: 45px;
     height: 45px;
     font-size: 1.1rem;
@@ -2051,7 +2051,7 @@ footer {
 
   .progress-wrap {
     right: 20px;
-    bottom: 20px;
+    bottom: 50px; /* Podniesione nad System Bar */
     width: 45px;
     height: 45px;
   }
@@ -2201,7 +2201,7 @@ footer {
   /* Floating UI - symetryczne rozmiary */
   .chatbot-trigger {
     left: 15px;
-    bottom: 15px;
+    bottom: 50px; /* Podniesione nad System Bar */
     width: 42px;
     height: 42px;
     font-size: 1rem;
@@ -2209,7 +2209,7 @@ footer {
 
   .progress-wrap {
     right: 15px;
-    bottom: 15px;
+    bottom: 50px; /* Podniesione nad System Bar */
     width: 42px;
     height: 42px;
   }
@@ -2548,7 +2548,7 @@ footer {
   /* Floating UI */
   .chatbot-trigger {
     left: 10px;
-    bottom: 10px;
+    bottom: 50px; /* Podniesione nad System Bar */
     width: 42px;
     height: 42px;
     font-size: 0.95rem;
@@ -2556,7 +2556,7 @@ footer {
 
   .progress-wrap {
     right: 10px;
-    bottom: 10px;
+    bottom: 50px; /* Podniesione nad System Bar */
     width: 38px;
     height: 38px;
   }
@@ -2771,48 +2771,79 @@ body.cursor-hidden .cursor-outline {
   }
 }
 
-/* --- LIVE STATS HUD (HERO) --- */
+/* --- SYSTEM STATUS BAR (Floating Bottom) --- */
 
-.hero-stats {
-  display: flex;
-  gap: 30px;
-  margin-top: 40px;
-  font-family: "Courier New", monospace;
-  font-size: 0.8rem;
-  color: #666;
-  letter-spacing: 1px;
-  padding: 15px 25px;
-  background: rgba(10, 10, 10, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-left: 2px solid var(--primary);
-  backdrop-filter: blur(5px);
-  width: fit-content;
+/* Zabezpieczenie stopki przed zasłonięciem */
+body {
+  padding-bottom: 40px;
 }
 
-.stat-item {
+.system-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 36px;
+  background: rgba(5, 5, 5, 0.95);
+  border-top: 1px solid rgba(255, 31, 31, 0.3);
+  z-index: 800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Space Grotesk", monospace;
+  font-size: 0.75rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.8);
+}
+
+.sys-container {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  width: 100%;
+  max-width: var(--container);
+  justify-content: center;
+  opacity: 0;
+  animation: fadeIn 1s 1s ease forwards;
+}
+
+.sys-col {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: #666;
 }
 
-.stat-value {
+.sys-label {
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.sys-val {
   color: #fff;
   font-weight: 700;
+  font-family: monospace;
+}
+
+.sys-icon {
+  color: var(--primary);
+  font-size: 0.8rem;
 }
 
 .text-green {
   color: #4ade80;
-  text-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
+  text-shadow: 0 0 5px rgba(74, 222, 128, 0.3);
 }
 
 .text-primary {
   color: var(--primary);
 }
 
-/* Pulsująca kropka statusu */
+/* Pulsująca kropka */
 .status-dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   background-color: #4ade80;
   border-radius: 50%;
   box-shadow: 0 0 5px #4ade80;
@@ -2825,31 +2856,28 @@ body.cursor-hidden .cursor-outline {
   100% { opacity: 1; box-shadow: 0 0 5px #4ade80; }
 }
 
-/* Responsywność dla HUD - WERSJA ODCHUDZONA */
+/* Mobile Adjustments dla System Bar */
 @media (max-width: 768px) {
-  .hero-stats {
-    /* Reset stylów ramki */
-    background: transparent;
-    border: none;
-    backdrop-filter: none;
-    padding: 0;
+  .sys-container {
+    justify-content: space-around;
+    padding: 0 10px;
+    gap: 10px;
+  }
 
-    /* Układ pionowy, ale zbity */
-    flex-direction: column;
+  /* Ukrywamy mniej ważne statystyki na mobile */
+  .desktop-only {
+    display: none;
+  }
+
+  .sys-label {
+    display: none;
+  }
+
+  .sys-col {
     gap: 5px;
-    margin-top: 25px;
-    width: 100%;
   }
+}
 
-  .stat-item {
-    font-size: 0.7rem;
-    color: #888;
-    padding-left: 10px;
-    border-left: 2px solid rgba(255, 255, 255, 0.1);
-  }
-
-  /* Wyróżnienie wartości */
-  .stat-value {
-    font-size: 0.8rem;
-  }
+@keyframes fadeIn {
+  to { opacity: 1; }
 }

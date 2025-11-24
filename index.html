@@ -180,18 +180,6 @@
         <div class="hero-btns">
           <a href="#contact" class="btn">Uzbrój Swój Biznes</a>
         </div>
-
-        <div class="hero-stats reveal">
-          <div class="stat-item">
-            <span class="status-dot"></span> SYSTEM: <span class="stat-value">ONLINE</span>
-          </div>
-          <div class="stat-item">
-            INIT LOAD: <span id="loadTime" class="stat-value">CALC...</span>
-          </div>
-          <div class="stat-item">
-            LIGHTHOUSE: <span class="stat-value text-green">100/100</span>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -672,6 +660,23 @@
 
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-outline" id="cursor-outline"></div>
+
+    <div class="system-bar">
+      <div class="sys-container">
+        <div class="sys-col">
+          <span class="status-dot"></span> <span class="sys-label">SYSTEM:</span> <span class="sys-val text-green">ONLINE</span>
+        </div>
+        <div class="sys-col">
+          <span class="sys-icon"><i class="fa-solid fa-bolt"></i></span> <span class="sys-label">LOAD:</span> <span id="loadTime" class="sys-val">CALC...</span>
+        </div>
+        <div class="sys-col desktop-only">
+          <span class="sys-icon"><i class="fa-solid fa-shield-halved"></i></span> <span class="sys-label">SECURITY:</span> <span class="sys-val text-green">HIGH</span>
+        </div>
+        <div class="sys-col desktop-only">
+          <span class="sys-icon"><i class="fa-solid fa-gauge-high"></i></span> <span class="sys-label">SCORE:</span> <span class="sys-val text-green">100/100</span>
+        </div>
+      </div>
+    </div>
 
     <script src="script.js"></script>
   </body>
