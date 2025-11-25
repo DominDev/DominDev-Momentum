@@ -1,6 +1,5 @@
 // js/modules/chatbot.js
-
-let botData = null; // Cache dla danych
+let botData = null;
 
 async function loadBotData() {
   if (botData) return botData;
@@ -22,13 +21,11 @@ export function initChat() {
   const chatbotSend = document.getElementById("chatbot-send");
   const chatbotMessages = document.getElementById("chatbot-messages");
 
-  // Funkcja otwierania (Lazy Load Data here)
   async function openChat() {
     chatbotWindow.classList.add("active");
     chatbotTrigger.classList.add("active");
     chatbotInput.focus();
 
-    // Pobierz dane jeśli ich nie ma
     if (!botData) {
       await loadBotData();
     }
@@ -51,7 +48,6 @@ export function initChat() {
 
   if (chatbotClose) chatbotClose.addEventListener("click", closeChat);
 
-  // Logika wiadomości
   function sendMessage() {
     const msg = chatbotInput.value.trim();
     if (!msg) return;
@@ -60,7 +56,6 @@ export function initChat() {
     chatbotInput.value = "";
 
     if (!botData) {
-      // Fallback gdyby dane się nie załadowały
       addMessage("System initializing...", false);
       loadBotData().then(() => {
         const response = getBotResponse(msg);
@@ -110,17 +105,14 @@ export function initChat() {
 
     const lower = msg.toLowerCase();
 
-    // 1. Check Vulgar
     if (botData.vulgarWords.some(w => lower.includes(w))) {
       return getRandom(botData.responses.vulgar);
     }
 
-    // 2. Check Glossary
     for (const [term, def] of Object.entries(botData.glossary)) {
       if (lower.includes(term)) return def;
     }
 
-    // 3. Check Keywords
     for (const [cat, words] of Object.entries(botData.keywords)) {
       if (words.some(w => lower.includes(w))) {
         return getRandom(botData.responses[cat]);

@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(start chrome --headless --screenshot=cta-check.png index.html)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(if [ -f nul ])",
+      "Bash(then rm nul)",
+      "Bash(else echo \"File ''nul'' not found\")",
+      "Bash(fi)"
     ],
     "deny": [],
     "ask": []

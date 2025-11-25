@@ -1,6 +1,4 @@
 // js/modules/portfolio.js
-
-// 1. Baza danych projektów (Storytelling)
 const projectsDB = {
   kraft: {
     title: "Kraft Daily Pub",
@@ -41,7 +39,6 @@ const projectsDB = {
 };
 
 export function initPortfolio() {
-  // 2. Elementy DOM
   const modal = document.getElementById("project-modal");
   const modalImg = document.getElementById("modal-img");
   const modalTitle = document.getElementById("modal-title");
@@ -53,22 +50,16 @@ export function initPortfolio() {
   const closeModalBtn = document.getElementById("modal-close-btn");
   const glitchOverlay = document.getElementById("system-glitch");
 
-  // 3. Funkcja otwierania z efektem SYSTEM BREACH
   window.openModal = function (projectId) {
     const data = projectsDB[projectId];
     if (!data) return;
 
-    // KROK 1: Odpal Glitch
     glitchOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
 
-    // Symulacja czasu "Włamania" (300ms)
     setTimeout(() => {
-      // KROK 2: Podmień dane w tle (gdy glitch zasłania ekran)
-
-      // Reset animacji scrollowania
       modalImg.classList.remove("scrolling");
-      void modalImg.offsetWidth; // Trigger reflow
+      void modalImg.offsetWidth;
 
       modalImg.src = data.image;
       modalTitle.innerText = data.title;
@@ -77,27 +68,22 @@ export function initPortfolio() {
       modalSolution.innerText = data.solution;
       modalResult.innerText = data.result;
 
-      // Generuj tagi
       modalTags.innerHTML = data.tags
         .map((tag) => `<span class="tech-badge">${tag}</span>`)
         .join("");
 
-      // Dodaj klasę animacji do obrazka
       modalImg.classList.add("scrolling");
 
-      // KROK 3: Wyłącz Glitch i Pokaż Panel
       glitchOverlay.classList.remove("active");
       modal.classList.add("active");
     }, 300);
   };
 
-  // 4. Funkcja zamykania
   window.closeModal = function () {
     modal.classList.remove("active");
     document.body.style.overflow = "";
   };
 
-  // Eventy zamykania
   if (closeModalBtn) {
     closeModalBtn.addEventListener("click", window.closeModal);
   }
@@ -108,7 +94,6 @@ export function initPortfolio() {
     });
   }
 
-  // Zamknij na klawisz ESC
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       if (modal && modal.classList.contains("active")) {
