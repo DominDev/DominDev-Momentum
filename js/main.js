@@ -11,6 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
   initMatrix();
   initCursor();
 
+  // Reset scroll position and block scrolling during preloader
+  window.scrollTo(0, 0);
+  if (CONFIG.enablePreloader) {
+    document.body.classList.add("preloader-active");
+  }
+
   // === MAINTENANCE CHECK ===
   const urlParams = new URLSearchParams(window.location.search);
   const isAdmin = urlParams.get('admin') === 'true';
@@ -38,27 +44,53 @@ document.addEventListener("DOMContentLoaded", () => {
     initHud();
   }, 500);
 
-  // === PRELOADER ===
+  // === PRELOADER (Smart Conditional Display) ===
   if (CONFIG.enablePreloader) {
     const preloader = document.getElementById("preloader");
     if (preloader) {
       window.addEventListener("load", () => {
-        setTimeout(() => {
-          preloader.classList.add("loaded");
-          setTimeout(() => preloader.style.display = "none", 500);
-        }, 300);
+        const perfData = performance.getEntriesByType("navigation")[0];
+        let loadTime = 0;
+
+        if (perfData && perfData.loadEventEnd > 0) {
+          loadTime = perfData.loadEventEnd - perfData.startTime;
+        } else {
+          loadTime = performance.now();
+        }
+
+        const threshold = 800;
+
+        if (loadTime < threshold) {
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              preloader.style.display = "none";
+              document.body.classList.remove("preloader-active");
+            }, 50);
+          });
+        } else {
+          setTimeout(() => {
+            preloader.classList.add("loaded");
+            setTimeout(() => {
+              preloader.style.display = "none";
+              document.body.classList.remove("preloader-active");
+            }, 550);
+          }, 500);
+        }
       });
 
       setTimeout(() => {
-        if (!preloader.classList.contains("loaded")) {
+        if (preloader && !preloader.classList.contains("loaded")) {
           preloader.classList.add("loaded");
-          preloader.style.display = "none";
+          setTimeout(() => {
+            preloader.style.display = "none";
+            document.body.classList.remove("preloader-active");
+          }, 550);
         }
-      }, 3000);
+      }, 4000);
     }
   } else {
     const pre = document.getElementById("preloader");
-    if(pre) pre.style.display = "none";
+    if (pre) pre.style.display = "none";
   }
 
   // === LAZY CHATBOT ===
