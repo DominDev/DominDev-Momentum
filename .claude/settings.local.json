@@ -6,7 +6,10 @@
       "Bash(if [ -f nul ])",
       "Bash(then rm nul)",
       "Bash(else echo \"File ''nul'' not found\")",
-      "Bash(fi)"
+      "Bash(fi)",
+      "Bash(start chrome:*)",
+      "Bash(timeout /t 3 /nobreak)",
+      "Bash(start \"\" \"d:\\ProgramData\\DominDev\\DominDev-Momentum\\index.html\")"
     ],
     "deny": [],
     "ask": []
