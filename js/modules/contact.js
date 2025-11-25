@@ -1,5 +1,4 @@
 // js/modules/contact.js
-
 import { CONFIG } from '../config.js';
 
 export function initContact() {
@@ -7,19 +6,15 @@ export function initContact() {
   const contactCloseBtn = document.getElementById("contact-close-btn");
   const glitchOverlay = document.getElementById("system-glitch");
 
-  // Funkcja otwierania panelu kontaktowego (z efektem Glitch jak w Portfolio)
   window.openContactPanel = function () {
     if (!contactPanel) return;
 
-    // KROK 1: Odpal Glitch
     if (glitchOverlay) {
       glitchOverlay.classList.add("active");
     }
     document.body.style.overflow = "hidden";
 
-    // Symulacja czasu "Włamania" (300ms)
     setTimeout(() => {
-      // KROK 2: Wyłącz Glitch i Pokaż Panel
       if (glitchOverlay) {
         glitchOverlay.classList.remove("active");
       }
@@ -27,7 +22,6 @@ export function initContact() {
     }, 300);
   };
 
-  // Funkcja zamykania panelu
   window.closeContactPanel = function () {
     if (contactPanel) {
       contactPanel.classList.remove("active");
@@ -39,14 +33,12 @@ export function initContact() {
     contactCloseBtn.addEventListener("click", window.closeContactPanel);
   }
 
-  // Zamknij klikając w tło
   if (contactPanel) {
     contactPanel.addEventListener("click", (e) => {
       if (e.target === contactPanel) window.closeContactPanel();
     });
   }
 
-  // Zamknij na ESC
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       if (contactPanel && contactPanel.classList.contains("active")) {
@@ -55,22 +47,17 @@ export function initContact() {
     }
   });
 
-  /* --- SMART PREFILL LOGIC --- */
   window.prefillForm = function (serviceType, budgetValue) {
-    // 1. Otwórz panel
     window.openContactPanel();
 
-    // 2. Znajdź elementy formularza (są teraz w panelu)
     const serviceSelect = document.getElementById("panel-service");
     const budgetInput = document.getElementById("panel-budget");
     const budgetLabel = document.getElementById("budgetValue");
 
-    // 3. Ustaw usługę
     if (serviceSelect) {
       serviceSelect.value = serviceType;
     }
 
-    // 4. Ustaw budżet
     if (budgetInput && budgetLabel) {
       if (budgetValue === 0) {
         budgetInput.value = 0;
@@ -82,7 +69,6 @@ export function initContact() {
     }
   };
 
-  // Budget slider update w panelu
   const panelBudget = document.getElementById("panel-budget");
   const budgetValueLabel = document.getElementById("budgetValue");
 
@@ -97,50 +83,41 @@ export function initContact() {
     });
   }
 
-  /* --- REAL BACKEND LOGIC --- */
   const form = document.getElementById("contactForm");
 
   if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      // 1. SPAM CHECK (Honeypot)
-      // Jeśli ukryte pole ma wartość, to znaczy, że wypełnił je bot.
       const honeypot = document.getElementById("honey-field");
       if (honeypot && honeypot.value !== "") {
         console.warn("Bot detected. Submission blocked.");
-        return; // Ciche odrzucenie
+        return;
       }
 
       const btn = form.querySelector("button[type='submit']");
       const msgDiv = document.getElementById("formMessage");
       const originalText = btn.innerText;
 
-      // UI Loading State
       btn.innerText = "NADAWANIE SYGNAŁU...";
       btn.disabled = true;
       btn.style.opacity = "0.7";
 
-      // Przygotowanie danych
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
 
       try {
-        // Wybór Providera (Abstrakcja)
         let response;
 
         if (CONFIG.mail.provider === 'formspree') {
           response = await sendViaFormspree(data);
         } else if (CONFIG.mail.provider === 'custom') {
-          // Przyszłość: LH.pl / PHP
-          // response = await sendViaCustom(data);
           throw new Error("Custom provider not implemented yet");
         } else {
           throw new Error("Unknown mail provider");
         }
 
         if (response.ok) {
-          // SUKCES
           btn.innerText = "POTWIERDZONO.";
           btn.style.borderColor = "#4ade80";
           btn.style.color = "#4ade80";
@@ -153,7 +130,6 @@ export function initContact() {
 
           setTimeout(() => {
             window.closeContactPanel();
-            // Reset UI po zamknięciu
             setTimeout(() => {
               btn.innerText = originalText;
               btn.disabled = false;
@@ -164,12 +140,10 @@ export function initContact() {
           }, 2000);
 
         } else {
-          // BŁĄD SERWERA
           throw new Error("Błąd transmisji danych.");
         }
 
       } catch (error) {
-        // BŁĄD SIECI / UI
         console.error(error);
         btn.innerText = "BŁĄD NADAWANIA";
         btn.style.borderColor = "#ff1f1f";
@@ -189,8 +163,6 @@ export function initContact() {
     });
   }
 }
-
-/* --- ADAPTERS --- */
 
 async function sendViaFormspree(data) {
   const endpoint = `https://formspree.io/f/${CONFIG.mail.formspreeId}`;

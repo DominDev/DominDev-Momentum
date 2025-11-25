@@ -10,13 +10,11 @@ export function initMatrix() {
   const cols = Math.floor(width / 20);
   const ypos = Array(cols).fill(0);
 
-  // Mouse interaction
   let mouseX = -100;
   let mouseY = -100;
   let targetMouseX = -100;
   let targetMouseY = -100;
 
-  // Throttling for ~15 FPS (slower, cinematic Matrix feel + battery saving)
   let lastTime = 0;
   const fps = 15;
   const interval = 1000 / fps;
@@ -36,17 +34,14 @@ export function initMatrix() {
   function matrixLoop(currentTime) {
     requestAnimationFrame(matrixLoop);
 
-    // Throttling logic - skip frame if not enough time passed
     if (!currentTime) currentTime = 0;
     const delta = currentTime - lastTime;
     if (delta < interval) return;
     lastTime = currentTime - (delta % interval);
 
-    // Interpolacja myszki
     mouseX += (targetMouseX - mouseX) * 0.12;
     mouseY += (targetMouseY - mouseY) * 0.12;
 
-    // Fade effect
     ctx.fillStyle = "rgba(5, 5, 5, 0.06)";
     ctx.fillRect(0, 0, width, height);
     ctx.font = "15pt monospace";
@@ -56,7 +51,6 @@ export function initMatrix() {
       const text = chars[Math.floor(Math.random() * chars.length)];
       const x = ind * 20;
 
-      // Interakcja z myszką
       const dist = Math.hypot(x - mouseX, y - mouseY);
       if (dist < 150) {
         ctx.fillStyle = `rgba(255, 31, 31, ${1 - dist / 150})`;

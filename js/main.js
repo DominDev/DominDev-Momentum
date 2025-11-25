@@ -5,36 +5,32 @@ import { initPortfolio } from './modules/portfolio.js';
 import { initContact } from './modules/contact.js';
 import { initHud } from './modules/hud.js';
 import { initMaintenance } from './modules/maintenance.js';
-// Chatbota ładujemy dynamicznie (Lazy), więc nie importujemy go tutaj statycznie
 
 document.addEventListener("DOMContentLoaded", () => {
-
-  // 1. MAINTENANCE CHECK (Priorytet Absolutny)
+  // === MAINTENANCE CHECK ===
   const urlParams = new URLSearchParams(window.location.search);
   const isAdmin = urlParams.get('admin') === 'true';
 
   if (CONFIG.maintenanceMode && !isAdmin) {
     initMaintenance();
-    return; // Stop execution: Reszta JS nie obciąża procesora
+    return;
   }
 
-  // 2. LAZY MATRIX START (Performance Fix)
-  // Opóźniamy start Canvasa, żeby przeglądarka najpierw narysowała tekst (LCP)
+  // === LAZY MATRIX START ===
   setTimeout(() => {
     initMatrix();
-  }, 100); // 100ms wystarczy, żeby "oszukać" Lighthouse i dać oddech CPU
+  }, 100);
 
-  // 3. UI & Modules (Critical)
+  // === CORE MODULES ===
   initUI();
   initPortfolio();
   initContact();
 
-  // HUD (Performance Meter) - też można lekko opóźnić
   setTimeout(() => {
     initHud();
   }, 500);
 
-  // 4. PRELOADER (Smart Mask)
+  // === PRELOADER ===
   if (CONFIG.enablePreloader) {
     const preloader = document.getElementById("preloader");
     if (preloader) {
@@ -45,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 300);
       });
 
-      // Timeout bezpieczeństwa
       setTimeout(() => {
         if (!preloader.classList.contains("loaded")) {
           preloader.classList.add("loaded");
@@ -58,30 +53,21 @@ document.addEventListener("DOMContentLoaded", () => {
     if(pre) pre.style.display = "none";
   }
 
-  // 5. LAZY LOAD CHATBOT (Desktop + Mobile Fix)
+  // === LAZY CHATBOT ===
   const chatTrigger = document.getElementById("chatbot-trigger");
   if (chatTrigger) {
     let chatLoaded = false;
 
-    // Funkcja ładująca moduł
     const loadChatbot = async () => {
       if (chatLoaded) return;
       chatLoaded = true;
-
-      // Dynamic Import
       const { initChat } = await import('./modules/chatbot.js');
       initChat();
     };
 
-    // Trigger Desktop: Najazd myszką
     chatTrigger.addEventListener("mouseenter", loadChatbot, { once: true });
-
-    // Trigger Mobile: Pierwszy scroll lub dotknięcie (bo nie ma hover)
-    // Dzięki temu czat będzie gotowy zanim użytkownik w niego kliknie
     window.addEventListener("scroll", loadChatbot, { passive: true, once: true });
     window.addEventListener("touchstart", loadChatbot, { passive: true, once: true });
-
-    // Fallback: Załaduj po 5 sekundach bezczynności (dla pewności)
     setTimeout(loadChatbot, 5000);
   }
 });

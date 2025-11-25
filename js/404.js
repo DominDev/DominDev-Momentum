@@ -1,11 +1,9 @@
-// js/404.js - Minimal script for 404 page (Matrix + Cursor only)
+// js/404.js
 import { initMatrix } from './core/matrix.js';
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize Matrix background
   initMatrix();
 
-  // Initialize Cursor (simplified for 404)
   const cursorDot = document.getElementById("cursor-dot");
   const cursorOutline = document.getElementById("cursor-outline");
 
@@ -21,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
 
-    // Hover effect on button
     const btn = document.querySelector(".btn");
     if (btn) {
       btn.addEventListener("mouseenter", () => document.body.classList.add("hovering"));
