@@ -2904,6 +2904,11 @@ body {
   color: #fff;
   font-weight: 700;
   font-family: monospace;
+
+  /* FIX CLS: Rezerwujemy miejsce na cyfry */
+  display: inline-block;
+  min-width: 40px;
+  text-align: right; /* Cyfry wyrównane do prawej, żeby nie skakały */
 }
 
 .sys-icon {
@@ -3878,7 +3883,7 @@ body {
   width: 100%;
   height: 100%;
   background: transparent; /* Przezroczyste tło - Matrix będzie widoczny */
-  z-index: 10000;
+  z-index: 100001; /* FIX: Musi być wyżej niż preloader (99999) */
   display: none; /* Domyślnie ukryte */
   overflow: hidden;
 }
