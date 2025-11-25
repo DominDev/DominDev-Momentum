@@ -68,8 +68,29 @@
   </head>
 
   <body>
+    <!-- MATRIX BACKGROUND CANVAS -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- PRELOADER (Boot Screen) -->
+    <div id="preloader">
+      <div class="loader-content">
+        <div class="logo-loader">Domin<span>Dev</span>.</div>
+        <div class="loading-text">INITIALIZING SYSTEM...</div>
+      </div>
+    </div>
+
+    <!-- SYSTEM GLITCH OVERLAY -->
+    <div id="system-glitch" class="glitch-overlay">
+      <div class="glitch-line-container">
+        <span class="glitch-line"></span>
+        <span class="glitch-text">SYSTEM ACCESS</span>
+        <span class="glitch-line"></span>
+      </div>
+    </div>
+
     <!-- MAINTENANCE SCREEN (Red Alert) -->
     <div id="maintenance-screen" class="maintenance-overlay">
+      <canvas id="maintenance-matrix" class="maintenance-canvas"></canvas>
       <div class="screen-overlay"></div>
 
       <div class="maintenance-container">
@@ -95,25 +116,8 @@
       </div>
     </div>
 
-    <!-- PRELOADER (Boot Screen) -->
-    <div id="preloader">
-      <div class="loader-content">
-        <div class="logo-loader">Domin<span>Dev</span>.</div>
-        <div class="loading-text">INITIALIZING SYSTEM...</div>
-      </div>
-    </div>
-
-    <!-- SYSTEM GLITCH OVERLAY -->
-    <div id="system-glitch" class="glitch-overlay">
-      <div class="glitch-line-container">
-        <span class="glitch-line"></span>
-        <span class="glitch-text">SYSTEM ACCESS</span>
-        <span class="glitch-line"></span>
-      </div>
-    </div>
-
-    <!-- MATRIX BACKGROUND CANVAS -->
-    <canvas id="matrixCanvas"></canvas>
+    <!-- SITE CONTENT WRAPPER -->
+    <div id="site-content">
 
     <!-- Scroll Progress & Back to Top -->
     <div class="progress-wrap" id="progress-wrap">
@@ -175,9 +179,6 @@
         </button>
       </div>
     </div>
-
-    <!-- SITE CONTENT WRAPPER (wszystko oprócz tła i narzędzi) -->
-    <div id="site-content">
 
     <nav>
       <div class="container nav-container">
@@ -812,12 +813,6 @@
       </div>
     </footer>
 
-    </div>
-    <!-- END SITE CONTENT WRAPPER -->
-
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-outline" id="cursor-outline"></div>
-
     <div class="system-bar">
       <div class="sys-container">
         <div class="sys-col">
@@ -1000,6 +995,12 @@
         </div>
       </div>
     </div>
+
+    </div>
+    <!-- END SITE CONTENT WRAPPER -->
+
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
 
     <script type="module" src="js/main.js"></script>
   </body>
