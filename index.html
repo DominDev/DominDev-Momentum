@@ -67,15 +67,21 @@
     <link rel="stylesheet" href="style.css" />
   </head>
 
-  <body>
+  <body style="overflow: hidden; height: 100vh;">
     <!-- MATRIX BACKGROUND CANVAS -->
     <canvas id="matrixCanvas"></canvas>
 
     <!-- PRELOADER (Boot Screen) -->
     <div id="preloader">
+      <canvas id="preloader-matrix" class="preloader-canvas"></canvas>
+      <div class="screen-overlay"></div>
+
       <div class="loader-content">
-        <div class="logo-loader">Domin<span>Dev</span>.</div>
-        <div class="loading-text">INITIALIZING SYSTEM...</div>
+        <div class="loader-code-block">
+          <span class="loader-label">SYSTEM STATUS:</span>
+          <div class="glitch-logo" data-text="DominDev.">Domin<span>Dev</span>.</div>
+        </div>
+        <div class="loading-text">INITIALIZING SYSTEM<span class="blink-cursor">_</span></div>
       </div>
     </div>
 
