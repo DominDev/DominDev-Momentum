@@ -2842,7 +2842,7 @@ footer {
   width: 40px;
   height: 40px;
   border: 1px solid rgba(255, 31, 31, 0.8);
-  transition: width 0.2s, height 0.2s, background-color 0.2s;
+  transition: width 0.2s, height 0.2s, background-color 0.2s, border-width 0.3s;
   mix-blend-mode: difference;
   pointer-events: none;
 }
@@ -2852,6 +2852,7 @@ body.hovering .cursor-outline {
   height: 70px;
   background-color: rgba(255, 31, 31, 0.05);
   border-color: var(--primary);
+  border-width: 1.5px;
 }
 
 /* Ukryj custom kursor, gdy wyjedziemy poza okno */
