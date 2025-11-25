@@ -2784,7 +2784,7 @@ footer {
   left: 0;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  z-index: 9999;
+  z-index: 10003; /* Nad maintenance screen */
   pointer-events: none;
   display: none;
 }
@@ -3745,4 +3745,412 @@ body {
   .panel-title {
     font-size: 1.8rem;
   }
+}
+
+
+/* ========================================
+   404 PAGE STYLES
+   ======================================== */
+
+.error-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.error-code {
+  font-family: var(--font-display);
+  font-size: 10rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.05);
+  position: relative;
+  line-height: 1;
+}
+
+/* Glitch effect na liczbie 404 */
+.error-code::before,
+.error-code::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.error-code::before {
+  color: var(--primary);
+  z-index: -1;
+  clip-path: inset(20% 0 80% 0);
+  animation: glitch-anim-1 3s infinite linear alternate-reverse;
+  transform: translate(-2px, 2px);
+}
+
+.error-code::after {
+  color: #fff;
+  z-index: -2;
+  clip-path: inset(80% 0 10% 0);
+  animation: glitch-anim-2 2s infinite linear alternate-reverse;
+  transform: translate(2px, -2px);
+}
+
+.error-title {
+  font-size: 3rem;
+  margin-top: -20px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px rgba(255, 31, 31, 0.5);
+}
+
+.error-desc {
+  color: var(--text-muted);
+  max-width: 500px;
+  margin-bottom: 40px;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .error-code { font-size: 6rem; }
+  .error-title { font-size: 2rem; }
+}
+
+
+/* ========================================
+   SMART PRELOADER (Boot Screen)
+   ======================================== */
+
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000; /* Czysta czerń */
+  z-index: 99999; /* Absolutnie najwyżej */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#preloader.loaded {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-content {
+  text-align: center;
+}
+
+.logo-loader {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 10px;
+  animation: pulse 1.5s infinite;
+}
+
+.logo-loader span { color: var(--primary); }
+
+.loading-text {
+  font-family: monospace;
+  color: var(--primary);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+}
+
+
+/* ========================================
+   MAINTENANCE SCREEN (Terminal Style)
+   ======================================== */
+
+.maintenance-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent; /* Przezroczyste tło - Matrix będzie widoczny */
+  z-index: 10000;
+  display: none; /* Domyślnie ukryte */
+  overflow: hidden;
+}
+
+.maintenance-overlay.active {
+  display: block;
+}
+
+/* Nie potrzebujemy już indywidualnego ukrywania elementów - używamy wrappera #site-content w JS */
+
+/* Maintenance używa tych samych efektów co 404 */
+.maintenance-overlay .screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10001; /* Nad Matrixem */
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.2) 0px,
+    rgba(0, 0, 0, 0.2) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  animation: screenFlicker 0.15s infinite;
+}
+
+.maintenance-container {
+  position: relative;
+  z-index: 10002; /* Nad scanlines */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  box-shadow: inset 0 0 200px rgba(255, 0, 0, 0.1); /* Czerwone zabarwienie */
+  background: rgba(5, 5, 5, 0.85); /* Przezroczyste tło z blur - Matrix prześwituje */
+  backdrop-filter: blur(5px); /* Opcjonalny blur dla lepszego efektu głębi */
+}
+
+/* OFFLINE STATUS CODE */
+.maintenance-code-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.maintenance-label {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.9rem;
+  color: var(--primary); /* Czerwony jak na stronie głównej */
+  letter-spacing: 3px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.glitch-maintenance {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 6rem;
+  font-weight: 900;
+  color: #fff; /* Biały jak na 404 */
+  position: relative;
+  letter-spacing: 10px;
+  line-height: 1;
+  animation: glitch-skew 0.5s infinite linear alternate-reverse;
+}
+
+/* RGB Split dla OFFLINE - czerwony i cyjan (jak 404) */
+.glitch-maintenance::before,
+.glitch-maintenance::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.glitch-maintenance::before {
+  color: #ff0000; /* Czerwony kanał */
+  z-index: -1;
+  animation: glitch-aggressive-1 0.3s infinite;
+}
+
+.glitch-maintenance::after {
+  color: #00ffff; /* Cyjan kanał */
+  z-index: -2;
+  animation: glitch-aggressive-2 0.3s infinite reverse;
+}
+
+/* Terminal message dla maintenance */
+.maintenance-container .terminal-msg {
+  font-family: 'Space Grotesk', monospace;
+  color: var(--primary);
+  font-size: 1.3rem;
+  margin-top: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: rgba(0,0,0,0.7);
+  padding: 10px 20px;
+  border: 1px solid var(--primary);
+}
+
+.maintenance-text {
+  font-family: monospace;
+  color: #888;
+  margin: 20px 0 30px;
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+.maintenance-progress {
+  width: 300px;
+  max-width: 90%;
+  height: 4px;
+  background: #222;
+  margin-bottom: 15px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #333;
+}
+
+.progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 30%;
+  background: var(--primary); /* Czerwony */
+  animation: progressMove 2s infinite ease-in-out;
+  box-shadow: 0 0 10px rgba(255, 31, 31, 0.5);
+}
+
+.eta {
+  font-family: 'Space Grotesk', monospace;
+  color: #666;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+@keyframes progressMove {
+  0% { left: -30%; }
+  100% { left: 100%; }
+}
+
+/* Responsywność dla Maintenance */
+@media (max-width: 768px) {
+  .maintenance-label {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+  }
+  .glitch-maintenance {
+    font-size: 4rem;
+    letter-spacing: 8px;
+  }
+  .maintenance-container .terminal-msg {
+    font-size: 1rem;
+    padding: 8px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .maintenance-label {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+  }
+  .glitch-maintenance {
+    font-size: 2.5rem;
+    letter-spacing: 5px;
+  }
+  .maintenance-container .terminal-msg {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    letter-spacing: 1px;
+  }
+  .maintenance-text {
+    font-size: 0.85rem;
+  }
+  .eta {
+    font-size: 0.7rem;
+  }
+}
+
+/* Glitch animations for 404 page */
+@keyframes glitch-anim-1 {
+  0% {
+    clip-path: inset(10% 0 85% 0);
+    transform: translate(-2px, 2px);
+  }
+  20% {
+    clip-path: inset(80% 0 10% 0);
+    transform: translate(2px, -2px);
+  }
+  40% {
+    clip-path: inset(40% 0 50% 0);
+    transform: translate(-2px, 2px);
+  }
+  60% {
+    clip-path: inset(60% 0 30% 0);
+    transform: translate(2px, -2px);
+  }
+  80% {
+    clip-path: inset(20% 0 70% 0);
+    transform: translate(-2px, 2px);
+  }
+  100% {
+    clip-path: inset(70% 0 20% 0);
+    transform: translate(2px, -2px);
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip-path: inset(90% 0 5% 0);
+    transform: translate(2px, -2px);
+  }
+  25% {
+    clip-path: inset(15% 0 75% 0);
+    transform: translate(-2px, 2px);
+  }
+  50% {
+    clip-path: inset(50% 0 40% 0);
+    transform: translate(2px, -2px);
+  }
+  75% {
+    clip-path: inset(30% 0 60% 0);
+    transform: translate(-2px, 2px);
+  }
+  100% {
+    clip-path: inset(75% 0 15% 0);
+    transform: translate(2px, -2px);
+  }
+}
+
+/* Screen flicker animation for CRT effect */
+@keyframes screenFlicker {
+  0% { opacity: 0.8; }
+  100% { opacity: 0.95; }
+}
+
+/* Aggressive glitch animations (used by maintenance and 404) */
+@keyframes glitch-aggressive-1 {
+  0% { clip-path: inset(20% 0 80% 0); transform: translate(-4px, 2px); }
+  20% { clip-path: inset(60% 0 10% 0); transform: translate(4px, -2px); }
+  40% { clip-path: inset(10% 0 50% 0); transform: translate(-6px, 4px); }
+  60% { clip-path: inset(80% 0 5% 0); transform: translate(6px, -4px); }
+  80% { clip-path: inset(30% 0 30% 0); transform: translate(-4px, 2px); }
+  100% { clip-path: inset(50% 0 20% 0); transform: translate(4px, -2px); }
+}
+
+@keyframes glitch-aggressive-2 {
+  0% { clip-path: inset(10% 0 60% 0); transform: translate(4px, -2px); }
+  20% { clip-path: inset(40% 0 20% 0); transform: translate(-4px, 2px); }
+  40% { clip-path: inset(70% 0 10% 0); transform: translate(6px, -4px); }
+  60% { clip-path: inset(20% 0 50% 0); transform: translate(-6px, 4px); }
+  80% { clip-path: inset(50% 0 30% 0); transform: translate(4px, -2px); }
+  100% { clip-path: inset(30% 0 40% 0); transform: translate(-6px, 4px); }
+}
+
+@keyframes glitch-skew {
+  0% { transform: skew(0deg); }
+  20% { transform: skew(2deg); }
+  40% { transform: skew(-2deg); }
+  60% { transform: skew(4deg); filter: contrast(1.5); }
+  80% { transform: skew(-4deg); }
+  100% { transform: skew(0deg); }
 }
