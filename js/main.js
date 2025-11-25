@@ -1,27 +1,35 @@
 import { CONFIG } from './config.js';
 import { initMatrix } from './core/matrix.js';
-import { initUI } from './core/ui.js';
+import { initUI, initCursor } from './core/ui.js';
 import { initPortfolio } from './modules/portfolio.js';
 import { initContact } from './modules/contact.js';
 import { initHud } from './modules/hud.js';
 import { initMaintenance } from './modules/maintenance.js';
 
 document.addEventListener("DOMContentLoaded", () => {
+  // === CORE (Always run) ===
+  initMatrix();
+  initCursor();
+
   // === MAINTENANCE CHECK ===
   const urlParams = new URLSearchParams(window.location.search);
   const isAdmin = urlParams.get('admin') === 'true';
 
   if (CONFIG.maintenanceMode && !isAdmin) {
+    const siteContent = document.getElementById("site-content");
+    if (siteContent) {
+      siteContent.style.display = "none";
+    }
+
+    const preloader = document.getElementById("preloader");
+    if (preloader) preloader.style.display = "none";
+
     initMaintenance();
+
     return;
   }
 
-  // === LAZY MATRIX START ===
-  setTimeout(() => {
-    initMatrix();
-  }, 100);
-
-  // === CORE MODULES ===
+  // === NORMAL MODE ===
   initUI();
   initPortfolio();
   initContact();

@@ -146,14 +146,20 @@ h3 {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
-  opacity: 0.6;
+  z-index: 0;
+  opacity: 0.8;
+  pointer-events: none;
 }
 
 @media (max-width: 768px) {
   #matrixCanvas {
     opacity: 0.45;
   }
+}
+
+#site-content {
+  position: relative;
+  z-index: 10;
 }
 
 /* --- SCROLLBAR --- */
@@ -2784,7 +2790,7 @@ footer {
   left: 0;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  z-index: 10003; /* Nad maintenance screen */
+  z-index: 999999;
   pointer-events: none;
   display: none;
 }
@@ -3836,8 +3842,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: #000; /* Czysta czerń */
-  z-index: 99999; /* Absolutnie najwyżej */
+  background: #000;
+  z-index: 5;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -3882,31 +3888,43 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: transparent; /* Przezroczyste tło - Matrix będzie widoczny */
-  z-index: 100001; /* FIX: Musi być wyżej niż preloader (99999) */
-  display: none; /* Domyślnie ukryte */
-  overflow: hidden;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 100000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .maintenance-overlay.active {
-  display: block;
+  display: flex;
 }
 
-/* Nie potrzebujemy już indywidualnego ukrywania elementów - używamy wrappera #site-content w JS */
+.maintenance-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.8;
+  pointer-events: none;
+}
 
-/* Maintenance używa tych samych efektów co 404 */
 .maintenance-overlay .screen-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 10001; /* Nad Matrixem */
+  z-index: 1;
   pointer-events: none;
   background: repeating-linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.2) 0px,
-    rgba(0, 0, 0, 0.2) 1px,
+    rgba(0, 0, 0, 0.05) 0px,
+    rgba(0, 0, 0, 0.05) 1px,
     transparent 1px,
     transparent 3px
   );
@@ -3915,7 +3933,7 @@ body {
 
 .maintenance-container {
   position: relative;
-  z-index: 10002; /* Nad scanlines */
+  z-index: 2;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -3923,9 +3941,7 @@ body {
   align-items: center;
   text-align: center;
   padding: 20px;
-  box-shadow: inset 0 0 200px rgba(255, 0, 0, 0.1); /* Czerwone zabarwienie */
-  background: rgba(5, 5, 5, 0.85); /* Przezroczyste tło z blur - Matrix prześwituje */
-  backdrop-filter: blur(5px); /* Opcjonalny blur dla lepszego efektu głębi */
+  box-shadow: inset 0 0 200px rgba(255, 0, 0, 0.1);
 }
 
 /* OFFLINE STATUS CODE */

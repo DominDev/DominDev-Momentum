@@ -1,6 +1,7 @@
 // js/core/ui.js
-export function initUI() {
-  // === CURSOR ===
+
+// === CURSOR (Separate export for Maintenance mode) ===
+export function initCursor() {
   const cursorDot = document.getElementById("cursor-dot");
   const cursorOutline = document.getElementById("cursor-outline");
 
@@ -8,20 +9,37 @@ export function initUI() {
     window.addEventListener("mousemove", (e) => {
       const posX = e.clientX;
       const posY = e.clientY;
+
       cursorDot.style.left = `${posX}px`;
       cursorDot.style.top = `${posY}px`;
-      cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+
+      cursorOutline.animate({
+        left: `${posX}px`,
+        top: `${posY}px`
+      }, { duration: 500, fill: "forwards" });
     });
 
     const interactiveSelectors = "a, button, input, textarea, select, .project-card, .service-card, .chatbot-trigger, .progress-wrap, input[type='range'], input[type='checkbox'], .cert-chip";
-    document.querySelectorAll(interactiveSelectors).forEach((el) => {
-      el.addEventListener("mouseenter", () => document.body.classList.add("hovering"));
-      el.addEventListener("mouseleave", () => document.body.classList.remove("hovering"));
+
+    document.body.addEventListener('mouseover', (e) => {
+      if (e.target.closest(interactiveSelectors)) {
+        document.body.classList.add("hovering");
+      }
+    });
+
+    document.body.addEventListener('mouseout', (e) => {
+      if (e.target.closest(interactiveSelectors)) {
+        document.body.classList.remove("hovering");
+      }
     });
 
     document.addEventListener("mouseleave", () => document.body.classList.add("cursor-hidden"));
     document.addEventListener("mouseenter", () => document.body.classList.remove("cursor-hidden"));
   }
+}
+
+// === UI COMPONENTS (Normal mode only) ===
+export function initUI() {
 
   // === HAMBURGER MENU ===
   const hamburger = document.getElementById("hamburger-menu");
