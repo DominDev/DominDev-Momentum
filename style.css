@@ -276,35 +276,63 @@ h3 {
 }
 
 .btn-secondary {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-  padding: 10px 20px;
+  /* Padding jak w primary button */
+  padding: 14px 40px;
 
+  /* SOLIDNE TŁO (CZYTELNOŚĆ) */
   background: var(--primary);
+  color: #000000; /* Czarny tekst = max kontrast */
 
-  color: white;
-
+  /* Typografia jak w primary */
+  font-family: var(--font-display);
+  font-weight: 900;
   font-size: 0.9rem;
-
-  border: none;
-
   text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none;
 
-  font-weight: 700;
+  /* Kształt Taktyczny */
+  clip-path: polygon(
+    15px 0,
+    100% 0,
+    100% calc(100% - 15px),
+    calc(100% - 15px) 100%,
+    0 100%,
+    0 15px
+  );
 
-  letter-spacing: 0.5px;
-
-  transition: var(--transition);
-
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  border: none;
+  position: relative;
+  z-index: 1;
   cursor: pointer;
+
+  /* Cień pod spodem dla głębi */
+  filter: drop-shadow(0 5px 10px rgba(255, 31, 31, 0.3));
 }
 
 .btn-secondary:hover {
-  background: var(--primary-dark);
+  /* Zmiana na biały (wygląda jak rozgrzany metal) */
+  background: #ffffff;
+  color: var(--primary); /* Tekst czerwony */
 
-  box-shadow: 0 0 15px rgba(255, 31, 31, 0.4);
-
+  /* Przesunięcie i powiększenie cienia */
   transform: translateY(-2px);
+  filter: drop-shadow(0 10px 20px rgba(255, 31, 31, 0.5));
+
+  /* Subtelna zmiana kształtu (odwrócenie cięć) */
+  clip-path: polygon(
+    0 0,
+    calc(100% - 15px) 0,
+    100% 15px,
+    100% 100%,
+    15px 100%,
+    0 calc(100% - 15px)
+  );
 }
 
 /* --- NAVBAR --- */
