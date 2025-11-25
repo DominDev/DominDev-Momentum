@@ -1,0 +1,221 @@
+/* ========================================
+   404 PAGE SPECIFIC STYLES
+   Aggressive CRT Glitch Effect
+   ======================================== */
+
+body.error-page {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Blokada scrolla */
+  height: 100vh; /* Dokładna wysokość viewportu */
+  width: 100vw; /* Dokładna szerokość viewportu */
+}
+
+html {
+  overflow: hidden; /* Blokada na poziomie html również */
+  height: 100%;
+}
+
+/* ========================================
+   1. SCREEN ATMOSPHERE (Scanlines & Noise)
+   ======================================== */
+.screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+  /* Scanlines pattern */
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.2) 0px,
+    rgba(0, 0, 0, 0.2) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  /* Flicker animation */
+  animation: screenFlicker 0.15s infinite;
+}
+
+@keyframes screenFlicker {
+  0% { opacity: 0.8; }
+  100% { opacity: 0.95; }
+}
+
+/* ========================================
+   2. ERROR CONTAINER
+   ======================================== */
+.error-container {
+  position: relative;
+  z-index: 10;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  /* Lekkie czerwone zabarwienie całego ekranu */
+  box-shadow: inset 0 0 200px rgba(255, 0, 0, 0.1);
+}
+
+/* ========================================
+   3. ULTRA AGGRESSIVE 404 GLITCH
+   ======================================== */
+.error-code-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.error-label {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.9rem;
+  color: var(--primary, #ff3131);
+  letter-spacing: 3px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.glitch-404 {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 8rem;
+  font-weight: 900;
+  color: #fff;
+  position: relative;
+  letter-spacing: 10px;
+  line-height: 1;
+  /* Efekt "rozrywania" tekstu */
+  animation: glitch-skew 0.5s infinite linear alternate-reverse;
+}
+
+/* Warstwa Czerwona i Niebieska (RGB Split) */
+.glitch-404::before,
+.glitch-404::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.glitch-404::before {
+  color: #ff0000; /* RED CHANNEL */
+  z-index: -1;
+  animation: glitch-aggressive-1 0.3s infinite;
+}
+
+.glitch-404::after {
+  color: #00ffff; /* CYAN CHANNEL */
+  z-index: -2;
+  animation: glitch-aggressive-2 0.3s infinite reverse;
+}
+
+/* Animacje szatkowania i przesuwania RGB */
+@keyframes glitch-aggressive-1 {
+  0% { clip-path: inset(20% 0 80% 0); transform: translate(-4px, 2px); }
+  20% { clip-path: inset(60% 0 10% 0); transform: translate(4px, -2px); }
+  40% { clip-path: inset(10% 0 50% 0); transform: translate(-6px, 4px); }
+  60% { clip-path: inset(80% 0 5% 0); transform: translate(6px, -4px); }
+  80% { clip-path: inset(30% 0 30% 0); transform: translate(-4px, 2px); }
+  100% { clip-path: inset(50% 0 20% 0); transform: translate(4px, -2px); }
+}
+
+@keyframes glitch-aggressive-2 {
+  0% { clip-path: inset(10% 0 60% 0); transform: translate(4px, -2px); }
+  20% { clip-path: inset(40% 0 20% 0); transform: translate(-4px, 2px); }
+  40% { clip-path: inset(70% 0 10% 0); transform: translate(6px, -4px); }
+  60% { clip-path: inset(20% 0 50% 0); transform: translate(-6px, 4px); }
+  80% { clip-path: inset(50% 0 30% 0); transform: translate(4px, -2px); }
+  100% { clip-path: inset(30% 0 40% 0); transform: translate(-6px, 4px); }
+}
+
+@keyframes glitch-skew {
+  0% { transform: skew(0deg); }
+  20% { transform: skew(2deg); }
+  40% { transform: skew(-2deg); }
+  60% { transform: skew(4deg); filter: contrast(1.5); }
+  80% { transform: skew(-4deg); }
+  100% { transform: skew(0deg); }
+}
+
+/* ========================================
+   4. TERMINAL MESSAGING
+   ======================================== */
+.terminal-msg {
+  font-family: 'Space Grotesk', monospace; /* Monospace font */
+  color: var(--primary, #ff3131);
+  font-size: 1.5rem;
+  margin-top: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: rgba(0,0,0,0.7);
+  padding: 10px 20px;
+  border: 1px solid var(--primary, #ff3131);
+}
+
+.blink-cursor {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.error-desc {
+  font-family: monospace;
+  color: #888;
+  margin: 20px 0 40px;
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+/* Przycisk dziedziczy styl SOLID TECH z .btn (style.css) */
+/* Nie nadpisujemy - używamy domyślnego primary button */
+
+/* ========================================
+   5. RESPONSYWNOŚĆ
+   ======================================== */
+@media (max-width: 768px) {
+  .error-label {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+  }
+  .glitch-404 {
+    font-size: 5rem;
+    letter-spacing: 8px;
+  }
+  .terminal-msg {
+    font-size: 1.1rem;
+    padding: 8px 15px;
+  }
+  .error-desc {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .error-label {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+  }
+  .glitch-404 {
+    font-size: 3.5rem;
+    letter-spacing: 5px;
+  }
+  .terminal-msg {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    letter-spacing: 1px;
+  }
+  .error-desc {
+    font-size: 0.85rem;
+    margin: 15px 0 30px;
+  }
+}

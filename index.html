@@ -68,6 +68,41 @@
   </head>
 
   <body>
+    <!-- MAINTENANCE SCREEN (Red Alert) -->
+    <div id="maintenance-screen" class="maintenance-overlay">
+      <div class="screen-overlay"></div>
+
+      <div class="maintenance-container">
+        <div class="maintenance-code-block">
+          <span class="maintenance-label">SYSTEM STATUS:</span>
+          <div class="glitch-maintenance" data-text="[OFFLINE]">[OFFLINE]</div>
+        </div>
+
+        <h1 class="terminal-msg">
+          > MAINTENANCE_MODE: INFRASTRUCTURE_UPGRADE<span class="blink-cursor">_</span>
+        </h1>
+
+        <p class="maintenance-text">
+          Trwają prace modernizacyjne infrastruktury.<br>
+          Wdrażanie nowych protokołów bezpieczeństwa i optymalizacja systemów.
+        </p>
+
+        <div class="maintenance-progress">
+          <div class="progress-bar"></div>
+        </div>
+
+        <p class="eta">ESTIMATED TIME: ~2H</p>
+      </div>
+    </div>
+
+    <!-- PRELOADER (Boot Screen) -->
+    <div id="preloader">
+      <div class="loader-content">
+        <div class="logo-loader">Domin<span>Dev</span>.</div>
+        <div class="loading-text">INITIALIZING SYSTEM...</div>
+      </div>
+    </div>
+
     <!-- SYSTEM GLITCH OVERLAY -->
     <div id="system-glitch" class="glitch-overlay">
       <div class="glitch-line-container">
@@ -140,6 +175,9 @@
         </button>
       </div>
     </div>
+
+    <!-- SITE CONTENT WRAPPER (wszystko oprócz tła i narzędzi) -->
+    <div id="site-content">
 
     <nav>
       <div class="container nav-container">
@@ -774,6 +812,9 @@
       </div>
     </footer>
 
+    </div>
+    <!-- END SITE CONTENT WRAPPER -->
+
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-outline" id="cursor-outline"></div>
 
@@ -950,6 +991,6 @@
       </div>
     </div>
 
-    <script src="script.js"></script>
+    <script type="module" src="js/main.js"></script>
   </body>
 </html>

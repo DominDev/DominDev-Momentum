@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(start chrome --headless --screenshot=cta-check.png index.html)"
+      "Bash(start chrome --headless --screenshot=cta-check.png index.html)",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []

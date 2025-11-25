@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 | System Critical Error</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=Space+Grotesk:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style-404.css" />
+  </head>
+
+  <body class="error-page">
+    <canvas id="matrixCanvas"></canvas>
+
+    <div class="screen-overlay"></div>
+
+    <div class="error-container">
+      <div class="error-code-block">
+        <span class="error-label">ERROR CODE:</span>
+        <div class="glitch-404" data-text="[404]">[404]</div>
+      </div>
+
+      <h1 class="terminal-msg">
+        > CRITICAL_ERROR: SECTOR_NOT_FOUND<span class="blink-cursor">_</span>
+      </h1>
+
+      <p class="error-desc">
+        Symulacja napotkała nieodwracalny błąd. Wskazane dane nie istnieją w
+        obecnej iteracji DominDev.
+      </p>
+
+      <a href="index.html" class="btn">
+        <i class="fa-solid fa-rotate-left"></i> REBOOT SYSTEM
+      </a>
+    </div>
+
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <script type="module" src="js/404.js"></script>
+  </body>
+</html>

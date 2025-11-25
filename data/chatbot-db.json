@@ -1,0 +1,52 @@
+{
+  "vulgarWords": ["kurwa", "chuj", "pierdol", "jebać", "dupa", "gówno", "fuck", "shit", "debil", "idiota"],
+  "keywords": {
+    "greeting": ["cześć", "hej", "witaj", "dzień dobry", "siema", "halo"],
+    "farewell": ["pa", "do widzenia", "narazie", "trzymaj się"],
+    "services": ["usługi", "oferta", "co robisz", "landing", "wizytówka", "sklep", "strona"],
+    "price": ["cena", "koszt", "ile", "cennik", "pieniądze", "budżet"],
+    "contact": ["kontakt", "email", "telefon", "napisz", "gdzie"],
+    "tech": ["wordpress", "react", "js", "technologie", "php", "html", "css"],
+    "portfolio": ["portfolio", "realizacje", "projekty", "co zrobiłeś"],
+    "about": ["o tobie", "kim jesteś", "domin", "autor"],
+    "seo": ["seo", "pozycjonowanie", "google"],
+    "thanks": ["dzięki", "dziękuje", "super", "ok", "fajnie"]
+  },
+  "responses": {
+    "greeting": [
+      "Cześć! Jestem botem DominDev. O czym chcesz pogadać? (Usługi, Projekty, Kontakt)",
+      "Hej! Tu wirtualny asystent. W czym mogę pomóc?"
+    ],
+    "farewell": ["Do zobaczenia! Powodzenia w projektach!", "Trzymaj się! Jesteśmy w kontakcie."],
+    "services": [
+      "🚀 Moje usługi:<br>1. <strong>Landing Page</strong> (konwersja)<br>2. <strong>Strony Wizytówki</strong> (CMS)<br>3. <strong>Sklepy E-Commerce</strong>.<br>Która opcja Cię interesuje?",
+      "Specjalizuję się w WordPress High-Performance. Szybkie strony, sklepy i aplikacje."
+    ],
+    "price": [
+      "💰 Wycena jest indywidualna. Landing od 1500 PLN, Strony od 3500 PLN. Użyj suwaka w sekcji Kontakt, żeby określić budżet!",
+      "To zależy od zakresu. Napisz mi więcej o projekcie, a przygotuję wycenę."
+    ],
+    "contact": ["📬 Pisz na <strong>kontakt@domindev.pl</strong> lub użyj formularza na dole strony.", "Jestem z Wrocławia, ale działam globalnie."],
+    "tech": ["🛠️ Mój stack: WordPress, WooCommerce, JS (React), PHP 8.2, HTML5/CSS3. Czysty kod, zero bloatu."],
+    "portfolio": ["🎨 Zobacz sekcję 'Realizacje' na stronie. Robiłem FinTechy, E-commerce i strony Agencyjne."],
+    "about": ["👨‍💻 DominDev to Fullstack Developer z obsesją na punkcie wydajności. Łączę kod z designem."],
+    "seo": ["🔍 Każda moja strona ma SEO w standardzie. Szybkość + semantyczny HTML = wysokie pozycje."],
+    "vulgar": [
+      "⚠️ DETECTED: Unsafe language protocol. Proszę sformułować zapytanie zgodnie ze standardami biznesowymi.",
+      "🚫 SYSTEM ALERT: Wykryto słownictwo niskiego poziomu. Mój procesor ignoruje ten input.",
+      "Error 406: Not Acceptable. Jako AI klasy premium nie obsługuję takich komend."
+    ],
+    "thanks": ["Nie ma za co!", "Polecam się!", "Do usług!"],
+    "unknown": [
+      "Hmm, nie mam tego w bazie. Zapytaj o: Usługi, Ceny, Kontakt lub Technologie.",
+      "Nie do końca rozumiem. Jestem tylko botem. Chcesz pogadać o stronie WWW?"
+    ]
+  },
+  "glossary": {
+    "landing page": "📄 **Landing Page** to strona jednego celu. Ma sprzedawać lub zbierać leade.",
+    "seo": "🔍 **SEO** to optymalizacja pod Google.",
+    "cms": "🔧 **CMS** to system zarządzania treścią (np. WordPress).",
+    "wordpress": "🔵 **WordPress** to silnik, na którym stoi 43% internetu.",
+    "responsive": "📱 **RWD** to responsywność - strona wygląda dobrze na telefonie i komputerze."
+  }
+}
