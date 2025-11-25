@@ -6,6 +6,15 @@ export function initCursor() {
   const cursorOutline = document.getElementById("cursor-outline");
 
   if (cursorDot && cursorOutline && window.matchMedia("(min-width: 1024px)").matches) {
+    // Set initial position immediately to prevent "frozen" cursor during preloader
+    const initPosX = window.innerWidth / 2;
+    const initPosY = window.innerHeight / 2;
+
+    cursorDot.style.left = `${initPosX}px`;
+    cursorDot.style.top = `${initPosY}px`;
+    cursorOutline.style.left = `${initPosX}px`;
+    cursorOutline.style.top = `${initPosY}px`;
+
     window.addEventListener("mousemove", (e) => {
       const posX = e.clientX;
       const posY = e.clientY;
