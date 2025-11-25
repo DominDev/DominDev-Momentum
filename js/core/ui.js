@@ -1,7 +1,6 @@
 // js/core/ui.js
 export function initUI() {
-
-  /* --- 1. CURSOR --- */
+  // === CURSOR ===
   const cursorDot = document.getElementById("cursor-dot");
   const cursorOutline = document.getElementById("cursor-outline");
 
@@ -24,7 +23,7 @@ export function initUI() {
     document.addEventListener("mouseenter", () => document.body.classList.remove("cursor-hidden"));
   }
 
-  /* --- 2. HAMBURGER MENU --- */
+  // === HAMBURGER MENU ===
   const hamburger = document.getElementById("hamburger-menu");
   const menu = document.getElementById("fullscreen-menu");
   if (hamburger && menu) {
@@ -41,7 +40,7 @@ export function initUI() {
     });
   }
 
-  /* --- 3. SCROLL PROGRESS --- */
+  // === SCROLL PROGRESS ===
   const progressWrap = document.getElementById("progress-wrap");
   if (progressWrap) {
     const progressPath = progressWrap.querySelector("path");
@@ -71,7 +70,7 @@ export function initUI() {
     });
   }
 
-  /* --- 4. TYPEWRITER --- */
+  // === TYPEWRITER ===
   const typeTextSpan = document.querySelector(".typewriter-text");
   const cursorSpan = document.querySelector(".typewriter-cursor");
 
@@ -113,7 +112,7 @@ export function initUI() {
     setTimeout(type, 1000);
   }
 
-  /* --- 5. SCROLL REVEAL --- */
+  // === SCROLL REVEAL ===
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
