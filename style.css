@@ -1817,10 +1817,12 @@ footer {
 
 .chat-message.bot {
   align-self: flex-start;
+  max-width: 90%; /* Trochę szerzej dla odpowiedzi bota */
 }
 
 .chat-message.user {
   align-self: flex-end;
+  max-width: 80%; /* Trochę wężej dla wiadomości użytkownika */
 }
 
 .message-content {
@@ -1828,6 +1830,12 @@ footer {
   font-size: 0.85rem;
   line-height: 1.6;
   font-family: "Space Grotesk", sans-serif; /* Czytelny, techniczny font */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  letter-spacing: 0 !important;
+  word-spacing: 0 !important;
+  font-feature-settings: normal;
+  font-variant-numeric: normal;
 }
 
 /* BOT: Wygląd terminala */
@@ -1835,7 +1843,7 @@ footer {
   background: transparent;
   border: 1px solid #333;
   border-left: 2px solid #555;
-  color: #ccc;
+  color: #e8e8e8 !important;
   border-radius: 0; /* Zero zaokrągleń */
 }
 
@@ -1862,6 +1870,124 @@ footer {
 /* Efekt powiększenia po najechaniu myszką */
 .chatbot-link:hover {
   transform: scale(1.05); /* Powiększa link o 5% */
+}
+
+/* Style dla paragrafów i list wewnątrz dymków czatu */
+.message-content p {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.message-content p:not(:last-child) {
+  margin-bottom: 1.2em;
+}
+
+.message-content ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  display: block;
+}
+
+.message-content ul li {
+  margin-bottom: 0.75em;
+  padding-left: 0.5em;
+  position: relative;
+  line-height: 1.6;
+  display: block;
+  clear: both;
+  width: 100%;
+}
+
+/* Nie dodawaj strzałek przez CSS - odpowiedzi już mają emoji/symbole w HTML */
+.message-content ul li::before {
+  display: none;
+}
+
+/* Uporządkowane listy (ol) */
+.message-content ol {
+  list-style: none;
+  counter-reset: item;
+  padding-left: 0;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.message-content ol li {
+  margin-bottom: 0.8em;
+  padding-left: 2em;
+  position: relative;
+  counter-increment: item;
+  line-height: 1.6;
+  display: block;
+}
+
+.message-content ol li::before {
+  content: counter(item) ".";
+  position: absolute;
+  left: 0.3em;
+  top: 0;
+  color: var(--primary);
+  font-weight: bold;
+  font-size: 1em;
+  line-height: 1.6;
+}
+
+.message-content strong {
+  color: var(--primary);
+  font-weight: 700;
+  display: inline-block;
+}
+
+/* Zwiększony kontrast dla liczb/cen */
+.message-content {
+  color: #e8e8e8;
+  font-weight: 400;
+}
+
+/* Specjalne style dla nagłówków w strong (np. "CENNIK:", "PROJEKTY:") */
+/* Tylko dla strong które są JEDYNYM dzieckiem (nagłówki samodzielne) */
+.message-content p > strong:only-child {
+  display: block;
+  margin-bottom: 0.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.message-content br {
+  display: block;
+  content: "";
+  margin-top: 0.5em;
+}
+
+/* Emoji - zapewnij prawidłowe wyświetlanie */
+.message-content {
+  font-variant-emoji: emoji;
+}
+
+/* Dodaj minimalny odstęp dla emoji na początku tekstu */
+.message-content p:first-of-type::first-line {
+  letter-spacing: 0.02em;
+}
+
+/* Marginesy dla nagłówków (jeśli będą używane) */
+.message-content h4,
+.message-content h5 {
+  margin-top: 0.8em;
+  margin-bottom: 0.4em;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* Kod inline (jeśli będzie używany) */
+.message-content code {
+  background: rgba(255, 31, 31, 0.1);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-family: "Courier New", monospace;
+  font-size: 0.9em;
+  color: var(--primary);
 }
 
 /* --- TYPING INDICATOR --- */
@@ -1950,17 +2076,37 @@ footer {
   color: #666;
   font-size: 1rem;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s ease;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.chatbot-send:hover {
+/* Stan aktywny (gdy pole nie jest puste) */
+.chatbot-send.active {
+  background: rgba(255, 31, 31, 0.15);
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 0 10px rgba(255, 31, 31, 0.3);
+  animation: sendPulse 2s infinite;
+}
+
+@keyframes sendPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 31, 31, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 31, 31, 0.5);
+  }
+}
+
+.chatbot-send:hover,
+.chatbot-send.active:hover {
   background: var(--primary);
   border-color: var(--primary);
   color: black;
   transform: none;
+  box-shadow: 0 0 20px rgba(255, 31, 31, 0.5);
 }
 
 .chatbot-send:active {
@@ -2370,7 +2516,30 @@ footer {
 
   .message-content {
     font-size: 0.85rem;
-    padding: 10px 14px;
+    padding: 12px 14px;
+    line-height: 1.75;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    letter-spacing: 0 !important;
+    word-spacing: 0 !important;
+    font-feature-settings: normal !important;
+    font-variant-numeric: normal !important;
+  }
+
+  /* Więcej przestrzeni dla list na mobile */
+  .message-content ul li {
+    margin-bottom: 0.9em;
+    line-height: 1.7;
+    padding-left: 0.5em;
+  }
+
+  .message-content ol li {
+    margin-bottom: 1em;
+    line-height: 1.7;
+  }
+
+  .message-content p {
+    line-height: 1.8;
   }
 
   /* Footer */
@@ -2759,14 +2928,46 @@ footer {
     gap: 10px;
   }
 
-  .chat-message {
-    max-width: 90%;
+  .chat-message.bot {
+    max-width: 95%;
+  }
+
+  .chat-message.user {
+    max-width: 85%;
   }
 
   .message-content {
-    font-size: 0.78rem;
-    padding: 8px 10px;
+    font-size: 0.8rem;
+    padding: 10px 12px;
     border-radius: 10px;
+    line-height: 1.75;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    letter-spacing: 0 !important;
+    word-spacing: 0 !important;
+    font-feature-settings: normal !important;
+    font-variant-numeric: normal !important;
+  }
+
+  /* Dodatkowa przestrzeń dla list na małych ekranach */
+  .message-content ul li {
+    margin-bottom: 1em;
+    line-height: 1.7;
+    padding-left: 0.5em;
+  }
+
+  .message-content ol li {
+    margin-bottom: 1.1em;
+    line-height: 1.7;
+  }
+
+  .message-content p {
+    line-height: 1.8;
+    margin-bottom: 1em;
+  }
+
+  .message-content p:not(:last-child) {
+    margin-bottom: 1.3em;
   }
 
   .chatbot-input-area {

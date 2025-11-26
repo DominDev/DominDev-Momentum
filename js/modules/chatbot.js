@@ -83,12 +83,20 @@ export function initChat() {
 
   if (chatbotClose) chatbotClose.addEventListener("click", closeChat);
 
+  // Zamknij chat klawiszem ESC
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && chatbotWindow.classList.contains("active")) {
+      closeChat();
+    }
+  });
+
   function sendMessage() {
     const msg = chatbotInput.value.trim();
     if (!msg) return;
 
     addMessage(msg, true);
     chatbotInput.value = "";
+    chatbotSend.classList.remove("active"); // Usuń aktywny stan po wysłaniu
 
     if (!botData) {
       addMessage("System initializing...", false);
@@ -111,6 +119,15 @@ export function initChat() {
     chatbotInput.addEventListener("keypress", (e) => {
       if (e.key === "Enter") sendMessage();
     });
+
+    // Aktywuj/dezaktywuj ikonę wysyłki w zależności od treści pola
+    chatbotInput.addEventListener("input", () => {
+      if (chatbotInput.value.trim().length > 0) {
+        chatbotSend.classList.add("active");
+      } else {
+        chatbotSend.classList.remove("active");
+      }
+    });
   }
 
   function addMessage(text, isUser = false) {
@@ -119,6 +136,16 @@ export function initChat() {
     div.innerHTML = `<div class="message-content">${text}</div>`;
     chatbotMessages.appendChild(div);
     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+    // Zamknij chat automatycznie po kliknięciu w link na małych ekranach
+    if (!isUser && window.innerWidth <= 1024) {
+      const links = div.querySelectorAll("a");
+      links.forEach((link) => {
+        link.addEventListener("click", () => {
+          closeChat();
+        });
+      });
+    }
   }
 
   function showTyping() {
