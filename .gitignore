@@ -1,1 +1,36 @@
+# System files
 nul
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Claude Code settings (local)
+.claude/
+
+# Backups
+backup-*.zip
+*.backup
+*.bak
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node modules (if you add npm later)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
