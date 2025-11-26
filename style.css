@@ -765,6 +765,17 @@ nav {
   transform: scale(1.05);
 }
 
+/* Desktop only class - hide on mobile/tablet */
+.desktop-only {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .desktop-only {
+    display: block;
+  }
+}
+
 /* --- PORTFOLIO --- */
 
 .portfolio-grid {
