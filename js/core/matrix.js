@@ -1,4 +1,5 @@
 // js/core/matrix.js
+// Background Matrix with Intersection Observer optimization
 export function initMatrix() {
   const canvas = document.getElementById("matrixCanvas");
   if (!canvas) return;
@@ -19,20 +20,49 @@ export function initMatrix() {
   const fps = 15;
   const interval = 1000 / fps;
 
-  window.addEventListener("mousemove", (e) => {
+  // Pause animation when canvas is not visible (CPU saver)
+  let isVisible = true;
+  let animationId = null;
+
+  // Intersection Observer - pauses animation when canvas out of viewport
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        isVisible = entry.isIntersecting;
+        // If became visible, restart animation loop
+        if (isVisible && !animationId) {
+          animationId = requestAnimationFrame(matrixLoop);
+        }
+      });
+    },
+    { threshold: 0.1 } // Trigger when at least 10% visible
+  );
+
+  observer.observe(canvas);
+
+  const mouseMoveHandler = (e) => {
     targetMouseX = e.clientX;
     targetMouseY = e.clientY;
-  });
+  };
 
-  window.addEventListener("resize", () => {
+  const resizeHandler = () => {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
     const newCols = Math.floor(width / 20);
     while (ypos.length < newCols) ypos.push(0);
-  });
+  };
+
+  window.addEventListener("mousemove", mouseMoveHandler, { passive: true });
+  window.addEventListener("resize", resizeHandler, { passive: true });
 
   function matrixLoop(currentTime) {
-    requestAnimationFrame(matrixLoop);
+    // Only continue loop if canvas is visible
+    if (!isVisible) {
+      animationId = null;
+      return;
+    }
+
+    animationId = requestAnimationFrame(matrixLoop);
 
     if (!currentTime) currentTime = 0;
     const delta = currentTime - lastTime;
@@ -68,5 +98,6 @@ export function initMatrix() {
     });
   }
 
-  requestAnimationFrame(matrixLoop);
+  // Start animation
+  animationId = requestAnimationFrame(matrixLoop);
 }

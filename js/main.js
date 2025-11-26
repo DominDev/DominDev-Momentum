@@ -6,7 +6,11 @@ import { initContact } from './modules/contact.js';
 import { initHud } from './modules/hud.js';
 import { initMaintenance } from './modules/maintenance.js';
 
-// === PRELOADER MATRIX ANIMATION ===
+// Globalne zmienne do kontroli pętli animacji preloadera i cleanup
+let preloaderAnimId = null;
+let preloaderResizeCleanup = null;
+
+// === LEKKI PRELOADER MATRIX (CPU OPTIMIZED) ===
 function initPreloaderMatrix() {
   const canvas = document.getElementById("preloader-matrix");
   if (!canvas) return;
@@ -18,39 +22,31 @@ function initPreloaderMatrix() {
   const cols = Math.floor(width / 20);
   const ypos = Array(cols).fill(0);
 
-  let mouseX = -100;
-  let mouseY = -100;
-  let targetMouseX = -100;
-  let targetMouseY = -100;
-
   let lastTime = 0;
   const fps = 15;
   const interval = 1000 / fps;
 
-  window.addEventListener("mousemove", (e) => {
-    targetMouseX = e.clientX;
-    targetMouseY = e.clientY;
-  });
-
-  window.addEventListener("resize", () => {
+  const resizeHandler = () => {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
-    const newCols = Math.floor(width / 20);
-    while (ypos.length < newCols) ypos.push(0);
-  });
+  };
+
+  window.addEventListener("resize", resizeHandler, { passive: true });
+
+  // Save cleanup function for later removal
+  preloaderResizeCleanup = () => {
+    window.removeEventListener("resize", resizeHandler);
+  };
 
   function matrixLoop(currentTime) {
-    requestAnimationFrame(matrixLoop);
+    preloaderAnimId = requestAnimationFrame(matrixLoop);
 
     if (!currentTime) currentTime = 0;
     const delta = currentTime - lastTime;
     if (delta < interval) return;
     lastTime = currentTime - (delta % interval);
 
-    mouseX += (targetMouseX - mouseX) * 0.12;
-    mouseY += (targetMouseY - mouseY) * 0.12;
-
-    ctx.fillStyle = "rgba(5, 5, 5, 0.06)";
+    ctx.fillStyle = "rgba(5, 5, 5, 0.08)";
     ctx.fillRect(0, 0, width, height);
     ctx.font = "15pt monospace";
 
@@ -59,13 +55,7 @@ function initPreloaderMatrix() {
       const text = chars[Math.floor(Math.random() * chars.length)];
       const x = ind * 20;
 
-      const dist = Math.hypot(x - mouseX, y - mouseY);
-      if (dist < 150) {
-        ctx.fillStyle = `rgba(255, 31, 31, ${1 - dist / 150})`;
-      } else {
-        ctx.fillStyle = Math.random() > 0.98 ? "#fff" : "#333";
-      }
-
+      ctx.fillStyle = Math.random() > 0.98 ? "#fff" : "#ff1f1f";
       ctx.fillText(text, x, y);
 
       if (y > 100 + Math.random() * 10000) {
@@ -80,12 +70,13 @@ function initPreloaderMatrix() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // === CORE (Always run) ===
-  initMatrix();
+  // === CORE INITIALIZATION ===
   initCursor();
 
-  // Reset scroll position (overflow already blocked in CSS)
+  // Reset scroll position
   window.scrollTo(0, 0);
+
+  // Start preloader Matrix if enabled
   if (CONFIG.enablePreloader) {
     initPreloaderMatrix();
   }
@@ -103,85 +94,103 @@ document.addEventListener("DOMContentLoaded", () => {
     const preloader = document.getElementById("preloader");
     if (preloader) preloader.style.display = "none";
 
-    initMaintenance();
+    // FIX 1: Stop preloader animation loop if maintenance mode is active
+    if (preloaderAnimId) {
+      cancelAnimationFrame(preloaderAnimId);
+      preloaderAnimId = null;
+    }
 
+    // FIX 2: Clean up resize event listener to prevent memory leak
+    if (preloaderResizeCleanup) {
+      preloaderResizeCleanup();
+      preloaderResizeCleanup = null;
+    }
+
+    initMaintenance();
     return;
   }
 
-  // === NORMAL MODE ===
-  initUI();
+  // === STATIC MODULES (Lightweight) ===
   initPortfolio();
   initContact();
 
-  setTimeout(() => {
-    initHud();
-  }, 500);
+  // === PRELOADER LOGIC (Optimized) ===
+  const preloader = document.getElementById("preloader");
 
-  // === PRELOADER (Smart Conditional Display) ===
-  if (CONFIG.enablePreloader) {
-    const preloader = document.getElementById("preloader");
-    if (preloader) {
-      window.addEventListener("load", () => {
-        const perfData = performance.getEntriesByType("navigation")[0];
-        let loadTime = 0;
+  const killPreloader = () => {
+    if (!preloader) return;
+    if (preloader.classList.contains("hiding")) return;
 
-        if (perfData && perfData.loadEventEnd > 0) {
-          loadTime = perfData.loadEventEnd - perfData.startTime;
-        } else {
-          loadTime = performance.now();
-        }
+    preloader.classList.add("hiding");
+    preloader.classList.add("loaded");
 
-        const threshold = 800;
+    setTimeout(() => {
+      preloader.style.display = "none";
+      document.body.removeAttribute("style");
 
-        if (loadTime < threshold) {
-          requestAnimationFrame(() => {
-            setTimeout(() => {
-              preloader.style.display = "none";
-              document.body.removeAttribute("style");
-            }, 50);
-          });
-        } else {
-          setTimeout(() => {
-            preloader.classList.add("loaded");
-            setTimeout(() => {
-              preloader.style.display = "none";
-              document.body.removeAttribute("style");
-            }, 550);
-          }, 500);
-        }
-      });
+      // CRITICAL: Kill preloader animation loop to free CPU
+      if (preloaderAnimId) {
+        cancelAnimationFrame(preloaderAnimId);
+        preloaderAnimId = null;
+      }
 
-      setTimeout(() => {
-        if (preloader && !preloader.classList.contains("loaded")) {
-          preloader.classList.add("loaded");
-          setTimeout(() => {
-            preloader.style.display = "none";
-            document.body.removeAttribute("style");
-          }, 550);
-        }
-      }, 4000);
+      // FIX 3: Clean up resize event listener to prevent memory leak
+      if (preloaderResizeCleanup) {
+        preloaderResizeCleanup();
+        preloaderResizeCleanup = null;
+      }
+
+      // NOW start heavy operations (Matrix + UI)
+      // This ensures we never run two Matrix animations simultaneously
+      initMatrix();
+      initUI();
+
+      // Delayed HUD initialization to avoid blocking animations
+      setTimeout(initHud, 200);
+    }, 550);
+  };
+
+  // Strategy: Hide preloader ~700ms after DOMContentLoaded
+  // Don't wait for all images/fonts - Content First!
+  if (CONFIG.enablePreloader && preloader) {
+    if (document.readyState === 'complete') {
+      // Page already loaded (cached)
+      setTimeout(killPreloader, 300);
+    } else {
+      // Normal flow - hide after reasonable time
+      setTimeout(killPreloader, 700);
     }
   } else {
-    const pre = document.getElementById("preloader");
-    if (pre) pre.style.display = "none";
-    document.body.removeAttribute("style");
+    // No preloader mode
+    if (preloader) preloader.style.display = "none";
+    initMatrix();
+    initUI();
+    initHud();
   }
 
-  // === LAZY CHATBOT ===
+  // === ULTRA LAZY CHATBOT (Load on Demand Only) ===
   const chatTrigger = document.getElementById("chatbot-trigger");
   if (chatTrigger) {
-    let chatLoaded = false;
-
     const loadChatbot = async () => {
-      if (chatLoaded) return;
-      chatLoaded = true;
+      // Remove all listeners to prevent duplicate loads
+      chatTrigger.removeEventListener("mouseenter", loadChatbot);
+      chatTrigger.removeEventListener("click", loadChatbot);
+      chatTrigger.removeEventListener("touchstart", loadChatbot);
+
+      console.log("🚀 Initializing Chatbot Core...");
+
       const { initChat } = await import('./modules/chatbot.js');
       initChat();
     };
 
+    // Desktop: Hover preloads
     chatTrigger.addEventListener("mouseenter", loadChatbot, { once: true });
-    window.addEventListener("scroll", loadChatbot, { passive: true, once: true });
-    window.addEventListener("touchstart", loadChatbot, { passive: true, once: true });
-    setTimeout(loadChatbot, 5000);
+    // Mobile/Desktop: Click loads
+    chatTrigger.addEventListener("click", loadChatbot, { once: true });
+    chatTrigger.addEventListener("touchstart", loadChatbot, { passive: true, once: true });
+
+    // REMOVED: Auto-load after 5s
+    // REMOVED: Scroll trigger
+    // Chatbot loads ONLY when user explicitly interacts
   }
 });
