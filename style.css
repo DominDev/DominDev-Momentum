@@ -1548,6 +1548,8 @@ footer {
 @media (hover: hover) {
   .chatbot-trigger:hover {
     transform: scale(1.1); /* Powiększenie zamiast zmiany koloru tła */
+    /* Podskok i salto */
+    transform: translateY(-10px) rotate(360deg);
     box-shadow: 0 0 40px rgba(255, 31, 31, 0.8);
     background: var(--primary-dark); /* Lekkie przyciemnienie */
     border-color: rgba(255, 255, 255, 0.6);
@@ -3799,7 +3801,6 @@ body {
   }
 }
 
-
 /* ========================================
    404 PAGE STYLES
    ======================================== */
@@ -3868,10 +3869,13 @@ body {
 }
 
 @media (max-width: 768px) {
-  .error-code { font-size: 6rem; }
-  .error-title { font-size: 2rem; }
+  .error-code {
+    font-size: 6rem;
+  }
+  .error-title {
+    font-size: 2rem;
+  }
 }
-
 
 /* ========================================
    SMART PRELOADER (Boot Screen - Matrix Style)
@@ -3948,7 +3952,7 @@ body {
 }
 
 .loader-label {
-  font-family: 'Space Grotesk', monospace;
+  font-family: "Space Grotesk", monospace;
   font-size: 0.9rem;
   color: var(--primary);
   letter-spacing: 3px;
@@ -3995,13 +3999,13 @@ body {
 }
 
 .loading-text {
-  font-family: 'Space Grotesk', monospace;
+  font-family: "Space Grotesk", monospace;
   color: var(--primary);
   font-size: 1rem;
   margin-top: 20px;
   text-transform: uppercase;
   letter-spacing: 3px;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   padding: 10px 20px;
   border: 1px solid var(--primary);
 }
@@ -4036,7 +4040,6 @@ body {
     letter-spacing: 2px;
   }
 }
-
 
 /* ========================================
    MAINTENANCE SCREEN (Terminal Style)
@@ -4114,7 +4117,7 @@ body {
 }
 
 .maintenance-label {
-  font-family: 'Space Grotesk', monospace;
+  font-family: "Space Grotesk", monospace;
   font-size: 0.9rem;
   color: var(--primary); /* Czerwony jak na stronie głównej */
   letter-spacing: 3px;
@@ -4123,7 +4126,7 @@ body {
 }
 
 .glitch-maintenance {
-  font-family: 'Space Grotesk', monospace;
+  font-family: "Space Grotesk", monospace;
   font-size: 6rem;
   font-weight: 900;
   color: #fff; /* Biały jak na 404 */
@@ -4159,13 +4162,13 @@ body {
 
 /* Terminal message dla maintenance */
 .maintenance-container .terminal-msg {
-  font-family: 'Space Grotesk', monospace;
+  font-family: "Space Grotesk", monospace;
   color: var(--primary);
   font-size: 1.3rem;
   margin-top: 20px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   padding: 10px 20px;
   border: 1px solid var(--primary);
 }
@@ -4201,7 +4204,7 @@ body {
 }
 
 .eta {
-  font-family: 'Space Grotesk', monospace;
+  font-family: "Space Grotesk", monospace;
   color: #666;
   font-size: 0.8rem;
   letter-spacing: 2px;
@@ -4209,8 +4212,12 @@ body {
 }
 
 @keyframes progressMove {
-  0% { left: -30%; }
-  100% { left: 100%; }
+  0% {
+    left: -30%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 /* Responsywność dla Maintenance */
@@ -4304,34 +4311,87 @@ body {
 
 /* Screen flicker animation for CRT effect */
 @keyframes screenFlicker {
-  0% { opacity: 0.8; }
-  100% { opacity: 0.95; }
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.95;
+  }
 }
 
 /* Aggressive glitch animations (used by maintenance and 404) */
 @keyframes glitch-aggressive-1 {
-  0% { clip-path: inset(20% 0 80% 0); transform: translate(-4px, 2px); }
-  20% { clip-path: inset(60% 0 10% 0); transform: translate(4px, -2px); }
-  40% { clip-path: inset(10% 0 50% 0); transform: translate(-6px, 4px); }
-  60% { clip-path: inset(80% 0 5% 0); transform: translate(6px, -4px); }
-  80% { clip-path: inset(30% 0 30% 0); transform: translate(-4px, 2px); }
-  100% { clip-path: inset(50% 0 20% 0); transform: translate(4px, -2px); }
+  0% {
+    clip-path: inset(20% 0 80% 0);
+    transform: translate(-4px, 2px);
+  }
+  20% {
+    clip-path: inset(60% 0 10% 0);
+    transform: translate(4px, -2px);
+  }
+  40% {
+    clip-path: inset(10% 0 50% 0);
+    transform: translate(-6px, 4px);
+  }
+  60% {
+    clip-path: inset(80% 0 5% 0);
+    transform: translate(6px, -4px);
+  }
+  80% {
+    clip-path: inset(30% 0 30% 0);
+    transform: translate(-4px, 2px);
+  }
+  100% {
+    clip-path: inset(50% 0 20% 0);
+    transform: translate(4px, -2px);
+  }
 }
 
 @keyframes glitch-aggressive-2 {
-  0% { clip-path: inset(10% 0 60% 0); transform: translate(4px, -2px); }
-  20% { clip-path: inset(40% 0 20% 0); transform: translate(-4px, 2px); }
-  40% { clip-path: inset(70% 0 10% 0); transform: translate(6px, -4px); }
-  60% { clip-path: inset(20% 0 50% 0); transform: translate(-6px, 4px); }
-  80% { clip-path: inset(50% 0 30% 0); transform: translate(4px, -2px); }
-  100% { clip-path: inset(30% 0 40% 0); transform: translate(-6px, 4px); }
+  0% {
+    clip-path: inset(10% 0 60% 0);
+    transform: translate(4px, -2px);
+  }
+  20% {
+    clip-path: inset(40% 0 20% 0);
+    transform: translate(-4px, 2px);
+  }
+  40% {
+    clip-path: inset(70% 0 10% 0);
+    transform: translate(6px, -4px);
+  }
+  60% {
+    clip-path: inset(20% 0 50% 0);
+    transform: translate(-6px, 4px);
+  }
+  80% {
+    clip-path: inset(50% 0 30% 0);
+    transform: translate(4px, -2px);
+  }
+  100% {
+    clip-path: inset(30% 0 40% 0);
+    transform: translate(-6px, 4px);
+  }
 }
 
 @keyframes glitch-skew {
-  0% { transform: skew(0deg); }
-  20% { transform: skew(2deg); }
-  40% { transform: skew(-2deg); }
-  60% { transform: skew(4deg); filter: contrast(1.5); }
-  80% { transform: skew(-4deg); }
-  100% { transform: skew(0deg); }
+  0% {
+    transform: skew(0deg);
+  }
+  20% {
+    transform: skew(2deg);
+  }
+  40% {
+    transform: skew(-2deg);
+  }
+  60% {
+    transform: skew(4deg);
+    filter: contrast(1.5);
+  }
+  80% {
+    transform: skew(-4deg);
+  }
+  100% {
+    transform: skew(0deg);
+  }
 }
