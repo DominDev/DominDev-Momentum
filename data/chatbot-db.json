@@ -1,6 +1,10 @@
 {
   "vulgarWords": [
     "kurwa",
+    "kurwy",
+    "kurwami",
+    "kurwę",
+    "kurwie",
     "kurde",
     "kurna",
     "kurczę",
@@ -8,12 +12,18 @@
     "chuja",
     "chujnia",
     "pierdolić",
+    "pierdole",
+    "pierdolisz",
     "pierdol",
     "pierdolnięty",
     "jebać",
     "jebany",
+    "jebana",
+    "jebane",
     "jebak",
     "dupa",
+    "dupy",
+    "dupie",
     "dupek",
     "dupeczka",
     "gówno",
@@ -21,6 +31,7 @@
     "gówniany",
     "fuck",
     "fucking",
+    "motherfucker",
     "shit",
     "shitty",
     "debil",
@@ -30,6 +41,7 @@
     "idiocki",
     "skurwiel",
     "skurwysyn",
+    "sukin",
     "szmata",
     "dziwka",
     "suka",
@@ -40,12 +52,17 @@
     "chujowy",
     "pierdolony",
     "jebany",
-    "zajebisty",
     "spierdalaj",
     "wypierdalaj",
     "ass",
     "asshole",
     "dick",
+    "pussy",
+    "cunt",
+    "cock",
+    "cocksucker",
+    "bullshit",
+    "bollocks",
     "bastard",
     "bitch",
     "damn",
@@ -76,18 +93,12 @@
     "na razie": "farewell",
     "usługi": "services",
     "uslugi": "services",
+    "usługa": "services",
     "oferta": "services",
     "co robisz": "services",
-    "co oferujesz": "services",
-    "co oferujecie": "services",
-    "co zaoferujesz": "services",
-    "co możesz zrobić": "services",
-    "co możesz zaoferować": "services",
-    "co mozesz zaoferowac": "services",
-    "co mozesz zrobic": "services",
-    "jakie usługi": "services",
-    "jakie uslugi": "services",
-    "w czym pomożesz": "services",
+    "oferować": "services",
+    "zrobić": "services",
+    "pomóc": "services",
     "w czym pomozesz": "services",
     "landing": "landing",
     "landing page": "landing",
@@ -95,12 +106,7 @@
     "czym jest landing": "landing",
     "czym landing": "landing",
     "cyum jest landing": "landing",
-    "cyun jest landing": "landing",
     "co to jest landing": "landing",
-    "co to landing": "landing",
-    "czym jest landingpage": "landing",
-    "cyum jest landingpage": "landing",
-    "cyun jest landingpage": "landing",
     "jak działa landing": "landing",
     "wizytówka": "business",
     "wizytowka": "business",
@@ -116,20 +122,13 @@
     "sklep internetowy": "ecommerce",
     "woocommerce": "ecommerce",
     "czym jest ecommerce": "ecommerce",
-    "cyum jest sklep": "ecommerce",
     "co to ecommerce": "ecommerce",
     "jak zrobić sklep": "ecommerce",
-    "jak zrobic sklep": "ecommerce",
     "strona": "services",
-    "stronę": "services",
-    "strone": "services",
-    "stronke": "services",
+    "zrobienie strony": "services",
     "www": "services",
     "website": "services",
     "ile kosztuje strona": "price",
-    "ile kosztuje strone": "price",
-    "jak długo robisz stronę": "deadline",
-    "jak dlugo robisz strone": "deadline",
     "webapp": "webapp",
     "web app": "webapp",
     "aplikacja": "webapp",
@@ -141,6 +140,7 @@
     "jak działa webapp": "webapp",
     "cena": "price",
     "koszt": "price",
+    "ceny": "price",
     "ile": "price",
     "cennik": "price",
     "pieniądze": "price",
@@ -151,13 +151,15 @@
     "hajs": "price",
     "kasa": "price",
     "ile kosztuje": "price",
-    "ile to kosztuje": "price",
     "drogo": "price",
     "tanio": "price",
-    "za ile": "price",
-    "co ceny": "price",
     "kontakt": "contact",
     "email": "contact",
+    "e-mail": "contact",
+    "mejl": "contact",
+    "dane kontaktowe": "contact",
+    "jak się z tobą skontaktować": "contact",
+    "jak sie z toba skontaktowac": "contact",
     "mail": "contact",
     "telefon": "contact",
     "napisz": "contact",
@@ -167,11 +169,7 @@
     "wrocław": "contact",
     "wroclaw": "contact",
     "spotkanie": "contact",
-    "jak się skontaktować": "contact",
-    "jak sie skontaktowac": "contact",
-    "jak napisać": "contact",
-    "jak napisac": "contact",
-    "gdzie pisać": "contact",
+    "skontaktować": "contact",
     "gdzie pisac": "contact",
     "wordpress": "tech",
     "wp": "tech",
@@ -191,7 +189,6 @@
     "hosting": "hosting",
     "domena": "domena",
     "plugin": "plugin",
-    "pluginy": "plugin",
     "cache": "cache",
     "cdn": "cdn",
     "rwd": "rwd",
@@ -203,7 +200,6 @@
     "portfolio": "portfolio",
     "realizacje": "portfolio",
     "projekty": "portfolio",
-    "co zrobiłeś": "portfolio",
     "prace": "portfolio",
     "przykłady": "portfolio",
     "case study": "portfolio",
@@ -213,6 +209,7 @@
     "domindev": "about",
     "autor": "about",
     "developer": "about",
+    "kto": "about",
     "programista": "about",
     "seo": "seo",
     "pozycjonowanie": "seo",
@@ -237,13 +234,14 @@
     "wirus": "security",
     "hakowanie": "security",
     "czy to bezpieczne": "security",
-    "bezpieczna strona": "security",
     "audyt": "audit",
     "ratunek": "audit",
     "naprawa": "audit",
     "błąd": "audit",
     "error": "audit",
     "nie działa": "audit",
+    "strona nie działa": "audit",
+    "cos sie zepsulo": "audit",
     "zepsute": "audit",
     "czas": "deadline",
     "termin": "deadline",
@@ -252,7 +250,7 @@
     "jak długo": "deadline",
     "ile trwa": "deadline",
     "proces": "process",
-    "jak działasz": "process",
+    "jak wygląda współpraca": "process",
     "współpraca": "process",
     "etapy": "process",
     "cms": "cms",
@@ -260,8 +258,8 @@
     "edycja": "cms",
     "admin": "cms",
     "panel": "cms",
+    "zajebisty": "thanks",
     "dzięki": "thanks",
-    "dziękuję": "thanks",
     "thx": "thanks",
     "thanks": "thanks",
     "super": "thanks",
@@ -271,7 +269,6 @@
     "świetnie": "thanks",
     "git": "thanks",
     "spoko": "thanks",
-    "dobra": "thanks",
     "wiem": "thanks",
     "rozumiem": "thanks",
     "jasne": "thanks",
@@ -293,7 +290,6 @@
     "wolno się ładuje": "speedboost",
     "strona wolna": "speedboost",
     "integracja": "integration",
-    "integracje": "integration",
     "api": "integration",
     "crm": "integration",
     "newsletter": "integration",
@@ -304,7 +300,6 @@
     "polaczenie systemow": "integration",
     "certyfikaty": "certifications",
     "certyfikat": "certifications",
-    "kompetencje": "certifications",
     "wykształcenie": "certifications",
     "wyksztalcenie": "certifications",
     "goit": "certifications",
@@ -322,15 +317,27 @@
     "wirus na stronie": "audit",
     "zhackowana strona": "audit",
     "zhakowana": "audit",
-    "strona zhakowana": "audit",
     "strona nie ładuje": "audit",
-    "strona nie laduje": "audit",
     "błędy na stronie": "audit",
-    "bledy na stronie": "audit",
     "diagnoza": "audit",
     "naprawa strony": "audit",
     "naprawa wordpress": "audit",
-    "fix wordpress": "audit"
+    "fix wordpress": "audit",
+    "opieka": "support",
+    "wsparcie": "support",
+    "support": "support",
+    "maintenance": "support",
+    "utrzymanie strony": "support",
+    "poprawki": "revisions",
+    "zmiany": "revisions",
+    "płatność": "payment",
+    "platnosc": "payment",
+    "faktura": "payment",
+    "zaliczka": "payment",
+    "przedpłata": "payment",
+    "gwarancja": "guarantee",
+    "rękojmia": "guarantee",
+    "co jeśli coś się zepsuje": "guarantee"
   },
   "responses": {
     "greeting": [
@@ -346,54 +353,54 @@
       "Cześć! 🚀 Miło było pogadać. Jeśli będziesz potrzebować wsparcia – wiesz gdzie mnie znaleźć."
     ],
     "services": [
-      "🚀 <strong>CORE SYSTEMS:</strong><br>1️⃣ Landing Page → Konwersja & Sprzedaż<br>2️⃣ Business Hub → Strona firmowa z CMS<br>3️⃣ E-Commerce Pro → Sklep WooCommerce<br>4️⃣ Web App / React → Aplikacje custom<br><br><strong>MIKROUSŁUGI:</strong><br>🩺 Audyt & Ratunek WP (300-500 PLN)<br>⚡ Speed Boost Pack (od 800 PLN)<br>🔌 Integracje API (od 400 PLN)<br><br>Możesz zapytać o konkretną usługę lub przejść do <a href='#services' style='color: var(--primary); text-decoration: underline;'>sekcji Usługi</a> / <a href='#contact' style='color: var(--primary); text-decoration: underline;'>Kontaktu</a>! 💬",
-      "💼 Specjalizacja: <strong>High-Performance WordPress</strong> + React. Buduję strony, które ładują się szybciej niż konkurencja myśli. Oferuję też mikrousługi: audyty bezpieczeństwa, speed boost, integracje API. Chcesz szczegóły? Pytaj śmiało! <a href='#services' style='color: var(--primary); text-decoration: underline;'>Pełna oferta tutaj</a> 🚀",
-      "⚡ Oferuję pełen stack webowy:<br><strong>BUILD:</strong><br>• Landing Page (od 1500 PLN)<br>• Strony firmowe z CMS (od 3500 PLN)<br>• Sklepy e-commerce (od 6000 PLN)<br>• Aplikacje React (od 8000 PLN)<br><br><strong>SUPPORT & OPTIMIZATION:</strong><br>• Audyt & Ratunek WP (300-500 PLN)<br>• Speed Boost (od 800 PLN)<br>• Integracje API (od 400 PLN)<br><br><a href='#services' style='color: var(--primary); text-decoration: underline;'>Sprawdź szczegóły</a> 🔥"
+      "🚀 <strong>CORE SYSTEMS:</strong><br>1️⃣ Landing Page → Konwersja & Sprzedaż<br>2️⃣ Business Hub → Strona firmowa z CMS<br>3️⃣ E-Commerce Pro → Sklep WooCommerce<br>4️⃣ Web App / React → Aplikacje custom<br><br><strong>MIKROUSŁUGI:</strong><br>🩺 Audyt & Ratunek WP (300-500 PLN)<br>⚡ Speed Boost Pack (od 800 PLN)<br>🔌 Integracje API (od 400 PLN)<br><br>Możesz zapytać o konkretną usługę lub przejść do <a href='#services' class='chatbot-link'>sekcji Usługi</a> / <a href='#contact' class='chatbot-link'>Kontaktu</a>! 💬",
+      "💼 Specjalizacja: <strong>High-Performance WordPress</strong> + React. Buduję strony, które ładują się szybciej niż konkurencja myśli. Oferuję też mikrousługi: audyty bezpieczeństwa, speed boost, integracje API. Chcesz szczegóły? Pytaj śmiało! <a href='#services' class='chatbot-link'>Pełna oferta tutaj</a> 🚀",
+      "⚡ Oferuję pełen stack webowy:<br><strong>BUILD:</strong><br>• Landing Page (od 1500 PLN)<br>• Strony firmowe z CMS (od 3500 PLN)<br>• Sklepy e-commerce (od 6000 PLN)<br>• Aplikacje React (od 8000 PLN)<br><br><strong>SUPPORT & OPTIMIZATION:</strong><br>• Audyt & Ratunek WP (300-500 PLN)<br>• Speed Boost (od 800 PLN)<br>• Integracje API (od 400 PLN)<br><br><a href='#services' class='chatbot-link'>Sprawdź szczegóły</a> 🔥"
     ],
     "landing": [
-      "🎯 <strong>Landing Page</strong> to strona jednego celu – konwersja.<br><br>✅ Szybkość < 1s<br>✅ Copywriting sprzedażowy<br>✅ Idealna pod kampanie Ads<br><br>💰 Cena: <strong>od 1500 PLN netto</strong><br><br>Chcesz szczegóły? <a href='#services' style='color: var(--primary); text-decoration: underline;'>Zobacz w sekcji Usługi</a> lub <a href='#contact' style='color: var(--primary); text-decoration: underline;'>Napisz do mnie</a>! 🚀",
-      "📄 Landing to misja specjalna – jedna strona, jeden przekaz, maksymalna konwersja. Ładowanie poniżej 1s, design nastawiony na CTA. Idealny do kampanii reklamowych. Startujemy od <strong>1500 PLN</strong>. <a href='#contact' style='color: var(--primary); text-decoration: underline;'>Gadamy?</a> 💬"
+      "🎯 <strong>Landing Page</strong> to strona jednego celu – konwersja.<br><br>✅ Szybkość < 1s<br>✅ Copywriting sprzedażowy<br>✅ Idealna pod kampanie Ads<br><br>💰 Cena: <strong>od 1500 PLN netto</strong><br><br>Chcesz szczegóły? <a href='#services' class='chatbot-link'>Zobacz w sekcji Usługi</a> lub <a href='#contact' class='chatbot-link'>Napisz do mnie</a>! 🚀",
+      "📄 Landing to misja specjalna – jedna strona, jeden przekaz, maksymalna konwersja. Ładowanie poniżej 1s, design nastawiony na CTA. Idealny do kampanii reklamowych. Startujemy od <strong>1500 PLN</strong>. <a href='#contact' class='chatbot-link'>Gadamy?</a> 💬"
     ],
     "business": [
-      "🏢 <strong>Business Hub</strong> – cyfrowa siedziba Twojej firmy.<br><br>✅ CMS – edytujesz treści sam<br>✅ Blog & SEO<br>✅ Integracja z social media<br>✅ 1 miesiąc opieki GRATIS<br><br>💰 Cena: <strong>od 3500 PLN netto</strong><br><br>To moja rekomendacja dla firm, które myślą długoterminowo. <a href='#services' style='color: var(--primary); text-decoration: underline;'>Zobacz więcej</a> 💼",
-      "💼 Business Hub to nie wizytówka – to <strong>maszyna biznesowa</strong>. WordPress z CMS, pełna kontrola nad treścią, SEO w pakiecie + gratis miesiąc wsparcia. Od 3500 PLN budujesz fundament marki w sieci. <a href='#contact' style='color: var(--primary); text-decoration: underline;'>Porozmawiajmy</a> 🔥"
+      "🏢 <strong>Business Hub</strong> – cyfrowa siedziba Twojej firmy.<br><br>✅ CMS – edytujesz treści sam<br>✅ Blog & SEO<br>✅ Integracja z social media<br>✅ 1 miesiąc opieki GRATIS<br><br>💰 Cena: <strong>od 3500 PLN netto</strong><br><br>To moja rekomendacja dla firm, które myślą długoterminowo. <a href='#services' class='chatbot-link'>Zobacz więcej</a> 💼",
+      "💼 Business Hub to nie wizytówka – to <strong>maszyna biznesowa</strong>. WordPress z CMS, pełna kontrola nad treścią, SEO w pakiecie + gratis miesiąc wsparcia. Od 3500 PLN budujesz fundament marki w sieci. <a href='#contact' class='chatbot-link'>Porozmawiajmy</a> 🔥"
     ],
     "ecommerce": [
-      "🛒 <strong>E-Commerce Pro</strong> – sklep gotowy na duży ruch.<br><br>✅ WooCommerce Custom<br>✅ Płatności (BLIK, karty, PayPal)<br>✅ Kurierzy & Paczkomaty<br>✅ 1 miesiąc opieki GRATIS<br><br>💰 Cena: <strong>od 6000 PLN netto</strong><br><br>Zautomatyzowany, bezpieczny, szybki. <a href='#services' style='color: var(--primary); text-decoration: underline;'>Sprawdź szczegóły</a> 🚀",
-      "💳 Sklep e-commerce to coś więcej niż katalog produktów – to zautomatyzowana maszyna sprzedażowa. WooCommerce z integracją płatności, kurierów, analytics. Odporny na ruch jak czołg. Startujemy od <strong>6000 PLN</strong>. <a href='#contact' style='color: var(--primary); text-decoration: underline;'>Gadamy?</a> 💬"
+      "🛒 <strong>E-Commerce Pro</strong> – sklep gotowy na duży ruch.<br><br>✅ WooCommerce Custom<br>✅ Płatności (BLIK, karty, PayPal)<br>✅ Kurierzy & Paczkomaty<br>✅ 1 miesiąc opieki GRATIS<br><br>💰 Cena: <strong>od 6000 PLN netto</strong><br><br>Zautomatyzowany, bezpieczny, szybki. <a href='#services' class='chatbot-link'>Sprawdź szczegóły</a> 🚀",
+      "💳 Sklep e-commerce to coś więcej niż katalog produktów – to zautomatyzowana maszyna sprzedażowa. WooCommerce z integracją płatności, kurierów, analytics. Odporny na ruch jak czołg. Startujemy od <strong>6000 PLN</strong>. <a href='#contact' class='chatbot-link'>Gadamy?</a> 💬"
     ],
     "webapp": [
-      "⚛️ <strong>Web App / React</strong> – dedykowane oprogramowanie webowe.<br><br>✅ React / Next.js<br>✅ Dashboardy, CRM, panele<br>✅ Custom Logic<br>✅ API & Skalowalność<br><br>💰 Cena: <strong>od 8000 PLN netto</strong><br><br>Dla wymagających procesów biznesowych. To już nie strona – to system. <a href='#services' style='color: var(--primary); text-decoration: underline;'>Zobacz szczegóły</a> 🔥",
-      "🚀 WebApp to opcja dla tych, którzy potrzebują czegoś więcej niż strona. Dashboardy, panele adminowe, CRM, custom logic – wszystko w React/Next.js. Skalowalność i czysty kod. Od <strong>8000 PLN</strong> budujesz potężne narzędzie. <a href='#contact' style='color: var(--primary); text-decoration: underline;'>Omówmy projekt</a> 💪"
+      "⚛️ <strong>Web App / React</strong> – dedykowane oprogramowanie webowe.<br><br>✅ React / Next.js<br>✅ Dashboardy, CRM, panele<br>✅ Custom Logic<br>✅ API & Skalowalność<br><br>💰 Cena: <strong>od 8000 PLN netto</strong><br><br>Dla wymagających procesów biznesowych. To już nie strona – to system. <a href='#services' class='chatbot-link'>Zobacz szczegóły</a> 🔥",
+      "🚀 WebApp to opcja dla tych, którzy potrzebują czegoś więcej niż strona. Dashboardy, panele adminowe, CRM, custom logic – wszystko w React/Next.js. Skalowalność i czysty kod. Od <strong>8000 PLN</strong> budujesz potężne narzędzie. <a href='#contact' class='chatbot-link'>Omówmy projekt</a> 💪"
     ],
     "price": [
-      "💰 <strong>CENNIK:</strong><br><br><strong>BUILD:</strong><br>• Landing Page: od 1500 PLN<br>• Business Hub: od 3500 PLN<br>• E-Commerce: od 6000 PLN<br>• Web App / React: od 8000 PLN<br><br><strong>SUPPORT & OPTIMIZATION:</strong><br>• Audyt & Ratunek WP: 300-500 PLN<br>• Speed Boost Pack: od 800 PLN<br>• Integracje API: od 400 PLN<br><br><a href='#services' style='color: var(--primary); text-decoration: underline;'>Pełna oferta tutaj</a> 📊",
-      "💸 Ceny zależą od zakresu, ale mam transparentne stawki:<br><strong>Projekty:</strong> Landing 1500+ | Business 3500+ | Sklep 6000+ | WebApp 8000+<br><strong>Mikrousługi:</strong> Audyt 300-500 | Speed Boost 800+ | API 400+<br><br>Chcesz dokładną wycenę? <a href='#contact' style='color: var(--primary); text-decoration: underline;'>Napisz do mnie</a> – dostaniesz konkretną ofertę w 24h. ⚡",
-      "💵 Nie mam ukrytych kosztów – wszystko jest jasne. Od małych napraw (300 PLN) po duże projekty (8000+ PLN). Projekt to inwestycja, nie wydatek. Powiedz mi o swoim celu, a zaproponuję rozwiązanie w Twoim budżecie. <a href='#contact' style='color: var(--primary); text-decoration: underline;'>Skontaktuj się</a> 🎯"
+      "💰 <strong>CENNIK:</strong><br><br><strong>PROJEKTY:</strong><br>• Landing Page: od 1500 PLN<br>• Business Hub: od 3500 PLN<br>• E-Commerce: od 6000 PLN<br>• Web App / React: od 8000 PLN<br><br><strong>MIKROUSŁUGI:</strong><br>• Audyt & Ratunek WP: 300-500 PLN<br>• Speed Boost Pack: od 800 PLN<br>• Integracje API: od 400 PLN<br><br>Wszystkie ceny są netto. <a href='#services' class='chatbot-link'>Pełna oferta tutaj</a> 📊",
+      "💸 Ceny zależą od zakresu, ale mam transparentne stawki:<br><strong>Projekty:</strong> Landing 1500+ | Business 3500+ | Sklep 6000+ | WebApp 8000+<br><strong>Mikrousługi:</strong> Audyt 300-500 | Speed Boost 800+ | API 400+<br><br>Chcesz dokładną wycenę? <a href='#contact' class='chatbot-link'>Napisz do mnie</a> – dostaniesz konkretną ofertę w 24h. ⚡",
+      "💵 Nie mam ukrytych kosztów – wszystko jest jasne. Od małych napraw (300 PLN) po duże projekty (8000+ PLN). Projekt to inwestycja, nie wydatek. Powiedz mi o swoim celu, a zaproponuję rozwiązanie w Twoim budżecie. <a href='#contact' class='chatbot-link'>Skontaktuj się</a> 🎯"
     ],
     "contact": [
-      "📬 <strong>TERMINAL KONTAKTOWY:</strong><br>• E-mail: <strong><a href='mailto:contact@domindev.com' style='color: var(--primary); text-decoration: underline;'>contact@domindev.com</a></strong><br>• Formularz: przejdź do <a href='#contact' style='color: var(--primary); text-decoration: underline;'>sekcji Kontakt</a> i użyj 'NADAJ WIADOMOŚĆ'<br>• Lokalizacja: Wrocław (działam globalnie)<br><br>Czekam na Twój sygnał! 🚀",
-      "📧 Najszybszy kontakt? <a href='#contact' style='color: var(--primary); text-decoration: underline;'>Formularz kontaktowy</a> – kliknij 'NADAJ WIADOMOŚĆ'. Możesz też mailować: <strong><a href='mailto:contact@domindev.com' style='color: var(--primary); text-decoration: underline;'>contact@domindev.com</a></strong>. Odpisuję w ciągu 24h (często szybciej). 💬",
-      "📍 Jestem z Wrocławia, ale projekty robię dla całej Polski (i nie tylko). Pisz: <strong><a href='mailto:contact@domindev.com' style='color: var(--primary); text-decoration: underline;'>contact@domindev.com</a></strong> albo <a href='#contact' style='color: var(--primary); text-decoration: underline;'>użyj formularza</a> – tam masz suwak budżetu i pole na opis. Prostsze się nie da! ✌️"
+      "📬 <strong>TERMINAL KONTAKTOWY:</strong><br>• E-mail: <strong><a href='mailto:contact@domindev.com' class='chatbot-link'>contact@domindev.com</a></strong><br>• Formularz: przejdź do <a href='#contact' class='chatbot-link'>sekcji Kontakt</a> i użyj 'NADAJ WIADOMOŚĆ'<br>• Lokalizacja: Wrocław (działam globalnie)<br><br>Czekam na Twój sygnał! 🚀",
+      "📧 Najszybszy kontakt? <a href='#contact' class='chatbot-link'>Formularz kontaktowy</a> – kliknij 'NADAJ WIADOMOŚĆ'. Możesz też mailować: <strong><a href='mailto:contact@domindev.com' class='chatbot-link'>contact@domindev.com</a></strong>. Odpisuję w ciągu 24h (często szybciej). 💬",
+      "📍 Jestem z Wrocławia, ale projekty robię dla całej Polski (i nie tylko). Pisz: <strong><a href='mailto:contact@domindev.com' class='chatbot-link'>contact@domindev.com</a></strong> albo <a href='#contact' class='chatbot-link'>użyj formularza</a> – tam masz suwak budżetu i pole na opis. Prostsze się nie da! ✌️"
     ],
     "tech": [
-      "🛠️ <strong>TECH STACK:</strong><br>• WordPress + WooCommerce (custom themes, zero bloat)<br>• React / Next.js (web apps, SPA)<br>• PHP 8.2 + JavaScript ES6+<br>• HTML5, CSS3, SASS<br>• MySQL / PostgreSQL<br>• AWS, Cloudflare, Git<br><br>Czysty kod. Semantyka. Zero bloatu. Performance first. ⚡",
+      "🛠️ <strong>TECH STACK:</strong><br>• <strong>Backend:</strong> WordPress (Custom Themes), PHP 8.2+, MySQL/PostgreSQL<br>• <strong>Frontend:</strong> React/Next.js, JavaScript ES6+, HTML5, SASS<br>• <strong>Infrastruktura:</strong> AWS, Cloudflare, Git, Docker<br><br>Czysty kod. Semantyka. Zero bloatu. Performance first. ⚡",
       "💻 Głównie <strong>WordPress High-Performance</strong> (custom themes bez zbędnych pluginów) + <strong>React</strong> do aplikacji. Backend: PHP 8.2, frontend: czysty JS/CSS bez frameworków-monstrum. Stack to jedno – ważniejsze jest <strong>jak</strong> koduję. Zero bałaganu, maksymalna wydajność. 🔥"
     ],
     "portfolio": [
-      "🎨 <strong>REALIZACJE:</strong><br><a href='#portfolio' style='color: var(--primary); text-decoration: underline;'>Zobacz w sekcji Portfolio</a> – tam znajdziesz case studies:<br>• Kraft Daily Pub (WordPress)<br>• Neon Estate (Next.js)<br>• TechGear Store (E-commerce)<br><br>Kliknij w projekt, żeby zobaczyć detale: wyzwanie, rozwiązanie, wyniki. 📊",
-      "🚀 Robiłem różne projekty: od landing pages dla startupów po sklepy e-commerce dla dużych firm. <a href='#portfolio' style='color: var(--primary); text-decoration: underline;'>Sprawdź sekcję Realizacje</a> – tam masz przykłady + case study. Każdy projekt to lekcja – i żadnego kopiuj-wklej! 💪"
+      "🎨 <strong>REALIZACJE:</strong><br><a href='#portfolio' class='chatbot-link'>Zobacz w sekcji Portfolio</a> – tam znajdziesz case studies:<br>• Kraft Daily Pub (WordPress)<br>• Neon Estate (Next.js)<br>• TechGear Store (E-commerce)<br><br>Kliknij w projekt, żeby zobaczyć detale: wyzwanie, rozwiązanie, wyniki. 📊",
+      "🚀 Robiłem różne projekty: od landing pages dla startupów po sklepy e-commerce dla dużych firm. <a href='#portfolio' class='chatbot-link'>Sprawdź sekcję Realizacje</a> – tam masz przykłady + case study. Każdy projekt to lekcja – i żadnego kopiuj-wklej! 💪"
     ],
     "about": [
-      "👨‍💻 <strong>DominDev</strong> = Fullstack Developer z obsesją na punkcie wydajności.<br><br>Nie robię 'ładnych wizytówek' – buduję <strong>maszyny biznesowe</strong>. Łączę kod z designem, inżynierię z psychologią sprzedaży. Każda linijka kodu ma cel: szybkość, SEO, konwersja.<br><br>GoIT Certified | Cisco Cybersecurity | AWS Academy. Zero bullshitu, same wyniki. <a href='#about' style='color: var(--primary); text-decoration: underline;'>Poznaj mnie bliżej</a> 🔥",
-      "⚡ Jestem Dominem – developer, który traktuje kod jak strategię biznesową. Nie wystarczy mi 'działa' – musi być <strong>szybko, bezpiecznie i sprzedawać</strong>. Certyfikaty: Fullstack Dev, Cybersecurity, AWS Cloud. Ale najważniejsze to portfolio – gadają same projekty. <a href='#about' style='color: var(--primary); text-decoration: underline;'>Więcej o mnie</a> 💼"
+      "👨‍💻 <strong>DominDev</strong> = Fullstack Developer z obsesją na punkcie wydajności.<br><br>Nie robię 'ładnych wizytówek' – buduję <strong>maszyny biznesowe</strong>. Łączę kod z designem, inżynierię z psychologią sprzedaży. Każda linijka kodu ma cel: szybkość, SEO, konwersja.<br><br>GoIT Certified | Cisco Cybersecurity | AWS Academy. Zero bullshitu, same wyniki. <a href='#about' class='chatbot-link'>Poznaj mnie bliżej</a> 🔥",
+      "⚡ Jestem Dominem – developer, który traktuje kod jak strategię biznesową. Nie wystarczy mi 'działa' – musi być <strong>szybko, bezpiecznie i sprzedawać</strong>. Certyfikaty: Fullstack Dev, Cybersecurity, AWS Cloud. Ale najważniejsze to portfolio – gadają same projekty. <a href='#about' class='chatbot-link'>Więcej o mnie</a> 💼"
     ],
     "seo": [
       "🔍 <strong>SEO</strong> to nie magiczna zaklęcia – to techniczna precyzja.<br><br>✅ Semantyczny HTML5<br>✅ Core Web Vitals (PageSpeed 90+)<br>✅ Szybkość ładowania < 1s<br>✅ Mobile-first indexing<br>✅ Schema.org (structured data)<br><br>Nie robię 'SEO na końcu' – wpisuję je w fundament. Google lubi szybkie strony. 🚀",
       "🎯 SEO w moich projektach to standard, nie dodatek. Szybkość + semantyka + structured data = wysokie pozycje w Google. Każda strona wychodzi z PageSpeed 90+ i pełną optymalizacją techniczną. Pozycjonowanie zaczyna się od kodu. 💪"
     ],
     "performance": [
-      "⚡ <strong>PERFORMANCE = PRZEWAGA</strong><br><br>Każda moja strona:<br>✅ PageSpeed Score 90-100/100<br>✅ Ładowanie < 1s<br>✅ Core Web Vitals w zieleni<br>✅ Optymalizacja obrazów (WebP)<br>✅ Lazy loading + caching<br><br>Wolna strona = stracone pieniądze. Szybka strona = konwersja. To takie proste. 🔥",
+      "⚡ <strong>PERFORMANCE = PRZEWAGA</strong><br><br>Każda moja strona ma:<br>✅ PageSpeed Score 90-100/100<br>✅ Ładowanie < 1s<br>✅ Core Web Vitals w zieleni<br>✅ Optymalizacja obrazów (WebP)<br>✅ Lazy loading + caching<br><br>Wolna strona = stracone pieniądze. Szybka strona = konwersja. To takie proste. 🔥",
       "🚀 Performance to moja obsesja. Nie wystarczy mi 'ładuje się szybko' – muszę widzieć PageSpeed 90+ i Core Web Vitals w zieleni. Optymalizuję wszystko: obrazy, zapytania DB, cache, CDN. Każda milisekunda się liczy. ⚡"
     ],
     "security": [
@@ -402,15 +409,15 @@
     ],
     "audit": [
       "🩺 <strong>AUDYT & RATUNEK WP:</strong><br><br>Strona nie działa? Wirusy? Wolno się ładuje?<br>Diagnozuję problem + naprawiam.<br><br>✅ Audyt bezpieczeństwa<br>✅ Usuwanie malware<br>✅ Naprawa błędów<br>✅ Speed boost<br><br>💰 Cena: <strong>300-500 PLN</strong><br><br>Ratujemy tonący statek. ⛑️",
-      "🚑 WordPress padł? Wolno się ładuje? Dziwne rzeczy w Google? Nie panikuj. Audyt + naprawa to moja codzienność. Diagnoza problemu, fix, raport. 300-500 PLN i wracasz do gry. Pisz, jeśli płonie! 🔥"
+      "🚑 WordPress padł? Wolno się ładuje? Dziwne rzeczy w Google? Nie panikuj. Audyt + naprawa to moja codzienność. Diagnoza problemu, fix, raport. <strong>300-500 PLN</strong> i wracasz do gry. <a href='#contact' class='chatbot-link'>Pisz, jeśli płonie!</a> 🔥"
     ],
     "deadline": [
       "⏱️ <strong>CZAS REALIZACJI:</strong><br>• Landing Page: 1-2 tygodnie<br>• Business Hub: 3-4 tygodnie<br>• E-Commerce: 4-6 tygodni<br>• Web App: indywidualnie (min. 6 tygodni)<br><br>Terminy zależą od zakresu i feedbacku. Masz pilny deadline? Możemy pogadać o Fast Track. ⚡",
       "📅 Standardowe czasy: Landing 1-2 tyg, Business 3-4 tyg, Sklep 4-6 tyg. WebAppy zależą od złożoności. Ale najważniejsze: <strong>nie puszczam projektu, póki nie jest idealny</strong>. Jakość > pośpiech. Chcesz szybciej? Możemy ustalić Fast Track. 🚀"
     ],
     "process": [
-      "🔧 <strong>JAK DZIAŁAM?</strong><br><br>1️⃣ <strong>Brief strategiczny</strong> – analiza celu, nie 'jaki kolor'<br>2️⃣ <strong>Design & UX</strong> – interfejs prowadzący do konwersji<br>3️⃣ <strong>Hardcore Dev</strong> – czysty kod, szybkość, SEO<br>4️⃣ <strong>Review & Testy</strong> – Twoja weryfikacja + security tests<br>5️⃣ <strong>Deploy</strong> – start + szkolenie z CMS<br><br><a href='#process' style='color: var(--primary); text-decoration: underline;'>Sprawdź szczegóły procesu</a> 📋",
-      "💼 Współpraca ze mną to nie 'zrobię stronę i znikam'. To proces:<br>1. Rozmawiamy o celach biznesowych<br>2. Projektuję UX pod konwersję<br>3. Koduję z myślą o wydajności<br>4. Testujemy razem<br>5. Startujesz + dostajesz szkolenie<br><br>Jesteś w pętli przez cały czas. Zero niespodzianek. <a href='#process' style='color: var(--primary); text-decoration: underline;'>Zobacz timeline</a> 🤝"
+      "🔧 <strong>JAK DZIAŁAM?</strong><br><br>1️⃣ <strong>Brief strategiczny</strong> – analiza celu, nie 'jaki kolor'<br>2️⃣ <strong>Design & UX</strong> – interfejs prowadzący do konwersji<br>3️⃣ <strong>Hardcore Dev</strong> – czysty kod, szybkość, SEO<br>4️⃣ <strong>Review & Testy</strong> – Twoja weryfikacja + security tests<br>5️⃣ <strong>Deploy</strong> – start + szkolenie z CMS<br><br><a href='#process' class='chatbot-link'>Sprawdź szczegóły procesu</a> 📋",
+      "💼 Współpraca ze mną to nie 'zrobię stronę i znikam'. To proces:<br>1. Rozmawiamy o celach biznesowych<br>2. Projektuję UX pod konwersję<br>3. Koduję z myślą o wydajności<br>4. Testujemy razem<br>5. Startujesz + dostajesz szkolenie<br><br>Jesteś w pętli przez cały czas. Zero niespodzianek. <a href='#process' class='chatbot-link'>Zobacz timeline</a> 🤝"
     ],
     "cms": [
       "🔧 <strong>CMS (Content Management System)</strong> to panel, z którego sam edytujesz treści na stronie.<br><br>Nie musisz dzwonić do programisty, żeby zmienić tekst czy dodać zdjęcie. WordPress ma świetny CMS – intuicyjny i potężny.<br><br>W pakiecie Business Hub i E-Commerce dostajesz pełne szkolenie z obsługi! 📚",
@@ -421,16 +428,16 @@
       "💡 Startup? Innowacyjny pomysł? Ograniczony cash? Nie musi być problemem. Jeśli projekt ma sens biznesowy, mogę wejść na zasadzie equity, revenue share albo długoterminowej współpracy. Piszę kod, Ty rozwijasz biznes. Win-win. 🚀"
     ],
     "speedboost": [
-      "⚡ <strong>SPEED BOOST PACK:</strong><br><br>Twoja strona ładuje się wolno? Naprawmy to!<br><br>✅ Optymalizacja Core Web Vitals<br>✅ Kompresja obrazów (WebP)<br>✅ Lazy loading + caching<br>✅ Minifikacja CSS/JS<br>✅ PageSpeed 90+ gwarantowany<br><br>💰 Cena: <strong>od 800 PLN</strong><br><br>Wolna strona = stracone pieniądze. <a href='#contact' style='color: var(--primary); text-decoration: underline;'>Przyspiesz swoją stronę</a> 🚀",
-      "🚀 Strona wolna jak ślimak? Speed Boost Pack to kompletna optymalizacja wydajności. Compresja, cache, CDN, minifikacja – wszystko, co potrzebne, żeby osiągnąć PageSpeed 90+. Cena: <strong>od 800 PLN</strong>. <a href='#contact' style='color: var(--primary); text-decoration: underline;'>Chcę przyspieszenie</a> ⚡"
+      "⚡ <strong>SPEED BOOST PACK:</strong><br><br>Twoja strona ładuje się wolno? Naprawmy to!<br><br>✅ Optymalizacja Core Web Vitals<br>✅ Kompresja obrazów (WebP)<br>✅ Lazy loading + caching<br>✅ Minifikacja CSS/JS<br>✅ PageSpeed 90+ gwarantowany<br><br>💰 Cena: <strong>od 800 PLN</strong><br><br>Wolna strona = stracone pieniądze. <a href='#contact' class='chatbot-link'>Przyspiesz swoją stronę</a> 🚀",
+      "🚀 Strona wolna jak ślimak? Speed Boost Pack to kompletna optymalizacja wydajności. Compresja, cache, CDN, minifikacja – wszystko, co potrzebne, żeby osiągnąć PageSpeed 90+. Cena: <strong>od 800 PLN</strong>. <a href='#contact' class='chatbot-link'>Chcę przyspieszenie</a> ⚡"
     ],
     "integration": [
-      "🔌 <strong>INTEGRACJE API:</strong><br><br>Łączę Twoją stronę z zewnętrznymi systemami:<br><br>✅ Newsletter (Mailchimp, MailerLite)<br>✅ CRM (HubSpot, Pipedrive)<br>✅ Chatbot (własny lub zewnętrzny)<br>✅ Płatności (Stripe, PayU, Przelewy24)<br>✅ Social Media feeds<br><br>💰 Cena: <strong>od 400 PLN</strong><br><br>Automatyzacja = oszczędność czasu. <a href='#contact' style='color: var(--primary); text-decoration: underline;'>Wdróż integrację</a> 🤖",
-      "🤖 Potrzebujesz połączyć stronę z CRM, newsletterem, płatnościami? Integracje API to moja specjalność. Newsletter, chatbot, social media, płatności – łączę systemy w całość. Od <strong>400 PLN</strong> automatyzujesz procesy. <a href='#contact' style='color: var(--primary); text-decoration: underline;'>Omówmy integrację</a> 🔥"
+      "🔌 <strong>INTEGRACJE API:</strong><br><br>Łączę Twoją stronę z zewnętrznymi systemami:<br><br>✅ Newsletter (Mailchimp, MailerLite)<br>✅ CRM (HubSpot, Pipedrive)<br>✅ Chatbot (własny lub zewnętrzny)<br>✅ Płatności (Stripe, PayU, Przelewy24)<br>✅ Social Media feeds<br><br>💰 Cena: <strong>od 400 PLN</strong><br><br>Automatyzacja = oszczędność czasu. <a href='#contact' class='chatbot-link'>Wdróż integrację</a> 🤖",
+      "🤖 Potrzebujesz połączyć stronę z CRM, newsletterem, płatnościami? Integracje API to moja specjalność. Newsletter, chatbot, social media, płatności – łączę systemy w całość. Od <strong>400 PLN</strong> automatyzujesz procesy. <a href='#contact' class='chatbot-link'>Omówmy integrację</a> 🔥"
     ],
     "certifications": [
-      "🎓 <strong>CERTYFIKACJA & KOMPETENCJE:</strong><br><br>Nie tylko koduję – mam za sobą solidne fundamenty:<br><br>✅ <strong>Fullstack Developer</strong> – GoIT Certified<br>✅ <strong>Cybersecurity Essentials</strong> – Cisco<br>✅ <strong>AWS Cloud Practitioner</strong> – AWS Academy Graduate<br>✅ <strong>PostgreSQL DB Admin</strong> – Database Management<br><br>Certyfikaty to nie ozdoba CV – to gwarancja, że wiem co robię. <a href='#about' style='color: var(--primary); text-decoration: underline;'>Poznaj mnie bliżej</a> 🔥",
-      "💼 Certyfikaty? Mam ich kilka: GoIT Fullstack Dev, Cisco Cybersecurity, AWS Cloud Academy, PostgreSQL DB Admin. Ale najważniejsze nie są papierki – tylko projekty i wyniki. Certyfikaty to fundament, portfolio to dowód. <a href='#portfolio' style='color: var(--primary); text-decoration: underline;'>Zobacz realizacje</a> 💪"
+      "🎓 <strong>CERTYFIKACJA & KOMPETENCJE:</strong><br><br>Nie tylko koduję – mam za sobą solidne fundamenty:<br><br>✅ <strong>Fullstack Developer</strong> – GoIT Certified<br>✅ <strong>Cybersecurity Essentials</strong> – Cisco<br>✅ <strong>AWS Cloud Practitioner</strong> – AWS Academy Graduate<br>✅ <strong>PostgreSQL DB Admin</strong> – Database Management<br><br>Certyfikaty to nie ozdoba CV – to gwarancja, że wiem co robię. <a href='#about' class='chatbot-link'>Poznaj mnie bliżej</a> 🔥",
+      "💼 Certyfikaty? Mam ich kilka: GoIT Fullstack Dev, Cisco Cybersecurity, AWS Cloud Academy, PostgreSQL DB Admin. Ale najważniejsze nie są papierki – tylko projekty i wyniki. Certyfikaty to fundament, portfolio to dowód. <a href='#portfolio' class='chatbot-link'>Zobacz realizacje</a> 💪"
     ],
     "hosting": [
       "🖥️ <strong>Hosting</strong> to usługa serwerowa, na której 'leży' Twoja strona. Ważne: szybkość serwera = szybkość strony. Polecam: LH.pl, home.pl, OVH lub premium: WP Engine, Kinsta. W wycenie mogę pomóc dobrać hosting. ⚡"
@@ -476,11 +483,27 @@
       "Git! 🤙",
       "Roger that! 📡"
     ],
+    "support": [
+      "🛡️ <strong>OPIEKA & WSPARCIE:</strong><br><br>Każdy projekt Business Hub i E-Commerce ma <strong>1 miesiąc opieki GRATIS</strong>. Potem oferuję pakiety wsparcia (od 250 PLN/msc) obejmujące:<br>✅ Aktualizacje i backupy<br>✅ Monitoring bezpieczeństwa<br>✅ Drobne zmiany i konsultacje<br><br>Chcesz spać spokojnie? <a href='#contact' class='chatbot-link'>Zapytaj o pakiet opieki</a>. 👨‍⚕️",
+      " claro! Po wdrożeniu nie znikam. Pierwszy miesiąc wsparcia masz w cenie projektu. Jeśli chcesz stałej opieki (aktualizacje, backupy, security), mam elastyczne pakiety. Bezpieczeństwo i spokój ducha są bezcenne. <a href='#contact' class='chatbot-link'>Porozmawiajmy o tym</a>. 🤝"
+    ],
+    "revisions": [
+      "🔄 <strong>POPRAWKI & ZMIANY:</strong><br><br>Mój proces jest transparentny. Na etapie designu masz <strong>2 tury poprawek</strong> w cenie. Po akceptacji designu i starcie developmentu, większe zmiany są dodatkowo płatne.<br><br>Cel: uniknąć niespodzianek i dowieźć projekt na czas. Wszystko ustalamy na początku. Jasne zasady to podstawa! 📋",
+      "👍 Dobre pytanie! W cenie projektu zawarte są 2 rundy poprawek na etapie projektowania. Dzięki temu upewniamy się, że idziemy w dobrym kierunku. Po zakodowaniu strony, zmiany w designie są trudniejsze i dodatkowo płatne. Dlatego tak ważny jest <a href='#process' class='chatbot-link'>dobry proces</a>! 🚀"
+    ],
+    "payment": [
+      "💳 <strong>PŁATNOŚCI & FAKTURY:</strong><br><br>Pracuję na podstawie umowy i faktur VAT.<br>Standardowy model:<br>• <strong>50% zaliczki</strong> przed startem prac<br>• <strong>50% płatności</strong> po zakończeniu i akceptacji projektu<br><br>Przy większych projektach możemy podzielić płatność na więcej etapów. Pełna transparentność! 💸",
+      "💰 Jasna sprawa! Działam legalnie, więc wystawiam faktury VAT. Zazwyczaj praca wygląda tak: 50% zaliczki na start, 50% po skończonym projekcie. Proste i uczciwe. Przy większych budżetach możemy być bardziej elastyczni. <a href='#contact' class='chatbot-link'>Masz pytania? Pisz!</a> 💬"
+    ],
+    "guarantee": [
+      "✅ <strong>GWARANCJA JAKOŚCI:</strong><br><br>Udzielam <strong>12-miesięcznej gwarancji</strong> na kod. Jeśli w tym czasie pojawi się błąd wynikający z mojej pracy, naprawiam go za darmo.<br><br>Gwarancja nie obejmuje błędów po samodzielnych modyfikacjach kodu, aktualizacjach wtyczek firm trzecich czy problemów z serwerem. Jakość to mój priorytet! 🛠️",
+      "💯 Oczywiście! Daję 12 miesięcy gwarancji na swój kod. Jeśli coś, co zaprogramowałem, przestanie działać (a nie było modyfikowane), naprawiam to w ramach gwarancji. To jak ubezpieczenie na jakość. Śpisz spokojnie. 😴"
+    ],
     "unknown": [
-      "🤔 Hmm, nie mam tego w bazie. Mogę Ci pomóc z:<br>• <strong>Usługi & Ceny</strong> → <a href='#services' style='color: var(--primary); text-decoration: underline;'>zobacz ofertę</a><br>• <strong>Realizacje</strong> → <a href='#portfolio' style='color: var(--primary); text-decoration: underline;'>portfolio</a><br>• <strong>Tech Stack</strong> (WordPress, React, technologie)<br>• <strong>Kontakt</strong> → <a href='#contact' style='color: var(--primary); text-decoration: underline;'>napisz do mnie</a><br><br>Albo po prostu napisz konkretnie – postaram się pomóc! 💬",
-      "❓ Nie rozpoznałem tego zapytania. Możesz zapytać:<br>• <strong>'ile kosztuje strona'</strong><br>• <strong>'czym jest landing page'</strong><br>• <strong>'jakie masz realizacje'</strong><br>• <strong>'jak działa współpraca'</strong><br>• <strong>'jak szybko zrobisz stronę'</strong><br><br>Lub przejdź do: <a href='#services' style='color: var(--primary); text-decoration: underline;'>Usługi</a> | <a href='#portfolio' style='color: var(--primary); text-decoration: underline;'>Portfolio</a> | <a href='#contact' style='color: var(--primary); text-decoration: underline;'>Kontakt</a> 🚀",
-      "🧐 Nie do końca łapię. Jestem botem, nie czytam w myślach (jeszcze 😅).<br><br>Mogę opowiedzieć o:<br>✅ Usługach (Landing, Business, Sklep, WebApp) → <a href='#services' style='color: var(--primary); text-decoration: underline;'>zobacz</a><br>✅ Cenach i wycenie<br>✅ Portfolio i realizacjach → <a href='#portfolio' style='color: var(--primary); text-decoration: underline;'>sprawdź</a><br>✅ Procesie współpracy → <a href='#process' style='color: var(--primary); text-decoration: underline;'>jak działam</a><br>✅ Technologiach (WordPress, React, SEO, Performance)<br><br>Śmiało pytaj konkretnie! 💬",
-      "🤷 Hmm, tego nie mam w bazie wiedzy. Ale mogę pomóc z:<br>• Ile kosztuje strona / landing / sklep?<br>• Co to jest CMS / SEO / WordPress?<br>• Jak wygląda proces / współpraca? → <a href='#process' style='color: var(--primary); text-decoration: underline;'>zobacz proces</a><br>• Jakie masz projekty w portfolio? → <a href='#portfolio' style='color: var(--primary); text-decoration: underline;'>sprawdź realizacje</a><br>• Jak się skontaktować? → <a href='#contact' style='color: var(--primary); text-decoration: underline;'>kontakt</a><br><br>Pisz śmiało! 🚀"
+      "🤔 Hmm, nie mam tego w bazie. Mogę Ci pomóc z:<br>• <strong>Usługi & Ceny</strong> → <a href='#services' class='chatbot-link'>zobacz ofertę</a><br>• <strong>Realizacje</strong> → <a href='#portfolio' class='chatbot-link'>portfolio</a><br>• <strong>Tech Stack</strong> (WordPress, React, technologie)<br>• <strong>Kontakt</strong> → <a href='#contact' class='chatbot-link'>napisz do mnie</a><br><br>Albo po prostu napisz konkretnie – postaram się pomóc! 💬",
+      "❓ Nie rozpoznałem tego zapytania. Możesz zapytać:<br>• <strong>'ile kosztuje strona'</strong><br>• <strong>'czym jest landing page'</strong><br>• <strong>'jakie masz realizacje'</strong><br>• <strong>'jak działa współpraca'</strong><br>• <strong>'jak szybko zrobisz stronę'</strong><br><br>Lub przejdź do: <a href='#services' class='chatbot-link'>Usługi</a> | <a href='#portfolio' class='chatbot-link'>Portfolio</a> | <a href='#contact' class='chatbot-link'>Kontakt</a> 🚀",
+      "🧐 Nie do końca łapię. Jestem botem, nie czytam w myślach (jeszcze 😅).<br><br>Mogę opowiedzieć o:<br>✅ Usługach (Landing, Business, Sklep, WebApp) → <a href='#services' class='chatbot-link'>zobacz</a><br>✅ Cenach i wycenie<br>✅ Portfolio i realizacjach → <a href='#portfolio' class='chatbot-link'>sprawdź</a><br>✅ Procesie współpracy → <a href='#process' class='chatbot-link'>jak działam</a><br>✅ Technologiach (WordPress, React, SEO, Performance)<br><br>Śmiało pytaj konkretnie! 💬",
+      "🤷 Hmm, tego nie mam w bazie wiedzy. Ale mogę pomóc z:<br>• Ile kosztuje strona / landing / sklep?<br>• Co to jest CMS / SEO / WordPress?<br>• Jak wygląda proces / współpraca? → <a href='#process' class='chatbot-link'>zobacz proces</a><br>• Jakie masz projekty w portfolio? → <a href='#portfolio' class='chatbot-link'>sprawdź realizacje</a><br>• Jak się skontaktować? → <a href='#contact' class='chatbot-link'>kontakt</a><br><br>Pisz śmiało! 🚀"
     ]
   },
   "glossary": {
