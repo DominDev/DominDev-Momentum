@@ -1850,6 +1850,20 @@ footer {
   box-shadow: inset 0 0 15px rgba(255, 31, 31, 0.1); /* Głębszy glow wewnątrz */
 }
 
+/* Styl dla linków w odpowiedziach chatbota */
+.chatbot-link {
+  color: var(--primary); /* Używa Twojego czerwonego koloru */
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block; /* Potrzebne do działania transformacji */
+  transition: transform 0.2s ease-in-out; /* Płynne przejście animacji */
+}
+
+/* Efekt powiększenia po najechaniu myszką */
+.chatbot-link:hover {
+  transform: scale(1.05); /* Powiększa link o 5% */
+}
+
 /* --- TYPING INDICATOR --- */
 
 .typing-indicator {
