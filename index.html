@@ -19,7 +19,7 @@
 
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://domindev.pl/" />
+    <meta property="og:url" content="https://domindev.com/" />
     <meta property="og:title" content="DominDev | Building Digital Momentum" />
     <meta
       property="og:description"
@@ -67,7 +67,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
 
-  <body style="overflow: hidden; height: 100vh;">
+  <body style="overflow: hidden; height: 100vh">
     <!-- MATRIX BACKGROUND CANVAS -->
     <canvas id="matrixCanvas"></canvas>
 
@@ -79,9 +79,13 @@
       <div class="loader-content">
         <div class="loader-code-block">
           <span class="loader-label">SYSTEM STATUS:</span>
-          <div class="glitch-logo" data-text="DominDev.">Domin<span>Dev</span>.</div>
+          <div class="glitch-logo" data-text="DominDev.">
+            Domin<span>Dev</span>.
+          </div>
         </div>
-        <div class="loading-text">INITIALIZING SYSTEM<span class="blink-cursor">_</span></div>
+        <div class="loading-text">
+          INITIALIZING SYSTEM<span class="blink-cursor">_</span>
+        </div>
       </div>
     </div>
 
@@ -106,11 +110,13 @@
         </div>
 
         <h1 class="terminal-msg">
-          > MAINTENANCE_MODE: INFRASTRUCTURE_UPGRADE<span class="blink-cursor">_</span>
+          > MAINTENANCE_MODE: INFRASTRUCTURE_UPGRADE<span class="blink-cursor"
+            >_</span
+          >
         </h1>
 
         <p class="maintenance-text">
-          Trwają prace modernizacyjne infrastruktury.<br>
+          Trwają prace modernizacyjne infrastruktury.<br />
           Wdrażanie nowych protokołów bezpieczeństwa i optymalizacja systemów.
         </p>
 
@@ -124,882 +130,906 @@
 
     <!-- SITE CONTENT WRAPPER -->
     <div id="site-content">
+      <!-- Scroll Progress & Back to Top -->
+      <div class="progress-wrap" id="progress-wrap">
+        <svg
+          class="progress-circle svg-content"
+          width="100%"
+          height="100%"
+          viewBox="-1 -1 102 102"
+        >
+          <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+        <i class="fas fa-arrow-up"></i>
+      </div>
 
-    <!-- Scroll Progress & Back to Top -->
-    <div class="progress-wrap" id="progress-wrap">
-      <svg
-        class="progress-circle svg-content"
-        width="100%"
-        height="100%"
-        viewBox="-1 -1 102 102"
-      >
-        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-      </svg>
-      <i class="fas fa-arrow-up"></i>
-    </div>
+      <!-- Chatbot Trigger Button -->
+      <div class="chatbot-trigger" id="chatbot-trigger">
+        <i class="fa-solid fa-robot"></i>
+      </div>
 
-    <!-- Chatbot Trigger Button -->
-    <div class="chatbot-trigger" id="chatbot-trigger">
-      <i class="fa-solid fa-robot"></i>
-    </div>
+      <!-- Chatbot Backdrop (tylko mobile/tablet) -->
+      <div class="chatbot-backdrop" id="chatbot-backdrop"></div>
 
-    <!-- Chatbot Backdrop (tylko mobile/tablet) -->
-    <div class="chatbot-backdrop" id="chatbot-backdrop"></div>
-
-    <!-- Chatbot Window -->
-    <div class="chatbot-window" id="chatbot-window">
-      <div class="chatbot-header">
-        <div class="chatbot-header-info">
-          <div class="chatbot-avatar">
-            <i class="fa-solid fa-terminal"></i>
+      <!-- Chatbot Window -->
+      <div class="chatbot-window" id="chatbot-window">
+        <div class="chatbot-header">
+          <div class="chatbot-header-info">
+            <div class="chatbot-avatar">
+              <i class="fa-solid fa-terminal"></i>
+            </div>
+            <div class="chatbot-header-text">
+              <span class="chatbot-name">DominDev Bot</span>
+              <span class="chatbot-status">Online</span>
+            </div>
           </div>
-          <div class="chatbot-header-text">
-            <span class="chatbot-name">DominDev Bot</span>
-            <span class="chatbot-status">Online</span>
+          <button class="chatbot-close" id="chatbot-close">
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+
+        <div class="chatbot-messages" id="chatbot-messages">
+          <div class="chat-message bot">
+            <div class="message-content">
+              Cześć! Jestem asystentem DominDev. W czym mogę Ci pomóc?
+            </div>
           </div>
         </div>
-        <button class="chatbot-close" id="chatbot-close">
-          <span></span>
-          <span></span>
-        </button>
-      </div>
 
-      <div class="chatbot-messages" id="chatbot-messages">
-        <div class="chat-message bot">
-          <div class="message-content">
-            Cześć! Jestem asystentem DominDev. W czym mogę Ci pomóc?
-          </div>
+        <div class="chatbot-input-area">
+          <input
+            type="text"
+            class="chatbot-input"
+            id="chatbot-input"
+            placeholder="Napisz wiadomość (Enter = wyślij)"
+            autocomplete="off"
+          />
+          <button class="chatbot-send" id="chatbot-send">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
         </div>
       </div>
 
-      <div class="chatbot-input-area">
-        <input
-          type="text"
-          class="chatbot-input"
-          id="chatbot-input"
-          placeholder="Napisz wiadomość..."
-          autocomplete="off"
-        />
-        <button class="chatbot-send" id="chatbot-send">
-          <i class="fa-solid fa-paper-plane"></i>
-        </button>
-      </div>
-    </div>
+      <nav>
+        <div class="container nav-container">
+          <div class="logo">Domin<span>Dev</span>.</div>
 
-    <nav>
-      <div class="container nav-container">
-        <div class="logo">Domin<span>Dev</span>.</div>
+          <ul class="nav-links">
+            <li><a href="#about">O mnie</a></li>
 
-        <ul class="nav-links">
-          <li><a href="#about">O mnie</a></li>
+            <li><a href="#portfolio">Realizacje</a></li>
 
-          <li><a href="#portfolio">Realizacje</a></li>
+            <li><a href="#process">Proces</a></li>
 
-          <li><a href="#process">Proces</a></li>
+            <li><a href="#services">Usługi</a></li>
 
-          <li><a href="#services">Usługi</a></li>
+            <li><a href="#contact" class="btn btn-nav">Kontakt</a></li>
+          </ul>
 
-          <li><a href="#contact" class="btn btn-nav">Kontakt</a></li>
+          <div class="hamburger" id="hamburger-menu">
+            <span></span>
+
+            <span></span>
+
+            <span></span>
+          </div>
+        </div>
+      </nav>
+
+      <div class="fullscreen-menu" id="fullscreen-menu">
+        <ul>
+          <li><a href="#about">O MNIE</a></li>
+
+          <li><a href="#portfolio">REALIZACJE</a></li>
+
+          <li><a href="#process">PROCES</a></li>
+
+          <li><a href="#services">USŁUGI</a></li>
+
+          <li><a href="#contact">KONTAKT</a></li>
         </ul>
 
-        <div class="hamburger" id="hamburger-menu">
-          <span></span>
-
-          <span></span>
-
-          <span></span>
+        <div class="menu-social">
+          <a href="#" aria-label="LinkedIn Profile"
+            ><i class="fa-brands fa-linkedin"></i
+          ></a>
+          <a href="#" aria-label="GitHub Profile"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+          <a href="#" aria-label="Instagram Profile"
+            ><i class="fa-brands fa-instagram"></i
+          ></a>
         </div>
       </div>
-    </nav>
 
-    <div class="fullscreen-menu" id="fullscreen-menu">
-      <ul>
-        <li><a href="#about">O MNIE</a></li>
+      <section id="hero">
+        <div class="container hero-content">
+          <span class="hero-subtitle">High-Performance Web Engineering</span>
+          <h1 class="hero-title">
+            To nie wizytówka.<br />
+            To Twoja <span class="typewriter-text"></span
+            ><span class="typewriter-cursor">|</span>
+          </h1>
+          <p class="hero-desc">
+            Przestań prosić o uwagę. Zacznij ją przejmować.<br />
+            <span class="hero-highlight"
+              >Szybkość. Bezpieczeństwo. Wyniki.</span
+            >
+          </p>
+          <div class="hero-btns">
+            <a href="#services" class="btn">Uzbrój Swój Biznes</a>
+          </div>
+        </div>
+      </section>
 
-        <li><a href="#portfolio">REALIZACJE</a></li>
-
-        <li><a href="#process">PROCES</a></li>
-
-        <li><a href="#services">USŁUGI</a></li>
-
-        <li><a href="#contact">KONTAKT</a></li>
-      </ul>
-
-      <div class="menu-social">
-        <a href="#" aria-label="LinkedIn Profile"
-          ><i class="fa-brands fa-linkedin"></i
-        ></a>
-        <a href="#" aria-label="GitHub Profile"
-          ><i class="fa-brands fa-github"></i
-        ></a>
-        <a href="#" aria-label="Instagram Profile"
-          ><i class="fa-brands fa-instagram"></i
-        ></a>
-      </div>
-    </div>
-
-    <section id="hero">
-      <div class="container hero-content">
-        <span class="hero-subtitle">High-Performance Web Engineering</span>
-        <h1 class="hero-title">
-          To nie wizytówka.<br />
-          To Twoja <span class="typewriter-text"></span
-          ><span class="typewriter-cursor">|</span>
-        </h1>
-        <p class="hero-desc">
-          Przestań prosić o uwagę. Zacznij ją przejmować.<br />
-          <span class="hero-highlight">Szybkość. Bezpieczeństwo. Wyniki.</span>
-        </p>
-        <div class="hero-btns">
-          <a href="#services" class="btn">Uzbrój Swój Biznes</a>
+      <!-- Tech Stack Marquee -->
+      <div class="tech-strip">
+        <div class="marquee-content">
+          <span class="tech-item">WORDPRESS</span>
+          <span class="tech-item">WOOCOMMERCE</span>
+          <span class="tech-item">PHP 8.2</span>
+          <span class="tech-item">JAVASCRIPT</span>
+          <span class="tech-item">REACT</span>
+          <span class="tech-item">HTML5</span>
+          <span class="tech-item">CSS3</span>
+          <span class="tech-item">ACF PRO</span>
+          <span class="tech-item">SEO</span>
+          <span class="tech-item">CYBERSECURITY</span>
+          <!-- Duplikaty dla płynnej pętli -->
+          <span class="tech-item">WORDPRESS</span>
+          <span class="tech-item">WOOCOMMERCE</span>
+          <span class="tech-item">PHP 8.2</span>
+          <span class="tech-item">JAVASCRIPT</span>
+          <span class="tech-item">REACT</span>
+          <span class="tech-item">HTML5</span>
+          <span class="tech-item">CSS3</span>
+          <span class="tech-item">ACF PRO</span>
+          <span class="tech-item">SEO</span>
+          <span class="tech-item">CYBERSECURITY</span>
         </div>
       </div>
-    </section>
 
-    <!-- Tech Stack Marquee -->
-    <div class="tech-strip">
-      <div class="marquee-content">
-        <span class="tech-item">WORDPRESS</span>
-        <span class="tech-item">WOOCOMMERCE</span>
-        <span class="tech-item">PHP 8.2</span>
-        <span class="tech-item">JAVASCRIPT</span>
-        <span class="tech-item">REACT</span>
-        <span class="tech-item">HTML5</span>
-        <span class="tech-item">CSS3</span>
-        <span class="tech-item">ACF PRO</span>
-        <span class="tech-item">SEO</span>
-        <span class="tech-item">CYBERSECURITY</span>
-        <!-- Duplikaty dla płynnej pętli -->
-        <span class="tech-item">WORDPRESS</span>
-        <span class="tech-item">WOOCOMMERCE</span>
-        <span class="tech-item">PHP 8.2</span>
-        <span class="tech-item">JAVASCRIPT</span>
-        <span class="tech-item">REACT</span>
-        <span class="tech-item">HTML5</span>
-        <span class="tech-item">CSS3</span>
-        <span class="tech-item">ACF PRO</span>
-        <span class="tech-item">SEO</span>
-        <span class="tech-item">CYBERSECURITY</span>
-      </div>
-    </div>
+      <section id="about" class="section-padding">
+        <div class="container">
+          <div class="about-grid">
+            <div class="about-text reveal">
+              <h2 class="accent">01. O MNIE</h2>
+              <h3>Nie tylko koduję.<br />Dostarczam wyniki.</h3>
+              <p class="text-muted margin-bottom-30">
+                Większość stron internetowych to tylko "ładne wizytówki". Moje
+                projekty to <strong>maszyny biznesowe</strong>. Jako Fullstack
+                Developer łączę inżynieryjną precyzję z psychologią sprzedaży.
+                <br /><br />
+                Każda linijka kodu ma cel: przyspieszyć ładowanie, poprawić SEO
+                lub zwiększyć konwersję. Nie marnuję zasobów – ani serwera, ani
+                Twoich.
+              </p>
+              <ul class="check-list">
+                <li>
+                  <i class="fa-solid fa-check accent"></i> PageSpeed Score
+                  90-100/100
+                </li>
+                <li>
+                  <i class="fa-solid fa-check accent"></i> Bezpieczeństwo klasy
+                  Enterprise
+                </li>
+                <li>
+                  <i class="fa-solid fa-check accent"></i> Design nastawiony na
+                  konwersję
+                </li>
+              </ul>
 
-    <section id="about" class="section-padding">
-      <div class="container">
-        <div class="about-grid">
-          <div class="about-text reveal">
-            <h2 class="accent">01. O MNIE</h2>
-            <h3>Nie tylko koduję.<br />Dostarczam wyniki.</h3>
-            <p class="text-muted margin-bottom-30">
-              Większość stron internetowych to tylko "ładne wizytówki". Moje
-              projekty to <strong>maszyny biznesowe</strong>. Jako Fullstack
-              Developer łączę inżynieryjną precyzję z psychologią sprzedaży.
-              <br /><br />
-              Każda linijka kodu ma cel: przyspieszyć ładowanie, poprawić SEO
-              lub zwiększyć konwersję. Nie marnuję zasobów – ani serwera, ani
-              Twoich.
-            </p>
-            <ul class="check-list">
-              <li>
-                <i class="fa-solid fa-check accent"></i> PageSpeed Score
-                90-100/100
-              </li>
-              <li>
-                <i class="fa-solid fa-check accent"></i> Bezpieczeństwo klasy
-                Enterprise
-              </li>
-              <li>
-                <i class="fa-solid fa-check accent"></i> Design nastawiony na
-                konwersję
-              </li>
-            </ul>
+              <div class="cert-container reveal">
+                <h4>CERTYFIKACJA & KOMPETENCJE:</h4>
+                <div class="cert-grid">
+                  <div class="cert-chip">
+                    <div class="cert-icon">
+                      <i class="fa-solid fa-code"></i>
+                    </div>
+                    <div class="cert-info">
+                      <span class="cert-title">FULLSTACK DEV</span>
+                      <span class="cert-source">GoIT Certified</span>
+                    </div>
+                    <div class="cert-status"></div>
+                  </div>
 
-            <div class="cert-container reveal">
-              <h4>CERTYFIKACJA & KOMPETENCJE:</h4>
-              <div class="cert-grid">
-                <div class="cert-chip">
-                  <div class="cert-icon"><i class="fa-solid fa-code"></i></div>
-                  <div class="cert-info">
-                    <span class="cert-title">FULLSTACK DEV</span>
-                    <span class="cert-source">GoIT Certified</span>
+                  <div class="cert-chip">
+                    <div class="cert-icon">
+                      <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="cert-info">
+                      <span class="cert-title">CYBERSECURITY</span>
+                      <span class="cert-source">Cisco Essentials</span>
+                    </div>
+                    <div class="cert-status"></div>
                   </div>
-                  <div class="cert-status"></div>
-                </div>
 
-                <div class="cert-chip">
-                  <div class="cert-icon">
-                    <i class="fa-solid fa-shield-halved"></i>
+                  <div class="cert-chip">
+                    <div class="cert-icon">
+                      <i class="fa-brands fa-aws"></i>
+                    </div>
+                    <div class="cert-info">
+                      <span class="cert-title">AWS CLOUD</span>
+                      <span class="cert-source">Academy Graduate</span>
+                    </div>
+                    <div class="cert-status"></div>
                   </div>
-                  <div class="cert-info">
-                    <span class="cert-title">CYBERSECURITY</span>
-                    <span class="cert-source">Cisco Essentials</span>
-                  </div>
-                  <div class="cert-status"></div>
-                </div>
 
-                <div class="cert-chip">
-                  <div class="cert-icon"><i class="fa-brands fa-aws"></i></div>
-                  <div class="cert-info">
-                    <span class="cert-title">AWS CLOUD</span>
-                    <span class="cert-source">Academy Graduate</span>
+                  <div class="cert-chip">
+                    <div class="cert-icon">
+                      <i class="fa-solid fa-database"></i>
+                    </div>
+                    <div class="cert-info">
+                      <span class="cert-title">POSTGRESQL</span>
+                      <span class="cert-source">DB Admin</span>
+                    </div>
+                    <div class="cert-status"></div>
                   </div>
-                  <div class="cert-status"></div>
-                </div>
-
-                <div class="cert-chip">
-                  <div class="cert-icon">
-                    <i class="fa-solid fa-database"></i>
-                  </div>
-                  <div class="cert-info">
-                    <span class="cert-title">POSTGRESQL</span>
-                    <span class="cert-source">DB Admin</span>
-                  </div>
-                  <div class="cert-status"></div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="about-img-wrapper reveal desktop-only">
-            <img
-              src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070&auto=format&fit=crop"
-              srcset="
-                https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=1200&auto=format&fit=crop 1200w,
-                https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070&auto=format&fit=crop 2070w
-              "
-              sizes="500px"
-              alt="DominDev Coding Setup - WordPress Development Environment"
-              loading="lazy"
-              width="500"
-              height="400"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="portfolio" class="section-padding">
-      <div class="container">
-        <h2 class="accent reveal">02. REALIZACJE</h2>
-
-        <h3 class="reveal header-margin">Wybrane Realizacje</h3>
-
-        <div class="portfolio-grid">
-          <div class="project-card reveal" onclick="openModal('kraft')">
-            <img
-              src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=800&auto=format&fit=crop"
-              srcset="
-                https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=400&auto=format&fit=crop   400w,
-                https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=800&auto=format&fit=crop   800w,
-                https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1200&auto=format&fit=crop 1200w
-              "
-              sizes="(max-width: 768px) 90vw, 400px"
-              alt="Kraft Daily Pub - WordPress Project"
-              loading="lazy"
-              width="400"
-              height="300"
-            />
-            <div class="project-overlay">
-              <h4>Kraft Daily Pub</h4>
-              <p class="accent">Realizacja / WordPress</p>
-            </div>
-          </div>
-
-          <div class="project-card reveal" onclick="openModal('neon')">
-            <img
-              src="https://images.unsplash.com/photo-1600596542815-27508887cd27?q=80&w=800&auto=format&fit=crop"
-              srcset="
-                https://images.unsplash.com/photo-1600596542815-27508887cd27?q=80&w=400&auto=format&fit=crop   400w,
-                https://images.unsplash.com/photo-1600596542815-27508887cd27?q=80&w=800&auto=format&fit=crop   800w,
-                https://images.unsplash.com/photo-1600596542815-27508887cd27?q=80&w=1200&auto=format&fit=crop 1200w
-              "
-              sizes="(max-width: 768px) 90vw, 400px"
-              alt="Neon Estate - Real Estate Project"
-              loading="lazy"
-              width="400"
-              height="300"
-            />
-            <div class="project-overlay">
-              <h4>Neon Estate</h4>
-              <p class="accent">Concept / Next.js</p>
-            </div>
-          </div>
-
-          <div class="project-card reveal" onclick="openModal('techgear')">
-            <img
-              src="https://images.unsplash.com/photo-1550009158-9ebf690be2f4?q=80&w=800&auto=format&fit=crop"
-              srcset="
-                https://images.unsplash.com/photo-1550009158-9ebf690be2f4?q=80&w=400&auto=format&fit=crop   400w,
-                https://images.unsplash.com/photo-1550009158-9ebf690be2f4?q=80&w=800&auto=format&fit=crop   800w,
-                https://images.unsplash.com/photo-1550009158-9ebf690be2f4?q=80&w=1200&auto=format&fit=crop 1200w
-              "
-              sizes="(max-width: 768px) 90vw, 400px"
-              alt="TechGear Store - E-Commerce Project"
-              loading="lazy"
-              width="400"
-              height="300"
-            />
-            <div class="project-overlay">
-              <h4>TechGear Store</h4>
-              <p class="accent">Concept / E-Commerce</p>
+            <div class="about-img-wrapper reveal desktop-only">
+              <img
+                src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070&auto=format&fit=crop"
+                srcset="
+                  https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=1200&auto=format&fit=crop 1200w,
+                  https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070&auto=format&fit=crop 2070w
+                "
+                sizes="500px"
+                alt="DominDev Coding Setup - WordPress Development Environment"
+                loading="lazy"
+                width="500"
+                height="400"
+              />
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="process" class="section-padding">
-      <div class="container">
-        <h2 class="accent reveal">03. PROCES</h2>
+      <section id="portfolio" class="section-padding">
+        <div class="container">
+          <h2 class="accent reveal">02. REALIZACJE</h2>
 
-        <h3 class="reveal header-margin">Jak działam?</h3>
+          <h3 class="reveal header-margin">Wybrane Realizacje</h3>
 
-        <div class="timeline reveal">
-          <div class="timeline__line"></div>
-
-          <div class="timeline__item">
-            <div class="timeline__dot"></div>
-            <div class="timeline__content">
-              <h4>01. Strategiczny Brief</h4>
-              <p>
-                Analizuję Twój biznes. Nie pytam "jaki kolor", pytam "jaki cel
-                biznesowy".
-              </p>
-            </div>
-          </div>
-
-          <div class="timeline__item">
-            <div class="timeline__dot"></div>
-            <div class="timeline__content">
-              <h4>02. Design & UX</h4>
-              <p>
-                Projektuję interfejsy, które prowadzą użytkownika za rękę prosto
-                do przycisku "Kup".
-              </p>
-            </div>
-          </div>
-
-          <div class="timeline__item">
-            <div class="timeline__dot"></div>
-            <div class="timeline__content">
-              <h4>03. Hardcore Dev</h4>
-              <p>
-                Czysty kod. Semantyka. SEO techniczne. Szybkość ładowania
-                poniżej 1s.
-              </p>
-            </div>
-          </div>
-
-          <div class="timeline__item">
-            <div class="timeline__dot"></div>
-            <div class="timeline__content">
-              <h4>04. Review & Testy</h4>
-              <p>
-                Twoja weryfikacja. Testy bezpieczeństwa i wydajności. Szlifujemy
-                diament.
-              </p>
-            </div>
-          </div>
-
-          <div class="timeline__item">
-            <div class="timeline__dot"></div>
-            <div class="timeline__content">
-              <h4>05. Deploy</h4>
-              <p>
-                Startujemy. Podpinam analitykę, szkolę Cię z obsługi CMS. Jesteś
-                online.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="services" class="section-padding dark-bg">
-      <div class="container">
-        <h2 class="accent reveal">04. USŁUGI</h2>
-        <h3 class="reveal header-margin">Wybierz Swój Moduł</h3>
-
-        <div class="services-label reveal">CORE SYSTEMS (BUILD)</div>
-        <div class="services-grid core-grid reveal">
-          <div class="service-card">
-            <div class="card-icon"><i class="fa-solid fa-rocket"></i></div>
-            <div class="card-content">
-              <h4>Landing Page</h4>
-              <ul class="service-features">
-                <li><i class="fa-solid fa-check"></i> Konwersja & Sprzedaż</li>
-                <li>
-                  <i class="fa-solid fa-check"></i> Copywriting sprzedażowy
-                </li>
-                <li><i class="fa-solid fa-check"></i> Szybkość < 1s</li>
-              </ul>
-              <p class="service-desc">
-                Idealny do kampanii Ads i szybkich startów produktu.
-              </p>
-            </div>
-            <div class="card-footer">
-              <div class="price">
-                od 1500 PLN <span class="netto">netto</span>
+          <div class="portfolio-grid">
+            <div class="project-card reveal" onclick="openModal('kraft')">
+              <img
+                src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=800&auto=format&fit=crop"
+                srcset="
+                  https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=400&auto=format&fit=crop   400w,
+                  https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=800&auto=format&fit=crop   800w,
+                  https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1200&auto=format&fit=crop 1200w
+                "
+                sizes="(max-width: 768px) 90vw, 400px"
+                alt="Kraft Daily Pub - WordPress Project"
+                loading="lazy"
+                width="400"
+                height="300"
+              />
+              <div class="project-overlay">
+                <h4>Kraft Daily Pub</h4>
+                <p class="accent">Realizacja / WordPress</p>
               </div>
-              <a
-                href="#contact"
-                class="btn-secondary full-width center-text"
-                onclick="prefillForm('landing', 1500)"
-                >Chcę Konwersji</a
-              >
             </div>
-          </div>
 
-          <div class="service-card highlight">
-            <div class="best-choice">REKOMENDOWANE</div>
-            <div class="card-icon"><i class="fa-solid fa-layer-group"></i></div>
-            <div class="card-content">
-              <h4>Business Hub</h4>
-              <ul class="service-features">
-                <li><i class="fa-solid fa-check"></i> CMS (Edycja treści)</li>
-                <li><i class="fa-solid fa-check"></i> Blog & SEO Structure</li>
-                <li>
-                  <i class="fa-solid fa-check"></i> Integracja Social Media
-                </li>
-                <li>
-                  <i class="fa-solid fa-check"></i>
-                  <strong>1 msc Opieki Gratis</strong>
-                </li>
-              </ul>
-              <p class="service-desc">
-                Cyfrowa siedziba Twojej firmy. Skalowalna i profesjonalna.
-              </p>
-            </div>
-            <div class="card-footer">
-              <div class="price">
-                od 3500 PLN <span class="netto">netto</span>
+            <div class="project-card reveal" onclick="openModal('neon')">
+              <img
+                src="https://images.unsplash.com/photo-1600596542815-27508887cd27?q=80&w=800&auto=format&fit=crop"
+                srcset="
+                  https://images.unsplash.com/photo-1600596542815-27508887cd27?q=80&w=400&auto=format&fit=crop   400w,
+                  https://images.unsplash.com/photo-1600596542815-27508887cd27?q=80&w=800&auto=format&fit=crop   800w,
+                  https://images.unsplash.com/photo-1600596542815-27508887cd27?q=80&w=1200&auto=format&fit=crop 1200w
+                "
+                sizes="(max-width: 768px) 90vw, 400px"
+                alt="Neon Estate - Real Estate Project"
+                loading="lazy"
+                width="400"
+                height="300"
+              />
+              <div class="project-overlay">
+                <h4>Neon Estate</h4>
+                <p class="accent">Concept / Next.js</p>
               </div>
-              <a
-                href="#contact"
-                class="btn-secondary full-width center-text"
-                onclick="prefillForm('business', 3500)"
-                >Buduj Markę</a
-              >
             </div>
-          </div>
 
-          <div class="service-card">
-            <div class="card-icon">
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-            <div class="card-content">
-              <h4>E-Commerce Pro</h4>
-              <ul class="service-features">
-                <li><i class="fa-solid fa-check"></i> WooCommerce Custom</li>
-                <li>
-                  <i class="fa-solid fa-check"></i> Płatności (BLIK/Karty)
-                </li>
-                <li><i class="fa-solid fa-check"></i> Kurierzy & Paczkomaty</li>
-                <li>
-                  <i class="fa-solid fa-check"></i>
-                  <strong>1 msc Opieki Gratis</strong>
-                </li>
-              </ul>
-              <p class="service-desc">
-                Sklep odporny na duży ruch. Zautomatyzowany i bezpieczny.
-              </p>
-            </div>
-            <div class="card-footer">
-              <div class="price">
-                od 6000 PLN <span class="netto">netto</span>
+            <div class="project-card reveal" onclick="openModal('techgear')">
+              <img
+                src="https://images.unsplash.com/photo-1550009158-9ebf690be2f4?q=80&w=800&auto=format&fit=crop"
+                srcset="
+                  https://images.unsplash.com/photo-1550009158-9ebf690be2f4?q=80&w=400&auto=format&fit=crop   400w,
+                  https://images.unsplash.com/photo-1550009158-9ebf690be2f4?q=80&w=800&auto=format&fit=crop   800w,
+                  https://images.unsplash.com/photo-1550009158-9ebf690be2f4?q=80&w=1200&auto=format&fit=crop 1200w
+                "
+                sizes="(max-width: 768px) 90vw, 400px"
+                alt="TechGear Store - E-Commerce Project"
+                loading="lazy"
+                width="400"
+                height="300"
+              />
+              <div class="project-overlay">
+                <h4>TechGear Store</h4>
+                <p class="accent">Concept / E-Commerce</p>
               </div>
-              <a
-                href="#contact"
-                class="btn-secondary full-width center-text"
-                onclick="prefillForm('ecommerce', 6000)"
-                >Zacznij Sprzedawać</a
-              >
-            </div>
-          </div>
-
-          <div class="service-card">
-            <div class="card-icon"><i class="fa-brands fa-react"></i></div>
-            <div class="card-content">
-              <h4>Web App / React</h4>
-              <ul class="service-features">
-                <li><i class="fa-solid fa-check"></i> React / Next.js</li>
-                <li><i class="fa-solid fa-check"></i> Dashboardy & CRM</li>
-                <li><i class="fa-solid fa-check"></i> Custom Logic</li>
-                <li><i class="fa-solid fa-check"></i> Skalowalność API</li>
-              </ul>
-              <p class="service-desc">
-                Dedykowane oprogramowanie webowe dla wymagających procesów.
-              </p>
-            </div>
-            <div class="card-footer">
-              <div class="price">
-                od 8000 PLN <span class="netto">netto</span>
-              </div>
-              <a
-                href="#contact"
-                class="btn-secondary full-width center-text"
-                onclick="prefillForm('webapp', 8000)"
-                >Stwórz System</a
-              >
             </div>
           </div>
         </div>
+      </section>
 
-        <div class="services-label reveal margin-top-large">
-          OPTIMIZATION & SUPPORT
-        </div>
-        <div class="services-grid micro-grid reveal">
-          <div class="micro-card">
-            <div class="micro-header">
-              <i class="fa-solid fa-stethoscope accent"></i>
-              <h4>Audyt & Ratunek WP</h4>
-            </div>
-            <p>
-              Strona wolno działa? Wirusy? Błędy? Zdiagnozuję i naprawię
-              problem.
-            </p>
-            <div class="micro-footer">
-              <span class="micro-price">300-500 PLN</span>
-              <a
-                href="#contact"
-                class="micro-link"
-                onclick="prefillForm('audit', 500)"
-                >Zamów <i class="fa-solid fa-arrow-right"></i
-              ></a>
-            </div>
-          </div>
+      <section id="process" class="section-padding">
+        <div class="container">
+          <h2 class="accent reveal">03. PROCES</h2>
 
-          <div class="micro-card">
-            <div class="micro-header">
-              <i class="fa-solid fa-bolt accent"></i>
-              <h4>Speed Boost Pack</h4>
-            </div>
-            <p>
-              Optymalizacja Core Web Vitals. Wynik 90+ na Mobile gwarantowany.
-            </p>
-            <div class="micro-footer">
-              <span class="micro-price">od 800 PLN</span>
-              <a
-                href="#contact"
-                class="micro-link"
-                onclick="prefillForm('speed', 800)"
-                >Przyspiesz <i class="fa-solid fa-arrow-right"></i
-              ></a>
-            </div>
-          </div>
+          <h3 class="reveal header-margin">Jak działam?</h3>
 
-          <div class="micro-card">
-            <div class="micro-header">
-              <i class="fa-solid fa-plug accent"></i>
-              <h4>Integracje API</h4>
-            </div>
-            <p>Newsletter, CRM, Chatbot, Płatności. Łączę systemy w całość.</p>
-            <div class="micro-footer">
-              <span class="micro-price">od 400 PLN</span>
-              <a
-                href="#contact"
-                class="micro-link"
-                onclick="prefillForm('integration', 400)"
-                >Wdróż <i class="fa-solid fa-arrow-right"></i
-              ></a>
-            </div>
-          </div>
+          <div class="timeline reveal">
+            <div class="timeline__line"></div>
 
-          <div class="micro-card highlight-micro">
-            <div class="micro-header">
-              <i class="fa-solid fa-handshake accent"></i>
-              <h4>Partnerstwo Win-Win</h4>
+            <div class="timeline__item">
+              <div class="timeline__dot"></div>
+              <div class="timeline__content">
+                <h4>01. Strategiczny Brief</h4>
+                <p>
+                  Analizuję Twój biznes. Nie pytam "jaki kolor", pytam "jaki cel
+                  biznesowy".
+                </p>
+              </div>
             </div>
-            <p>
-              Masz ciekawy pomysł, ale ograniczony budżet? Jestem otwarty na
-              negocjacje.
-            </p>
-            <div class="micro-footer">
-              <span class="micro-price">0 PLN (Invest)</span>
-              <a
-                href="#contact"
-                class="micro-link"
-                onclick="prefillForm('other', 0)"
-                >Zaproponuj <i class="fa-solid fa-arrow-right"></i
-              ></a>
+
+            <div class="timeline__item">
+              <div class="timeline__dot"></div>
+              <div class="timeline__content">
+                <h4>02. Design & UX</h4>
+                <p>
+                  Projektuję interfejsy, które prowadzą użytkownika za rękę
+                  prosto do przycisku "Kup".
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline__item">
+              <div class="timeline__dot"></div>
+              <div class="timeline__content">
+                <h4>03. Hardcore Dev</h4>
+                <p>
+                  Czysty kod. Semantyka. SEO techniczne. Szybkość ładowania
+                  poniżej 1s.
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline__item">
+              <div class="timeline__dot"></div>
+              <div class="timeline__content">
+                <h4>04. Review & Testy</h4>
+                <p>
+                  Twoja weryfikacja. Testy bezpieczeństwa i wydajności.
+                  Szlifujemy diament.
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline__item">
+              <div class="timeline__dot"></div>
+              <div class="timeline__content">
+                <h4>05. Deploy</h4>
+                <p>
+                  Startujemy. Podpinam analitykę, szkolę Cię z obsługi CMS.
+                  Jesteś online.
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="contact" class="section-padding">
-      <div class="container">
-        <div class="contact-grid">
-          <div class="contact-info reveal">
-            <h2 class="accent">05. KONTAKT</h2>
-            <h3>
-              PRZESTAŃ WALCZYĆ<br /><span class="accent">Z TECHNOLOGIĄ!</span>
-            </h3>
-            <p class="text-muted margin-bottom-30">
-              Niech ona walczy dla Ciebie. To Twój fundament przewagi w sieci.
-            </p>
+      <section id="services" class="section-padding dark-bg">
+        <div class="container">
+          <h2 class="accent reveal">04. USŁUGI</h2>
+          <h3 class="reveal header-margin">Wybierz Swój Moduł</h3>
 
-            <div class="contact-details">
-              <a href="mailto:contact@domindev.com" class="contact-link"
-                >contact@domindev.com</a
-              >
-              <div class="contact-social">
+          <div class="services-label reveal">CORE SYSTEMS (BUILD)</div>
+          <div class="services-grid core-grid reveal">
+            <div class="service-card">
+              <div class="card-icon"><i class="fa-solid fa-rocket"></i></div>
+              <div class="card-content">
+                <h4>Landing Page</h4>
+                <ul class="service-features">
+                  <li>
+                    <i class="fa-solid fa-check"></i> Konwersja & Sprzedaż
+                  </li>
+                  <li>
+                    <i class="fa-solid fa-check"></i> Copywriting sprzedażowy
+                  </li>
+                  <li><i class="fa-solid fa-check"></i> Szybkość < 1s</li>
+                </ul>
+                <p class="service-desc">
+                  Idealny do kampanii Ads i szybkich startów produktu.
+                </p>
+              </div>
+              <div class="card-footer">
+                <div class="price">
+                  od 1500 PLN <span class="netto">netto</span>
+                </div>
+                <a
+                  href="#contact"
+                  class="btn-secondary full-width center-text"
+                  onclick="prefillForm('landing', 1500)"
+                  >Chcę Konwersji</a
+                >
+              </div>
+            </div>
+
+            <div class="service-card highlight">
+              <div class="best-choice">REKOMENDOWANE</div>
+              <div class="card-icon">
+                <i class="fa-solid fa-layer-group"></i>
+              </div>
+              <div class="card-content">
+                <h4>Business Hub</h4>
+                <ul class="service-features">
+                  <li><i class="fa-solid fa-check"></i> CMS (Edycja treści)</li>
+                  <li>
+                    <i class="fa-solid fa-check"></i> Blog & SEO Structure
+                  </li>
+                  <li>
+                    <i class="fa-solid fa-check"></i> Integracja Social Media
+                  </li>
+                  <li>
+                    <i class="fa-solid fa-check"></i>
+                    <strong>1 msc Opieki Gratis</strong>
+                  </li>
+                </ul>
+                <p class="service-desc">
+                  Cyfrowa siedziba Twojej firmy. Skalowalna i profesjonalna.
+                </p>
+              </div>
+              <div class="card-footer">
+                <div class="price">
+                  od 3500 PLN <span class="netto">netto</span>
+                </div>
+                <a
+                  href="#contact"
+                  class="btn-secondary full-width center-text"
+                  onclick="prefillForm('business', 3500)"
+                  >Buduj Markę</a
+                >
+              </div>
+            </div>
+
+            <div class="service-card">
+              <div class="card-icon">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </div>
+              <div class="card-content">
+                <h4>E-Commerce Pro</h4>
+                <ul class="service-features">
+                  <li><i class="fa-solid fa-check"></i> WooCommerce Custom</li>
+                  <li>
+                    <i class="fa-solid fa-check"></i> Płatności (BLIK/Karty)
+                  </li>
+                  <li>
+                    <i class="fa-solid fa-check"></i> Kurierzy & Paczkomaty
+                  </li>
+                  <li>
+                    <i class="fa-solid fa-check"></i>
+                    <strong>1 msc Opieki Gratis</strong>
+                  </li>
+                </ul>
+                <p class="service-desc">
+                  Sklep odporny na duży ruch. Zautomatyzowany i bezpieczny.
+                </p>
+              </div>
+              <div class="card-footer">
+                <div class="price">
+                  od 6000 PLN <span class="netto">netto</span>
+                </div>
+                <a
+                  href="#contact"
+                  class="btn-secondary full-width center-text"
+                  onclick="prefillForm('ecommerce', 6000)"
+                  >Zacznij Sprzedawać</a
+                >
+              </div>
+            </div>
+
+            <div class="service-card">
+              <div class="card-icon"><i class="fa-brands fa-react"></i></div>
+              <div class="card-content">
+                <h4>Web App / React</h4>
+                <ul class="service-features">
+                  <li><i class="fa-solid fa-check"></i> React / Next.js</li>
+                  <li><i class="fa-solid fa-check"></i> Dashboardy & CRM</li>
+                  <li><i class="fa-solid fa-check"></i> Custom Logic</li>
+                  <li><i class="fa-solid fa-check"></i> Skalowalność API</li>
+                </ul>
+                <p class="service-desc">
+                  Dedykowane oprogramowanie webowe dla wymagających procesów.
+                </p>
+              </div>
+              <div class="card-footer">
+                <div class="price">
+                  od 8000 PLN <span class="netto">netto</span>
+                </div>
+                <a
+                  href="#contact"
+                  class="btn-secondary full-width center-text"
+                  onclick="prefillForm('webapp', 8000)"
+                  >Stwórz System</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="services-label reveal margin-top-large">
+            OPTIMIZATION & SUPPORT
+          </div>
+          <div class="services-grid micro-grid reveal">
+            <div class="micro-card">
+              <div class="micro-header">
+                <i class="fa-solid fa-stethoscope accent"></i>
+                <h4>Audyt & Ratunek WP</h4>
+              </div>
+              <p>
+                Strona wolno działa? Wirusy? Błędy? Zdiagnozuję i naprawię
+                problem.
+              </p>
+              <div class="micro-footer">
+                <span class="micro-price">300-500 PLN</span>
+                <a
+                  href="#contact"
+                  class="micro-link"
+                  onclick="prefillForm('audit', 500)"
+                  >Zamów <i class="fa-solid fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+
+            <div class="micro-card">
+              <div class="micro-header">
+                <i class="fa-solid fa-bolt accent"></i>
+                <h4>Speed Boost Pack</h4>
+              </div>
+              <p>
+                Optymalizacja Core Web Vitals. Wynik 90+ na Mobile gwarantowany.
+              </p>
+              <div class="micro-footer">
+                <span class="micro-price">od 800 PLN</span>
+                <a
+                  href="#contact"
+                  class="micro-link"
+                  onclick="prefillForm('speed', 800)"
+                  >Przyspiesz <i class="fa-solid fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+
+            <div class="micro-card">
+              <div class="micro-header">
+                <i class="fa-solid fa-plug accent"></i>
+                <h4>Integracje API</h4>
+              </div>
+              <p>
+                Newsletter, CRM, Chatbot, Płatności. Łączę systemy w całość.
+              </p>
+              <div class="micro-footer">
+                <span class="micro-price">od 400 PLN</span>
+                <a
+                  href="#contact"
+                  class="micro-link"
+                  onclick="prefillForm('integration', 400)"
+                  >Wdróż <i class="fa-solid fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+
+            <div class="micro-card highlight-micro">
+              <div class="micro-header">
+                <i class="fa-solid fa-handshake accent"></i>
+                <h4>Partnerstwo Win-Win</h4>
+              </div>
+              <p>
+                Masz ciekawy pomysł, ale ograniczony budżet? Jestem otwarty na
+                negocjacje.
+              </p>
+              <div class="micro-footer">
+                <span class="micro-price">0 PLN (Invest)</span>
+                <a
+                  href="#contact"
+                  class="micro-link"
+                  onclick="prefillForm('other', 0)"
+                  >Zaproponuj <i class="fa-solid fa-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section-padding">
+        <div class="container">
+          <div class="contact-grid">
+            <div class="contact-info reveal">
+              <h2 class="accent">05. KONTAKT</h2>
+              <h3>
+                PRZESTAŃ WALCZYĆ<br /><span class="accent">Z TECHNOLOGIĄ!</span>
+              </h3>
+              <p class="text-muted margin-bottom-30">
+                Niech ona walczy dla Ciebie. To Twój fundament przewagi w sieci.
+              </p>
+
+              <div class="contact-details">
+                <a href="mailto:contact@domindev.com" class="contact-link"
+                  >contact@domindev.com</a
+                >
+                <div class="contact-social">
+                  <a href="#" aria-label="LinkedIn"
+                    ><i class="fab fa-linkedin-in"></i
+                  ></a>
+                  <a href="#" aria-label="GitHub"
+                    ><i class="fab fa-github"></i
+                  ></a>
+                  <a href="#" aria-label="Instagram"
+                    ><i class="fab fa-instagram"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-cta-wrapper reveal">
+              <div class="cta-box">
+                <p class="cta-text">
+                  Masz misję do wykonania? Wyślij sygnał.<br />
+                  Resztę przejmą zawodowcy.
+                </p>
+                <button class="btn-mega" onclick="openContactPanel()">
+                  <i class="fa-solid fa-power-off"></i> NADAJ WIADOMOŚĆ
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="container">
+          <div class="footer-grid">
+            <div>
+              <div class="logo">Domin<span>Dev</span>.</div>
+
+              <p class="text-muted margin-top-20 footer-desc">
+                Agresywny Web Development dla liderów rynku. Wrocław, Polska.
+              </p>
+            </div>
+
+            <div>
+              <h4 class="margin-bottom-20">Menu</h4>
+
+              <ul class="footer-links">
+                <li><a href="#about">O mnie</a></li>
+
+                <li><a href="#portfolio">Portfolio</a></li>
+
+                <li><a href="#services">Usługi</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="margin-bottom-20">Social</h4>
+
+              <div class="social-icons">
                 <a href="#" aria-label="LinkedIn"
-                  ><i class="fab fa-linkedin-in"></i
+                  ><i class="fa-brands fa-linkedin"></i
                 ></a>
                 <a href="#" aria-label="GitHub"
-                  ><i class="fab fa-github"></i
+                  ><i class="fa-brands fa-github"></i
                 ></a>
                 <a href="#" aria-label="Instagram"
-                  ><i class="fab fa-instagram"></i
+                  ><i class="fa-brands fa-instagram"></i
                 ></a>
               </div>
             </div>
           </div>
 
-          <div class="contact-cta-wrapper reveal">
-            <div class="cta-box">
-              <p class="cta-text">
-                Masz misję do wykonania? Wyślij sygnał.<br />
-                Resztę przejmą zawodowcy.
-              </p>
-              <button class="btn-mega" onclick="openContactPanel()">
-                <i class="fa-solid fa-power-off"></i> NADAJ WIADOMOŚĆ
-              </button>
+          <div class="copyright">
+            &copy; 2025 DominDev. Wszelkie prawa zastrzeżone.
+          </div>
+        </div>
+      </footer>
+
+      <div class="system-bar">
+        <div class="sys-container">
+          <div class="sys-col">
+            <span class="status-dot"></span>
+            <span class="sys-label">SYSTEM:</span>
+            <span class="sys-val text-green">ONLINE</span>
+          </div>
+          <div class="sys-col">
+            <span class="sys-icon"><i class="fa-solid fa-bolt"></i></span>
+            <span class="sys-label">LOAD:</span>
+            <span id="loadTime" class="sys-val">CALC...</span>
+          </div>
+          <div class="sys-col desktop-only">
+            <span class="sys-icon"
+              ><i class="fa-solid fa-shield-halved"></i
+            ></span>
+            <span class="sys-label">SECURITY:</span>
+            <span class="sys-val text-green">HIGH</span>
+          </div>
+          <div class="sys-col desktop-only">
+            <span class="sys-icon"><i class="fa-solid fa-gauge-high"></i></span>
+            <span class="sys-label">SCORE:</span>
+            <span class="sys-val text-green">100/100</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-overlay" id="project-modal" aria-hidden="true">
+        <div class="modal-content">
+          <button class="modal-close" id="modal-close-btn" aria-label="Zamknij">
+            <span></span>
+            <span></span>
+          </button>
+
+          <div class="modal-body">
+            <div class="modal-image-container">
+              <img id="modal-img" src="" alt="Project Preview" />
+              <div class="modal-tech-stack" id="modal-tags"></div>
+            </div>
+
+            <div class="modal-info">
+              <h3 id="modal-title">Project Title</h3>
+              <p id="modal-type" class="accent-text">Type</p>
+
+              <div class="modal-details">
+                <div class="detail-block">
+                  <h4>WYZWANIE:</h4>
+                  <p id="modal-challenge">...</p>
+                </div>
+                <div class="detail-block">
+                  <h4>ROZWIĄZANIE:</h4>
+                  <p id="modal-solution">...</p>
+                </div>
+                <div class="detail-block result-block">
+                  <h4>WYNIK:</h4>
+                  <p id="modal-result">...</p>
+                </div>
+              </div>
+
+              <a
+                href="#contact"
+                class="btn full-width"
+                onclick="closeModal(); prefillForm('other', 0)"
+                >Chcę podobny projekt</a
+              >
             </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <footer>
-      <div class="container">
-        <div class="footer-grid">
-          <div>
-            <div class="logo">Domin<span>Dev</span>.</div>
+      <!-- CONTACT PANEL -->
+      <div class="modal-overlay" id="contact-panel" aria-hidden="true">
+        <div class="modal-content contact-content">
+          <button
+            class="modal-close"
+            id="contact-close-btn"
+            aria-label="Zamknij"
+          >
+            <span></span>
+            <span></span>
+          </button>
 
-            <p class="text-muted margin-top-20 footer-desc">
-              Agresywny Web Development dla liderów rynku. Wrocław, Polska.
+          <div class="contact-panel-body">
+            <h3 class="panel-title">
+              TERMINAL <span class="accent">KONTAKTOWY</span>
+            </h3>
+            <p class="panel-desc">
+              Czekam na dane. Opisz parametry misji, a otrzymasz strategię
+              techniczną.
             </p>
-          </div>
 
-          <div>
-            <h4 class="margin-bottom-20">Menu</h4>
-
-            <ul class="footer-links">
-              <li><a href="#about">O mnie</a></li>
-
-              <li><a href="#portfolio">Portfolio</a></li>
-
-              <li><a href="#services">Usługi</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 class="margin-bottom-20">Social</h4>
-
-            <div class="social-icons">
-              <a href="#" aria-label="LinkedIn"
-                ><i class="fa-brands fa-linkedin"></i
-              ></a>
-              <a href="#" aria-label="GitHub"
-                ><i class="fa-brands fa-github"></i
-              ></a>
-              <a href="#" aria-label="Instagram"
-                ><i class="fa-brands fa-instagram"></i
-              ></a>
-            </div>
-          </div>
-        </div>
-
-        <div class="copyright">
-          &copy; 2025 DominDev. Wszelkie prawa zastrzeżone.
-        </div>
-      </div>
-    </footer>
-
-    <div class="system-bar">
-      <div class="sys-container">
-        <div class="sys-col">
-          <span class="status-dot"></span>
-          <span class="sys-label">SYSTEM:</span>
-          <span class="sys-val text-green">ONLINE</span>
-        </div>
-        <div class="sys-col">
-          <span class="sys-icon"><i class="fa-solid fa-bolt"></i></span>
-          <span class="sys-label">LOAD:</span>
-          <span id="loadTime" class="sys-val">CALC...</span>
-        </div>
-        <div class="sys-col desktop-only">
-          <span class="sys-icon"
-            ><i class="fa-solid fa-shield-halved"></i
-          ></span>
-          <span class="sys-label">SECURITY:</span>
-          <span class="sys-val text-green">HIGH</span>
-        </div>
-        <div class="sys-col desktop-only">
-          <span class="sys-icon"><i class="fa-solid fa-gauge-high"></i></span>
-          <span class="sys-label">SCORE:</span>
-          <span class="sys-val text-green">100/100</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal-overlay" id="project-modal" aria-hidden="true">
-      <div class="modal-content">
-        <button class="modal-close" id="modal-close-btn" aria-label="Zamknij">
-          <span></span>
-          <span></span>
-        </button>
-
-        <div class="modal-body">
-          <div class="modal-image-container">
-            <img id="modal-img" src="" alt="Project Preview" />
-            <div class="modal-tech-stack" id="modal-tags"></div>
-          </div>
-
-          <div class="modal-info">
-            <h3 id="modal-title">Project Title</h3>
-            <p id="modal-type" class="accent-text">Type</p>
-
-            <div class="modal-details">
-              <div class="detail-block">
-                <h4>WYZWANIE:</h4>
-                <p id="modal-challenge">...</p>
+            <form id="contactForm" class="cyber-form">
+              <div class="form-group">
+                <label for="panel-name">NADAWCA / ORGANIZACJA *</label>
+                <input
+                  type="text"
+                  id="panel-name"
+                  name="name"
+                  required
+                  placeholder="Twoje Imię lub Nazwa Firmy"
+                  autocomplete="name"
+                />
               </div>
-              <div class="detail-block">
-                <h4>ROZWIĄZANIE:</h4>
-                <p id="modal-solution">...</p>
+
+              <div class="form-group">
+                <label for="panel-email">KANAŁ ZWROTNY (E-MAIL) *</label>
+                <input
+                  type="email"
+                  id="panel-email"
+                  name="email"
+                  required
+                  placeholder="Twój adres e-mail"
+                  autocomplete="email"
+                />
               </div>
-              <div class="detail-block result-block">
-                <h4>WYNIK:</h4>
-                <p id="modal-result">...</p>
+
+              <div class="form-group">
+                <label for="panel-service">Cel Misji (Usługa)</label>
+                <select id="panel-service" name="service">
+                  <option value="landing">Landing Page (od 1500 PLN)</option>
+                  <option value="business">Strona Firmowa (od 3500 PLN)</option>
+                  <option value="ecommerce">
+                    Sklep E-Commerce (od 6000 PLN)
+                  </option>
+                  <option value="webapp">Web App / React (od 8000 PLN)</option>
+                  <option value="audit">
+                    Audyt & Ratunek WP (300-500 PLN)
+                  </option>
+                  <option value="speed">
+                    Optymalizacja Szybkości (od 800 PLN)
+                  </option>
+                  <option value="integration">
+                    Integracje API (od 400 PLN)
+                  </option>
+                  <option value="other">Inne / Partnerstwo Win-Win</option>
+                </select>
               </div>
-            </div>
 
-            <a
-              href="#contact"
-              class="btn full-width"
-              onclick="closeModal(); prefillForm('other', 0)"
-              >Chcę podobny projekt</a
-            >
-          </div>
-        </div>
-      </div>
-    </div>
+              <div class="form-group">
+                <label for="panel-budget"
+                  >Budżet Operacyjny:
+                  <span id="budgetValue" class="accent"
+                    >Partnerstwo | Win-Win</span
+                  ></label
+                >
+                <input
+                  type="range"
+                  id="panel-budget"
+                  name="budget"
+                  min="0"
+                  max="25000"
+                  step="250"
+                  value="0"
+                />
+              </div>
 
-    <!-- CONTACT PANEL -->
-    <div class="modal-overlay" id="contact-panel" aria-hidden="true">
-      <div class="modal-content contact-content">
-        <button class="modal-close" id="contact-close-btn" aria-label="Zamknij">
-          <span></span>
-          <span></span>
-        </button>
+              <div class="form-group">
+                <label for="panel-message">Szczegóły Misji *</label>
+                <textarea
+                  id="panel-message"
+                  name="message"
+                  required
+                  rows="4"
+                  placeholder="Opisz krótko wymagania..."
+                ></textarea>
+              </div>
 
-        <div class="contact-panel-body">
-          <h3 class="panel-title">
-            TERMINAL <span class="accent">KONTAKTOWY</span>
-          </h3>
-          <p class="panel-desc">
-            Czekam na dane. Opisz parametry misji, a otrzymasz strategię
-            techniczną.
-          </p>
+              <div class="form-group checkbox-group">
+                <input type="checkbox" id="panel-rodo" name="rodo" required />
+                <label for="panel-rodo"
+                  >Zgoda na przetwarzanie danych (RODO Protocol).</label
+                >
+              </div>
 
-          <form id="contactForm" class="cyber-form">
-            <div class="form-group">
-              <label for="panel-name">NADAWCA / ORGANIZACJA *</label>
+              <!-- Honeypot Anti-Spam Field (hidden from users, visible to bots) -->
               <input
                 type="text"
-                id="panel-name"
-                name="name"
-                required
-                placeholder="Twoje Imię lub Nazwa Firmy"
-                autocomplete="name"
+                id="honey-field"
+                name="_gotcha"
+                style="display: none !important"
+                tabindex="-1"
+                autocomplete="off"
               />
-            </div>
 
-            <div class="form-group">
-              <label for="panel-email">KANAŁ ZWROTNY (E-MAIL) *</label>
-              <input
-                type="email"
-                id="panel-email"
-                name="email"
-                required
-                placeholder="Twój adres e-mail"
-                autocomplete="email"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="panel-service">Cel Misji (Usługa)</label>
-              <select id="panel-service" name="service">
-                <option value="landing">Landing Page (od 1500 PLN)</option>
-                <option value="business">Strona Firmowa (od 3500 PLN)</option>
-                <option value="ecommerce">
-                  Sklep E-Commerce (od 6000 PLN)
-                </option>
-                <option value="webapp">Web App / React (od 8000 PLN)</option>
-                <option value="audit">Audyt & Ratunek WP (300-500 PLN)</option>
-                <option value="speed">
-                  Optymalizacja Szybkości (od 800 PLN)
-                </option>
-                <option value="integration">Integracje API (od 400 PLN)</option>
-                <option value="other">Inne / Partnerstwo Win-Win</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="panel-budget"
-                >Budżet Operacyjny:
-                <span id="budgetValue" class="accent"
-                  >Partnerstwo | Win-Win</span
-                ></label
-              >
-              <input
-                type="range"
-                id="panel-budget"
-                name="budget"
-                min="0"
-                max="25000"
-                step="250"
-                value="0"
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="panel-message">Szczegóły Misji *</label>
-              <textarea
-                id="panel-message"
-                name="message"
-                required
-                rows="4"
-                placeholder="Opisz krótko wymagania..."
-              ></textarea>
-            </div>
-
-            <div class="form-group checkbox-group">
-              <input type="checkbox" id="panel-rodo" name="rodo" required />
-              <label for="panel-rodo"
-                >Zgoda na przetwarzanie danych (RODO Protocol).</label
-              >
-            </div>
-
-            <!-- Honeypot Anti-Spam Field (hidden from users, visible to bots) -->
-            <input
-              type="text"
-              id="honey-field"
-              name="_gotcha"
-              style="display:none !important"
-              tabindex="-1"
-              autocomplete="off"
-            />
-
-            <button type="submit" class="btn full-width">WYŚLIJ RAPORT</button>
-            <div id="formMessage" class="form-message"></div>
-          </form>
+              <button type="submit" class="btn full-width">
+                WYŚLIJ RAPORT
+              </button>
+              <div id="formMessage" class="form-message"></div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-
     </div>
     <!-- END SITE CONTENT WRAPPER -->
 

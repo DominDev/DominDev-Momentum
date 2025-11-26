@@ -1,36 +1,107 @@
 {
-  "vulgarWords": ["kurwa", "chuj", "pierdol", "jebać", "dupa", "gówno", "fuck", "shit", "debil", "idiota"],
-  "keywords": {
-    "greeting": ["cześć", "hej", "witaj", "dzień dobry", "siema", "halo"],
-    "farewell": ["pa", "do widzenia", "narazie", "trzymaj się"],
-    "services": ["usługi", "oferta", "co robisz", "landing", "wizytówka", "sklep", "strona"],
-    "price": ["cena", "koszt", "ile", "cennik", "pieniądze", "budżet"],
-    "contact": ["kontakt", "email", "telefon", "napisz", "gdzie"],
-    "tech": ["wordpress", "react", "js", "technologie", "php", "html", "css"],
-    "portfolio": ["portfolio", "realizacje", "projekty", "co zrobiłeś"],
-    "about": ["o tobie", "kim jesteś", "domin", "autor"],
-    "seo": ["seo", "pozycjonowanie", "google"],
-    "thanks": ["dzięki", "dziękuje", "super", "ok", "fajnie"]
+  "vulgarWords": [
+    "kurwa",
+    "chuj",
+    "pierdolić",
+    "jebać",
+    "dupa",
+    "gówno",
+    "fuck",
+    "shit",
+    "debil",
+    "idiota"
+  ],
+  "keywordMap": {
+    "cześć": "greeting",
+    "hej": "greeting",
+    "witaj": "greeting",
+    "dzień dobry": "greeting",
+    "siema": "greeting",
+    "halo": "greeting",
+    "pa": "farewell",
+    "do widzenia": "farewell",
+    "narazie": "farewell",
+    "trzymaj się": "farewell",
+    "nara": "farewell",
+    "usługi": "services",
+    "oferta": "services",
+    "co robisz": "services",
+    "landing": "services",
+    "wizytówka": "services",
+    "sklep": "services",
+    "strona": "services",
+    "cena": "price",
+    "koszt": "price",
+    "ile": "price",
+    "cennik": "price",
+    "pieniądze": "price",
+    "budżet": "price",
+    "wycena": "price",
+    "hajs": "price",
+    "kontakt": "contact",
+    "email": "contact",
+    "telefon": "contact",
+    "napisz": "contact",
+    "gdzie": "contact",
+    "adres": "contact",
+    "wordpress": "tech",
+    "react": "tech",
+    "js": "tech",
+    "technologie": "tech",
+    "php": "tech",
+    "html": "tech",
+    "css": "tech",
+    "stack": "tech",
+    "portfolio": "portfolio",
+    "realizacje": "portfolio",
+    "projekty": "portfolio",
+    "co zrobiłeś": "portfolio",
+    "o tobie": "about",
+    "kim jesteś": "about",
+    "domin": "about",
+    "autor": "about",
+    "seo": "seo",
+    "pozycjonowanie": "seo",
+    "google": "seo",
+    "dzięki": "thanks",
+    "dziękuje": "thanks",
+    "super": "thanks",
+    "ok": "thanks",
+    "fajnie": "thanks"
   },
   "responses": {
     "greeting": [
       "Cześć! Jestem botem DominDev. O czym chcesz pogadać? (Usługi, Projekty, Kontakt)",
       "Hej! Tu wirtualny asystent. W czym mogę pomóc?"
     ],
-    "farewell": ["Do zobaczenia! Powodzenia w projektach!", "Trzymaj się! Jesteśmy w kontakcie."],
+    "farewell": [
+      "Do zobaczenia! Powodzenia w projektach!",
+      "Trzymaj się! Jesteśmy w kontakcie."
+    ],
     "services": [
-      "🚀 Moje usługi:<br>1. <strong>Landing Page</strong> (konwersja)<br>2. <strong>Strony Wizytówki</strong> (CMS)<br>3. <strong>Sklepy E-Commerce</strong>.<br>Która opcja Cię interesuje?",
+      "🚀 Moje usługi:<br>1. <strong>Landing Page</strong><br>2. <strong>Strona Wizytówka (CMS)</strong><br>3. <strong>Sklep E-Commerce</strong>.<br>Możesz zapytać o szczegóły, np. 'co to landing page' lub 'jaka cena za sklep'.",
       "Specjalizuję się w WordPress High-Performance. Szybkie strony, sklepy i aplikacje."
     ],
     "price": [
       "💰 Wycena jest indywidualna. Landing od 1500 PLN, Strony od 3500 PLN. Użyj suwaka w sekcji Kontakt, żeby określić budżet!",
       "To zależy od zakresu. Napisz mi więcej o projekcie, a przygotuję wycenę."
     ],
-    "contact": ["📬 Pisz na <strong>contact@domindev.com</strong> lub użyj formularza na dole strony.", "Jestem z Wrocławia, ale działam globalnie."],
-    "tech": ["🛠️ Mój stack: WordPress, WooCommerce, JS (React), PHP 8.2, HTML5/CSS3. Czysty kod, zero bloatu."],
-    "portfolio": ["🎨 Zobacz sekcję 'Realizacje' na stronie. Robiłem FinTechy, E-commerce i strony Agencyjne."],
-    "about": ["👨‍💻 DominDev to Fullstack Developer z obsesją na punkcie wydajności. Łączę kod z designem."],
-    "seo": ["🔍 Każda moja strona ma SEO w standardzie. Szybkość + semantyczny HTML = wysokie pozycje."],
+    "contact": [
+      "📬 Pisz na <strong>contact@domindev.com</strong> lub użyj formularza na dole strony.",
+      "Jestem z Wrocławia, ale działam globalnie."
+    ],
+    "tech": [
+      "🛠️ Mój stack: WordPress, WooCommerce, JS (React), PHP 8.2, HTML5/CSS3. Czysty kod, zero bloatu."
+    ],
+    "portfolio": [
+      "🎨 Zobacz sekcję 'Realizacje' na stronie. Robiłem FinTechy, E-commerce i strony Agencyjne."
+    ],
+    "about": [
+      "👨‍💻 DominDev to Fullstack Developer z obsesją na punkcie wydajności. Łączę kod z designem."
+    ],
+    "seo": [
+      "🔍 Każda moja strona ma SEO w standardzie. Szybkość + semantyczny HTML = wysokie pozycje."
+    ],
     "vulgar": [
       "⚠️ DETECTED: Unsafe language protocol. Proszę sformułować zapytanie zgodnie ze standardami biznesowymi.",
       "🚫 SYSTEM ALERT: Wykryto słownictwo niskiego poziomu. Mój procesor ignoruje ten input.",

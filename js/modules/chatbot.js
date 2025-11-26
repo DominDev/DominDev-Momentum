@@ -1,11 +1,42 @@
 // js/modules/chatbot.js
 let botData = null;
+const SPLIT_REGEX = /[\s,.;!?]+/;
+
+/**
+ * Normalizuje tekst, usuwając polskie znaki diakrytyczne.
+ * @param {string} str - Tekst do normalizacji.
+ * @returns {string} - Znormalizowany tekst.
+ */
+const normalize = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
 async function loadBotData() {
   if (botData) return botData;
   try {
-    const response = await fetch('data/chatbot-db.json');
-    botData = await response.json();
+    const response = await fetch("data/chatbot-db.json");
+    const data = await response.json();
+
+    // Pre-kompilacja i normalizacja danych dla maksymalnej wydajności
+    data.normalizedVulgarWords = data.vulgarWords.map(normalize);
+
+    data.precomputedGlossary = Object.keys(data.glossary).map((term) => ({
+      original: term,
+      normalized: normalize(term),
+    }));
+
+    data.normalizedKeywordMap = {};
+    data.precomputedPhrases = [];
+
+    for (const key in data.keywordMap) {
+      const normalizedKey = normalize(key);
+      data.normalizedKeywordMap[normalizedKey] = data.keywordMap[key];
+      if (key.includes(" ")) {
+        data.precomputedPhrases.push({
+          original: key,
+          normalized: normalizedKey,
+        });
+      }
+    }
+    botData = data;
     return botData;
   } catch (error) {
     console.error("Failed to load chatbot data:", error);
@@ -24,7 +55,11 @@ export function initChat() {
   async function openChat() {
     chatbotWindow.classList.add("active");
     chatbotTrigger.classList.add("active");
-    chatbotInput.focus();
+
+    // Delay focus aby poczekać na animację otwarcia
+    setTimeout(() => {
+      chatbotInput.focus();
+    }, 100);
 
     if (!botData) {
       await loadBotData();
@@ -100,29 +135,68 @@ export function initChat() {
     if (typing) typing.remove();
   }
 
+  /**
+   * Znajduje intencję użytkownika i zwraca odpowiednią odpowiedź.
+   * Używa zoptymalizowanej struktury `keywordMap` i `glossary`.
+   * @param {string} msg - Wiadomość od użytkownika.
+   * @returns {string} - Odpowiedź bota.
+   */
   function getBotResponse(msg) {
-    if (!botData) return "Error loading database.";
+    if (!botData) return "⚠️ System niedostępny. Spróbuj odświeżyć stronę.";
 
-    const lower = msg.toLowerCase();
-
-    if (botData.vulgarWords.some(w => lower.includes(w))) {
-      return getRandom(botData.responses.vulgar);
+    // Walidacja pustej wiadomości
+    if (!msg || msg.trim() === "") {
+      return "🤔 Nie rozumiem. Napisz coś!";
     }
 
-    for (const [term, def] of Object.entries(botData.glossary)) {
-      if (lower.includes(term)) return def;
-    }
+    const lowerInput = msg.toLowerCase().trim();
+    const normalizedInput = normalize(lowerInput);
+    let intent = "unknown";
 
-    for (const [cat, words] of Object.entries(botData.keywords)) {
-      if (words.some(w => lower.includes(w))) {
-        return getRandom(botData.responses[cat]);
+    // ETAP 1: Wulgaryzmy
+    if (
+      botData.normalizedVulgarWords.some((word) =>
+        normalizedInput.includes(word)
+      )
+    ) {
+      intent = "vulgar";
+    }
+    // ETAP 2: Dokładne frazy ze słownika (glossary)
+    else {
+      const glossaryMatch = botData.precomputedGlossary.find((term) =>
+        normalizedInput.includes(term.normalized)
+      );
+      if (glossaryMatch) {
+        return botData.glossary[glossaryMatch.original]; // Zwracamy od razu definicję
+      }
+    }
+    // ETAP 3: Dokładne frazy z keywordMap
+    if (intent === "unknown") {
+      const phraseMatch = botData.precomputedPhrases.find((phrase) =>
+        normalizedInput.includes(phrase.normalized)
+      );
+      if (phraseMatch) {
+        intent = botData.keywordMap[phraseMatch.original];
+      }
+    }
+    // ETAP 4: Pojedyncze słowa z keywordMap
+    if (intent === "unknown") {
+      const words = normalizedInput.split(SPLIT_REGEX);
+      for (const word of words) {
+        // Bezpośredni, błyskawiczny dostęp O(1) do znormalizowanej mapy
+        if (botData.normalizedKeywordMap[word]) {
+          intent = botData.normalizedKeywordMap[word];
+          break;
+        }
       }
     }
 
-    return getRandom(botData.responses.unknown);
+    return getRandom(botData.responses[intent]);
   }
 
   function getRandom(arr) {
-    return Array.isArray(arr) ? arr[Math.floor(Math.random() * arr.length)] : arr;
+    return Array.isArray(arr)
+      ? arr[Math.floor(Math.random() * arr.length)]
+      : arr;
   }
 }
