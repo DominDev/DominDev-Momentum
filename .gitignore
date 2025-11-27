@@ -35,7 +35,11 @@ yarn-error.log*
 .env.local
 .env.*.local
 
-# DominDev Momentum snapshots
+# DominDev Momentum optional folders (prefix with _)
 _project_snapshots/
-snapshot_structure.ps1
-snapshot_code.ps1
+_scripts/
+_docs/
+
+# Build/Minified files (generate before production)
+*.min.css
+*.min.js

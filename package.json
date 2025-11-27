@@ -1,0 +1,25 @@
+{
+  "name": "domindev-momentum",
+  "version": "2.0.0",
+  "description": "High-Performance Landing Page - DominDev Portfolio",
+  "scripts": {
+    "minify": "node _scripts/minify-css.js",
+    "build": "npm run minify",
+    "dev": "echo 'Development server - just open index.html in browser'",
+    "help": "echo '\nAvailable commands:\n  npm run minify - Minify CSS files\n  npm run build  - Build for production\n'"
+  },
+  "keywords": [
+    "portfolio",
+    "landing-page",
+    "high-performance",
+    "matrix-effect",
+    "fullstack"
+  ],
+  "author": "DominDev",
+  "license": "MIT",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/domindev-momentum.git"
+  }
+}
