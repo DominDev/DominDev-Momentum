@@ -5,48 +5,259 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>DominDev | WordPress High-Performance & Custom Development</title>
+    <!-- Primary Meta Tags -->
+    <title>DominDev | WordPress Developer Wrocław - Strony WWW & Sklepy WooCommerce</title>
+    <meta
+      name="title"
+      content="DominDev | WordPress Developer Wrocław - Strony WWW & Sklepy WooCommerce"
+    />
     <meta
       name="description"
-      content="Agresywny rozwój Twojego biznesu online. Tworzę ultraszybkie strony WordPress, sklepy WooCommerce i aplikacje React. Fullstack Developer z Wrocławia."
+      content="Tworzę ultraszybkie strony WordPress i sklepy WooCommerce we Wrocławiu. PageSpeed 90-100/100, Custom Development, React, Optymalizacja SEO. Fullstack Developer z certyfikacjami."
     />
     <meta
       name="keywords"
-      content="WordPress Developer, Strony WWW Wrocław, Programista React, Optymalizacja stron, Sklepy internetowe, High Performance Web"
+      content="WordPress Developer Wrocław, strony internetowe Wrocław, sklep WooCommerce, tworzenie stron www, programista WordPress, React Developer, optymalizacja stron, PageSpeed Optimization, SEO WordPress, szybkie strony www, strony firmowe, landing page, e-commerce, fullstack developer, custom WordPress, ACF Pro, PHP developer, web development Wrocław, strony na zamówienie"
     />
-    <meta name="author" content="DominDev" />
-    <meta name="robots" content="index, follow" />
+    <meta name="author" content="DominDev - Dominik" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://domindev.com/" />
 
-    <!-- Open Graph / Social Media -->
+    <!-- Geo Tags for Local SEO -->
+    <meta name="geo.region" content="PL-DS" />
+    <meta name="geo.placename" content="Wrocław" />
+    <meta name="geo.position" content="51.1079;17.0385" />
+    <meta name="ICBM" content="51.1079, 17.0385" />
+
+    <!-- Theme Color & Mobile -->
+    <meta name="theme-color" content="#cc0000" />
+    <meta name="msapplication-navbutton-color" content="#cc0000" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/icons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/icons/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="/assets/images/icons/favicon.ico" />
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://domindev.com/" />
-    <meta property="og:title" content="DominDev | Building Digital Momentum" />
+    <meta property="og:site_name" content="DominDev" />
+    <meta property="og:title" content="DominDev | WordPress Developer Wrocław - Strony WWW PageSpeed 100/100" />
     <meta
       property="og:description"
-      content="Strony WWW szybkie jak cios boksera. WordPress Development dla liderów rynku."
+      content="Tworzę ultraszybkie strony WordPress i sklepy WooCommerce we Wrocławiu. PageSpeed 90-100/100, Custom Development, React. Fullstack Developer."
     />
-    <meta property="og:image" content="https://domindev.pl/og-image.jpg" />
+    <meta property="og:image" content="https://domindev.com/assets/images/social/og-image.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="DominDev - WordPress High Performance Development" />
+    <meta property="og:image:type" content="image/webp" />
+    <meta property="og:locale" content="pl_PL" />
 
-    <!-- Schema.org JSON-LD -->
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://domindev.com/" />
+    <meta name="twitter:title" content="DominDev | WordPress Developer Wrocław - Strony WWW PageSpeed 100/100" />
+    <meta
+      name="twitter:description"
+      content="Tworzę ultraszybkie strony WordPress i sklepy WooCommerce. PageSpeed 90-100/100, Custom Development, React. Fullstack Developer z Wrocławia."
+    />
+    <meta name="twitter:image" content="https://domindev.com/assets/images/social/og-image.webp" />
+    <meta name="twitter:image:alt" content="DominDev - WordPress High Performance Development" />
+
+    <!-- Schema.org JSON-LD - Advanced @graph Structure -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "name": "DominDev",
-        "description": "Fullstack Developer specjalizujący się w High-Performance WordPress i React.",
-        "url": "https://domindev.com",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Wrocław",
-          "addressCountry": "PL"
-        },
-        "priceRange": "$$",
-        "openingHoursSpecification": {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "09:00",
-          "closes": "17:00"
-        }
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://domindev.com/#website",
+            "name": "DominDev",
+            "url": "https://domindev.com/",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://domindev.com/?s={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          },
+          {
+            "@type": "LocalBusiness",
+            "@id": "https://domindev.com/#organization",
+            "name": "DominDev - High Performance Web Development",
+            "legalName": "DominDev - Dominik Dominiak",
+            "description": "Fullstack Developer specjalizujący się w wysokowydajnych stronach WordPress, sklepach WooCommerce i aplikacjach React. PageSpeed 90-100/100. Nie robimy wizytówek - robimy maszyny biznesowe.",
+            "url": "https://domindev.com",
+            "logo": "https://domindev.com/assets/images/logo.png",
+            "image": "https://domindev.com/assets/images/social/og-image.webp",
+            "telephone": "+48536553820",
+            "email": "contact@domindev.com",
+            "priceRange": "1500 PLN - 10000 PLN",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Wrocław",
+              "addressRegion": "Dolnośląskie",
+              "addressCountry": "PL"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "51.1079",
+              "longitude": "17.0385"
+            },
+            "areaServed": [
+              {
+                "@type": "City",
+                "name": "Wrocław"
+              },
+              {
+                "@type": "Country",
+                "name": "Polska"
+              }
+            ],
+            "openingHoursSpecification": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+              "opens": "09:00",
+              "closes": "18:00"
+            },
+            "sameAs": [
+              "https://www.linkedin.com/in/domindev",
+              "https://github.com/domindev",
+              "https://www.instagram.com/domindev"
+            ]
+          },
+          {
+            "@type": "Service",
+            "@id": "https://domindev.com/#service-landing",
+            "name": "Landing Page High-Performance",
+            "provider": { "@id": "https://domindev.com/#organization" },
+            "serviceType": "Web Development",
+            "description": "Wysokokonwertujące landing page z PageSpeed 100/100. Szybkość ładowania poniżej 1s.",
+            "offers": {
+              "@type": "Offer",
+              "price": "1500",
+              "priceCurrency": "PLN",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "Service",
+            "@id": "https://domindev.com/#service-wordpress",
+            "name": "Strona WordPress Firmowa - Business Hub",
+            "provider": { "@id": "https://domindev.com/#organization" },
+            "serviceType": "WordPress Development",
+            "description": "Profesjonalna strona firmowa z CMS, SEO, Blog. Cyfrowa siedziba Twojej firmy.",
+            "offers": {
+              "@type": "Offer",
+              "price": "3500",
+              "priceCurrency": "PLN",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "Service",
+            "@id": "https://domindev.com/#service-woocommerce",
+            "name": "Sklep WooCommerce E-Commerce Pro",
+            "provider": { "@id": "https://domindev.com/#organization" },
+            "serviceType": "E-Commerce Development",
+            "description": "Sklep internetowy WooCommerce z płatnościami, kurierami, paczkomaty. Odporny na duży ruch.",
+            "offers": {
+              "@type": "Offer",
+              "price": "6000",
+              "priceCurrency": "PLN",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "Service",
+            "@id": "https://domindev.com/#service-react",
+            "name": "Web App / React - Aplikacje Dedykowane",
+            "provider": { "@id": "https://domindev.com/#organization" },
+            "serviceType": "Custom Software Development",
+            "description": "Dedykowane aplikacje webowe React/Next.js. Dashboardy, CRM, systemy biznesowe.",
+            "offers": {
+              "@type": "Offer",
+              "price": "8000",
+              "priceCurrency": "PLN",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "Service",
+            "@id": "https://domindev.com/#service-speed",
+            "name": "Speed Boost Pack - Optymalizacja WordPress",
+            "provider": { "@id": "https://domindev.com/#organization" },
+            "serviceType": "Web Performance Optimization",
+            "description": "Optymalizacja Core Web Vitals. Wynik 90+ na Mobile gwarantowany. Przyspieszenie stron WordPress.",
+            "offers": {
+              "@type": "Offer",
+              "price": "800",
+              "priceCurrency": "PLN",
+              "availability": "https://schema.org/InStock"
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Dlaczego powinienem wybrać Ciebie zamiast tanich wykonawców z builderów?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bo nie sprzedaję 'klikanych' stron, tylko inżynierię. Strony z builderów są wolne, ciężkie i psują się przy każdej aktualizacji. U mnie dostajesz czysty kod, pełną kontrolę i performance, który przebija 95% internetu. PageSpeed 90-100/100 gwarantowany."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Czy możesz naprawić stronę po innym wykonawcy?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tak, robię to chirurgicznie. Usuwam bloat, naprawiam błędy i przebudowuję kluczowe elementy tak, żeby strona działała jak maszyna – szybko i stabilnie. Audyt + Speed Boost Pack od 800 PLN."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Ile kosztuje strona WordPress i jak długo trwa realizacja?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Landing page od 1500 PLN (1-2 tygodnie), Strona firmowa od 3500 PLN (2-4 tygodnie), Sklep WooCommerce od 6000 PLN (4-8 tygodni). Każdy projekt wyceniany indywidualnie. Szybko, ale nie kosztem jakości."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Czy tworzysz strony na gotowych szablonach?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nie. Szablony to kaganiec dla biznesu. Każdy piksel i każda linijka kodu w moich projektach jest po coś - pod SEO, prędkość i konwersję. Custom development, nie 'kliknięty' szablon."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Co jeśli moja strona WordPress działa wolno?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Wtedy robię chirurgię performance. Usuwam śmieciowy kod, dzielę skrypty, kompresuję zasoby, wprowadzam cache i optymalizację Core Web Vitals. Cel: 95+ wyników PageSpeed. Speed Boost Pack od 800 PLN."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Czy oferujesz pełne wsparcie techniczne po wdrożeniu?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tak. Strona firmowa i sklep WooCommerce zawierają 1 miesiąc opieki gratis. Oferuję plany maintenance: aktualizacje, backupy, bezpieczeństwo, stabilność. Klienci mają spokój - ja zajmuję się resztą."
+            }
+          }
+        ]
       }
     </script>
 
@@ -261,7 +472,7 @@
       <section id="hero">
         <div class="container hero-content">
           <span class="hero-subtitle">High-Performance Web Engineering</span>
-          <h1 class="hero-title">
+          <h1 class="hero-title" aria-label="WordPress Developer Wrocław - High Performance Strony WWW, Sklepy WooCommerce, Aplikacje React">
             To nie wizytówka.<br />
             To Twoja <span class="typewriter-text"></span
             ><span class="typewriter-cursor">|</span>
@@ -309,7 +520,7 @@
         <div class="container">
           <div class="about-grid">
             <div class="about-text reveal">
-              <h2 class="accent">01. O MNIE</h2>
+              <h2 class="accent">01. O MNIE — FULLSTACK DEVELOPER</h2>
               <h3>Nie tylko koduję.<br />Dostarczam wyniki.</h3>
               <p class="text-muted margin-bottom-30">
                 Większość stron internetowych to tylko "ładne wizytówki". Moje
@@ -404,9 +615,9 @@
 
       <section id="portfolio" class="section-padding">
         <div class="container">
-          <h2 class="accent reveal">02. REALIZACJE</h2>
+          <h2 class="accent reveal">02. REALIZACJE — WORDPRESS & REACT</h2>
 
-          <h3 class="reveal header-margin">Wybrane Realizacje</h3>
+          <h3 class="reveal header-margin">Portfolio: Strony WordPress & Aplikacje Web</h3>
 
           <div class="portfolio-grid">
             <div class="project-card reveal" onclick="openModal('kraft')">
@@ -474,9 +685,9 @@
 
       <section id="process" class="section-padding">
         <div class="container">
-          <h2 class="accent reveal">03. PROCES</h2>
+          <h2 class="accent reveal">03. PROCES — METODYKA WDROŻEŃ</h2>
 
-          <h3 class="reveal header-margin">Jak działam?</h3>
+          <h3 class="reveal header-margin">Jak działam? Od strategii do wdrożenia.</h3>
 
           <div class="timeline reveal">
             <div class="timeline__line"></div>
@@ -541,8 +752,8 @@
 
       <section id="services" class="section-padding dark-bg">
         <div class="container">
-          <h2 class="accent reveal">04. USŁUGI</h2>
-          <h3 class="reveal header-margin">Wybierz Swój Moduł</h3>
+          <h2 class="accent reveal">04. USŁUGI WEB DEVELOPMENT</h2>
+          <h3 class="reveal header-margin">Oferta: Strony WordPress, Sklepy & Aplikacje</h3>
 
           <div class="services-label reveal">CORE SYSTEMS (BUILD)</div>
           <div class="services-grid core-grid reveal">
@@ -766,7 +977,7 @@
         <div class="container">
           <div class="contact-grid">
             <div class="contact-info reveal">
-              <h2 class="accent">05. KONTAKT</h2>
+              <h2 class="accent">05. KONTAKT — WROCŁAW</h2>
               <h3>
                 PRZESTAŃ WALCZYĆ<br /><span class="accent">Z TECHNOLOGIĄ!</span>
               </h3>
@@ -803,6 +1014,86 @@
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section (SEO Static Content) -->
+      <section id="faq" class="section-padding">
+        <div class="container">
+          <h2 class="accent reveal">06. FAQ — NAJCZĘSTSZE PYTANIA</h2>
+          <h3 class="reveal header-margin">Wszystko co musisz wiedzieć przed wyborem wykonawcy</h3>
+
+          <div class="faq-grid">
+            <article class="faq-item reveal">
+              <h3 class="faq-question">
+                <i class="fa-solid fa-shield-halved accent"></i>
+                Dlaczego powinienem wybrać Ciebie zamiast tanich wykonawców z builderów?
+              </h3>
+              <div class="faq-answer">
+                <p>Bo nie sprzedaję <strong>"klikanych" stron, tylko inżynierię</strong>. Strony z builderów są wolne, ciężkie i psują się przy każdej aktualizacji WordPress.</p>
+                <p>U mnie dostajesz <strong>czysty kod</strong>, pełną kontrolę i performance, który przebija 95% internetu. PageSpeed <strong>90-100/100 gwarantowany</strong>.</p>
+              </div>
+            </article>
+
+            <article class="faq-item reveal">
+              <h3 class="faq-question">
+                <i class="fa-solid fa-screwdriver-wrench accent"></i>
+                Czy możesz naprawić stronę po innym wykonawcy?
+              </h3>
+              <div class="faq-answer">
+                <p><strong>Tak, robię to chirurgicznie.</strong> Usuwam bloat, naprawiam błędy i przebudowuję kluczowe elementy tak, żeby strona działała jak maszyna – szybko i stabilnie.</p>
+                <p>Audyt + <strong>Speed Boost Pack od 800 PLN</strong>. Często ratuję strony, które "specjaliści" uznali za stracone.</p>
+              </div>
+            </article>
+
+            <article class="faq-item reveal">
+              <h3 class="faq-question">
+                <i class="fa-solid fa-money-bill-wave accent"></i>
+                Ile kosztuje strona WordPress i jak długo trwa realizacja?
+              </h3>
+              <div class="faq-answer">
+                <ul class="faq-pricing">
+                  <li><strong>Landing Page:</strong> od 1500 PLN (1-2 tygodnie)</li>
+                  <li><strong>Strona Firmowa:</strong> od 3500 PLN (2-4 tygodnie)</li>
+                  <li><strong>Sklep WooCommerce:</strong> od 6000 PLN (4-8 tygodni)</li>
+                </ul>
+                <p>Każdy projekt wyceniany indywidualnie. <strong>Szybko, ale nie kosztem jakości.</strong> High-Performance wymaga precyzji.</p>
+              </div>
+            </article>
+
+            <article class="faq-item reveal">
+              <h3 class="faq-question">
+                <i class="fa-solid fa-ban accent"></i>
+                Czy tworzysz strony na gotowych szablonach?
+              </h3>
+              <div class="faq-answer">
+                <p><strong>Nie.</strong> Szablony to kaganiec dla biznesu. Każdy piksel i każda linijka kodu w moich projektach jest po coś – pod SEO, prędkość i konwersję.</p>
+                <p><strong>Custom development</strong>, nie "kliknięty" szablon. To różnica między narzędziem a zabawką.</p>
+              </div>
+            </article>
+
+            <article class="faq-item reveal">
+              <h3 class="faq-question">
+                <i class="fa-solid fa-gauge-high accent"></i>
+                Co jeśli moja strona WordPress działa wolno?
+              </h3>
+              <div class="faq-answer">
+                <p>Wtedy robię <strong>chirurgię performance</strong>. Usuwam śmieciowy kod, dzielę skrypty, kompresuję zasoby, wprowadzam cache i optymalizację Core Web Vitals.</p>
+                <p><strong>Cel: 95+ wyników PageSpeed.</strong> Speed Boost Pack od 800 PLN. Większość stron zyskuje 3-5 sekund czasu ładowania.</p>
+              </div>
+            </article>
+
+            <article class="faq-item reveal">
+              <h3 class="faq-question">
+                <i class="fa-solid fa-handshake accent"></i>
+                Czy oferujesz pełne wsparcie techniczne po wdrożeniu?
+              </h3>
+              <div class="faq-answer">
+                <p><strong>Tak.</strong> Strona firmowa i sklep WooCommerce zawierają <strong>1 miesiąc opieki gratis</strong>.</p>
+                <p>Oferuję plany maintenance: aktualizacje, backupy, bezpieczeństwo, stabilność. <strong>Klienci mają spokój – ja zajmuję się resztą.</strong></p>
+              </div>
+            </article>
           </div>
         </div>
       </section>
