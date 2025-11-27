@@ -126,7 +126,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(() => {
       preloader.style.display = "none";
-      document.body.removeAttribute("style");
+
+      // Remove specific body styles used during preloader
+      // Safer than removeAttribute('style') which would remove ALL inline styles
+      document.body.style.overflow = '';
+      document.body.style.height = '';
 
       // CRITICAL: Kill preloader animation loop to free CPU
       if (preloaderAnimId) {
@@ -163,6 +167,8 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     // No preloader mode
     if (preloader) preloader.style.display = "none";
+    document.body.style.overflow = '';
+    document.body.style.height = '';
     initMatrix();
     initUI();
     initHud();
@@ -177,10 +183,34 @@ document.addEventListener("DOMContentLoaded", () => {
       chatTrigger.removeEventListener("click", loadChatbot);
       chatTrigger.removeEventListener("touchstart", loadChatbot);
 
-      console.log("🚀 Initializing Chatbot Core...");
+      try {
+        console.log("🚀 Initializing Chatbot Core...");
 
-      const { initChat } = await import('./modules/chatbot.js');
-      initChat();
+        const { initChat } = await import('./modules/chatbot.js');
+        initChat();
+
+        console.log("✅ Chatbot loaded successfully");
+      } catch (error) {
+        console.error("❌ Failed to load chatbot:", error);
+
+        // User-friendly fallback: hide the trigger or show error message
+        if (chatTrigger) {
+          chatTrigger.style.opacity = "0.5";
+          chatTrigger.title = "Chatbot temporarily unavailable";
+          chatTrigger.style.cursor = "not-allowed";
+        }
+
+        // Optional: Show notification in HUD area
+        const loadTimeElement = document.getElementById("loadTime");
+        if (loadTimeElement) {
+          const originalText = loadTimeElement.innerText;
+          loadTimeElement.innerText = "⚠️ Bot Error";
+          loadTimeElement.style.color = "#ef4444";
+          setTimeout(() => {
+            loadTimeElement.innerText = originalText;
+          }, 3000);
+        }
+      }
     };
 
     // Desktop: Hover preloads
