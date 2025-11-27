@@ -1,0 +1,42 @@
+# DominDev Robots.txt - High Performance Web Development
+# WordPress Developer Wrocław
+
+User-agent: *
+Allow: /
+
+# Sitemap Location
+Sitemap: https://domindev.com/sitemap.xml
+
+# Allow crawling of assets
+Allow: /assets/
+Allow: /js/
+Allow: /css/
+
+# Disallow project snapshots (internal use only)
+Disallow: /_project_snapshots/
+Disallow: /_docs/
+Disallow: /_scripts/
+
+# Disallow config files
+Disallow: /package.json
+Disallow: /.gitignore
+
+# Allow all bots to index main content
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Bad bots
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: DotBot
+Crawl-delay: 10
