@@ -2305,10 +2305,11 @@ footer {
   /* Chatbot */
   .chatbot-window {
     width: 360px;
-    height: calc(100vh - 180px); /* Od dołu (110px) do góry (70px nawigacja) */
-    max-height: 600px;
+    height: calc(100vh - 240px); /* Więcej marginesu - uwzględnia pasek URL */
+    max-height: 500px;
     left: 20px;
     bottom: 110px; /* Nad chatbot-trigger */
+    top: auto;
   }
 
   .chatbot-trigger {
@@ -2491,9 +2492,9 @@ footer {
     bottom: 110px; /* Nad chatbot-trigger (50px) + jego wysokość (45px) + margines */
     width: auto;
     height: calc(
-      100vh - 190px
-    ); /* Prawie do nawigacji - 80px nav + 110px bottom */
-    max-height: none; /* Usuń limit - niech się rozciąga */
+      100vh - 220px
+    ); /* Więcej marginesu - uwzględnia pasek URL + nawigację */
+    max-height: 470px; /* Maksymalna wysokość dla bezpieczeństwa */
   }
 
   .chatbot-header {
@@ -2877,9 +2878,9 @@ footer {
     bottom: 105px; /* Nad chatbot-trigger (50px) + jego wysokość (42px) + margines */
     width: auto;
     height: calc(
-      100vh - 180px
-    ); /* Prawie do nawigacji - 75px nav + 105px bottom */
-    max-height: none; /* Usuń limit - niech się rozciąga do nawigacji */
+      100vh - 200px
+    ); /* Więcej marginesu - uwzględnia pasek URL + nawigację */
+    max-height: 450px; /* Maksymalna wysokość dla małych ekranów */
     border-radius: 8px;
   }
 

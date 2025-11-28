@@ -72,13 +72,18 @@ export function initChat() {
   }
 
   if (chatbotTrigger) {
-    chatbotTrigger.addEventListener("click", () => {
+    const toggleChat = (e) => {
+      e.preventDefault();
       if (chatbotWindow.classList.contains("active")) {
         closeChat();
       } else {
         openChat();
       }
-    });
+    };
+
+    chatbotTrigger.addEventListener("click", toggleChat);
+    // Dodatkowa obsługa touch dla mobile
+    chatbotTrigger.addEventListener("touchend", toggleChat);
   }
 
   if (chatbotClose) chatbotClose.addEventListener("click", closeChat);
