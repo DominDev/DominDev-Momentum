@@ -4606,13 +4606,8 @@ body {
 }
 
 /* ==========================================
-   FAQ SECTION - Static SEO Content
+   FAQ – karty (ostre rogi, bez czerwonego rogu)
    ========================================== */
-
-/* #faq {
-  background: linear-gradient(135deg, #050505 0%, #0a0a0a 100%);
-  position: relative;
-} */
 
 .faq-grid {
   display: flex;
@@ -4622,145 +4617,84 @@ body {
   margin: 0 auto;
 }
 
+/* Karta FAQ */
 .faq-item {
   width: 100%;
-  background: var(--bg-card);
-  border: 1px solid rgba(255, 31, 31, 0.1);
-  border-radius: 8px;
-  padding: 30px;
-  transition: var(--transition);
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 24px 28px;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition);
+
+  border-radius: 0; /* ostre rogi */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.faq-item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 0%;
-  background: linear-gradient(to bottom, var(--primary), var(--primary-dark));
-  transition: height 0.4s ease;
+/* USUNIĘCIE czerwonego rogu */
+.faq-item::after {
+  content: none;
 }
 
-.faq-item:hover::before {
-  height: 100%;
-}
-
+/* Hover — spójny z micro-card */
 .faq-item:hover {
-  border-color: rgba(255, 31, 31, 0.3);
+  background: rgba(20, 20, 20, 0.95);
+  border-color: var(--primary);
   transform: translateY(-5px);
-  box-shadow: 0 10px 40px rgba(255, 31, 31, 0.1);
+  box-shadow: 0 10px 40px rgba(255, 31, 31, 0.18);
 }
+
+/* Otwarta karta */
+.faq-item.is-open {
+  border-color: var(--primary);
+  background: rgba(20, 20, 20, 0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(204, 0, 0, 0.5), 0 18px 45px rgba(0, 0, 0, 0.7);
+
+  justify-content: flex-start;
+}
+
+/* ==========================================
+   Pytanie – zmniejszona typografia
+   ========================================== */
 
 .faq-question {
-  font-size: 1.3rem;
+  font-size: 1.15rem; /* było 1.3rem → mniejsze */
   font-weight: 700;
   color: var(--text-main);
-  margin-bottom: 20px;
+  line-height: 1.35;
+
   display: flex;
-  align-items: flex-start;
-  gap: 15px;
-  line-height: 1.4;
-  text-transform: none;
-}
+  align-items: center;
+  gap: 0.7rem;
 
-.faq-question i {
-  flex-shrink: 0;
-  font-size: 1.5rem;
-  margin-top: 5px;
-}
-
-.faq-answer {
-  color: var(--text-muted);
-  line-height: 1.8;
-}
-
-.faq-answer p {
-  margin-bottom: 15px;
-}
-
-.faq-answer p:last-child {
+  padding-right: 2rem; /* miejsce na + / – */
+  position: relative;
   margin-bottom: 0;
 }
 
-.faq-answer strong {
-  color: var(--text-main);
-  font-weight: 600;
+/* Odstęp tylko gdy otwarta */
+.faq-item.is-open .faq-question {
+  margin-bottom: 0.65rem;
 }
 
-.faq-pricing {
-  list-style: none;
-  padding: 0;
-  margin: 15px 0;
+/* Ikona po lewej */
+.faq-question i {
+  font-size: 1.25rem; /* trochę mniejsza, żeby pasowała do nowego font-size */
+  margin: 0;
 }
 
-.faq-pricing li {
-  padding: 10px 0;
-  padding-left: 25px;
-  position: relative;
-  color: var(--text-muted);
-}
-
-.faq-pricing li::before {
-  content: "→";
-  position: absolute;
-  left: 0;
-  color: var(--primary);
-  font-weight: bold;
-}
-
-.faq-pricing li strong {
-  color: var(--text-main);
-}
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .faq-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .faq-item {
-    padding: 20px;
-  }
-
-  .faq-question {
-    font-size: 1.1rem;
-  }
-}
-
-/* FAQ – accordion behavior */
-
-.faq-item {
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.faq-item.is-open {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 1px rgba(204, 0, 0, 0.6), 0 18px 45px rgba(0, 0, 0, 0.7);
-  transform: translateY(-2px);
-}
-
-/* Pytanie – klikalny nagłówek + ikonka */
-.faq-question {
-  position: relative;
-  padding-right: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-/* Ikona + / - / chevron w stylu strony */
+/* Znaki + / – */
 .faq-question::after {
   content: "+";
   position: absolute;
   right: 0.25rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.4rem;
+  font-size: 1.2rem; /* było 1.4rem → lżejsze */
   color: var(--primary);
   transition: var(--transition);
 }
@@ -4770,21 +4704,48 @@ body {
   color: var(--text-main);
 }
 
-/* Odpowiedź – domyślnie zwinięta */
+/* ==========================================
+   Odpowiedź
+   ========================================== */
+
 .faq-answer {
+  color: var(--text-muted);
+  line-height: 1.7;
+
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  margin-top: 0; /* żeby zamknięte nie zajmowały miejsca */
   pointer-events: none;
   transform: translateY(-4px);
   transition: max-height 0.3s ease, opacity 0.25s ease, transform 0.25s ease;
 }
 
-/* Odpowiedź – po otwarciu */
 .faq-item.is-open .faq-answer {
   opacity: 1;
-  margin-top: 0.75rem;
   pointer-events: auto;
   transform: translateY(0);
+  margin-top: 0.65rem;
+}
+
+.faq-answer p {
+  margin-bottom: 14px;
+}
+.faq-answer p:last-child {
+  margin-bottom: 0;
+}
+.faq-answer strong {
+  color: var(--text-main);
+}
+
+/* ==========================================
+   Responsive
+   ========================================== */
+
+@media (max-width: 768px) {
+  .faq-item {
+    padding: 20px 18px;
+  }
+  .faq-question {
+    font-size: 1rem;
+  }
 }
