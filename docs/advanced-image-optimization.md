@@ -30,8 +30,8 @@ Stworzyłem moduł `js/modules/adaptive-images.js` który:
 | **Save-Data ON** | 800px | WebP | ✅ | Użytkownik oszczędza dane |
 | **2G** | 400px | WebP | ✅ | Bardzo wolne (~50 kbps) |
 | **3G** | 800px | WebP | ✅ | Średnie (~400 kbps) |
-| **4G** | 1600px | AVIF | ❌ | Szybkie (10+ Mbps) |
-| **WiFi** | 1600px | AVIF | ❌ | Zakładamy szybkie |
+| **4G** | Native | Native | ❌ | NIE MODYFIKUJE - przeglądarka wybiera sama |
+| **WiFi** | Native | Native | ❌ | NIE MODYFIKUJE - przeglądarka wybiera sama |
 
 #### **✅ Dynamicznie reaguje na zmiany:**
 ```javascript
@@ -43,13 +43,17 @@ connection.addEventListener('change', () => {
 
 ### **Przykład działania:**
 
-#### **Użytkownik na 4G:**
+#### **Użytkownik na 4G/WiFi:**
 ```javascript
-Network Strategy: 4g
+Network Strategy: 4g (lub wifi)
 Effective Type: 4g
 Save-Data: OFF
 
-Result: Ładuje 1600px AVIF (~280 KB) - pełna jakość
+Result: NIE MODYFIKUJE srcset
+⚡ Fast connection detected - using native browser selection
+Przeglądarka sama wybiera optymalny rozmiar na podstawie viewport + DPR
+Desktop 1920px: Ładuje 800px AVIF (~46 KB) - dopasowane do sizes="400px"
+Mobile 430px (3x DPR): Ładuje 1200px AVIF (~85 KB) - ostre na Retina
 ```
 
 #### **Użytkownik na 3G:**

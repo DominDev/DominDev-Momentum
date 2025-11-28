@@ -24,6 +24,7 @@ export function initAdaptiveImages() {
   console.log(`💾 Save-Data: ${saveData ? "ON" : "OFF"}`);
 
   // Zastosuj strategię do wszystkich obrazów
+  // WAŻNE: Dla 4G/WiFi funkcja NIE MODYFIKUJE srcset (pozwala przeglądarce samej wybrać)
   applyImageStrategy(networkStrategy);
 
   // Nasłuchuj zmian połączenia (np. przejście z WiFi na 3G)
@@ -107,6 +108,15 @@ function getNetworkStrategy(connection, saveData) {
  * Aplikuje strategię do wszystkich obrazów na stronie
  */
 function applyImageStrategy(strategy) {
+  // WAŻNE: Dla szybkich połączeń (4G, WiFi) NIE MODYFIKUJ srcset
+  // Pozwól przeglądarce samej wybrać optymalny rozmiar
+  const shouldOptimize = strategy.type !== '4g' && strategy.type !== 'wifi';
+
+  if (!shouldOptimize) {
+    console.log('⚡ Fast connection detected - using native browser selection');
+    return; // NIE modyfikuj obrazów dla szybkich połączeń
+  }
+
   // Znajdź wszystkie <picture> elementy
   const pictures = document.querySelectorAll("picture");
 
@@ -114,7 +124,7 @@ function applyImageStrategy(strategy) {
     const sources = picture.querySelectorAll("source");
     const img = picture.querySelector("img");
 
-    // Modyfikuj srcset aby ograniczyć do maxWidth
+    // Modyfikuj srcset TYLKO dla wolnych połączeń
     sources.forEach((source) => {
       const originalSrcset =
         source.dataset.originalSrcset || source.getAttribute("srcset");
