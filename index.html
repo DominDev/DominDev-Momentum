@@ -77,7 +77,7 @@
     />
     <meta
       property="og:image"
-      content="https://domindev.com/assets/images/social/og-image.webp"
+      content="https://domindev.com/assets/images/social/og-image-social.webp"
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -101,7 +101,7 @@
     />
     <meta
       name="twitter:image"
-      content="https://domindev.com/assets/images/social/og-image.webp"
+      content="https://domindev.com/assets/images/social/og-image-social.webp"
     />
     <meta
       name="twitter:image:alt"
@@ -315,6 +315,22 @@
     <!-- Preconnect for critical resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Preload critical images for LCP optimization -->
+    <!-- About section hero image (first viewport content) -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      href="assets/images/about/coding-setup-800.avif"
+      imagesrcset="
+        assets/images/about/coding-setup-400.avif   400w,
+        assets/images/about/coding-setup-800.avif   800w,
+        assets/images/about/coding-setup-1200.avif 1200w,
+        assets/images/about/coding-setup-1600.avif 1600w
+      "
+      imagesizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 500px"
+    />
 
     <!-- Optimized Font Loading with display=swap -->
     <link
@@ -650,18 +666,42 @@
               </div>
             </div>
             <div class="about-img-wrapper reveal desktop-only">
-              <img
-                src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070&auto=format&fit=crop"
-                srcset="
-                  https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=1200&auto=format&fit=crop 1200w,
-                  https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070&auto=format&fit=crop 2070w
-                "
-                sizes="500px"
-                alt="DominDev Coding Setup - WordPress Development Environment"
-                loading="lazy"
-                width="500"
-                height="400"
-              />
+              <picture>
+                <source
+                  type="image/avif"
+                  srcset="
+                    assets/images/about/coding-setup-400.avif   400w,
+                    assets/images/about/coding-setup-800.avif   800w,
+                    assets/images/about/coding-setup-1200.avif 1200w,
+                    assets/images/about/coding-setup-1600.avif 1600w
+                  "
+                  sizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 500px"
+                />
+                <source
+                  type="image/webp"
+                  srcset="
+                    assets/images/about/coding-setup-400.webp   400w,
+                    assets/images/about/coding-setup-800.webp   800w,
+                    assets/images/about/coding-setup-1200.webp 1200w,
+                    assets/images/about/coding-setup-1600.webp 1600w
+                  "
+                  sizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 500px"
+                />
+                <img
+                  src="assets/images/about/coding-setup-800.jpg"
+                  srcset="
+                    assets/images/about/coding-setup-400.jpg   400w,
+                    assets/images/about/coding-setup-800.jpg   800w,
+                    assets/images/about/coding-setup-1200.jpg 1200w,
+                    assets/images/about/coding-setup-1600.jpg 1600w
+                  "
+                  sizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 500px"
+                  alt="DominDev Coding Setup - WordPress Development Environment"
+                  loading="lazy"
+                  width="500"
+                  height="400"
+                />
+              </picture>
             </div>
           </div>
         </div>
@@ -677,19 +717,42 @@
 
           <div class="portfolio-grid">
             <div class="project-card reveal" onclick="openModal('kraft')">
-              <img
-                src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=800&auto=format&fit=crop"
-                srcset="
-                  https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=400&auto=format&fit=crop   400w,
-                  https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=800&auto=format&fit=crop   800w,
-                  https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1200&auto=format&fit=crop 1200w
-                "
-                sizes="(max-width: 768px) 90vw, 400px"
-                alt="Kraft Daily Pub - WordPress Project"
-                loading="lazy"
-                width="400"
-                height="300"
-              />
+              <picture>
+                <source
+                  type="image/avif"
+                  srcset="
+                    assets/images/portfolio/portfolio-kraft-400.avif   400w,
+                    assets/images/portfolio/portfolio-kraft-800.avif   800w,
+                    assets/images/portfolio/portfolio-kraft-1200.avif 1200w,
+                    assets/images/portfolio/portfolio-kraft-1600.avif 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 400px"
+                />
+                <source
+                  type="image/webp"
+                  srcset="
+                    assets/images/portfolio/portfolio-kraft-400.webp   400w,
+                    assets/images/portfolio/portfolio-kraft-800.webp   800w,
+                    assets/images/portfolio/portfolio-kraft-1200.webp 1200w,
+                    assets/images/portfolio/portfolio-kraft-1600.webp 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 400px"
+                />
+                <img
+                  src="assets/images/portfolio/portfolio-kraft-800.jpg"
+                  srcset="
+                    assets/images/portfolio/portfolio-kraft-400.jpg   400w,
+                    assets/images/portfolio/portfolio-kraft-800.jpg   800w,
+                    assets/images/portfolio/portfolio-kraft-1200.jpg 1200w,
+                    assets/images/portfolio/portfolio-kraft-1600.jpg 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 400px"
+                  alt="Kraft Daily Pub - WordPress Project"
+                  loading="lazy"
+                  width="400"
+                  height="300"
+                />
+              </picture>
               <div class="project-overlay">
                 <h4>Kraft Daily Pub</h4>
                 <p class="accent">Realizacja / WordPress</p>
@@ -697,19 +760,42 @@
             </div>
 
             <div class="project-card reveal" onclick="openModal('neon')">
-              <img
-                src="assets/images/portfolio/portfolio-2.png"
-                srcset="
-                  assets/images/portfolio/portfolio-2.png  400w,
-                  assets/images/portfolio/portfolio-2.png  800w,
-                  assets/images/portfolio/portfolio-2.png 1200w
-                "
-                sizes="(max-width: 768px) 90vw, 400px"
-                alt="Neon Estate - Real Estate Project"
-                loading="lazy"
-                width="400"
-                height="300"
-              />
+              <picture>
+                <source
+                  type="image/avif"
+                  srcset="
+                    assets/images/portfolio/portfolio-neon-400.avif   400w,
+                    assets/images/portfolio/portfolio-neon-800.avif   800w,
+                    assets/images/portfolio/portfolio-neon-1200.avif 1200w,
+                    assets/images/portfolio/portfolio-neon-1600.avif 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 400px"
+                />
+                <source
+                  type="image/webp"
+                  srcset="
+                    assets/images/portfolio/portfolio-neon-400.webp   400w,
+                    assets/images/portfolio/portfolio-neon-800.webp   800w,
+                    assets/images/portfolio/portfolio-neon-1200.webp 1200w,
+                    assets/images/portfolio/portfolio-neon-1600.webp 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 400px"
+                />
+                <img
+                  src="assets/images/portfolio/portfolio-neon-800.jpg"
+                  srcset="
+                    assets/images/portfolio/portfolio-neon-400.jpg   400w,
+                    assets/images/portfolio/portfolio-neon-800.jpg   800w,
+                    assets/images/portfolio/portfolio-neon-1200.jpg 1200w,
+                    assets/images/portfolio/portfolio-neon-1600.jpg 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 400px"
+                  alt="Neon Estate - Real Estate Project"
+                  loading="lazy"
+                  width="400"
+                  height="300"
+                />
+              </picture>
               <div class="project-overlay">
                 <h4>Neon Estate</h4>
                 <p class="accent">Concept / Next.js</p>
@@ -717,19 +803,40 @@
             </div>
 
             <div class="project-card reveal" onclick="openModal('techgear')">
-              <img
-                src="https://images.unsplash.com/photo-1550009158-9ebf690be2f4?q=80&w=800&auto=format&fit=crop"
-                srcset="
-                  https://images.unsplash.com/photo-1550009158-9ebf690be2f4?q=80&w=400&auto=format&fit=crop   400w,
-                  https://images.unsplash.com/photo-1550009158-9ebf690be2f4?q=80&w=800&auto=format&fit=crop   800w,
-                  https://images.unsplash.com/photo-1550009158-9ebf690be2f4?q=80&w=1200&auto=format&fit=crop 1200w
-                "
-                sizes="(max-width: 768px) 90vw, 400px"
-                alt="TechGear Store - E-Commerce Project"
-                loading="lazy"
-                width="400"
-                height="300"
-              />
+              <picture>
+                <source
+                  type="image/avif"
+                  srcset="
+                    assets/images/portfolio/portfolio-techgear-400.avif   400w,
+                    assets/images/portfolio/portfolio-techgear-800.avif   800w,
+                    assets/images/portfolio/portfolio-techgear-1200.avif 1200w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 400px"
+                />
+                <source
+                  type="image/webp"
+                  srcset="
+                    assets/images/portfolio/portfolio-techgear-400.webp   400w,
+                    assets/images/portfolio/portfolio-techgear-800.webp   800w,
+                    assets/images/portfolio/portfolio-techgear-1200.webp 1200w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 400px"
+                />
+                <img
+                  src="assets/images/portfolio/portfolio-techgear-800.jpg"
+                  srcset="
+                    assets/images/portfolio/portfolio-techgear-400.jpg   400w,
+                    assets/images/portfolio/portfolio-techgear-800.jpg   800w,
+                    assets/images/portfolio/portfolio-techgear-1200.jpg 1200w,
+                    assets/images/portfolio/portfolio-techgear-1600.jpg 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 400px"
+                  alt="TechGear Store - E-Commerce Project"
+                  loading="lazy"
+                  width="400"
+                  height="300"
+                />
+              </picture>
               <div class="project-overlay">
                 <h4>TechGear Store</h4>
                 <p class="accent">Concept / E-Commerce</p>

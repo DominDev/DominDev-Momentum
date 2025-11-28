@@ -4,9 +4,10 @@
   "description": "High-Performance Landing Page - DominDev Portfolio",
   "scripts": {
     "minify": "node _scripts/minify-css.js",
-    "build": "npm run minify",
+    "optimize:images": "node _scripts/optimize-images.js",
+    "build": "npm run optimize:images && npm run minify",
     "dev": "echo 'Development server - just open index.html in browser'",
-    "help": "echo '\nAvailable commands:\n  npm run minify - Minify CSS files\n  npm run build  - Build for production\n'"
+    "help": "echo '\nAvailable commands:\n  npm run optimize:images - Generate optimized image variants (AVIF, WebP, JPEG)\n  npm run minify         - Minify CSS files\n  npm run build          - Build for production (images + CSS)\n'"
   },
   "keywords": [
     "portfolio",
@@ -17,7 +18,9 @@
   ],
   "author": "DominDev",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "sharp": "^0.34.5"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/yourusername/domindev-momentum.git"
