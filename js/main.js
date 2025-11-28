@@ -177,50 +177,59 @@ document.addEventListener("DOMContentLoaded", () => {
   // === ULTRA LAZY CHATBOT (Load on Demand Only) ===
   const chatTrigger = document.getElementById("chatbot-trigger");
   if (chatTrigger) {
+    let chatbotLoaded = false;
+    let pendingOpen = false;
+
     const loadChatbot = async () => {
-      // Remove all listeners to prevent duplicate loads
-      chatTrigger.removeEventListener("mouseenter", loadChatbot);
-      chatTrigger.removeEventListener("click", loadChatbot);
-      chatTrigger.removeEventListener("touchstart", loadChatbot);
+      if (chatbotLoaded) return;
+      chatbotLoaded = true;
 
       try {
-        console.log("🚀 Initializing Chatbot Core...");
-
         const { initChat } = await import('./modules/chatbot.js');
-        initChat();
+        const chatAPI = initChat();
 
-        console.log("✅ Chatbot loaded successfully");
+        // Jeśli user kliknął podczas ładowania, otwórz teraz
+        if (pendingOpen) {
+          pendingOpen = false;
+          if (chatAPI && typeof chatAPI.open === 'function') {
+            chatAPI.open();
+          }
+        }
       } catch (error) {
         console.error("❌ Failed to load chatbot:", error);
+        chatbotLoaded = false;
 
-        // User-friendly fallback: hide the trigger or show error message
         if (chatTrigger) {
           chatTrigger.style.opacity = "0.5";
           chatTrigger.title = "Chatbot temporarily unavailable";
           chatTrigger.style.cursor = "not-allowed";
         }
-
-        // Optional: Show notification in HUD area
-        const loadTimeElement = document.getElementById("loadTime");
-        if (loadTimeElement) {
-          const originalText = loadTimeElement.innerText;
-          loadTimeElement.innerText = "⚠️ Bot Error";
-          loadTimeElement.style.color = "#ef4444";
-          setTimeout(() => {
-            loadTimeElement.innerText = originalText;
-          }, 3000);
-        }
       }
     };
 
-    // Desktop: Hover preloads
-    chatTrigger.addEventListener("mouseenter", loadChatbot, { once: true });
-    // Mobile/Desktop: Click loads
-    chatTrigger.addEventListener("click", loadChatbot, { once: true });
-    chatTrigger.addEventListener("touchstart", loadChatbot, { passive: true, once: true });
+    let touchFired = false;
 
-    // REMOVED: Auto-load after 5s
-    // REMOVED: Scroll trigger
-    // Chatbot loads ONLY when user explicitly interacts
+    const handleInteraction = async (e) => {
+      // Zapobiegaj double-fire: touchend + click na mobile
+      if (e.type === 'touchend') {
+        touchFired = true;
+        setTimeout(() => { touchFired = false; }, 400);
+      } else if (e.type === 'click' && touchFired) {
+        return; // Ignoruj click po touchend
+      }
+
+      if (!chatbotLoaded) {
+        e.preventDefault();
+        pendingOpen = true;
+        await loadChatbot();
+      }
+    };
+
+    // Preload on hover (desktop only)
+    chatTrigger.addEventListener("mouseenter", loadChatbot, { once: true });
+
+    // Handle clicks/touches
+    chatTrigger.addEventListener("touchend", handleInteraction, { passive: false });
+    chatTrigger.addEventListener("click", handleInteraction);
   }
 });
