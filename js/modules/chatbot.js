@@ -72,8 +72,9 @@ export function initChat() {
   }
 
   if (chatbotTrigger) {
-    const toggleChat = (e) => {
-      e.preventDefault();
+    let touchStarted = false;
+
+    const toggleChat = () => {
       if (chatbotWindow.classList.contains("active")) {
         closeChat();
       } else {
@@ -81,9 +82,22 @@ export function initChat() {
       }
     };
 
-    chatbotTrigger.addEventListener("click", toggleChat);
-    // Dodatkowa obsługa touch dla mobile
-    chatbotTrigger.addEventListener("touchend", toggleChat);
+    // Unified handler - zapobiega double-fire touch+click
+    const handleToggle = (e) => {
+      e.preventDefault();
+
+      // Na mobile, touchend może wywołać także click - ignoruj click po touch
+      if (e.type === 'touchend') {
+        touchStarted = true;
+        toggleChat();
+        setTimeout(() => { touchStarted = false; }, 400);
+      } else if (e.type === 'click' && !touchStarted) {
+        toggleChat();
+      }
+    };
+
+    chatbotTrigger.addEventListener("touchend", handleToggle, { passive: false });
+    chatbotTrigger.addEventListener("click", handleToggle);
   }
 
   if (chatbotClose) chatbotClose.addEventListener("click", closeChat);
@@ -231,4 +245,10 @@ export function initChat() {
       ? arr[Math.floor(Math.random() * arr.length)]
       : arr;
   }
+
+  // Return API dla external control
+  return {
+    open: openChat,
+    close: closeChat
+  };
 }
