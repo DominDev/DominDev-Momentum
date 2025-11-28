@@ -9,6 +9,7 @@
 - **[Image Optimization Guide](image-optimization-guide.md)** - Kompletny przewodnik (instalacja, użycie, troubleshooting)
 - **[Image Optimization Setup](image-optimization-setup.md)** - Setup complete summary
 - **[Testing Responsive Images](testing-responsive-images.md)** - 🧪 Jak testować (DevTools, PageSpeed, różne urządzenia)
+- **[Advanced Image Optimization](advanced-image-optimization.md)** - 🚀 Zaawansowane techniki (Network-Aware, Progressive Loading, CDN)
 
 ---
 
