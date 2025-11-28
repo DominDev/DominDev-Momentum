@@ -5,7 +5,6 @@
  * Automatycznie dopasowuje jakość obrazów do:
  * - Szybkości połączenia (4G, 3G, 2G)
  * - Trybu oszczędzania danych (Save-Data)
- * - Poziomu baterii (Battery API)
  */
 
 export function initAdaptiveImages() {
@@ -14,7 +13,7 @@ export function initAdaptiveImages() {
     navigator.connection ||
     navigator.mozConnection ||
     navigator.webkitConnection;
-  const saveData = navigator.connection?.saveData || false;
+  const saveData = connection?.saveData || false;
 
   // Wykryj typ połączenia i dostosuj strategie
   const networkStrategy = getNetworkStrategy(connection, saveData);
@@ -28,14 +27,20 @@ export function initAdaptiveImages() {
   applyImageStrategy(networkStrategy);
 
   // Nasłuchuj zmian połączenia (np. przejście z WiFi na 3G)
+
+  let debounceTimer = null;
+
   if (connection) {
     connection.addEventListener("change", () => {
-      const newStrategy = getNetworkStrategy(
-        connection,
-        navigator.connection?.saveData
-      );
-      console.log(`🔄 Network changed: ${newStrategy.type}`);
-      applyImageStrategy(newStrategy);
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        const newStrategy = getNetworkStrategy(
+          connection,
+          connection?.saveData
+        );
+        console.log(`🔄 Network changed: ${newStrategy.type}`);
+        applyImageStrategy(newStrategy);
+      }, 300); // Debounce 300ms
     });
   }
 }
@@ -110,10 +115,10 @@ function getNetworkStrategy(connection, saveData) {
 function applyImageStrategy(strategy) {
   // WAŻNE: Dla szybkich połączeń (4G, WiFi) NIE MODYFIKUJ srcset
   // Pozwól przeglądarce samej wybrać optymalny rozmiar
-  const shouldOptimize = strategy.type !== '4g' && strategy.type !== 'wifi';
+  const shouldOptimize = strategy.type !== "4g" && strategy.type !== "wifi";
 
   if (!shouldOptimize) {
-    console.log('⚡ Fast connection detected - using native browser selection');
+    console.log("⚡ Fast connection detected - using native browser selection");
     return; // NIE modyfikuj obrazów dla szybkich połączeń
   }
 
@@ -141,12 +146,14 @@ function applyImageStrategy(strategy) {
       );
       source.setAttribute("srcset", filteredSrcset);
 
-      // Dla Save-Data: usuń AVIF, zostaw tylko WebP/JPEG
+      // Dla Save-Data: wyłącz AVIF, zostaw tylko WebP/JPEG
       if (
         strategy.format === "webp" &&
         source.getAttribute("type") === "image/avif"
       ) {
-        source.remove();
+        source.setAttribute("media", "(max-width: 0px)"); // Wyłącz bez usuwania
+      } else if (source.getAttribute("type") === "image/avif") {
+        source.removeAttribute("media"); // Przywróć jeśli potrzebne
       }
     });
 
