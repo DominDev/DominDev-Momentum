@@ -43,3 +43,14 @@ _docs/
 # Build/Minified files (generate before production)
 *.min.css
 *.min.js
+
+# Image originals (za duże do commitowania)
+assets/images/*/originals/*.jpg
+assets/images/*/originals/*.png
+assets/images/*/originals/*.jpeg
+assets/images/*/originals/*.webp
+assets/images/*/originals/*.tiff
+assets/images/*/originals/*.gif
+
+# Keep originals folder structure
+!assets/images/*/originals/.gitkeep
