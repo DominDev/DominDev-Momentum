@@ -4598,3 +4598,34 @@ body {
     scroll-behavior: smooth;
   }
 }
+
+/* ========================================
+   BROWSER FALLBACKS
+   ======================================== */
+
+/* Fallback dla backdrop-filter (IE, Firefox <103, Safari <9) */
+@supports not (backdrop-filter: blur(1px)) {
+  nav {
+    background: rgba(5, 5, 5, 0.98);
+  }
+
+  .service-card {
+    background: rgba(15, 15, 15, 0.98);
+  }
+
+  .chatbot-window {
+    background: rgba(12, 12, 12, 0.98);
+  }
+
+  .chatbot-backdrop {
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  .modal-backdrop {
+    background: rgba(0, 0, 0, 0.95);
+  }
+
+  #maintenance-screen {
+    background: rgba(5, 5, 5, 0.98);
+  }
+}
