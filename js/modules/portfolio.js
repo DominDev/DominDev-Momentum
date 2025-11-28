@@ -15,7 +15,7 @@ const projectsDB = {
   neon: {
     title: "Neon Estate",
     type: "Concept / Headless",
-    image: "/assets/images/portfolio/portfolio-2.png",
+    image: "assets/images/portfolio/portfolio-2.png",
     tags: ["NEXT.JS", "HEADLESS WP", "GSAP"],
     challenge:
       "Projekt badawczy interfejsu dla luksusowych nieruchomości. Celem było połączenie 'ciężkich' wizualnie zdjęć 4K z błyskawicznym czasem ładowania, nieosiągalnym dla standardowych stron.",
