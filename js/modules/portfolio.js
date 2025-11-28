@@ -3,8 +3,7 @@ const projectsDB = {
   kraft: {
     title: "Kraft Daily Pub",
     type: "Realizacja / WordPress",
-    image:
-      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=800&auto=format&fit=crop",
+    image: "assets/images/portfolio/portfolio-kraft-800.jpg",
     tags: ["WORDPRESS", "CUSTOM THEME", "RWD"],
     challenge:
       "Lokalny browar potrzebował strony oddającej rzemieślniczy charakter marki. Głównym wyzwaniem było stworzenie systemu menu, który obsługa może edytować z telefonu w 30 sekund.",
@@ -15,7 +14,7 @@ const projectsDB = {
   neon: {
     title: "Neon Estate",
     type: "Concept / Headless",
-    image: "assets/images/portfolio/portfolio-2.png",
+    image: "assets/images/portfolio/portfolio-neon-800.jpg",
     tags: ["NEXT.JS", "HEADLESS WP", "GSAP"],
     challenge:
       "Projekt badawczy interfejsu dla luksusowych nieruchomości. Celem było połączenie 'ciężkich' wizualnie zdjęć 4K z błyskawicznym czasem ładowania, nieosiągalnym dla standardowych stron.",
@@ -26,8 +25,7 @@ const projectsDB = {
   techgear: {
     title: "TechGear Store",
     type: "Concept / E-Commerce",
-    image:
-      "https://images.unsplash.com/photo-1550009158-9ebf690be2f4?q=80&w=800&auto=format&fit=crop",
+    image: "assets/images/portfolio/portfolio-techgear-800.jpg",
     tags: ["WOOCOMMERCE", "REDIS", "SECURITY"],
     challenge:
       "Symulacja architektury sklepu z elektroniką odpornego na duży ruch (np. Black Friday). Skupienie na optymalizacji ścieżki zakupowej (Checkout) i bezpieczeństwie.",
