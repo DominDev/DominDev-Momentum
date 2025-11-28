@@ -87,12 +87,14 @@ export function initUI() {
     hamburger.addEventListener("click", () => {
       hamburger.classList.toggle("active");
       menu.classList.toggle("active");
+      document.body.classList.toggle("menu-open");
     });
 
     links.forEach((link) => {
       link.addEventListener("click", () => {
         hamburger.classList.remove("active");
         menu.classList.remove("active");
+        document.body.classList.remove("menu-open");
       });
     });
   }
