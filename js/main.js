@@ -5,6 +5,7 @@ import { initPortfolio } from './modules/portfolio.js';
 import { initContact } from './modules/contact.js';
 import { initHud } from './modules/hud.js';
 import { initMaintenance } from './modules/maintenance.js';
+import { initAdaptiveImages } from './modules/adaptive-images.js';
 
 // Globalne zmienne do kontroli pętli animacji preloadera i cleanup
 let preloaderAnimId = null;
@@ -113,6 +114,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // === STATIC MODULES (Lightweight) ===
   initPortfolio();
   initContact();
+
+  // === ADAPTIVE IMAGES (Network-Aware Loading) ===
+  initAdaptiveImages();
 
   // === PRELOADER LOGIC (Optimized) ===
   const preloader = document.getElementById("preloader");
