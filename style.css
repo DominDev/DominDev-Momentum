@@ -3415,7 +3415,7 @@ body {
 
 /* Animacja scrollowania długiego screenshota */
 .modal-image-container img.scrolling {
-  animation: scroll-screenshot 15s ease-in-out infinite alternate;
+  animation: scroll-screenshot 40s linear infinite alternate;
 }
 
 /* Scanlines overlay na obrazku */
@@ -3442,7 +3442,7 @@ body {
   0% {
     transform: translateY(0);
   }
-  20% {
+  5% {
     transform: translateY(0);
   }
   100% {
@@ -3604,7 +3604,7 @@ body {
   }
   /* Animacja dla mobile - od góry do dołu (z poprawną wysokością) */
   .modal-image-container img.scrolling {
-    animation: scroll-screenshot-mobile 15s ease-in-out infinite alternate;
+    animation: scroll-screenshot-mobile 40s ease-in-out infinite alternate;
   }
   .modal-info {
     padding: 20px;
@@ -3660,7 +3660,7 @@ body {
     height: 250px;
   }
   .modal-image-container img.scrolling {
-    animation: scroll-screenshot-small 15s ease-in-out infinite alternate;
+    animation: scroll-screenshot-small 40s ease-in-out infinite alternate;
   }
   .modal-info {
     padding: 15px;
