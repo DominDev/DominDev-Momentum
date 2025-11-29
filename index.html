@@ -5,8 +5,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Base URL for GitHub Pages deployment -->
-    <base href="/DominDev-Momentum/" />
+    <!-- Conditional base tag for GitHub Pages vs localhost -->
+    <script>
+      // Detect if running on GitHub Pages and set base href accordingly
+      if (window.location.hostname === 'domin737.github.io') {
+        document.write('<base href="/DominDev-Momentum/" />');
+      }
+    </script>
 
     <!-- Primary Meta Tags -->
     <title>
