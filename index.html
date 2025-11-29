@@ -5,6 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Base URL for GitHub Pages deployment -->
+    <base href="/DominDev-Momentum/" />
+
     <!-- Primary Meta Tags -->
     <title>
       DominDev | WordPress Developer Wrocław - Strony WWW & Sklepy WooCommerce
@@ -323,20 +326,20 @@
       crossorigin
     />
 
-    <!-- Preload critical images for LCP optimization -->
-    <!-- About section hero image (first viewport content) -->
+    <!-- Preload LCP image (Portfolio TechGear - actual LCP per Lighthouse) -->
     <link
       rel="preload"
       as="image"
       type="image/avif"
-      href="assets/images/about/coding-setup-800.avif"
+      href="assets/images/portfolio/portfolio-techgear-800.avif"
       imagesrcset="
-        assets/images/about/coding-setup-400.avif   400w,
-        assets/images/about/coding-setup-800.avif   800w,
-        assets/images/about/coding-setup-1200.avif 1200w,
-        assets/images/about/coding-setup-1600.avif 1600w
+        assets/images/portfolio/portfolio-techgear-400.avif   400w,
+        assets/images/portfolio/portfolio-techgear-800.avif   800w,
+        assets/images/portfolio/portfolio-techgear-1200.avif 1200w,
+        assets/images/portfolio/portfolio-techgear-1600.avif 1600w
       "
-      imagesizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 500px"
+      imagesizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+      fetchpriority="high"
     />
 
     <!-- ========================================
@@ -361,13 +364,15 @@
     <link rel="modulepreload" href="js/modules/hud.js" />
 
     <!-- ========================================
-         SELF-HOSTED FONTS - Performance Critical (INLINED)
-         Eliminates CDN: -200ms FCP, no FOIT
-         Eliminates render-blocking request: -160ms
+         SELF-HOSTED FONTS - Performance Critical
+         Google Fonts inlined, FontAwesome CSS from CDN (but fonts local!)
          ======================================== -->
     <style>
-/* Font Awesome - Solid */@font-face{font-family:'Font Awesome 6 Free';font-style:normal;font-weight:900;font-display:swap;src:url('assets/fonts/fa-solid-900.woff2')format('woff2')}.fas,.fa-solid{font-family:'Font Awesome 6 Free';font-weight:900}/* Font Awesome - Brands */@font-face{font-family:'Font Awesome 6 Brands';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/fa-brands-400.woff2')format('woff2')}.fab,.fa-brands{font-family:'Font Awesome 6 Brands';font-weight:400}/* Google Fonts - Outfit */@font-face{font-family:'Outfit';font-style:normal;font-weight:100 900;font-display:swap;src:url('assets/fonts/outfit-400.woff2')format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Outfit Fallback';src:local('Arial');size-adjust:102%;ascent-override:90%;descent-override:22%;line-gap-override:0%}/* Google Fonts - Space Grotesk */@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url('assets/fonts/space-grotesk.woff2')format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk Fallback';src:local('Courier New');size-adjust:98%;ascent-override:88%;descent-override:24%;line-gap-override:0%}
+/* Google Fonts - Outfit */@font-face{font-family:'Outfit';font-style:normal;font-weight:100 900;font-display:swap;src:url('assets/fonts/outfit-400.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Outfit Fallback';src:local('Arial');size-adjust:102%;ascent-override:90%;descent-override:22%;line-gap-override:0%}/* Google Fonts - Space Grotesk */@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url('assets/fonts/space-grotesk.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk Fallback';src:local('Courier New');size-adjust:98%;ascent-override:88%;descent-override:24%;line-gap-override:0%}
     </style>
+
+    <!-- FontAwesome CSS - fully self-hosted (fonts + icon classes) -->
+    <link rel="stylesheet" href="assets/fonts/fonts.css" />
 
     <link rel="stylesheet" href="style.min.css" />
   </head>
