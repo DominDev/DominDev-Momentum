@@ -4634,16 +4634,3 @@ body {
     background: rgba(5, 5, 5, 0.98);
   }
 }
-
-/* --- LAZY LOADING "BLUR-UP" STYLES --- */
-.lazy-img {
-  /* Start with a blur */
-  filter: blur(15px);
-  /* Animate the filter change for a smooth "un-blur" effect */
-  transition: filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.lazy-img.is-loaded {
-  /* Remove the blur when the full image is loaded */
-  filter: blur(0);
-}
