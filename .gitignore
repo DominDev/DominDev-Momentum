@@ -38,7 +38,7 @@ yarn-error.log*
 # DominDev Momentum optional folders (prefix with _)
 _project_snapshots/
 _scripts/
-_docs/
+#_docs/
 
 # Build/Minified files - COMMITTED for GitHub Pages deployment
 # Note: Minified files are now tracked in git for production deployment
