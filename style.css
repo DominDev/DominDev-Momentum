@@ -706,7 +706,7 @@ body.menu-open .progress-wrap {
 
   border: 2px solid rgba(255, 255, 255, 0.1);
 
-  aspect-ratio: 500 / 400;
+  height: 400px;
 
   overflow: hidden;
 }
@@ -750,7 +750,7 @@ body.menu-open .progress-wrap {
 .project-card {
   background: var(--bg-card);
 
-  aspect-ratio: 4 / 3;
+  height: 300px;
 
   position: relative;
 
@@ -2126,6 +2126,7 @@ footer {
   }
 
   .about-img-wrapper {
+    height: 300px;
     margin-top: 40px;
   }
 
@@ -2252,13 +2253,7 @@ footer {
   /* Portfolio */
   .portfolio-grid {
     grid-template-columns: 1fr;
-    gap: 40px; /* Zwiększony odstęp dla lepszej czytelności w jednej kolumnie */
-    justify-items: center; /* Wyśrodkowanie kart w gridzie */
-  }
-
-  .project-card {
-    width: 90%; /* Karty nie będą rozciągnięte na 100% szerokości */
-    max-width: 420px; /* Maksymalna szerokość dla estetyki */
+    gap: 25px;
   }
 
   /* Chatbot */
@@ -2382,12 +2377,12 @@ footer {
 
   /* About */
   .about-img-wrapper {
-    /* Height is controlled by aspect-ratio */
+    height: 250px;
   }
 
   /* Portfolio */
   .project-card {
-    /* Height is controlled by aspect-ratio */
+    height: 240px;
   }
 
   /* Timeline */
