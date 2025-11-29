@@ -2,6 +2,7 @@ import { CONFIG } from './config.js';
 import { initMatrix } from './core/matrix.js';
 import { initUI, initCursor } from './core/ui.js';
 import { initPortfolio } from './modules/portfolio.js';
+import { initLazyBlur } from './modules/lazy-blur.js';
 import { initContact } from './modules/contact.js';
 import { initHud } from './modules/hud.js';
 import { initMaintenance } from './modules/maintenance.js';
@@ -113,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === STATIC MODULES (Lightweight) ===
   initPortfolio();
+  initLazyBlur();
   initContact();
 
   // === ADAPTIVE IMAGES (Network-Aware Loading) ===
