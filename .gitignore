@@ -40,9 +40,8 @@ _project_snapshots/
 _scripts/
 _docs/
 
-# Build/Minified files (generate before production)
-*.min.css
-*.min.js
+# Build/Minified files - COMMITTED for GitHub Pages deployment
+# Note: Minified files are now tracked in git for production deployment
 
 # Image originals (za duże do commitowania)
 assets/images/*/originals/*.jpg

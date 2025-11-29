@@ -7,9 +7,9 @@
 
     <!-- Conditional base tag for GitHub Pages vs localhost -->
     <script>
-      // Detect if running on GitHub Pages and set base href accordingly
+      // Must use document.write for synchronous execution before resource loading
       if (window.location.hostname === 'domin737.github.io') {
-        document.write('<base href="/DominDev-Momentum/" />');
+        document.write('<base href="/DominDev-Momentum/">');
       }
     </script>
 
