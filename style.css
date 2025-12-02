@@ -4449,44 +4449,36 @@ body {
   margin: 0 auto;
 }
 
-/* Karta FAQ */
+/* Karta FAQ - Style cert-chip */
 .faq-item {
   width: 100%;
-  background: rgba(10, 10, 10, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 24px 28px;
+  background: rgba(20, 20, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: var(--transition);
-
-  border-radius: 0; /* ostre rogi */
+  transition: all 0.3s ease;
+  border-radius: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 0;
 }
 
-/* USUNIĘCIE czerwonego rogu */
-.faq-item::after {
-  content: none;
-}
-
-/* Hover — spójny z micro-card */
+/* Hover State */
 .faq-item:hover {
-  background: rgba(20, 20, 20, 0.95);
   border-color: var(--primary);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 40px rgba(255, 31, 31, 0.18);
+  background: rgba(25, 25, 25, 0.9);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
 }
 
 /* Otwarta karta */
 .faq-item.is-open {
   border-color: var(--primary);
-  background: rgba(20, 20, 20, 0.95);
-  transform: translateY(-2px);
-  box-shadow: 0 0 0 1px rgba(204, 0, 0, 0.5), 0 18px 45px rgba(0, 0, 0, 0.7);
-
-  justify-content: flex-start;
+  background: rgba(25, 25, 25, 0.9);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
 }
 
 /* ==========================================
@@ -4494,18 +4486,31 @@ body {
    ========================================== */
 
 .faq-question {
-  font-size: 1.15rem; /* było 1.3rem → mniejsze */
+  font-size: 1.2rem; /* desktop - domyślnie */
   font-weight: 700;
-  color: var(--text-main);
+  color: #fff;
   line-height: 1.35;
+  letter-spacing: 1px;
+  text-transform: none; /* bez wielkich liter */
 
   display: flex;
   align-items: center;
   gap: 0.7rem;
 
-  padding-right: 2rem; /* miejsce na + / – */
+  padding-right: 0;
   position: relative;
   margin-bottom: 0;
+}
+
+/* Mobile/Tablet - responsive FAQ (scalono z blokiem z linii 4600) */
+@media (max-width: 768px) {
+  .faq-item {
+    padding: 20px 18px;
+  }
+
+  .faq-question {
+    font-size: 1rem;
+  }
 }
 
 /* Odstęp tylko gdy otwarta */
@@ -4513,27 +4518,50 @@ body {
   margin-bottom: 0.65rem;
 }
 
-/* Ikona po lewej */
+/* Ikona po lewej - styl cert-icon */
 .faq-question i {
-  font-size: 1.25rem; /* trochę mniejsza, żeby pasowała do nowego font-size */
+  font-size: 1.25rem;
   margin: 0;
+  color: var(--text-muted);
+  transition: 0.3s;
 }
 
-/* Znaki + / – */
-.faq-question::after {
-  content: "+";
-  position: absolute;
-  right: 0.25rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.2rem; /* było 1.4rem → lżejsze */
+/* Hover - ikona glow (jak cert-chip) */
+.faq-item:hover .faq-question i {
   color: var(--primary);
-  transition: var(--transition);
+  text-shadow: 0 0 10px var(--primary);
 }
 
-.faq-item.is-open .faq-question::after {
-  content: "–";
-  color: var(--text-main);
+/* Otwarta - ikona glow */
+.faq-item.is-open .faq-question i {
+  color: var(--primary);
+  text-shadow: 0 0 10px var(--primary);
+}
+
+/* Status indicator - przeniesiony na .faq-item (jak w cert-chip) */
+.faq-item::after {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  background: #333;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  transition: 0.3s;
+}
+
+/* Hover - status light */
+.faq-item:hover::after {
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary);
+}
+
+/* Otwarta - zielone światło (jak w cert-chip) */
+.faq-item.is-open::after {
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80;
 }
 
 /* ==========================================
@@ -4570,17 +4598,8 @@ body {
 }
 
 /* ==========================================
-   Responsive
+   Responsive - usunięto duplikat, scalono z blokiem wyżej
    ========================================== */
-
-@media (max-width: 768px) {
-  .faq-item {
-    padding: 20px 18px;
-  }
-  .faq-question {
-    font-size: 0.9rem;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   *,
