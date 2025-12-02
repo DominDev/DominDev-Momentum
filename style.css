@@ -4451,16 +4451,16 @@ body {
   margin: 0 auto;
 }
 
-/* Karta FAQ */
+/* Karta FAQ - cert-chip styling */
 .faq-item {
   width: 100%;
-  background: rgba(10, 10, 10, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 24px 28px;
+  background: rgba(20, 20, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s ease;
 
   border-radius: 0; /* ostre rogi */
   display: flex;
@@ -4468,27 +4468,46 @@ body {
   justify-content: center;
 }
 
-/* USUNIĘCIE czerwonego rogu */
+/* Status dot (cert-chip style) */
 .faq-item::after {
-  content: none;
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  background: #333;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  transition: 0.3s;
 }
 
-/* Hover — spójny z micro-card */
+/* Hover — cert-chip style */
 .faq-item:hover {
-  background: rgba(20, 20, 20, 0.95);
   border-color: var(--primary);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 40px rgba(255, 31, 31, 0.18);
+  background: rgba(25, 25, 25, 0.9);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+.faq-item:hover::after {
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary);
 }
 
 /* Otwarta karta */
 .faq-item.is-open {
   border-color: var(--primary);
-  background: rgba(20, 20, 20, 0.95);
-  transform: translateY(-2px);
-  box-shadow: 0 0 0 1px rgba(204, 0, 0, 0.5), 0 18px 45px rgba(0, 0, 0, 0.7);
+  background: rgba(25, 25, 25, 0.9);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
 
   justify-content: flex-start;
+}
+
+.faq-item.is-open::after {
+  background: #4ade80;
+  box-shadow: 0 0 10px #4ade80;
 }
 
 /* ==========================================
@@ -4496,16 +4515,17 @@ body {
    ========================================== */
 
 .faq-question {
-  font-size: 1.15rem; /* było 1.3rem → mniejsze */
+  font-size: 1.1rem; /* Desktop: większy niż odpowiedź */
   font-weight: 700;
   color: var(--text-main);
   line-height: 1.35;
+  text-transform: none; /* Bez uppercase */
 
   display: flex;
   align-items: center;
   gap: 0.7rem;
 
-  padding-right: 2rem; /* miejsce na + / – */
+  padding-right: 25px; /* Miejsce dla status dot */
   position: relative;
   margin-bottom: 0;
 }
@@ -4517,25 +4537,13 @@ body {
 
 /* Ikona po lewej */
 .faq-question i {
-  font-size: 1.25rem; /* trochę mniejsza, żeby pasowała do nowego font-size */
+  font-size: 1.1rem; /* Proporcjonalna do font-size */
   margin: 0;
 }
 
-/* Znaki + / – */
+/* USUNIĘTE: Znaki + / – (status dot wystarczy jako indicator) */
 .faq-question::after {
-  content: "+";
-  position: absolute;
-  right: 0.25rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.2rem; /* było 1.4rem → lżejsze */
-  color: var(--primary);
-  transition: var(--transition);
-}
-
-.faq-item.is-open .faq-question::after {
-  content: "–";
-  color: var(--text-main);
+  content: none;
 }
 
 /* ==========================================
@@ -4577,10 +4585,13 @@ body {
 
 @media (max-width: 768px) {
   .faq-item {
-    padding: 20px 18px;
+    padding: 15px; /* cert-chip style - jednolity padding */
   }
   .faq-question {
-    font-size: 0.9rem;
+    font-size: 1rem; /* Mobile: większy niż odpowiedź */
+  }
+  .faq-question i {
+    font-size: 1rem;
   }
 }
 
