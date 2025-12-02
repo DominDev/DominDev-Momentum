@@ -48,6 +48,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* CRITICAL FIX: Add offset for fixed navbar */
+  scroll-padding-top: 80px;
 }
 
 body {
@@ -4636,11 +4638,15 @@ body {
    Impact: -30-50ms initial render time
    ============================================ */
 
+/* DISABLED: content-visibility causes massive offsetTop jumps during scroll (up to +2407px on mobile!)
+   Real-time monitoring showed FAQ offsetTop jumping: 6302 → 8537 → 8082 during scroll
+   This was the ROOT CAUSE of FAQ scroll issue - browser recalculating layout causes reflows
 #portfolio,
 #process,
 #services,
 #faq,
 #contact {
   content-visibility: auto;
-  contain-intrinsic-size: 0 1000px; /* Estimated height for layout stability */
+  contain-intrinsic-size: 0 1000px;
 }
+*/
