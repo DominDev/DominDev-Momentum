@@ -48,6 +48,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* CRITICAL FIX: Add offset for fixed navbar */
+  scroll-padding-top: 80px;
 }
 
 body {
@@ -4449,36 +4451,44 @@ body {
   margin: 0 auto;
 }
 
-/* Karta FAQ - Style cert-chip */
+/* Karta FAQ */
 .faq-item {
   width: 100%;
-  background: rgba(20, 20, 20, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 15px;
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 24px 28px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 0;
+  transition: var(--transition);
+
+  border-radius: 0; /* ostre rogi */
   display: flex;
   flex-direction: column;
-  gap: 0;
+  justify-content: center;
 }
 
-/* Hover State */
+/* USUNIĘCIE czerwonego rogu */
+.faq-item::after {
+  content: none;
+}
+
+/* Hover — spójny z micro-card */
 .faq-item:hover {
+  background: rgba(20, 20, 20, 0.95);
   border-color: var(--primary);
-  background: rgba(25, 25, 25, 0.9);
-  transform: translateY(-3px);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 40px rgba(255, 31, 31, 0.18);
 }
 
 /* Otwarta karta */
 .faq-item.is-open {
   border-color: var(--primary);
-  background: rgba(25, 25, 25, 0.9);
-  transform: translateY(-3px);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  background: rgba(20, 20, 20, 0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(204, 0, 0, 0.5), 0 18px 45px rgba(0, 0, 0, 0.7);
+
+  justify-content: flex-start;
 }
 
 /* ==========================================
@@ -4486,31 +4496,18 @@ body {
    ========================================== */
 
 .faq-question {
-  font-size: 1.2rem; /* desktop - domyślnie */
+  font-size: 1.15rem; /* było 1.3rem → mniejsze */
   font-weight: 700;
-  color: #fff;
+  color: var(--text-main);
   line-height: 1.35;
-  letter-spacing: 1px;
-  text-transform: none; /* bez wielkich liter */
 
   display: flex;
   align-items: center;
   gap: 0.7rem;
 
-  padding-right: 0;
+  padding-right: 2rem; /* miejsce na + / – */
   position: relative;
   margin-bottom: 0;
-}
-
-/* Mobile/Tablet - responsive FAQ (scalono z blokiem z linii 4600) */
-@media (max-width: 768px) {
-  .faq-item {
-    padding: 20px 18px;
-  }
-
-  .faq-question {
-    font-size: 1rem;
-  }
 }
 
 /* Odstęp tylko gdy otwarta */
@@ -4518,50 +4515,27 @@ body {
   margin-bottom: 0.65rem;
 }
 
-/* Ikona po lewej - styl cert-icon */
+/* Ikona po lewej */
 .faq-question i {
-  font-size: 1.25rem;
+  font-size: 1.25rem; /* trochę mniejsza, żeby pasowała do nowego font-size */
   margin: 0;
-  color: var(--text-muted);
-  transition: 0.3s;
 }
 
-/* Hover - ikona glow (jak cert-chip) */
-.faq-item:hover .faq-question i {
-  color: var(--primary);
-  text-shadow: 0 0 10px var(--primary);
-}
-
-/* Otwarta - ikona glow */
-.faq-item.is-open .faq-question i {
-  color: var(--primary);
-  text-shadow: 0 0 10px var(--primary);
-}
-
-/* Status indicator - przeniesiony na .faq-item (jak w cert-chip) */
-.faq-item::after {
-  content: "";
+/* Znaki + / – */
+.faq-question::after {
+  content: "+";
   position: absolute;
-  right: 10px;
-  top: 10px;
-  width: 6px;
-  height: 6px;
-  background: #333;
-  border-radius: 50%;
-  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-  transition: 0.3s;
+  right: 0.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem; /* było 1.4rem → lżejsze */
+  color: var(--primary);
+  transition: var(--transition);
 }
 
-/* Hover - status light */
-.faq-item:hover::after {
-  background: var(--primary);
-  box-shadow: 0 0 8px var(--primary);
-}
-
-/* Otwarta - zielone światło (jak w cert-chip) */
-.faq-item.is-open::after {
-  background: #4ade80;
-  box-shadow: 0 0 8px #4ade80;
+.faq-item.is-open .faq-question::after {
+  content: "–";
+  color: var(--text-main);
 }
 
 /* ==========================================
@@ -4598,8 +4572,17 @@ body {
 }
 
 /* ==========================================
-   Responsive - usunięto duplikat, scalono z blokiem wyżej
+   Responsive
    ========================================== */
+
+@media (max-width: 768px) {
+  .faq-item {
+    padding: 20px 18px;
+  }
+  .faq-question {
+    font-size: 0.9rem;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -4655,11 +4638,15 @@ body {
    Impact: -30-50ms initial render time
    ============================================ */
 
+/* DISABLED: content-visibility causes massive offsetTop jumps during scroll (up to +2407px on mobile!)
+   Real-time monitoring showed FAQ offsetTop jumping: 6302 → 8537 → 8082 during scroll
+   This was the ROOT CAUSE of FAQ scroll issue - browser recalculating layout causes reflows
 #portfolio,
 #process,
 #services,
 #faq,
 #contact {
   content-visibility: auto;
-  contain-intrinsic-size: 0 1000px; /* Estimated height for layout stability */
+  contain-intrinsic-size: 0 1000px;
 }
+*/

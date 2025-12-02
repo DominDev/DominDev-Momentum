@@ -77,6 +77,29 @@ export function initCursor() {
 
 // === UI COMPONENTS (Normal mode only) ===
 export function initUI() {
+  // CRITICAL FIX: Pre-activate ALL reveal animations on first hash link click
+  // This ensures stable offsetTop for all sections (prevents layout shifts)
+  let allRevealsActivated = false;
+
+  const activateAllReveals = () => {
+    if (allRevealsActivated) return;
+    allRevealsActivated = true;
+
+    const allReveals = document.querySelectorAll('.reveal:not(.active)');
+    allReveals.forEach(el => el.classList.add('active'));
+
+    // Force layout recalculation
+    document.body.offsetHeight;
+  };
+
+  // Pre-activate reveals on hash link click
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a[href^='#']");
+    if (link) {
+      activateAllReveals();
+    }
+  });
+
   // === HAMBURGER MENU ===
   const hamburger = document.getElementById("hamburger-menu");
   const menu = document.getElementById("fullscreen-menu");
@@ -189,12 +212,8 @@ export function initUI() {
         item.classList.remove("is-open");
         const answer = item.querySelector(".faq-answer");
         const question = item.querySelector(".faq-question");
-        if (answer) {
-          answer.style.maxHeight = "0px";
-        }
-        if (question) {
-          question.setAttribute("aria-expanded", "false");
-        }
+        if (answer) answer.style.maxHeight = "0px";
+        if (question) question.setAttribute("aria-expanded", "false");
       });
     };
 
@@ -238,9 +257,12 @@ export function initUI() {
 
     // Klik poza FAQ zamyka wszystkie
     document.addEventListener("click", (e) => {
-      if (!e.target.closest(".faq-item")) {
-        closeAll();
-      }
+      // Don't close FAQ items when clicking hash navigation links OR hamburger menu
+      const isHashLink = e.target.closest("a[href^='#']");
+      const isHamburger = e.target.closest(".hamburger, #hamburger-menu");
+
+      if (isHashLink || isHamburger) return;
+      if (!e.target.closest(".faq-item")) closeAll();
     });
   }
 
@@ -256,5 +278,6 @@ export function initUI() {
     { threshold: 0.1 }
   );
 
-  document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  const revealElements = document.querySelectorAll(".reveal");
+  revealElements.forEach((el) => observer.observe(el));
 }

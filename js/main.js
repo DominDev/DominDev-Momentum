@@ -74,8 +74,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // === CORE INITIALIZATION ===
   initCursor();
 
-  // Reset scroll position
-  window.scrollTo(0, 0);
+  // Reset scroll position (only if no hash)
+  if (!window.location.hash) {
+    window.scrollTo(0, 0);
+  }
 
   // Start preloader Matrix if enabled
   if (CONFIG.enablePreloader) {
@@ -132,26 +134,42 @@ document.addEventListener("DOMContentLoaded", () => {
       preloader.style.display = "none";
 
       // Remove specific body styles used during preloader
-      // Safer than removeAttribute('style') which would remove ALL inline styles
       document.body.style.overflow = '';
       document.body.style.height = '';
 
-      // CRITICAL: Kill preloader animation loop to free CPU
+      // Kill preloader animation loop to free CPU
       if (preloaderAnimId) {
         cancelAnimationFrame(preloaderAnimId);
         preloaderAnimId = null;
       }
 
-      // FIX 3: Clean up resize event listener to prevent memory leak
+      // Clean up resize event listener to prevent memory leak
       if (preloaderResizeCleanup) {
         preloaderResizeCleanup();
         preloaderResizeCleanup = null;
       }
 
-      // NOW start heavy operations (Matrix + UI)
-      // This ensures we never run two Matrix animations simultaneously
+      // Start heavy operations (Matrix + UI)
       initMatrix();
       initUI();
+
+      // Check if we have a hash that needs scrolling
+      if (window.location.hash) {
+        const targetId = window.location.hash.substring(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          // CRITICAL FIX: Pre-activate ALL reveal animations BEFORE scroll
+          const allReveals = document.querySelectorAll('.reveal:not(.active)');
+          allReveals.forEach(el => el.classList.add('active'));
+          document.body.offsetHeight; // Force layout recalculation
+
+          setTimeout(() => {
+            const rect = target.getBoundingClientRect();
+            const offset = window.pageYOffset + rect.top - 80; // navbar height
+            window.scrollTo({ top: offset, behavior: 'smooth' });
+          }, 100);
+        }
+      }
 
       // Delayed HUD initialization to avoid blocking animations
       setTimeout(initHud, 200);
