@@ -18,7 +18,15 @@ export function initMatrix() {
 
   let lastTime = 0;
   const fps = 15;
-  const interval = 1000 / fps;
+  let interval = 1000 / fps;
+
+  // Fast initial load - higher FPS for first few seconds (only on capable devices)
+  let frameCount = 0;
+  const fastLoadFrames = 120; // ~8 seconds at normal FPS
+  // Disable fast loading on slow connections or low-end devices
+  const isSlowConnection = navigator.connection?.effectiveType === '2g' || navigator.connection?.saveData;
+  const isLowEnd = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
+  const fastFPS = (isSlowConnection || isLowEnd) ? 15 : 30; // 2x faster only on capable devices
 
   // Pause animation when canvas is not visible (CPU saver)
   let isVisible = true;
@@ -65,6 +73,15 @@ export function initMatrix() {
     animationId = requestAnimationFrame(matrixLoop);
 
     if (!currentTime) currentTime = 0;
+
+    // Use higher FPS during initial load for faster fill
+    if (frameCount < fastLoadFrames) {
+      interval = 1000 / fastFPS;
+      frameCount++;
+    } else {
+      interval = 1000 / fps;
+    }
+
     const delta = currentTime - lastTime;
     if (delta < interval) return;
     lastTime = currentTime - (delta % interval);

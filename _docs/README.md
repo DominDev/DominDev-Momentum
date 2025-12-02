@@ -166,6 +166,20 @@ tags: [documentation, index, overview]
 
 ---
 
+#### [guide-matrix-animation-speed.md](guide-matrix-animation-speed.md) - Matrix Animation Config
+**Status:** ✅ NOWY! (2025-12-02)
+**Zawartość:**
+- Gdzie zmieniać prędkość Matrix (2 lokalizacje)
+- Parametry: FPS, fastLoadFrames, fastFPS, prędkość spadania
+- Przykładowe konfiguracje (szybkie/standardowe/wolne)
+- Mechanizm przyspieszenia początkowego ładowania
+- Testy i troubleshooting
+
+**Dla kogo:** Deweloperzy chcący modyfikować animację Matrix
+**Czas wdrożenia:** <5 minut na zmianę parametrów
+
+---
+
 ## 📁 STRUKTURA PLIKÓW
 
 ```
@@ -186,7 +200,8 @@ _docs/
 │   ├── checklist-quick-wins.md                 ✅ 13 quick wins
 │   ├── guide-fonts.md ✅ Font guide (reference)
 │   ├── guide-images.md  ✅ Image plan (reference)
-│   └── guide-javascript.md             ✅ JS optimization (reference)
+│   ├── guide-javascript.md             ✅ JS optimization (reference)
+│   └── guide-matrix-animation-speed.md         ✅ Matrix speed config (NEW!)
 │
 └── archive/
     └── testing-responsive-images.md            📦 Archived (niche topic)
@@ -420,6 +435,6 @@ head -10 _docs/guide-optimization.md
 
 ---
 
-**Last Updated:** 2025-11-29
+**Last Updated:** 2025-12-02
 **Maintained by:** Claude Code + User
 **Version:** 2.1.0 (Production-Ready)
