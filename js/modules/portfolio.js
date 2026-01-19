@@ -46,11 +46,13 @@ export function initPortfolio() {
   const modalResult = document.getElementById("modal-result");
   const closeModalBtn = document.getElementById("modal-close-btn");
   const glitchOverlay = document.getElementById("system-glitch");
+  let lastFocusedElement = null;
 
   window.openModal = function (projectId) {
     const data = projectsDB[projectId];
     if (!data) return;
 
+    lastFocusedElement = document.activeElement;
     glitchOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
 
@@ -72,13 +74,28 @@ export function initPortfolio() {
       modalImg.classList.add("scrolling");
 
       glitchOverlay.classList.remove("active");
+      
+      // Accessibility Fix: 
+      // 1. Unhide modal for screen readers
+      modal.setAttribute("aria-hidden", "false");
+      // 2. Show modal visually
       modal.classList.add("active");
+      // 3. Move focus to close button
+      if (closeModalBtn) {
+        requestAnimationFrame(() => closeModalBtn.focus());
+      }
     }, 300);
   };
 
   window.closeModal = function () {
     modal.classList.remove("active");
+    modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
+    
+    // Return focus to trigger element
+    if (lastFocusedElement) {
+      lastFocusedElement.focus();
+    }
   };
 
   if (closeModalBtn) {

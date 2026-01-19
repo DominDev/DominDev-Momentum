@@ -1,55 +1,62 @@
 #!/usr/bin/env node
 /**
- * JavaScript Minification Script
- * Uses Terser for production-ready minification
+ * Simple JavaScript Minifier (No dependencies)
+ * Targets project JS files.
  *
  * Usage: node _scripts/minify-js.js
  */
 
-const { minify } = require('terser');
 const fs = require('fs');
 const path = require('path');
 
-// ============================================
+// ============================================ 
 // Configuration
-// ============================================
+// ============================================ 
 
+// Files to explicitly minify
 const FILES_TO_MINIFY = [
-  { input: 'src/js/main.js', output: 'src/js/main.min.js' },
-  { input: 'src/js/config.js', output: 'src/js/config.min.js' },
-  { input: 'src/js/privacy-content.js', output: 'src/js/privacy-content.min.js' }
+  { input: 'js/main.js', output: 'js/main.min.js' },
+  { input: 'js/config.js', output: 'js/config.min.js' },
+  { input: 'js/404.js', output: 'js/404.min.js' }
+];
+
+// Directories to scan for additional modules (optional, recursive)
+const DIRS_TO_SCAN = [
+  'js/core',
+  'js/modules'
 ];
 
 const ROOT_DIR = path.join(__dirname, '..');
 
-const TERSER_OPTIONS = {
-  compress: {
-    drop_console: false,      // Keep console for debugging in prod if needed
-    drop_debugger: true,      // Remove debugger statements
-    passes: 2,                // Multiple compression passes
-    pure_funcs: ['console.debug'], // Remove debug logs only
-  },
-  mangle: {
-    safari10: true,           // Safari 10 compatibility
-  },
-  format: {
-    comments: false,          // Remove all comments
-  },
-  sourceMap: false,           // No source maps for production
-};
+// ============================================ 
+// Minification Logic (Regex-based)
+// ============================================ 
 
-// ============================================
+function minifyJS(code) {
+  return code
+    // Remove single-line comments (careful with URLs)
+    .replace(/\/\/[^(\n|\r)]*/g, '')
+    // Remove multi-line comments
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    // Remove extra whitespace
+    .replace(/\s+/g, ' ')
+    // Remove spaces around operators
+    .replace(/\s*([=+\-*/%&|^<>!?:;,{}()[\]])\s*/g, '$1')
+    .trim();
+}
+
+// ============================================ 
 // Process Single File
-// ============================================
+// ============================================ 
 
-async function processFile(inputFile, outputFile) {
+function processFile(inputFile, outputFile) {
   const inputPath = path.join(ROOT_DIR, inputFile);
   const outputPath = path.join(ROOT_DIR, outputFile);
 
   try {
-    // Check if input file exists
     if (!fs.existsSync(inputPath)) {
-      console.log(`⚠️  Skipping ${inputFile} (not found)\n`);
+      // Quietly skip if not found, or log warning
+      // console.log(`⚠️  Skipping ${inputFile} (not found)`);
       return false;
     }
 
@@ -57,21 +64,23 @@ async function processFile(inputFile, outputFile) {
     const code = fs.readFileSync(inputPath, 'utf8');
     const originalSize = Buffer.byteLength(code, 'utf8');
 
-    console.log('⚙️  Minifying with Terser...');
-    const result = await minify(code, TERSER_OPTIONS);
-
-    if (result.error) {
-      throw result.error;
+    console.log('⚙️  Minifying...');
+    const minified = minifyJS(code);
+    const minifiedSize = Buffer.byteLength(minified, 'utf8');
+    
+    // Check if changed
+    if (fs.existsSync(outputPath)) {
+      const existing = fs.readFileSync(outputPath, 'utf8');
+      if (existing === minified) {
+         console.log(`✓ No changes for ${outputFile}\n`);
+         return true;
+      }
     }
 
-    const minifiedSize = Buffer.byteLength(result.code, 'utf8');
+    fs.writeFileSync(outputPath, minified, 'utf8');
 
-    // Write output
-    fs.writeFileSync(outputPath, result.code, 'utf8');
-
-    // Calculate savings
     const saved = originalSize - minifiedSize;
-    const percentage = ((saved / originalSize) * 100).toFixed(2);
+    const percentage = originalSize > 0 ? ((saved / originalSize) * 100).toFixed(2) : 0;
 
     console.log(`✅ Success!`);
     console.log(`   Original:  ${(originalSize / 1024).toFixed(2)} KB`);
@@ -86,29 +95,34 @@ async function processFile(inputFile, outputFile) {
   }
 }
 
-// ============================================
+// ============================================ 
 // Main Execution
-// ============================================
+// ============================================ 
 
-async function main() {
-  console.log('🚀 JavaScript Minification Started\n');
+function main() {
+  console.log('🚀 JS Minification Started\n');
 
-  let filesProcessed = 0;
-
-  for (const { input, output } of FILES_TO_MINIFY) {
-    if (await processFile(input, output)) {
-      filesProcessed++;
+  // Process explicit files
+  FILES_TO_MINIFY.forEach(({ input, output }) => {
+    processFile(input, output);
+  });
+  
+  // Process subdirectories
+  DIRS_TO_SCAN.forEach(dir => {
+    const fullDir = path.join(ROOT_DIR, dir);
+    if (fs.existsSync(fullDir)) {
+      const files = fs.readdirSync(fullDir);
+      files.forEach(file => {
+        if (file.endsWith('.js') && !file.endsWith('.min.js')) {
+            const input = path.join(dir, file);
+            const output = path.join(dir, file.replace('.js', '.min.js'));
+            processFile(input, output);
+        }
+      });
     }
-  }
+  });
 
-  if (filesProcessed > 0) {
-    console.log(`🎉 Minified ${filesProcessed} file(s)!`);
-  } else {
-    console.log('⚠️  No files were minified.');
-  }
+  console.log('🎉 Done!');
 }
 
-main().catch(error => {
-  console.error('❌ Fatal error:', error.message);
-  process.exit(1);
-});
+main();

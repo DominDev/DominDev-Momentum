@@ -4,6 +4,7 @@
   "description": "High-Performance Landing Page - DominDev Portfolio",
   "scripts": {
     "minify": "node _scripts/minify-css.js",
+    "watch": "node _scripts/watch.js",
     "optimize:images": "node _scripts/optimize-images.js",
     "build": "npm run optimize:images && npm run minify",
     "dev": "echo 'Development server - just open index.html in browser'",
