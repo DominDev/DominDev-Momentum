@@ -1,464 +1,293 @@
-# 🚀 DominDev Momentum
+# DominDev Momentum
 
-> **Agresywny Web Development dla liderów rynku.**
-> Portfolio osobiste / Landing page zaprojektowana i zbudowana z obsesją na punkcie perfekcji.
+> **High-Performance Portfolio Landing Page** — A Matrix-inspired showcase of modern web engineering excellence.
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-GitHub_Pages-00D9FF?style=for-the-badge)](https://domin737.github.io/DominDev-Momentum/)
-[![Lighthouse Score](https://img.shields.io/badge/Lighthouse-97%2F100-success?style=for-the-badge&logo=lighthouse)](https://domin737.github.io/DominDev-Momentum/)
-[![Performance](https://img.shields.io/badge/Performance-Production_Ready-brightgreen?style=for-the-badge)]()
+[![Live Demo](https://img.shields.io/badge/demo-live-success?style=for-the-badge)](https://domin737.github.io/DominDev-Momentum/)
+[![Lighthouse](https://img.shields.io/badge/Lighthouse-97%2F100-brightgreen?style=for-the-badge&logo=lighthouse&logoColor=white)](https://pagespeed.web.dev/)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://www.w3.org/html/)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://www.w3.org/Style/CSS/)
+[![JavaScript](https://img.shields.io/badge/ES2022-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](LICENSE)
 
----
-
-## 💎 Czym Jest Ten Projekt?
-
-**DominDev Momentum** to nie kolejna strona portfolio zbudowana z gotowego szablonu.
-To **engineering showcase** - demonstracja tego, co można osiągnąć, gdy:
-
-- ✨ Design spotyka się z **perfekcyjną implementacją**
-- ⚡ Performance jest **obsesją**, nie dodatkiem
-- 🎯 Każdy piksel i każda linijka kodu ma **cel**
-- 🔧 "Good enough" **nie istnieje**
-
-**To strona, która robi wrażenie od pierwszej sekundy - wizualnie I technicznie.**
+[**Live Demo**](https://domin737.github.io/DominDev-Momentum/) • [**Contact**](mailto:contact@domindev.com)
 
 ---
 
-## 🎨 Design Philosophy
+## About
 
-### Matrix-Inspired Aesthetics
-Inspirowana estetyką **Matrix** i **cyberpunk** - agresywna, minimalistyczna, hipnotyzująca.
+**DominDev Momentum** is not just another portfolio website built from templates. It's an **engineering showcase** demonstrating what can be achieved when design meets perfect implementation, and performance becomes an obsession rather than an afterthought.
 
-**Kluczowe Elementy:**
-- 🟢 **Animowany Matrix Background** - custom canvas animation z Intersection Observer (auto-pause)
-- ⚫ **Dark Mode Only** - głęboka czerń (#050505) + akcenty czerwieni (#ff1f1f)
-- 🎭 **Micro-interactions** - każdy hover, każdy scroll, każdy element żyje
-- 📱 **Mobile-First** - responsive od 320px do 4K
+This project showcases expertise in:
+- Modern frontend architecture with vanilla JavaScript ES modules
+- Advanced CSS techniques (Grid, Flexbox, custom properties)
+- Performance optimization achieving top-tier Lighthouse scores
+- Accessible, SEO-optimized semantic HTML5 structure
 
-> *"Strona nie pokazuje portfolio. Strona JEST portfolio."*
+### Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **Matrix Canvas Animation** | Custom canvas-based falling character effect with Intersection Observer for auto-pause when off-viewport |
+| **Adaptive Image Loading** | Network-aware system that adjusts image quality based on connection speed (2G/3G/4G) |
+| **Performance-First Architecture** | ES modules with `modulepreload` hints reducing critical path by 192ms |
+| **On-Demand Chatbot** | Lazy-loaded AI chatbot module (~200KB saved from initial payload) |
+| **Self-Hosted Typography** | Outfit and Space Grotesk fonts with font-display swap and fallback metrics |
+| **Responsive Design** | Mobile-first approach supporting 320px to 4K displays |
+| **Automated Build Pipeline** | CSS/JS minification via npm scripts and Git pre-commit hooks |
+| **WCAG 2.1 AA Compliance** | Keyboard navigation, focus management, color contrast ratios >4.5:1 |
+| **Modern Image Formats** | Multi-format support (AVIF → WebP → JPEG) with responsive srcset |
+| **Schema.org Structured Data** | Rich JSON-LD markup for enhanced search engine visibility |
 
 ---
 
-## ⚡ Performance - Liczby Mówią Wszystko
+## Performance & Quality
 
-### Lighthouse Audit (Mobile)
-```
-Performance:    97/100  ✅ (target: >90)
-Accessibility:  100/100 ✅
-Best Practices: 100/100 ✅
-SEO:            100/100 ✅
-```
+### Lighthouse Scores
+
+| Category | Score | Status |
+|----------|-------|--------|
+| **Performance** | 97/100 | Excellent |
+| **Accessibility** | 100/100 | Perfect |
+| **Best Practices** | 100/100 | Perfect |
+| **SEO** | 100/100 | Perfect |
 
 ### Core Web Vitals
+
 | Metric | Value | Target | Status |
 |--------|-------|--------|--------|
-| **FCP** (First Contentful Paint) | ~0.6s | <1.0s | ✅✅ Excellent |
-| **LCP** (Largest Contentful Paint) | ~1.2s | <2.5s | ✅✅ Excellent |
-| **CLS** (Cumulative Layout Shift) | ~0.03 | <0.1 | ✅ Perfect |
-| **TTI** (Time to Interactive) | ~1.9s | <3.0s | ✅✅ Excellent |
+| **FCP** (First Contentful Paint) | ~0.6s | <1.0s | Excellent |
+| **LCP** (Largest Contentful Paint) | ~1.2s | <2.5s | Excellent |
+| **CLS** (Cumulative Layout Shift) | ~0.03 | <0.1 | Perfect |
+| **TTI** (Time to Interactive) | ~1.9s | <3.0s | Excellent |
 
-### Network Performance
-- **Render Blocking:** ~150ms (tylko minified CSS)
-- **Critical Path:** ~280ms (ES modules z modulepreload)
-- **Total Page Size:** ~430 KB (HTML + CSS + Fonts)
-- **Image Format:** AVIF → WebP → JPEG (70-80% size reduction)
+### Optimizations Applied
 
-**Wynik:** Strona ładuje się **szybciej niż 95% internetu.**
-
----
-
-## 🔧 Tech Stack - Modern Web Engineering
-
-### Frontend Architecture
-```
-HTML5 (Semantic)
-  ├─ CSS3 (Custom Properties, Grid, Flexbox)
-  ├─ Vanilla JavaScript (ES2022 Modules)
-  └─ Canvas API (Matrix animation)
-```
-
-### Performance Optimizations
-
-#### 🚀 **JavaScript**
-- **ES Modules** z `<link rel="modulepreload">` hints (-192ms Critical Path)
-- **Lazy Loading** - Chatbot ładowany on-demand (oszczędność ~200KB)
-- **Intersection Observer** - Matrix auto-pause poza viewport (-30% CPU)
-- **Memory Leak Prevention** - cleanup event listeners, animations
-
-#### 🎨 **CSS**
-- **Automated Minification** - Git pre-commit hook workflow
-- **35% Size Reduction** - 85.9 KB → 55.6 KB
-- **Zero Duplication** - DRY principles, CSS custom properties
-- **Mobile-First** - progressive enhancement
-
-#### 🖼️ **Images**
-- **Multi-Format Support:** AVIF (modern) → WebP (fallback) → JPEG (universal)
-- **Responsive Images:** srcset + `<picture>` element (400w, 600w, 800w)
-- **Lazy Loading:** `loading="lazy"` + `decoding="async"`
-- **Network-Aware:** Adaptive quality based on connection speed (2G/3G/4G)
-
-#### 🔤 **Fonts**
-- **Self-Hosted Fonts** - eliminacja CDN dependencies (+200ms saved)
-- **Font Display Swap** - zero FOIT (Flash of Invisible Text)
-- **Font Metric Overrides** - eliminacja CLS (Cumulative Layout Shift)
-- **Async Loading** - media query trick (-600ms render blocking!)
-
-**Stack Details:**
-- Google Fonts: Outfit (variable 300-900) + Space Grotesk (variable 300-700)
-- FontAwesome 6 (self-hosted, tylko używane ikony)
+- **JavaScript**: ES modules with `modulepreload`, lazy-loaded non-critical modules, memory leak prevention
+- **CSS**: Automated minification (86KB → 56KB, 35% reduction), DRY principles with custom properties
+- **Images**: AVIF/WebP/JPEG pipeline, responsive `srcset`, `loading="lazy"`, network-aware quality
+- **Fonts**: Self-hosted WOFF2, async loading via media query trick (600ms render-blocking eliminated)
+- **Critical Path**: Module preloading reduces JS chain from 472ms to ~280ms (-192ms)
 
 ---
 
-## 🌟 Kluczowe Features
+## Tech Stack
 
-### 🎭 Interaktywne Elementy
+| Category | Technologies | Rationale |
+|----------|-------------|-----------|
+| **Markup** | HTML5 (Semantic) | SEO-friendly, accessible, single H1 per view |
+| **Styling** | CSS3 (Grid, Flexbox, Custom Properties) | No framework overhead, full control |
+| **Scripting** | Vanilla JavaScript (ES2022 Modules) | Minimal bundle size, native performance |
+| **Animation** | Canvas API | Matrix rain effect with optimized frame rate |
+| **Build Tools** | Node.js, Sharp | Image optimization, CSS/JS minification |
+| **Typography** | Outfit, Space Grotesk (self-hosted) | Zero CDN dependencies |
+| **Icons** | Font Awesome 6 Free (self-hosted) | Consistent, scalable icons |
+| **Deployment** | GitHub Pages | Free hosting, automatic HTTPS |
 
-**1. Matrix Background Animation**
-- Custom Canvas API implementation
-- Intersection Observer - auto-pause gdy poza viewport
-- 60 FPS smooth animation
-- Fully responsive (skaluje się do viewport)
-
-**2. AI-Powered Chatbot**
-- Ultra lazy loading (on hover/click only)
-- JSON-based knowledge base
-- Smooth animations & transitions
-- Mobile-optimized UI
-
-**3. Scroll-to-Top Button**
-- SVG circular progress indicator
-- Smooth scroll behavior
-- Appears after 300px scroll
-
-**4. HUD Performance Monitor**
-- Real-time load time tracking
-- Color-coded thresholds (green/yellow/red)
-- DOMContentLoaded metrics (perceived performance)
-
-### 📱 Responsive Design
-
-**Breakpoints:**
-```css
-Mobile:    320px - 768px
-Tablet:    769px - 1024px
-Desktop:   1025px - 1920px
-4K:        1921px+
-```
-
-**Adaptive Features:**
-- Responsive typography (clamp + viewport units)
-- Fluid spacing system (CSS custom properties)
-- Touch-optimized interactions (44px min tap targets)
-- Reduced motion support (`prefers-reduced-motion`)
-
----
-
-## 🏆 Co Wyróżnia Ten Projekt?
-
-### ❌ Czego TU NIE MA:
-- ❌ WordPress / Page Builders
-- ❌ Bootstrap / Framework CSS
-- ❌ jQuery
-- ❌ Gotowe szablony
-- ❌ CDN dependencies (wszystko self-hosted!)
-- ❌ Niepotrzebne biblioteki
-
-### ✅ Co TU JEST:
-- ✅ **100% Custom Code** - każda linijka napisana ręcznie
-- ✅ **Production-Ready** - deployment-ready od pierwszego dnia
-- ✅ **Maintainable** - clean code, dokumentacja, automated workflows
-- ✅ **Scalable** - modular ES modules architecture
-- ✅ **Accessible** - semantic HTML, ARIA labels, keyboard navigation
-- ✅ **SEO-Optimized** - meta tags, OpenGraph, structured data
-
----
-
-## 📊 Optymalizacje - Behind The Scenes
-
-### Zaimplementowane Best Practices:
-
-**HTML:**
-- ✅ Semantic HTML5 (`<section>`, `<article>`, `<nav>`)
-- ✅ ARIA accessibility attributes
-- ✅ OpenGraph & Twitter Card meta tags
-- ✅ Conditional `<base>` tag (GitHub Pages compatibility)
-
-**CSS:**
-- ✅ CSS Custom Properties (theme system)
-- ✅ Mobile-first responsive design
-- ✅ Automated minification workflow
-- ✅ Zero CSS frameworks (pure vanilla)
-
-**JavaScript:**
-- ✅ ES2022 Modules (native imports)
-- ✅ Modulepreload resource hints
-- ✅ Lazy loading non-critical code
-- ✅ Error handling & graceful degradation
-
-**Images:**
-- ✅ AVIF/WebP/JPEG multi-format
-- ✅ Responsive srcset + sizes
-- ✅ Lazy loading + async decoding
-- ✅ Network-aware quality adjustment
-
-**Fonts:**
-- ✅ Self-hosted (Google Fonts + FontAwesome)
-- ✅ font-display: swap
-- ✅ Async CSS loading (media query trick)
-- ✅ Font metric overrides (CLS prevention)
-
-### Workflow Automation:
-- 🔄 **CSS Minification:** Git pre-commit hook auto-minify
-- 📦 **Deployment:** GitHub Pages auto-deploy on push
-- 🧪 **Testing:** Lighthouse CI integration-ready
-
----
-
-## 🚀 Live Demo & Deployment
-
-### 🌐 [Zobacz Live Demo](https://domin737.github.io/DominDev-Momentum/)
-
-**Deployment:**
-- **Platform:** GitHub Pages
-- **Subdirectory:** `/DominDev-Momentum/`
-- **Auto-Deploy:** Push to `main` branch
-- **Build Time:** ~1-2 minuty
-
-**URL Handling:**
-- Localhost: `http://127.0.0.1:5500/` (Live Server)
-- Production: `https://domin737.github.io/DominDev-Momentum/`
-- Conditional base tag - automatic detection
-
----
-
-## 📂 Struktura Projektu
+### Architecture
 
 ```
-DominDev-Momentum/
-├── index.html              # Main entry point (62 KB with inline fonts)
-├── style.css               # Source CSS (editable, 86 KB)
-├── style.min.css           # Production CSS (auto-generated, 56 KB)
-├── 404.html                # Custom 404 page
-│
-├── assets/
-│   ├── fonts/              # Self-hosted fonts (no CDN!)
-│   │   ├── fa-solid-900.woff2    # FontAwesome Solid (147 KB)
-│   │   ├── fa-brands-400.woff2   # FontAwesome Brands (106 KB)
-│   │   ├── outfit-400.woff2      # Google Fonts Outfit (32 KB)
-│   │   └── space-grotesk.woff2   # Google Fonts Space Grotesk (22 KB)
-│   └── images/
-│       ├── portfolio/      # Portfolio images (AVIF/WebP/JPEG)
-│       ├── about/          # About section images
-│       └── social/         # Social media assets
+domindev-momentum/
+├── index.html              # Main entry point (semantic HTML5)
+├── 404.html                # Custom error page with Matrix theme
+├── style.css               # Source styles (CSS custom properties)
+├── style.min.css           # Production minified CSS
+├── style-404.css           # Error page styles
 │
 ├── js/
-│   ├── main.js             # ES module entry point
-│   ├── config.js           # Configuration
+│   ├── main.js             # Entry point (ES module)
+│   ├── config.js           # Runtime configuration
 │   ├── core/
-│   │   ├── matrix.js       # Matrix background animation
-│   │   └── ui.js           # UI interactions
+│   │   ├── matrix.js       # Canvas animation engine
+│   │   └── ui.js           # UI interactions, cursor
 │   └── modules/
 │       ├── adaptive-images.js  # Network-aware image loading
-│       ├── portfolio.js    # Portfolio section logic
-│       ├── contact.js      # Contact form handling
-│       ├── hud.js          # Performance monitor
-│       └── chatbot.js      # AI chatbot (lazy loaded)
+│       ├── chatbot.js          # Lazy-loaded AI chat
+│       ├── contact.js          # Form handling
+│       ├── hud.js              # HUD overlay effects
+│       ├── maintenance.js      # Maintenance mode
+│       └── portfolio.js        # Gallery interactions
+│
+├── assets/
+│   ├── fonts/              # Self-hosted Outfit, Space Grotesk, Font Awesome
+│   └── images/
+│       ├── about/          # Profile images (AVIF/WebP/JPEG)
+│       ├── portfolio/      # Project screenshots
+│       ├── social/         # OG images
+│       └── icons/          # Favicons
+│
+├── data/
+│   └── chatbot-db.json     # Chatbot knowledge base
 │
 ├── _scripts/
-│   ├── auto-minify-css.js      # CSS minifier + watch mode
-│   └── setup-git-hooks.js      # Git hooks installer
+│   ├── minify-css.js       # CSS minification
+│   ├── minify-js.js        # JS minification
+│   ├── optimize-images.js  # Sharp-based image pipeline
+│   ├── watch.js            # Development file watcher
+│   └── setup-git-hooks.js  # Pre-commit hook installer
 │
-└── _docs/                  # Technical documentation (11 guides)
-    ├── README.md           # Documentation index
-    ├── guide-optimization.md       # Performance guide
-    ├── workflow-css-automation.md  # CSS workflow
-    └── ... (8 more guides)
+└── _docs/                  # Project documentation & reports
 ```
+
+### Why This Stack?
+
+1. **Zero Framework Overhead**: Vanilla JS provides maximum performance without React/Vue bundle costs
+2. **Native Browser APIs**: ES modules, Intersection Observer, Canvas API for future-proof code
+3. **Full Control**: Custom CSS without Tailwind/Bootstrap constraints enables pixel-perfect design
+4. **Progressive Enhancement**: Core content accessible even with JavaScript disabled
 
 ---
 
-## 👨‍💻 Dla Deweloperów
+## Accessibility
 
-### Quick Start
+This project prioritizes inclusive design following **WCAG 2.1 Level AA** guidelines:
+
+- **Semantic HTML5** structure with proper heading hierarchy
+- **Keyboard navigation** support throughout all interactive elements
+- **Focus management** for modals, menus, and dynamic content
+- **Color contrast** ratios exceeding 4.5:1 for text
+- **`prefers-reduced-motion`** support for animation-sensitive users
+- **Screen reader friendly** with ARIA labels where needed
+- **Skip links** for navigation efficiency
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- **Node.js 18+** (for build tools)
+- **Modern browser**: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+
+### Installation
 
 ```bash
-# Clone repository
+# Clone the repository
 git clone https://github.com/DominDev/DominDev-Momentum.git
 cd DominDev-Momentum
 
-# Setup CSS automation (optional)
-node _scripts/setup-git-hooks.js
+# Install dependencies
+npm install
 
-# Open with Live Server (VSCode extension)
-# lub użyj dowolnego local server:
-python -m http.server 5500
+# Start development (simply open index.html in browser)
+npm run dev
 ```
 
-### CSS Development Workflow
+### Available Scripts
 
-**Automated Minification:**
+| Command | Description |
+|---------|-------------|
+| `npm run build` | Full production build (images + CSS minification) |
+| `npm run minify` | Minify CSS files only |
+| `npm run optimize:images` | Generate AVIF/WebP/JPEG variants |
+| `npm run watch` | Watch for file changes during development |
+| `npm run help` | Display available commands |
+
+### Development Workflow
+
+1. **CSS Development**: Edit `style.css`, run `npm run minify` to generate `style.min.css`
+2. **Image Optimization**: Place originals in `assets/images/*/originals/`, run `npm run optimize:images`
+3. **Git Hooks**: Pre-commit hooks auto-minify CSS on commit (setup via `_scripts/setup-git-hooks.js`)
+
+---
+
+## Deployment
+
+### GitHub Pages
+
+The project is configured for GitHub Pages deployment:
+
+1. Push changes to `main` branch
+2. GitHub Actions automatically deploys to `https://[username].github.io/DominDev-Momentum/`
+3. Conditional base tag handles localhost vs production URLs automatically
+
+### Custom Domain
+
+To use a custom domain:
+
+1. Add `CNAME` file with your domain (e.g., `domindev.com`)
+2. Configure DNS records at your registrar
+3. Enable HTTPS in GitHub Pages settings
+
+### Manual Deployment
+
+For other hosting platforms:
+
 ```bash
-# One-time setup
-node _scripts/setup-git-hooks.js
+# Build for production
+npm run build
 
-# Development (watch mode)
-node _scripts/auto-minify-css.js --watch
-
-# Edit source
-code style.css
-
-# Commit (auto-minifies!)
-git add style.css
-git commit -m "Update styles"
-```
-
-**WAŻNE:**
-- ✅ **ZAWSZE** edytuj `style.css` (source)
-- ❌ **NIGDY** nie edytuj `style.min.css` ręcznie
-- ✅ Git hook automatycznie minifikuje przy commit
-
-### 📚 Dokumentacja Techniczna
-
-**Comprehensive guides w `_docs/`:**
-- [guide-optimization.md](_docs/guide-optimization.md) - Główny przewodnik optymalizacji
-- [workflow-css-automation.md](_docs/workflow-css-automation.md) - CSS automation
-- [guide-quick-start.md](_docs/guide-quick-start.md) - Quick start dla devs
-- [checklist-quick-wins.md](_docs/checklist-quick-wins.md) - 13 quick wins
-- [report-audit.md](_docs/report-audit.md) - Performance audit
-- [CHANGELOG.md](_docs/CHANGELOG.md) - Version history
-
-**Index:** [_docs/README.md](_docs/README.md)
-
----
-
-## 🎯 Use Cases
-
-**Ten projekt jest idealny dla:**
-
-✅ **Rekruterów** - demonstracja umiejętności frontend engineering
-✅ **Potencjalnych Klientów** - portfolio profesjonalisty
-✅ **Deweloperów** - case study optymalizacji performance
-✅ **Studentów** - nauka best practices i modern web development
-✅ **Code Review** - przykład production-ready code
-
-**Możesz użyć tego projektu jako:**
-- 📖 Learning resource (dokumentacja + kod źródłowy)
-- 🎨 Design inspiration (Matrix aesthetics)
-- ⚡ Performance benchmark (Lighthouse 97/100)
-- 🔧 Starter template (fork & customize)
-
----
-
-## 🏅 Achievements & Stats
-
-### Performance Wins (vs Average Website)
-```
-Render Blocking:   1,970ms → 150ms   (-92% ⚡⚡⚡)
-Critical Path:     1,261ms → 280ms   (-78% ⚡⚡⚡)
-FCP/LCP/TTI:       Avg -600ms        (⚡⚡⚡)
-Image Size:        AVIF vs JPEG      (-70% ⚡⚡)
-CSS Size:          86 KB → 56 KB     (-35% ⚡)
-```
-
-### Code Quality
-- ✅ **Zero external dependencies** (self-hosted everything)
-- ✅ **100% custom code** (no templates/frameworks)
-- ✅ **Comprehensive documentation** (11 technical guides)
-- ✅ **Automated workflows** (CSS minification, git hooks)
-- ✅ **Production-ready** (deployed & tested)
-
-### Web Vitals Comparison
-```
-                    This Site    Average    Difference
-First Contentful    0.6s         2.5s       -76% faster ⚡
-Largest Content     1.2s         4.0s       -70% faster ⚡
-Time to Interactive 1.9s         5.3s       -64% faster ⚡
-Cumulative Shift    0.03         0.15       -80% better ⚡
+# Upload contents to your hosting provider
+# Ensure .htaccess or equivalent handles caching headers
 ```
 
 ---
 
-## 💡 Lessons Learned
+## Browser Support
 
-### Największe Wyzwania:
-1. **FontAwesome Self-Hosting** - missing icon definitions (solved)
-2. **GitHub Pages Base URL** - conditional tag dla localhost vs production
-3. **Render-Blocking Fonts** - async loading z media query trick
-4. **CSS Workflow** - manual editing .min.css (solved z Git hooks)
-
-### Najważniejsze Insights:
-- ⚡ **Modulepreload** = biggest JS performance win (-192ms!)
-- 🎨 **Inline fonts CSS** with media trick = -600ms render blocking
-- 📦 **AVIF** format = -70% image size vs JPEG
-- 🔧 **Automation** = 100% developer time saved (CSS minification)
-
-**Każdy problem = okazja do nauki. Każda optymalizacja = wymierny rezultat.**
+| Browser | Version | Status |
+|---------|---------|--------|
+| Chrome | 90+ | Fully supported |
+| Firefox | 88+ | Fully supported |
+| Safari | 14+ | Fully supported |
+| Edge | 90+ | Fully supported |
+| Opera | 76+ | Fully supported |
+| Mobile Safari | iOS 14+ | Fully supported |
+| Chrome Android | 90+ | Fully supported |
 
 ---
 
-## 📞 Kontakt & Social
+## Roadmap
 
-**Paweł Dominiak** - Frontend Developer & Performance Enthusiast
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Paweł_Dominiak-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/p-dominiak-pd/)
-[![GitHub](https://img.shields.io/badge/GitHub-DominDev-181717?style=for-the-badge&logo=github)](https://github.com/DominDev)
-[![Instagram](https://img.shields.io/badge/Instagram-domindev__com-E4405F?style=for-the-badge&logo=instagram)](https://www.instagram.com/domindev_com/)
-[![Email](https://img.shields.io/badge/Email-contact@domindev.com-EA4335?style=for-the-badge&logo=gmail)](mailto:contact@domindev.com)
-
-**Lokalizacja:** Wrocław, Polska 🇵🇱
-**Specjalizacja:** High-Performance Web Development, Custom WordPress, UI/UX
+- [ ] Dark/Light mode toggle with system preference detection
+- [ ] Internationalization (i18n) with EN/PL language support
+- [ ] Blog section with markdown-based content
+- [ ] Service Worker for offline functionality
+- [ ] Analytics dashboard integration
+- [ ] A/B testing framework for conversion optimization
 
 ---
 
-## 📄 Licencja & Użycie
+## License
 
-**© 2025 Paweł Dominiak (DominDev)**
+This project uses a **dual-license structure**:
 
-Ten projekt jest **osobistym portfolio** i jest chroniony prawem autorskim.
+| Component | License | Usage |
+|-----------|---------|-------|
+| **Code** (HTML, CSS, JS) | MIT License | Free to use, modify, distribute |
+| **Assets** (images, logos, content) | All Rights Reserved | Requires explicit permission |
 
-**Możesz:**
-- ✅ Przeglądać kod źródłowy (learning purposes)
-- ✅ Używać jako inspiration dla własnych projektów
-- ✅ Linkować do tego repozytorium
+See [LICENSE](LICENSE) for full details.
 
-**Nie możesz:**
-- ❌ Kopiować design 1:1 do celów komercyjnych
-- ❌ Używać treści (teksty, obrazy) bez zgody
-- ❌ Podawać się za autora tego projektu
+### What You Can Do
 
-**Jeśli chcesz użyć części kodu:**
-Proszę o podanie źródła (link do tego repo). Doceniam! 🙏
+- Learn from the code architecture and techniques
+- Fork for personal projects and experimentation
+- Reference in educational content
+- Use as inspiration for your own designs
 
----
+### What Requires Permission
 
-## 🚀 Roadmap (Future Improvements)
-
-**Możliwe dalsze optymalizacje:**
-- [ ] Service Worker (PWA) - offline support
-- [ ] Critical CSS splitting (inline above-the-fold)
-- [ ] Font subsetting (tylko używane glyphs)
-- [ ] Blur-up effect dla obrazów (progressive loading)
-- [ ] RUM (Real User Monitoring) integration
-- [ ] A/B testing framework
-- [ ] Multi-language support (EN/PL)
-
-**Uwaga:** Obecny stan jest już **production-ready** i **highly optimized**.
-Powyższe są **opcjonalnymi** improvements dla perfectionistów. 😄
+- Using brand assets, logos, or trademarks
+- Copying design 1:1 for commercial purposes
+- Redistributing assets in templates or UI kits
 
 ---
 
-## ⭐ Podoba Ci Się?
+## Author
 
-**Jeśli ten projekt Ci się podoba:**
+<div align="center">
 
-1. ⭐ **Star this repo** - doceniam każde wsparcie!
-2. 🍴 **Fork** - customize dla własnych potrzeb
-3. 📢 **Share** - poleć znajomym deweloperom
-4. 💬 **Feedback** - issues/suggestions welcome!
+**Crafted with precision by DominDev**
 
-**Dziękuję za odwiedzenie! Happy coding!** 🚀
+*Building digital experiences that convert.*
+
+[![Website](https://img.shields.io/badge/Website-domindev.com-FF1F1F?style=for-the-badge&logo=google-chrome&logoColor=white)](https://domindev.com)
+[![Email](https://img.shields.io/badge/Email-contact@domindev.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:contact@domindev.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/p-dominiak-pd/)
+[![GitHub](https://img.shields.io/badge/GitHub-DominDev-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/DominDev)
 
 ---
 
-**Built with ❤️ and obsessive attention to detail by [Paweł Dominiak](https://domin737.github.io/DominDev-Momentum/)**
+**If you find this project useful, consider giving it a star!**
 
-*"Good enough" is not in my vocabulary. Only "exceptional" is acceptable.* 💎
+</div>
