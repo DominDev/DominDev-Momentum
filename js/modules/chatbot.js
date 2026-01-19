@@ -109,7 +109,14 @@ export function initChat() {
     }
   });
 
+  let lastMessageTime = 0;
+  const COOLDOWN_MS = 500;
+
   function sendMessage() {
+    const now = Date.now();
+    if (now - lastMessageTime < COOLDOWN_MS) return;
+    lastMessageTime = now;
+
     const msg = chatbotInput.value.trim();
     if (!msg) return;
 
