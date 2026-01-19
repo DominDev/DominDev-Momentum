@@ -1,6 +1,12 @@
-MIT License
+# DominDev Momentum - License
 
-Copyright (c) 2025-present DominDev
+Copyright (c) 2026 DominDev (Paweł Dominiak)
+
+This project uses a **dual-license structure** to protect both open-source collaboration and intellectual property.
+
+---
+
+## Code License (MIT)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +25,79 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+### Code Covered by MIT License
+
+- All HTML files (`*.html`)
+- All CSS files (`*.css`)
+- All JavaScript files (`*.js`)
+- Build scripts in `_scripts/` directory
+- Configuration files (`package.json`, etc.)
+
+---
+
+## Assets License (All Rights Reserved)
+
+All visual, brand, and content assets in this repository are **proprietary** and may NOT be used, copied, modified, or distributed without explicit written permission from DominDev.
+
+### Protected Assets Include
+
+| Category | Location | Description |
+|----------|----------|-------------|
+| **Images** | `assets/images/` | All photographs, graphics, screenshots |
+| **Brand Assets** | Various | Logos, favicons, OG images |
+| **Typography** | `assets/fonts/` | Custom font configurations (note: fonts themselves have their own licenses) |
+| **Written Content** | `*.html`, `data/` | Marketing copy, descriptions, chatbot responses |
+| **Design System** | N/A | Visual design, color palette, layout compositions |
+
+### Permitted Uses
+
+- **Learning**: Study the code architecture and implementation techniques
+- **Inspiration**: Use design concepts as reference for your own original work
+- **Personal Projects**: Fork and modify for non-commercial personal use
+- **Education**: Reference in tutorials, courses, or technical writing
+
+### Prohibited Uses (Without Permission)
+
+- Using DominDev brand assets, logos, or trademarks
+- Copying the visual design 1:1 for commercial products
+- Redistributing assets in templates, themes, or UI kits
+- Claiming authorship or removing attribution
+- Using images or graphics in any project without explicit permission
+
+---
+
+## Third-Party Licenses
+
+This project incorporates third-party components with their own licenses:
+
+| Component | License | Source |
+|-----------|---------|--------|
+| **Outfit** (font) | SIL Open Font License 1.1 | Google Fonts |
+| **Space Grotesk** (font) | SIL Open Font License 1.1 | Google Fonts |
+| **Font Awesome 6 Free** | Icons: SIL OFL 1.1, Code: MIT | fontawesome.com |
+| **Sharp** (build tool) | Apache License 2.0 | sharp.pixelplumbing.com |
+
+---
+
+## Contact for Licensing
+
+For licensing inquiries, commercial use requests, or permissions:
+
+- **Email**: contact@domindev.com
+- **Website**: https://domindev.com
+- **LinkedIn**: https://www.linkedin.com/in/p-dominiak-pd/
+
+---
+
+## Summary
+
+| What | License | Can I Use It? |
+|------|---------|---------------|
+| HTML/CSS/JS Code | MIT | Yes, with attribution |
+| Build Scripts | MIT | Yes, with attribution |
+| Images & Graphics | All Rights Reserved | No, without permission |
+| Brand Assets | All Rights Reserved | No, without permission |
+| Written Content | All Rights Reserved | No, without permission |
+
+**When in doubt, ask first.**
