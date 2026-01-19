@@ -95,6 +95,20 @@ export function initContact() {
         return;
       }
 
+      // Basic Email Validation
+      const emailField = document.getElementById("panel-email");
+      if (emailField) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailField.value)) {
+          const msgDiv = document.getElementById("formMessage");
+          if (msgDiv) {
+            msgDiv.innerText = "Nieprawidłowy format adresu e-mail.";
+            msgDiv.style.color = "#ff1f1f";
+          }
+          return;
+        }
+      }
+
       const btn = form.querySelector("button[type='submit']");
       const msgDiv = document.getElementById("formMessage");
       const originalText = btn.innerText;
