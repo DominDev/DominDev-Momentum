@@ -85,9 +85,105 @@ export function initContact() {
 
   const form = document.getElementById("contactForm");
 
+  // Auto-expand textarea
+  const textarea = document.getElementById("panel-message");
+  if (textarea) {
+    textarea.addEventListener("input", function() {
+      this.style.height = 'auto';
+      this.style.height = (this.scrollHeight) + 'px';
+    });
+  }
+
+  // Custom Validation Logic
+  const validationSummary = document.getElementById("validation-summary");
+  let hasAttemptedSubmit = false;
+
+  const updateValidationSummary = () => {
+    if (!hasAttemptedSubmit || !validationSummary) return;
+
+    const errors = [];
+    const inputs = form.querySelectorAll("input, textarea, select");
+
+    inputs.forEach(input => {
+      // Check required
+      if (input.hasAttribute("required") && input.validity.valueMissing) {
+        const label = form.querySelector(`label[for="${input.id}"]`);
+        const labelText = label ? label.innerText.replace('*', '').trim() : input.name;
+        errors.push({ id: input.id, msg: `${labelText}: WYMAGANE` });
+      }
+      // Check email format
+      else if (input.type === "email" && input.value && !input.validity.valid) {
+         errors.push({ id: input.id, msg: "E-MAIL: BŁĘDNY FORMAT" });
+      }
+      // Custom email regex check
+      else if (input.id === "panel-email" && input.value) {
+         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+         if (!emailRegex.test(input.value)) {
+            errors.push({ id: input.id, msg: "E-MAIL: NIEPRAWIDŁOWA DOMENA" });
+         }
+      }
+      // Check checkbox (RODO)
+      else if (input.type === "checkbox" && input.hasAttribute("required") && !input.checked) {
+         errors.push({ id: input.id, msg: "ZGODA RODO: WYMAGANA" });
+      }
+    });
+
+    if (errors.length > 0) {
+      validationSummary.style.display = "block";
+      validationSummary.innerHTML = `
+        <div class="validation-summary-header">
+           <i class="fa-solid fa-circle-exclamation"></i> STATUS SYSTEMU: ${errors.length} BŁĘDÓW
+        </div>
+        <ul class="validation-list">
+          ${errors.map(err => `<li class="validation-item" data-for="${err.id}">${err.msg}</li>`).join('')}
+        </ul>
+      `;
+    } else {
+      validationSummary.style.display = "none";
+      validationSummary.innerHTML = "";
+    }
+  };
+
+  const showError = (input, message) => {
+    const group = input.closest(".form-group");
+    if (!group) return;
+    
+    clearError(input);
+    input.classList.add("invalid");
+    
+    // Inline error (still useful for context)
+    const msgDiv = document.createElement("div");
+    msgDiv.className = "validation-msg";
+    msgDiv.innerText = message;
+    group.appendChild(msgDiv);
+  };
+
+  const clearError = (input) => {
+    input.classList.remove("invalid");
+    const group = input.closest(".form-group");
+    if (!group) return;
+    
+    const existingMsg = group.querySelector(".validation-msg");
+    if (existingMsg) existingMsg.remove();
+  };
+
   if (form) {
+    // Real-time error clearing & Summary Update
+    form.querySelectorAll("input, textarea, select").forEach(input => {
+      input.addEventListener("input", () => {
+        clearError(input);
+        updateValidationSummary();
+      });
+      input.addEventListener("change", () => {
+        clearError(input);
+        updateValidationSummary();
+      });
+    });
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      hasAttemptedSubmit = true; // Enable summary
+      updateValidationSummary(); // First check
 
       const honeypot = document.getElementById("honey-field");
       if (honeypot && honeypot.value !== "") {
@@ -95,19 +191,48 @@ export function initContact() {
         return;
       }
 
-      // Basic Email Validation
+      // --- CUSTOM VALIDATION START ---
+      let isValid = true;
+      const inputs = form.querySelectorAll("input[required], textarea[required], select[required]");
+      
+      // Inline Validation Loop
+      inputs.forEach(input => {
+        if (!input.checkValidity()) {
+          isValid = false;
+          // ... error mapping ...
+          if (input.validity.valueMissing) showError(input, "POLE WYMAGANE");
+          else if (input.validity.typeMismatch) showError(input, "BŁĘDNY FORMAT");
+          else showError(input, "BŁĄD DANYCH");
+        }
+      });
+      
+      // Manual checks (RODO, Email Regex)
+      const rodo = document.getElementById("panel-rodo");
+      if(rodo && !rodo.checked) {
+          showError(rodo, "WYMAGANA ZGODA");
+          isValid = false;
+      }
+
       const emailField = document.getElementById("panel-email");
-      if (emailField) {
+      if (emailField && !emailField.validity.valueMissing) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(emailField.value)) {
-          const msgDiv = document.getElementById("formMessage");
-          if (msgDiv) {
-            msgDiv.innerText = "Nieprawidłowy format adresu e-mail.";
-            msgDiv.style.color = "#ff1f1f";
-          }
-          return;
+          showError(emailField, "NIEPRAWIDŁOWY ADRES");
+          isValid = false;
         }
       }
+
+      // Re-run summary to ensure sync
+      updateValidationSummary();
+
+      if (!isValid) {
+        // Focus summary or first invalid
+        if(validationSummary.style.display !== "none") {
+            validationSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        return; 
+      }
+      // --- CUSTOM VALIDATION END ---
 
       const btn = form.querySelector("button[type='submit']");
       const msgDiv = document.getElementById("formMessage");

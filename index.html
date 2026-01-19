@@ -1844,7 +1844,7 @@
               techniczną.
             </p>
 
-            <form id="contactForm" class="cyber-form">
+            <form id="contactForm" class="cyber-form" novalidate>
               <div class="form-group">
                 <label for="panel-name">NADAWCA / ORGANIZACJA *</label>
                 <input
@@ -1937,6 +1937,9 @@
                 tabindex="-1"
                 autocomplete="off"
               />
+
+              <!-- Validation Summary (Dynamic) -->
+              <div id="validation-summary" class="validation-summary" style="display: none;" role="alert" aria-live="polite"></div>
 
               <button type="submit" class="btn full-width">
                 WYŚLIJ RAPORT

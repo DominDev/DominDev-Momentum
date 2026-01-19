@@ -1398,6 +1398,181 @@ input[type="range"]::-moz-range-track {
   gap: 12px;
 }
 
+/* ==========================================
+   FLOATING LABELS (Contact Form)
+   Targeting specific fields to avoid breaking Range/Select
+   ========================================== */
+
+/* Container adjustment */
+.form-group:has(#panel-name),
+.form-group:has(#panel-email),
+.form-group:has(#panel-message) {
+  position: relative;
+  margin-top: 10px; /* Space for floating label */
+}
+
+/* Base Label State (Inside Input) */
+.form-group:has(#panel-name) label,
+.form-group:has(#panel-email) label,
+.form-group:has(#panel-message) label {
+  position: absolute;
+  top: 30px; /* Center vertically in standard input */
+  left: 15px;
+  z-index: 2;
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #888;
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 0 5px;
+  background: transparent; 
+}
+
+/* Textarea Label specific position */
+.form-group:has(#panel-message) label {
+  top: 18px;
+}
+
+/* Active State (Floating Up) */
+.form-group:has(#panel-name:focus) label,
+.form-group:has(#panel-name:not(:placeholder-shown)) label,
+.form-group:has(#panel-email:focus) label,
+.form-group:has(#panel-email:not(:placeholder-shown)) label,
+.form-group:has(#panel-message:focus) label,
+.form-group:has(#panel-message:not(:placeholder-shown)) label {
+  top: -8px;
+  left: 10px;
+  font-size: 0.75rem;
+  color: var(--primary);
+  background: var(--bg-card); /* Hide border behind label */
+  border-radius: 4px;
+}
+
+/* Hide Native Placeholder when not focused */
+#panel-name:not(:focus)::placeholder,
+#panel-email:not(:focus)::placeholder,
+#panel-message:not(:focus)::placeholder {
+  color: transparent;
+}
+
+/* Ensure Input Text is visible */
+#panel-name, #panel-email, #panel-message {
+  background: transparent; /* Allow label bg to show through if needed */
+  background: var(--bg-card); /* Reset to card bg to cover lines */
+}
+
+/* ==========================================
+   CUSTOM VALIDATION (Cyber Style)
+   ========================================== */
+
+/* Invalid Input State */
+.form-group input.invalid,
+.form-group select.invalid,
+.form-group textarea.invalid {
+  border-color: #ff1f1f;
+  background: rgba(255, 31, 31, 0.05) !important; /* Force bg tint */
+  box-shadow: 0 0 15px rgba(255, 31, 31, 0.1);
+  animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* Validation Message */
+.validation-msg {
+  color: #ff1f1f;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.7rem;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  opacity: 0;
+  transform: translateY(-5px);
+  animation: slideDownFade 0.3s forwards;
+}
+
+.validation-msg::before {
+  content: "ERR://";
+  opacity: 0.7;
+  font-size: 0.6rem;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+@keyframes slideDownFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Validation Summary Checklist */
+.validation-summary {
+  background: rgba(255, 31, 31, 0.1);
+  border: 1px solid rgba(255, 31, 31, 0.3);
+  border-left: 3px solid #ff1f1f;
+  padding: 15px;
+  margin-bottom: 20px;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.85rem;
+  color: #ffcccc;
+  display: none; /* Controlled by JS */
+  animation: slideDownFade 0.3s forwards;
+}
+
+.validation-summary-header {
+  font-weight: 700;
+  color: #ff1f1f;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.validation-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.validation-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  opacity: 0.9;
+}
+
+.validation-item::before {
+  content: "×";
+  color: #ff1f1f;
+  font-weight: bold;
+}
+
+.validation-item.resolved {
+  text-decoration: line-through;
+  opacity: 0.5;
+  color: #888;
+}
+
+.validation-item.resolved::before {
+  content: "✓";
+  color: #4ade80;
+}
+
+/* ==========================================
+   BUTTONS
+   ========================================== */
+
+
 .checkbox-group input[type="checkbox"] {
   width: 18px;
   height: 18px;
