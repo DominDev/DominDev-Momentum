@@ -800,6 +800,7 @@
             class="chatbot-input"
             id="chatbot-input"
             placeholder="Napisz wiadomość (Enter = wyślij)"
+            aria-label="Wpisz wiadomość do asystenta AI"
             autocomplete="off"
           />
           <button class="chatbot-send" id="chatbot-send">
@@ -1865,6 +1866,7 @@
                   required
                   placeholder="Twój adres e-mail"
                   autocomplete="email"
+                  inputmode="email"
                 />
               </div>
 
@@ -1939,7 +1941,7 @@
               <button type="submit" class="btn full-width">
                 WYŚLIJ RAPORT
               </button>
-              <div id="formMessage" class="form-message"></div>
+              <div id="formMessage" class="form-message" role="alert" aria-live="polite"></div>
             </form>
           </div>
         </div>
