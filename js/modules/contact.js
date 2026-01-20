@@ -1,5 +1,5 @@
 // js/modules/contact.js
-import { CONFIG } from '../config.js';
+import { CONFIG } from "../config.js";
 
 export function initContact() {
   const contactPanel = document.getElementById("contact-panel");
@@ -19,13 +19,38 @@ export function initContact() {
         glitchOverlay.classList.remove("active");
       }
       contactPanel.classList.add("active");
+      // A11Y: Remove aria-hidden when modal is visible to prevent focus conflict
+      contactPanel.setAttribute("aria-hidden", "false");
+      // Focus first interactive element for keyboard users
+      if (contactCloseBtn) {
+        contactCloseBtn.focus();
+      }
     }, 300);
+  };
+
+  // Store the element that opened the modal for focus restore
+  let lastFocusedElement = null;
+
+  const originalOpenContactPanel = window.openContactPanel;
+  window.openContactPanel = function () {
+    lastFocusedElement = document.activeElement;
+    originalOpenContactPanel();
   };
 
   window.closeContactPanel = function () {
     if (contactPanel) {
       contactPanel.classList.remove("active");
       document.body.style.overflow = "";
+
+      // A11Y: Move focus OUT of modal BEFORE setting aria-hidden
+      if (lastFocusedElement && lastFocusedElement.focus) {
+        lastFocusedElement.focus();
+      } else {
+        document.body.focus();
+      }
+
+      // A11Y: Now safe to hide from assistive technology
+      contactPanel.setAttribute("aria-hidden", "true");
     }
   };
 
@@ -88,9 +113,9 @@ export function initContact() {
   // Auto-expand textarea
   const textarea = document.getElementById("panel-message");
   if (textarea) {
-    textarea.addEventListener("input", function() {
-      this.style.height = 'auto';
-      this.style.height = (this.scrollHeight) + 'px';
+    textarea.addEventListener("input", function () {
+      this.style.height = "auto";
+      this.style.height = this.scrollHeight + "px";
     });
   }
 
@@ -104,27 +129,33 @@ export function initContact() {
     const errors = [];
     const inputs = form.querySelectorAll("input, textarea, select");
 
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
       // Check required
       if (input.hasAttribute("required") && input.validity.valueMissing) {
         const label = form.querySelector(`label[for="${input.id}"]`);
-        const labelText = label ? label.innerText.replace('*', '').trim() : input.name;
+        const labelText = label
+          ? label.innerText.replace("*", "").trim()
+          : input.name;
         errors.push({ id: input.id, msg: `${labelText}: WYMAGANE` });
       }
       // Check email format
       else if (input.type === "email" && input.value && !input.validity.valid) {
-         errors.push({ id: input.id, msg: "E-MAIL: BŁĘDNY FORMAT" });
+        errors.push({ id: input.id, msg: "E-MAIL: BŁĘDNY FORMAT" });
       }
       // Custom email regex check
       else if (input.id === "panel-email" && input.value) {
-         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-         if (!emailRegex.test(input.value)) {
-            errors.push({ id: input.id, msg: "E-MAIL: NIEPRAWIDŁOWA DOMENA" });
-         }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(input.value)) {
+          errors.push({ id: input.id, msg: "E-MAIL: NIEPRAWIDŁOWA DOMENA" });
+        }
       }
       // Check checkbox (RODO)
-      else if (input.type === "checkbox" && input.hasAttribute("required") && !input.checked) {
-         errors.push({ id: input.id, msg: "ZGODA RODO: WYMAGANA" });
+      else if (
+        input.type === "checkbox" &&
+        input.hasAttribute("required") &&
+        !input.checked
+      ) {
+        errors.push({ id: input.id, msg: "ZGODA RODO: WYMAGANA" });
       }
     });
 
@@ -135,7 +166,7 @@ export function initContact() {
            <i class="fa-solid fa-circle-exclamation"></i> STATUS SYSTEMU: ${errors.length} BŁĘDÓW
         </div>
         <ul class="validation-list">
-          ${errors.map(err => `<li class="validation-item" data-for="${err.id}">${err.msg}</li>`).join('')}
+          ${errors.map((err) => `<li class="validation-item" data-for="${err.id}">${err.msg}</li>`).join("")}
         </ul>
       `;
     } else {
@@ -147,10 +178,10 @@ export function initContact() {
   const showError = (input, message) => {
     const group = input.closest(".form-group");
     if (!group) return;
-    
+
     clearError(input);
     input.classList.add("invalid");
-    
+
     // Inline error (still useful for context)
     const msgDiv = document.createElement("div");
     msgDiv.className = "validation-msg";
@@ -162,14 +193,14 @@ export function initContact() {
     input.classList.remove("invalid");
     const group = input.closest(".form-group");
     if (!group) return;
-    
+
     const existingMsg = group.querySelector(".validation-msg");
     if (existingMsg) existingMsg.remove();
   };
 
   if (form) {
     // Real-time error clearing & Summary Update
-    form.querySelectorAll("input, textarea, select").forEach(input => {
+    form.querySelectorAll("input, textarea, select").forEach((input) => {
       input.addEventListener("input", () => {
         clearError(input);
         updateValidationSummary();
@@ -193,24 +224,27 @@ export function initContact() {
 
       // --- CUSTOM VALIDATION START ---
       let isValid = true;
-      const inputs = form.querySelectorAll("input[required], textarea[required], select[required]");
-      
+      const inputs = form.querySelectorAll(
+        "input[required], textarea[required], select[required]",
+      );
+
       // Inline Validation Loop
-      inputs.forEach(input => {
+      inputs.forEach((input) => {
         if (!input.checkValidity()) {
           isValid = false;
           // ... error mapping ...
           if (input.validity.valueMissing) showError(input, "POLE WYMAGANE");
-          else if (input.validity.typeMismatch) showError(input, "BŁĘDNY FORMAT");
+          else if (input.validity.typeMismatch)
+            showError(input, "BŁĘDNY FORMAT");
           else showError(input, "BŁĄD DANYCH");
         }
       });
-      
+
       // Manual checks (RODO, Email Regex)
       const rodo = document.getElementById("panel-rodo");
-      if(rodo && !rodo.checked) {
-          showError(rodo, "WYMAGANA ZGODA");
-          isValid = false;
+      if (rodo && !rodo.checked) {
+        showError(rodo, "WYMAGANA ZGODA");
+        isValid = false;
       }
 
       const emailField = document.getElementById("panel-email");
@@ -227,10 +261,13 @@ export function initContact() {
 
       if (!isValid) {
         // Focus summary or first invalid
-        if(validationSummary.style.display !== "none") {
-            validationSummary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        if (validationSummary.style.display !== "none") {
+          validationSummary.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+          });
         }
-        return; 
+        return;
       }
       // --- CUSTOM VALIDATION END ---
 
@@ -248,9 +285,9 @@ export function initContact() {
       try {
         let response;
 
-        if (CONFIG.mail.provider === 'formspree') {
+        if (CONFIG.mail.provider === "formspree") {
           response = await sendViaFormspree(data);
-        } else if (CONFIG.mail.provider === 'custom') {
+        } else if (CONFIG.mail.provider === "custom") {
           throw new Error("Custom provider not implemented yet");
         } else {
           throw new Error("Unknown mail provider");
@@ -277,11 +314,9 @@ export function initContact() {
               form.reset();
             }, 500);
           }, 2000);
-
         } else {
           throw new Error("Błąd transmisji danych.");
         }
-
       } catch (error) {
         console.error(error);
         btn.innerText = "BŁĄD NADAWANIA";
@@ -289,7 +324,8 @@ export function initContact() {
         btn.style.color = "#ff1f1f";
 
         if (msgDiv) {
-          msgDiv.innerText = "Błąd połączenia. Spróbuj ponownie lub napisz bezpośrednio.";
+          msgDiv.innerText =
+            "Błąd połączenia. Spróbuj ponownie lub napisz bezpośrednio.";
           msgDiv.style.color = "#ff1f1f";
         }
 
@@ -310,8 +346,8 @@ async function sendViaFormspree(data) {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
   });
 }
