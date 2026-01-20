@@ -159,7 +159,19 @@ export function initChat() {
   function addMessage(text, isUser = false) {
     const div = document.createElement("div");
     div.className = `chat-message ${isUser ? "user" : "bot"}`;
-    div.innerHTML = `<div class="message-content">${text}</div>`;
+
+    const messageContent = document.createElement("div");
+    messageContent.className = "message-content";
+
+    if (isUser) {
+      // SEC-01: User messages use textContent to prevent XSS
+      messageContent.textContent = text;
+    } else {
+      // Bot messages can contain safe HTML (links, formatting)
+      messageContent.innerHTML = text;
+    }
+
+    div.appendChild(messageContent);
     chatbotMessages.appendChild(div);
     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
 
