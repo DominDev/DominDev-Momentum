@@ -50,6 +50,9 @@ html {
   scroll-behavior: smooth;
   /* CRITICAL FIX: Add offset for fixed navbar */
   scroll-padding-top: 80px;
+  /* RWD-01: Prevent horizontal overflow from animations (glitch, marquee) */
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -463,7 +466,10 @@ nav {
 
   transform: scale(0.9);
 
-  transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease,
+    visibility 0.6s ease;
   z-index: var(--z-nav);
 }
 
@@ -543,14 +549,18 @@ body.menu-open .progress-wrap {
 }
 
 .social-link::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--primary) 0%, rgba(204, 0, 0, 0.3) 100%);
+  background: radial-gradient(
+    circle,
+    var(--primary) 0%,
+    rgba(204, 0, 0, 0.3) 100%
+  );
   transform: translate(-50%, -50%);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: -1;
@@ -560,9 +570,13 @@ body.menu-open .progress-wrap {
 .social-link:hover {
   color: #fff;
   border-color: var(--primary);
-  text-shadow: 0 0 15px rgba(204, 0, 0, 0.8), 0 0 30px rgba(204, 0, 0, 0.5);
+  text-shadow:
+    0 0 15px rgba(204, 0, 0, 0.8),
+    0 0 30px rgba(204, 0, 0, 0.5);
   transform: translateY(-5px) scale(1.1);
-  box-shadow: 0 10px 30px rgba(204, 0, 0, 0.4), 0 0 20px rgba(204, 0, 0, 0.3);
+  box-shadow:
+    0 10px 30px rgba(204, 0, 0, 0.4),
+    0 0 20px rgba(204, 0, 0, 0.3);
 }
 
 .social-link:hover::before {
@@ -1425,7 +1439,7 @@ input[type="range"]::-moz-range-track {
   font-size: 0.9rem;
   margin: 0;
   padding: 0 5px;
-  background: transparent; 
+  background: transparent;
 }
 
 /* Textarea Label specific position */
@@ -1456,7 +1470,9 @@ input[type="range"]::-moz-range-track {
 }
 
 /* Ensure Input Text is visible */
-#panel-name, #panel-email, #panel-message {
+#panel-name,
+#panel-email,
+#panel-message {
   background: transparent; /* Allow label bg to show through if needed */
   background: var(--bg-card); /* Reset to card bg to cover lines */
 }
@@ -1472,13 +1488,13 @@ input[type="range"]::-moz-range-track {
   border-color: #ff1f1f;
   background: rgba(255, 31, 31, 0.05) !important; /* Force bg tint */
   box-shadow: 0 0 15px rgba(255, 31, 31, 0.1);
-  animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+  animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 /* Validation Message */
 .validation-msg {
   color: #ff1f1f;
-  font-family: 'Space Grotesk', monospace;
+  font-family: "Space Grotesk", monospace;
   font-size: 0.7rem;
   margin-top: 8px;
   display: flex;
@@ -1499,10 +1515,23 @@ input[type="range"]::-moz-range-track {
 }
 
 @keyframes shake {
-  10%, 90% { transform: translate3d(-1px, 0, 0); }
-  20%, 80% { transform: translate3d(2px, 0, 0); }
-  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-  40%, 60% { transform: translate3d(4px, 0, 0); }
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 
 @keyframes slideDownFade {
@@ -1519,7 +1548,7 @@ input[type="range"]::-moz-range-track {
   border-left: 3px solid #ff1f1f;
   padding: 15px;
   margin-bottom: 20px;
-  font-family: 'Space Grotesk', monospace;
+  font-family: "Space Grotesk", monospace;
   font-size: 0.85rem;
   color: #ffcccc;
   display: none; /* Controlled by JS */
@@ -1571,7 +1600,6 @@ input[type="range"]::-moz-range-track {
 /* ==========================================
    BUTTONS
    ========================================== */
-
 
 .checkbox-group input[type="checkbox"] {
   width: 18px;
@@ -1769,7 +1797,9 @@ footer {
   border-left: 3px solid var(--primary); /* Pogrubiony akcent z lewej */
   border-radius: 2px;
   /* CIEŃ: Głęboka czerń pod spodem + neonowy ambient */
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(255, 31, 31, 0.15);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.95),
+    0 0 30px rgba(255, 31, 31, 0.15);
   display: flex;
   flex-direction: column;
   z-index: 50;
@@ -2645,9 +2675,10 @@ footer {
   }
 
   /* Floating UI - symetryczne rozmiary */
+  /* RWD-02, RWD-03: Podniesione wyżej, by nie zasłaniać stopki i działać z iOS Safari */
   .chatbot-trigger {
     left: 15px;
-    bottom: 50px; /* Podniesione nad System Bar */
+    bottom: 80px; /* Podniesione nad stopkę i System Bar iOS */
     width: 42px;
     height: 42px;
     font-size: 1rem;
@@ -2655,7 +2686,7 @@ footer {
 
   .progress-wrap {
     right: 15px;
-    bottom: 50px; /* Podniesione nad System Bar */
+    bottom: 80px; /* Podniesione nad stopkę i System Bar iOS */
     width: 42px;
     height: 42px;
   }
@@ -2664,7 +2695,7 @@ footer {
   .chatbot-window {
     left: 15px;
     right: 15px;
-    bottom: 110px; /* Nad chatbot-trigger (50px) + jego wysokość (45px) + margines */
+    bottom: 140px; /* Nad chatbot-trigger (80px) + jego wysokość (42px) + margines */
     width: auto;
     height: calc(
       100vh - 220px
@@ -3023,9 +3054,10 @@ footer {
   }
 
   /* Floating UI */
+  /* RWD-02, RWD-03: Podniesione wyżej, by nie zasłaniać stopki i działać z iOS Safari */
   .chatbot-trigger {
     left: 10px;
-    bottom: 50px; /* Podniesione nad System Bar */
+    bottom: 80px; /* Podniesione nad stopkę i System Bar iOS */
     width: 42px;
     height: 42px;
     font-size: 0.95rem;
@@ -3033,7 +3065,7 @@ footer {
 
   .progress-wrap {
     right: 10px;
-    bottom: 50px; /* Podniesione nad System Bar */
+    bottom: 80px; /* Podniesione nad stopkę i System Bar iOS */
     width: 38px;
     height: 38px;
   }
@@ -3050,7 +3082,7 @@ footer {
   .chatbot-window {
     left: 5px;
     right: 5px;
-    bottom: 105px; /* Nad chatbot-trigger (50px) + jego wysokość (42px) + margines */
+    bottom: 140px; /* Nad chatbot-trigger (80px) + jego wysokość (42px) + margines */
     width: auto;
     height: calc(
       100vh - 200px
@@ -3239,7 +3271,11 @@ footer {
   width: 40px;
   height: 40px;
   border: 1px solid rgba(255, 31, 31, 0.8);
-  transition: width 0.2s, height 0.2s, background-color 0.2s, border-width 0.3s;
+  transition:
+    width 0.2s,
+    height 0.2s,
+    background-color 0.2s,
+    border-width 0.3s;
   mix-blend-mode: difference;
   pointer-events: none;
 }
@@ -3596,14 +3632,17 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+  background:
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
     linear-gradient(
       90deg,
       rgba(255, 0, 0, 0.06),
       rgba(0, 255, 0, 0.02),
       rgba(0, 0, 255, 0.06)
     );
-  background-size: 100% 2px, 3px 100%;
+  background-size:
+    100% 2px,
+    3px 100%;
   pointer-events: none;
   z-index: 2;
 }
@@ -3696,7 +3735,6 @@ body {
   z-index: 10;
   transition: var(--transition);
 }
-
 
 /* Modal Responsywność */
 @media (max-width: 768px) {
@@ -4132,7 +4170,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
   overflow: hidden;
   flex-direction: column;
 }
@@ -4760,7 +4800,10 @@ body {
   overflow: hidden;
   pointer-events: none;
   transform: translateY(-4px);
-  transition: max-height 0.3s ease, opacity 0.25s ease, transform 0.25s ease;
+  transition:
+    max-height 0.3s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
 }
 
 .faq-item.is-open .faq-answer {

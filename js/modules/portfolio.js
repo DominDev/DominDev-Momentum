@@ -74,8 +74,8 @@ export function initPortfolio() {
       modalImg.classList.add("scrolling");
 
       glitchOverlay.classList.remove("active");
-      
-      // Accessibility Fix: 
+
+      // Accessibility Fix:
       // 1. Unhide modal for screen readers
       modal.setAttribute("aria-hidden", "false");
       // 2. Show modal visually
@@ -89,13 +89,17 @@ export function initPortfolio() {
 
   window.closeModal = function () {
     modal.classList.remove("active");
-    modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
-    
-    // Return focus to trigger element
-    if (lastFocusedElement) {
+
+    // Accessibility Fix: Move focus OUT of modal BEFORE setting aria-hidden
+    if (lastFocusedElement && lastFocusedElement.focus) {
       lastFocusedElement.focus();
+    } else {
+      // Fallback if no last focused element
+      document.body.focus();
     }
+
+    modal.setAttribute("aria-hidden", "true");
   };
 
   if (closeModalBtn) {
@@ -114,5 +118,26 @@ export function initPortfolio() {
         window.closeModal();
       }
     }
+  });
+
+  // Keyboard support for project cards
+  const projectCards = document.querySelectorAll(
+    '.project-card[role="button"]',
+  );
+  projectCards.forEach((card) => {
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        // Extract project ID from onclick attribute (fallback method)
+        // Better way: read it from a data attribute if available, but here we parse onclick
+        const onclickAttr = card.getAttribute("onclick");
+        if (onclickAttr) {
+          const match = onclickAttr.match(/'([^']+)'/);
+          if (match && match[1]) {
+            window.openModal(match[1]);
+          }
+        }
+      }
+    });
   });
 }
