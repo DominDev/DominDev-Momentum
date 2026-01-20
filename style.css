@@ -1610,6 +1610,17 @@ input[type="range"]::-moz-range-track {
   cursor: pointer;
 }
 
+/* A11Y: Visible focus outline for checkbox (WCAG 2.4.7) */
+.checkbox-group input[type="checkbox"]:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.checkbox-group input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
 .checkbox-group label {
   text-transform: none;
   font-size: 0.85rem;

@@ -161,9 +161,12 @@ export function initContact() {
 
     if (errors.length > 0) {
       validationSummary.style.display = "block";
+      // A11Y: Set role and aria-live for screen reader announcements
+      validationSummary.setAttribute("role", "alert");
+      validationSummary.setAttribute("aria-live", "assertive");
       validationSummary.innerHTML = `
         <div class="validation-summary-header">
-           <i class="fa-solid fa-circle-exclamation"></i> STATUS SYSTEMU: ${errors.length} BŁĘDÓW
+           <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> STATUS SYSTEMU: ${errors.length} BŁĘDÓW
         </div>
         <ul class="validation-list">
           ${errors.map((err) => `<li class="validation-item" data-for="${err.id}">${err.msg}</li>`).join("")}
@@ -171,6 +174,8 @@ export function initContact() {
       `;
     } else {
       validationSummary.style.display = "none";
+      validationSummary.removeAttribute("role");
+      validationSummary.removeAttribute("aria-live");
       validationSummary.innerHTML = "";
     }
   };
@@ -182,15 +187,27 @@ export function initContact() {
     clearError(input);
     input.classList.add("invalid");
 
-    // Inline error (still useful for context)
+    // A11Y: Generate unique error ID and link to input
+    const errorId = input.id + "-error";
     const msgDiv = document.createElement("div");
+    msgDiv.id = errorId;
     msgDiv.className = "validation-msg";
+    msgDiv.setAttribute("role", "alert");
     msgDiv.innerText = message;
     group.appendChild(msgDiv);
+
+    // A11Y: Mark input as invalid and link to error message
+    input.setAttribute("aria-invalid", "true");
+    input.setAttribute("aria-describedby", errorId);
   };
 
   const clearError = (input) => {
     input.classList.remove("invalid");
+
+    // A11Y: Remove ARIA attributes when error is cleared
+    input.removeAttribute("aria-invalid");
+    input.removeAttribute("aria-describedby");
+
     const group = input.closest(".form-group");
     if (!group) return;
 
@@ -224,6 +241,7 @@ export function initContact() {
 
       // --- CUSTOM VALIDATION START ---
       let isValid = true;
+      let firstInvalidField = null; // A11Y: Track first invalid field for focus
       const inputs = form.querySelectorAll(
         "input[required], textarea[required], select[required]",
       );
@@ -232,6 +250,7 @@ export function initContact() {
       inputs.forEach((input) => {
         if (!input.checkValidity()) {
           isValid = false;
+          if (!firstInvalidField) firstInvalidField = input;
           // ... error mapping ...
           if (input.validity.valueMissing) showError(input, "POLE WYMAGANE");
           else if (input.validity.typeMismatch)
@@ -244,6 +263,7 @@ export function initContact() {
       const rodo = document.getElementById("panel-rodo");
       if (rodo && !rodo.checked) {
         showError(rodo, "WYMAGANA ZGODA");
+        if (!firstInvalidField) firstInvalidField = rodo;
         isValid = false;
       }
 
@@ -252,6 +272,7 @@ export function initContact() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(emailField.value)) {
           showError(emailField, "NIEPRAWIDŁOWY ADRES");
+          if (!firstInvalidField) firstInvalidField = emailField;
           isValid = false;
         }
       }
@@ -260,8 +281,13 @@ export function initContact() {
       updateValidationSummary();
 
       if (!isValid) {
-        // Focus summary or first invalid
-        if (validationSummary.style.display !== "none") {
+        // A11Y: Focus validation summary so screen reader announces all errors
+        if (validationSummary) {
+          // Make summary focusable if not already
+          if (!validationSummary.hasAttribute("tabindex")) {
+            validationSummary.setAttribute("tabindex", "-1");
+          }
+          validationSummary.focus();
           validationSummary.scrollIntoView({
             behavior: "smooth",
             block: "nearest",
