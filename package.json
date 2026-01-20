@@ -3,12 +3,14 @@
   "version": "2.0.0",
   "description": "High-Performance Landing Page - DominDev Portfolio",
   "scripts": {
-    "minify": "node _scripts/minify-css.js",
+    "minify:css": "node _scripts/minify-css.js",
+    "minify:js": "node _scripts/minify-js.js",
+    "minify": "npm run minify:css && npm run minify:js",
     "watch": "node _scripts/watch.js",
     "optimize:images": "node _scripts/optimize-images.js",
     "build": "npm run optimize:images && npm run minify",
     "dev": "echo 'Development server - just open index.html in browser'",
-    "help": "echo '\nAvailable commands:\n  npm run optimize:images - Generate optimized image variants (AVIF, WebP, JPEG)\n  npm run minify         - Minify CSS files\n  npm run build          - Build for production (images + CSS)\n'"
+    "help": "echo '\nAvailable commands:\n  npm run minify:css      - Minify CSS files\n  npm run minify:js       - Minify JS files\n  npm run minify          - Minify CSS + JS\n  npm run watch           - Watch CSS/JS changes and auto-minify\n  npm run optimize:images - Generate optimized image variants (AVIF, WebP, JPEG)\n  npm run build           - Build for production (images + CSS + JS)\n'"
   },
   "keywords": [
     "portfolio",

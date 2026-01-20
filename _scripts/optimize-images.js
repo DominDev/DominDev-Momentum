@@ -29,12 +29,13 @@
  *    - assets/images/social/originals/
  *
  * 3. Uruchom skrypt:
- *    node _scripts/optimize-images.js
+ *    npm run optimize:images
+ *    # lub: node _scripts/optimize-images.js
  *
- * 4. Zoptymalizowane obrazy zostaną wygenerowane w odpowiednich katalogach:
- *    - assets/images/portfolio/ (400w, 800w, 1200w, 1600w)
- *    - assets/images/about/ (400w, 800w, 1200w, 1600w)
- *    - assets/images/social/ (1200x630 dla OG)
+ * 4. Zoptymalizowane obrazy zostaną wygenerowane obok originals/:
+ *    - assets/images/portfolio/*.avif/webp/jpg (400w, 800w, 1200w, 1600w)
+ *    - assets/images/about/*.avif/webp/jpg (400w, 800w, 1200w, 1600w)
+ *    - assets/images/social/*.avif/webp/jpg (1200x630 dla OG)
  *
  * ═══════════════════════════════════════════════════════════════════
  * CO ROBI SKRYPT:
@@ -63,24 +64,24 @@
  *
  * assets/images/
  * ├── portfolio/
- * │   ├── originals/          ← UMIEŚĆ TUTAJ oryginalne obrazy
- * │   │   ├── kraft.jpg
- * │   │   ├── neon.png
- * │   │   └── techgear.jpg
- * │   ├── kraft-400.avif      ← Wygenerowane przez skrypt
- * │   ├── kraft-400.webp
- * │   ├── kraft-400.jpg
- * │   ├── kraft-800.avif
- * │   ├── ... (wszystkie warianty)
- * │   └── ...
+ * │   ├── originals/              ← UMIEŚĆ TUTAJ oryginalne obrazy
+ * │   │   ├── portfolio-kraft.jpg
+ * │   │   ├── portfolio-neon.png
+ * │   │   └── portfolio-techgear.jpg
+ * │   ├── portfolio-kraft-400.avif    ← Wygenerowane przez skrypt (obok originals/)
+ * │   ├── portfolio-kraft-400.webp
+ * │   ├── portfolio-kraft-400.jpg
+ * │   ├── portfolio-kraft-800.avif
+ * │   └── ... (wszystkie warianty)
  * ├── about/
  * │   ├── originals/
  * │   │   └── coding-setup.jpg
+ * │   ├── coding-setup-400.avif   ← Wygenerowane obok originals/
  * │   └── ... (wygenerowane warianty)
  * └── social/
  *     ├── originals/
  *     │   └── og-image.png
- *     └── og-image-1200x630.webp (dedykowany rozmiar dla OG)
+ *     └── og-image-social.webp    ← Dedykowany rozmiar dla OG (1200x630)
  *
  * ═══════════════════════════════════════════════════════════════════
  */
@@ -96,7 +97,9 @@ const path = require('path');
 const CONFIG = {
   // Ścieżki do katalogów z oryginałami
   inputDirs: [
-    'assets/img/originals',
+    'assets/images/portfolio/originals',
+    'assets/images/about/originals',
+    'assets/images/social/originals',
   ],
 
   // Rozmiary dla responsive images (szerokości w pikselach)
@@ -383,8 +386,8 @@ async function main() {
       continue;
     }
 
-    // Katalog wyjściowy (zawsze w podkatalogu 'optimized')
-    const outputDir = path.join(path.dirname(inputDir), 'optimized');
+    // Katalog wyjściowy (obok folderu originals, nie w podkatalogu optimized)
+    const outputDir = path.dirname(inputDir);
     await ensureDir(outputDir);
 
     for (const image of images) {
@@ -442,7 +445,7 @@ async function watchForChanges() {
         if (!/\.(jpg|jpeg|png|webp|tiff)$/i.test(filename)) return;
 
         const fullPath = path.join(inputDir, filename);
-        const outputDir = path.join(path.dirname(inputDir), 'optimized');
+        const outputDir = path.dirname(inputDir);
 
         // Small delay to ensure file is fully written
         setTimeout(async () => {
