@@ -300,7 +300,7 @@ export function initContact() {
           btn.style.opacity = "1";
 
           if (msgDiv) {
-            msgDiv.innerText = "Sygnał odebrany. Bez odbioru.";
+            msgDiv.innerText = "Sygnał odebrany. Potwierdzam status.\nOczekuj zaszyfrowanej transmisji (e-maila) w ciągu 24h.";
             msgDiv.style.color = "#4ade80";
           }
 
