@@ -91,6 +91,24 @@ document.addEventListener("DOMContentLoaded", () => {
   // === CORE INITIALIZATION ===
   initCursor();
 
+  // === SKIP LINK HANDLER (A11Y - No Hash Change) ===
+  const skipLinkBtn = document.getElementById('skip-link-btn');
+  if (skipLinkBtn) {
+    skipLinkBtn.addEventListener('click', (e) => {
+      e.preventDefault(); // Stop URL hash change
+      const target = document.getElementById('hero');
+      if (target) {
+        // Ensure target can receive focus
+        if (!target.hasAttribute('tabindex')) {
+          target.setAttribute('tabindex', '-1');
+        }
+        
+        target.scrollIntoView({ behavior: 'smooth' });
+        target.focus({ preventScroll: true }); // preventScroll because we used smooth scroll above
+      }
+    });
+  }
+
   // Reset scroll position (only if no hash)
   if (!window.location.hash) {
     window.scrollTo(0, 0);
