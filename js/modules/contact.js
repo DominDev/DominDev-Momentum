@@ -87,6 +87,9 @@ export function initContact() {
       if (budgetValue === 0) {
         budgetInput.value = 0;
         budgetLabel.innerText = "Partnerstwo | Win-Win";
+      } else if (budgetValue >= 15000) {
+        budgetInput.value = 15000;
+        budgetLabel.innerText = "15 000+ PLN";
       } else {
         budgetInput.value = budgetValue;
         budgetLabel.innerText = budgetValue.toLocaleString("pl-PL") + " PLN";
@@ -102,6 +105,8 @@ export function initContact() {
       const val = parseInt(this.value);
       if (val === 0) {
         budgetValueLabel.innerText = "Partnerstwo | Win-Win";
+      } else if (val >= 15000) {
+        budgetValueLabel.innerText = "15 000+ PLN";
       } else {
         budgetValueLabel.innerText = val.toLocaleString("pl-PL") + " PLN";
       }
