@@ -18,20 +18,30 @@ export function initCursor() {
   cursorOutline.style.left = `${initPosX}px`;
   cursorOutline.style.top = `${initPosY}px`;
 
+  let cursorX = initPosX;
+  let cursorY = initPosY;
+  let mouseTicking = false;
+
   window.addEventListener("mousemove", (e) => {
-    const posX = e.clientX;
-    const posY = e.clientY;
+    cursorX = e.clientX;
+    cursorY = e.clientY;
 
-    cursorDot.style.left = `${posX}px`;
-    cursorDot.style.top = `${posY}px`;
+    if (!mouseTicking) {
+      window.requestAnimationFrame(() => {
+        cursorDot.style.left = `${cursorX}px`;
+        cursorDot.style.top = `${cursorY}px`;
 
-    cursorOutline.animate(
-      {
-        left: `${posX}px`,
-        top: `${posY}px`,
-      },
-      { duration: 500, fill: "forwards" }
-    );
+        cursorOutline.animate(
+          {
+            left: `${cursorX}px`,
+            top: `${cursorY}px`,
+          },
+          { duration: 500, fill: "forwards" }
+        );
+        mouseTicking = false;
+      });
+      mouseTicking = true;
+    }
   });
 
   // Elementy, na których kursor ma wejść w tryb "hovering"
