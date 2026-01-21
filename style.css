@@ -120,16 +120,7 @@ h3 {
   padding: 100px 0;
 }
 
-/* Performance Optimization: Skip rendering for off-screen sections */
-#about,
-#portfolio,
-#process,
-#services,
-#contact,
-#faq {
-  content-visibility: auto;
-  contain-intrinsic-size: 800px;
-}
+/* Performance Optimization: Removed due to scroll precision issues */
 
 .accent {
   color: var(--primary);
@@ -1416,10 +1407,19 @@ a.btn-secondary {
   background-position: right 15px center;
 }
 
+.form-group select optgroup,
 .form-group select option {
   background: #111;
   color: white;
   padding: 10px;
+  font-family: var(--font-main);
+}
+
+.form-group select optgroup {
+  font-weight: 700;
+  color: var(--primary); /* Wyróżnienie grup kolorem czerwonym */
+  font-style: normal;
+  margin-top: 10px;
 }
 
 /* Custom Range Slider */
@@ -1784,6 +1784,11 @@ footer {
   position: absolute;
   color: white;
   font-size: 1rem;
+}
+
+/* Helper to stabilize layout during hash navigation */
+body.disable-transitions * {
+  transition: none !important;
 }
 
 /* --- CHATBOT TRIGGER BUTTON (Cyber-Circle) --- */
@@ -4146,6 +4151,27 @@ body {
   font-family: var(--font-main);
   font-size: 1rem;
   transition: 0.3s;
+}
+
+.cyber-form select optgroup,
+.cyber-form select option {
+  background: #111;
+  color: #fff;
+}
+
+.cyber-form select optgroup {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.cyber-form select {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23cccccc' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 12px;
 }
 
 .cyber-form input:focus,
