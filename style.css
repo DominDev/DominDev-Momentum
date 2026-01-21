@@ -120,6 +120,17 @@ h3 {
   padding: 100px 0;
 }
 
+/* Performance Optimization: Skip rendering for off-screen sections */
+#about,
+#portfolio,
+#process,
+#services,
+#contact,
+#faq {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
+}
+
 .accent {
   color: var(--primary);
 }
