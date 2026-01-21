@@ -672,6 +672,9 @@
   </head>
 
   <body style="overflow: hidden; height: 100vh">
+    <!-- SKIP LINK (A11Y) -->
+    <a href="#hero" class="skip-link" id="skip-link-btn">Przejdź do treści</a>
+
     <!-- MATRIX BACKGROUND CANVAS -->
     <canvas id="matrixCanvas"></canvas>
 
@@ -868,7 +871,7 @@
         </div>
       </div>
 
-      <section id="hero">
+      <section id="hero" tabindex="-1">
         <div class="container hero-content">
           <span class="hero-subtitle">High-Performance Web Engineering</span>
           
