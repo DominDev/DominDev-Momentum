@@ -138,18 +138,25 @@ export function initUI() {
       progressPath.style.transition = progressPath.style.WebkitTransition =
         "stroke-dashoffset 10ms linear";
 
+      let ticking = false;
       window.addEventListener("scroll", () => {
-        const scroll = window.pageYOffset || document.documentElement.scrollTop;
-        const height =
-          document.documentElement.scrollHeight -
-          document.documentElement.clientHeight;
-        const progress = pathLength - (scroll * pathLength) / height;
-        progressPath.style.strokeDashoffset = progress;
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const scroll = window.pageYOffset || document.documentElement.scrollTop;
+            const height =
+              document.documentElement.scrollHeight -
+              document.documentElement.clientHeight;
+            const progress = pathLength - (scroll * pathLength) / height;
+            progressPath.style.strokeDashoffset = progress;
 
-        if (window.pageYOffset > 50) {
-          progressWrap.classList.add("active-progress");
-        } else {
-          progressWrap.classList.remove("active-progress");
+            if (window.pageYOffset > 50) {
+              progressWrap.classList.add("active-progress");
+            } else {
+              progressWrap.classList.remove("active-progress");
+            }
+            ticking = false;
+          });
+          ticking = true;
         }
       });
     }
