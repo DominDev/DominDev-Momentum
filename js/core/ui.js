@@ -13,10 +13,8 @@ export function initCursor() {
   const initPosX = window.innerWidth / 2;
   const initPosY = window.innerHeight / 2;
 
-  cursorDot.style.left = `${initPosX}px`;
-  cursorDot.style.top = `${initPosY}px`;
-  cursorOutline.style.left = `${initPosX}px`;
-  cursorOutline.style.top = `${initPosY}px`;
+  cursorDot.style.transform = `translate3d(${initPosX}px, ${initPosY}px, 0)`;
+  cursorOutline.style.transform = `translate3d(${initPosX}px, ${initPosY}px, 0)`;
 
   let cursorX = initPosX;
   let cursorY = initPosY;
@@ -28,13 +26,11 @@ export function initCursor() {
 
     if (!mouseTicking) {
       window.requestAnimationFrame(() => {
-        cursorDot.style.left = `${cursorX}px`;
-        cursorDot.style.top = `${cursorY}px`;
+        cursorDot.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
 
         cursorOutline.animate(
           {
-            left: `${cursorX}px`,
-            top: `${cursorY}px`,
+            transform: `translate3d(${cursorX}px, ${cursorY}px, 0)`,
           },
           { duration: 500, fill: "forwards" }
         );
