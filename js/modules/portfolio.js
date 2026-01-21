@@ -121,15 +121,12 @@ export function initPortfolio() {
   });
 
   // Keyboard support for project cards
-  const projectCards = document.querySelectorAll(
-    '.project-card[role="button"]',
-  );
+  const projectCards = document.querySelectorAll('.project-card[role="button"]');
   projectCards.forEach((card) => {
     card.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        // Extract project ID from onclick attribute (fallback method)
-        // Better way: read it from a data attribute if available, but here we parse onclick
+        
         const onclickAttr = card.getAttribute("onclick");
         if (onclickAttr) {
           const match = onclickAttr.match(/'([^']+)'/);
