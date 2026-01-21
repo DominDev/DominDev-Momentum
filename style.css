@@ -2752,7 +2752,7 @@ body.disable-transitions * {
   /* RWD-02, RWD-03: Podniesione wyżej, by nie zasłaniać stopki i działać z iOS Safari */
   .chatbot-trigger {
     left: 15px;
-    bottom: 80px; /* Podniesione nad stopkę i System Bar iOS */
+    bottom: 60px; /* Obniżono z 80px */
     width: 42px;
     height: 42px;
     font-size: 1rem;
@@ -2760,7 +2760,7 @@ body.disable-transitions * {
 
   .progress-wrap {
     right: 15px;
-    bottom: 80px; /* Podniesione nad stopkę i System Bar iOS */
+    bottom: 60px; /* Obniżono z 80px */
     width: 42px;
     height: 42px;
   }
@@ -2769,7 +2769,7 @@ body.disable-transitions * {
   .chatbot-window {
     left: 15px;
     right: 15px;
-    bottom: 140px; /* Nad chatbot-trigger (80px) + jego wysokość (42px) + margines */
+    bottom: 120px; /* Obniżono z 140px - Nad chatbot-trigger (60px) + jego wysokość (42px) + margines */
     width: auto;
     height: calc(
       100vh - 220px
@@ -3133,7 +3133,7 @@ body.disable-transitions * {
   /* RWD-02, RWD-03: Podniesione wyżej, by nie zasłaniać stopki i działać z iOS Safari */
   .chatbot-trigger {
     left: 10px;
-    bottom: 80px; /* Podniesione nad stopkę i System Bar iOS */
+    bottom: 60px; /* Obniżono z 80px */
     width: 42px;
     height: 42px;
     font-size: 0.95rem;
@@ -3141,7 +3141,7 @@ body.disable-transitions * {
 
   .progress-wrap {
     right: 10px;
-    bottom: 80px; /* Podniesione nad stopkę i System Bar iOS */
+    bottom: 60px; /* Obniżono z 80px */
     width: 38px;
     height: 38px;
   }
@@ -3158,7 +3158,7 @@ body.disable-transitions * {
   .chatbot-window {
     left: 5px;
     right: 5px;
-    bottom: 140px; /* Nad chatbot-trigger (80px) + jego wysokość (42px) + margines */
+    bottom: 120px; /* Obniżono z 140px - Nad chatbot-trigger (60px) + jego wysokość (42px) + margines */
     width: auto;
     height: calc(
       100vh - 200px
