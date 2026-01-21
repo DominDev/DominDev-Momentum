@@ -1692,7 +1692,8 @@ footer {
 .footer-links a {
   color: var(--text-muted);
   display: block;
-  margin-bottom: 10px;
+  padding: 2px 0;
+  margin-bottom: 5px;
 }
 
 .footer-links a:hover {
@@ -3253,7 +3254,8 @@ footer {
 
   .footer-links a {
     font-size: 0.85rem;
-    margin-bottom: 8px;
+    padding: 6px 0; /* Mniejszy padding, ale wciąż klikalne */
+    margin-bottom: 0;
   }
 
   .social-icons .social-link {
