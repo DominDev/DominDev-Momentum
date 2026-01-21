@@ -139,6 +139,19 @@ h3 {
   color: var(--text-muted);
 }
 
+/* Screen Reader Only - for SEO & Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 .margin-bottom-30 {
   margin-bottom: 30px;
 }
@@ -680,6 +693,10 @@ body.menu-open .progress-wrap {
 }
 
 .hero-title {
+  font-family: var(--font-display); /* FIX: Restore font styling after H1->P change */
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: -1px;
   font-size: 4.5rem;
 
   margin-bottom: 15px;
