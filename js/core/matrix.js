@@ -1,5 +1,5 @@
 // js/core/matrix.js
-// Background Matrix with Intersection Observer optimization
+// Background Matrix with Intersection Observer & Visibility API optimization
 export function initMatrix() {
   const canvas = document.getElementById("matrixCanvas");
   if (!canvas) return;
@@ -20,33 +20,20 @@ export function initMatrix() {
   const fps = 15;
   let interval = 1000 / fps;
 
-  // Fast initial load - higher FPS for first few seconds (only on capable devices)
+  // Fast initial load - higher FPS for first few seconds
   let frameCount = 0;
-  const fastLoadFrames = 120; // ~8 seconds at normal FPS
-  // Disable fast loading on slow connections or low-end devices
+  const fastLoadFrames = 120;
   const isSlowConnection = navigator.connection?.effectiveType === '2g' || navigator.connection?.saveData;
   const isLowEnd = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
-  const fastFPS = (isSlowConnection || isLowEnd) ? 15 : 30; // 2x faster only on capable devices
+  const fastFPS = (isSlowConnection || isLowEnd) ? 15 : 30;
 
-  // Pause animation when canvas is not visible (CPU saver)
-  let isVisible = true;
   let animationId = null;
+  let isVisible = true; // Internal flag for loop
+  
+  // State tracking
+  let isIntersecting = false; 
 
-  // Intersection Observer - pauses animation when canvas out of viewport
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        isVisible = entry.isIntersecting;
-        // If became visible, restart animation loop
-        if (isVisible && !animationId) {
-          animationId = requestAnimationFrame(matrixLoop);
-        }
-      });
-    },
-    { threshold: 0.1 } // Trigger when at least 10% visible
-  );
-
-  observer.observe(canvas);
+  // --- Handlers ---
 
   const mouseMoveHandler = (e) => {
     targetMouseX = e.clientX;
@@ -60,21 +47,53 @@ export function initMatrix() {
     while (ypos.length < newCols) ypos.push(0);
   };
 
+  function updateAnimationState() {
+    // Run ONLY if intersecting AND document is visible
+    const shouldRun = isIntersecting && !document.hidden;
+
+    if (shouldRun && !animationId) {
+      isVisible = true;
+      animationId = requestAnimationFrame(matrixLoop);
+    } else if (!shouldRun && animationId) {
+      isVisible = false;
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+  }
+
+  const handleVisibilityChange = () => {
+    updateAnimationState();
+  };
+
+  // Intersection Observer
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        isIntersecting = entry.isIntersecting;
+        updateAnimationState();
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  // --- Init Listeners ---
+  observer.observe(canvas);
   window.addEventListener("mousemove", mouseMoveHandler, { passive: true });
   window.addEventListener("resize", resizeHandler, { passive: true });
+  document.addEventListener("visibilitychange", handleVisibilityChange);
 
+  // --- Animation Loop ---
   function matrixLoop(currentTime) {
-    // Only continue loop if canvas is visible
     if (!isVisible) {
-      animationId = null;
-      return;
+       animationId = null; 
+       return; 
     }
 
     animationId = requestAnimationFrame(matrixLoop);
 
     if (!currentTime) currentTime = 0;
 
-    // Use higher FPS during initial load for faster fill
+    // Use higher FPS during initial load
     if (frameCount < fastLoadFrames) {
       interval = 1000 / fastFPS;
       frameCount++;
@@ -115,6 +134,6 @@ export function initMatrix() {
     });
   }
 
-  // Start animation
-  animationId = requestAnimationFrame(matrixLoop);
+  // Initial start check (IntersectionObserver will trigger eventually, but let's try starting if visible)
+  // Actually, IO callback fires on observe(), so we rely on that for initial start.
 }
