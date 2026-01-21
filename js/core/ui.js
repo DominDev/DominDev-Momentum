@@ -91,11 +91,19 @@ export function initUI() {
     if (allRevealsActivated) return;
     allRevealsActivated = true;
 
+    // Disable transitions to snap elements to final position immediately
+    document.body.classList.add('disable-transitions');
+
     const allReveals = document.querySelectorAll('.reveal:not(.active)');
     allReveals.forEach(el => el.classList.add('active'));
 
     // Force layout recalculation
     document.body.offsetHeight;
+
+    // Re-enable transitions after scroll calculation (small delay)
+    setTimeout(() => {
+      document.body.classList.remove('disable-transitions');
+    }, 50);
   };
 
   // Pre-activate reveals on hash link click
