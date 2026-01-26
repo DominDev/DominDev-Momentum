@@ -99,17 +99,62 @@ export function initContact() {
 
   const panelBudget = document.getElementById("panel-budget");
   const budgetValueLabel = document.getElementById("budgetValue");
+  const serviceSelect = document.getElementById("panel-service");
 
-  if (panelBudget && budgetValueLabel) {
+  // Mapowanie cen usług do wartości suwaka (zaokrąglone do kroku 500)
+  const SERVICE_PRICES = {
+    landing: 1500,
+    business: 3500,
+    ecommerce: 6000,
+    webapp: 8000,
+    audit: 500, // 300-500 -> 500
+    speed: 1000, // od 800 -> 1000 (najbliższy krok w górę)
+    integration: 500, // od 400 -> 500
+    other: 0,
+  };
+
+  const updateBudgetLabel = (val) => {
+    if (!budgetValueLabel) return;
+    if (val === 0) {
+      budgetValueLabel.innerText = "Partnerstwo | Win-Win";
+    } else if (val >= 15000) {
+      budgetValueLabel.innerText = "15 000+ PLN";
+    } else {
+      budgetValueLabel.innerText = val.toLocaleString("pl-PL") + " PLN";
+    }
+  };
+
+  // Inicjalizacja domyślna (Inne / Partnerstwo = 0)
+  // Decyzja marketingowa: Ogólny kontakt powinien być neutralny ("Win-Win").
+  // Konkretne usługi są wybierane przez przyciski CTA (prefillForm).
+  if (panelBudget && serviceSelect) {
+    // Wymuszamy "other" jako domyślną opcję startową
+    // Sprawdzamy, czy użytkownik nie wybrał już czegoś (np. przy odświeżeniu strony przeglądarka pamięta stan)
+    // Ale dla spójności biznesowej resetujemy do neutralnego, chyba że prefill zadziała
+    if (serviceSelect.value === "landing" || serviceSelect.value === "") {
+        serviceSelect.value = "other";
+    }
+
+    const currentService = serviceSelect.value || "other";
+    const currentPrice = SERVICE_PRICES[currentService] !== undefined ? SERVICE_PRICES[currentService] : 0;
+    
+    panelBudget.value = currentPrice;
+    updateBudgetLabel(currentPrice);
+
+    // Listener zmiany usługi
+    serviceSelect.addEventListener("change", function() {
+      const price = SERVICE_PRICES[this.value];
+      if (price !== undefined) {
+        panelBudget.value = price;
+        updateBudgetLabel(price);
+      }
+    });
+  }
+
+  if (panelBudget) {
     panelBudget.addEventListener("input", function () {
       const val = parseInt(this.value);
-      if (val === 0) {
-        budgetValueLabel.innerText = "Partnerstwo | Win-Win";
-      } else if (val >= 15000) {
-        budgetValueLabel.innerText = "15 000+ PLN";
-      } else {
-        budgetValueLabel.innerText = val.toLocaleString("pl-PL") + " PLN";
-      }
+      updateBudgetLabel(val);
     });
   }
 
@@ -231,6 +276,15 @@ export function initContact() {
         clearError(input);
         updateValidationSummary();
       });
+      // Specific listener for checkbox to clear error immediately
+      if (input.type === "checkbox") {
+        input.addEventListener("click", () => {
+          if (input.checked) {
+            clearError(input);
+            updateValidationSummary();
+          }
+        });
+      }
     });
 
     form.addEventListener("submit", async (e) => {
@@ -328,8 +382,7 @@ export function initContact() {
 
         if (response.ok) {
           btn.innerText = "POTWIERDZONO.";
-          btn.style.borderColor = "#4ade80";
-          btn.style.color = "#4ade80";
+          btn.classList.add("success");
           btn.style.opacity = "1";
 
           if (msgDiv) {
@@ -342,6 +395,7 @@ export function initContact() {
             setTimeout(() => {
               btn.innerText = originalText;
               btn.disabled = false;
+              btn.classList.remove("success");
               btn.style = "";
               if (msgDiv) msgDiv.innerText = "";
               form.reset();
@@ -353,18 +407,20 @@ export function initContact() {
       } catch (error) {
         console.error(error);
         btn.innerText = "BŁĄD NADAWANIA";
+        btn.disabled = false;
+        btn.style.opacity = "1";
         btn.style.borderColor = "#ff1f1f";
         btn.style.color = "#ff1f1f";
+        btn.style.background = "transparent";
 
         if (msgDiv) {
           msgDiv.innerHTML =
-            'Błąd połączenia. Spróbuj ponownie lub <a href="mailto:contact@domindev.com" style="color: #ff1f1f; text-decoration: underline;">napisz bezpośrednio</a>.';
+            'Błąd połączenia. Spróbuj ponownie lub napisz bezpośrednio: <a href="mailto:contact@domindev.com" class="error-msg-link">contact@domindev.com</a>';
           msgDiv.style.color = "#ff1f1f";
         }
 
         setTimeout(() => {
           btn.innerText = originalText;
-          btn.disabled = false;
           btn.style = "";
         }, 4000);
       }

@@ -341,6 +341,36 @@ h3 {
   font-size: 0.9rem;
 }
 
+/* Stan sukcesu przycisku (Propozycja 2) */
+.btn.success {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4)) !important;
+  transform: none !important;
+  cursor: default !important;
+  pointer-events: none;
+}
+
+.btn.success::after {
+  display: none !important;
+}
+
+/* Styl dla linku w komunikacie błędu */
+.error-msg-link {
+  color: #ffffff !important;
+  text-decoration: none;
+  border-bottom: 1px solid #ff1f1f;
+  font-weight: 700;
+  transition: var(--transition);
+  margin-left: 5px;
+}
+
+.error-msg-link:hover {
+  color: #ff1f1f !important;
+  border-bottom-color: #ffffff;
+}
+
 /* --- NAVBAR --- */
 
 nav {
@@ -1465,9 +1495,33 @@ input[type="range"]::-moz-range-track {
 
 .checkbox-group {
   display: flex;
+  flex-wrap: wrap; /* Pozwala błędowi spaść do nowej linii */
   align-items: flex-start;
   gap: 12px;
 }
+
+/* Wymuszenie nowej linii dla błędu w checkboxie */
+.checkbox-group .validation-msg {
+  width: 100%;
+  margin-left: 30px; /* Wcięcie, żeby tekst błędu był pod tekstem zgody */
+  margin-top: 5px;
+}
+
+/* Stylizacja błędnego checkboxa (czerwony obrys + glow) */
+.checkbox-group input.invalid {
+  outline: 2px solid #ff1f1f;
+  outline-offset: 2px;
+  box-shadow: 0 0 10px rgba(255, 31, 31, 0.5);
+  border-color: #ff1f1f;
+}
+
+/* Stylizacja etykiety przy błędzie */
+.checkbox-group input.invalid + label {
+  color: #ffcccc; /* Lekko czerwony tekst */
+  text-shadow: 0 0 8px rgba(255, 31, 31, 0.4);
+}
+
+/* A11Y: Visible focus outline for checkbox (WCAG 2.4.7) */
 
 /* ==========================================
    FLOATING LABELS (Contact Form)
@@ -1679,14 +1733,21 @@ input[type="range"]::-moz-range-track {
 }
 
 /* A11Y: Visible focus outline for checkbox (WCAG 2.4.7) */
+/* FIX: Zmiana koloru focusa na biały, aby nie mylił się z błędem */
 .checkbox-group input[type="checkbox"]:focus {
-  outline: 2px solid var(--primary);
+  outline: 2px solid #ffffff;
   outline-offset: 2px;
 }
 
 .checkbox-group input[type="checkbox"]:focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid #ffffff;
   outline-offset: 2px;
+}
+
+/* Jeśli jest błąd, focus też musi być czerwony */
+.checkbox-group input.invalid:focus,
+.checkbox-group input.invalid:focus-visible {
+  outline-color: #ff1f1f;
 }
 
 .checkbox-group label {
