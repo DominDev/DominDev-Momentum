@@ -4,7 +4,8 @@ export const CONFIG = {
   enablePreloader: true,
 
   mail: {
-    provider: "formspree",
+    provider: "cloudflare",
+    // Legacy providers (kept for fallback):
     formspreeId: "mpweyqjp",
     customEndpoint: "/send-mail.php",
   },

@@ -669,6 +669,13 @@
     </noscript>
 
     <link rel="stylesheet" href="style.min.css" />
+
+    <!-- Cloudflare Turnstile (Anti-spam) -->
+    <script
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+      async
+      defer
+    ></script>
   </head>
 
   <body style="overflow: hidden; height: 100vh">
@@ -1943,6 +1950,14 @@
 
               <!-- Validation Summary (Dynamic) -->
               <div id="validation-summary" class="validation-summary" style="display: none;" role="alert" aria-live="polite"></div>
+
+              <!-- Cloudflare Turnstile Widget (Anti-spam) -->
+              <div
+                class="cf-turnstile"
+                data-sitekey="0x4AAAAAACO2zXQdd6rlrshk"
+                data-theme="dark"
+                data-language="pl"
+              ></div>
 
               <button type="submit" class="btn full-width">
                 WYŚLIJ RAPORT

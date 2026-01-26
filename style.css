@@ -1643,6 +1643,17 @@ input[type="range"]::-moz-range-track {
   font-weight: bold;
 }
 
+/* Cloudflare Turnstile Widget */
+.cf-turnstile {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.cf-turnstile iframe {
+  border-radius: 4px;
+}
+
 .validation-item.resolved {
   text-decoration: line-through;
   opacity: 0.5;
