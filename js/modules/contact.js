@@ -414,9 +414,14 @@ export function initContact() {
         btn.style.background = "transparent";
 
         if (msgDiv) {
-          msgDiv.innerHTML =
-            'Błąd połączenia. Spróbuj ponownie lub napisz bezpośrednio: <a href="mailto:contact@domindev.com" class="error-msg-link">contact@domindev.com</a>';
+          msgDiv.innerText = "Błąd połączenia. Spróbuj ponownie lub napisz bezpośrednio: ";
           msgDiv.style.color = "#ff1f1f";
+          
+          const mailLink = document.createElement("a");
+          mailLink.href = "mailto:contact@domindev.com";
+          mailLink.className = "error-msg-link";
+          mailLink.textContent = "contact@domindev.com";
+          msgDiv.appendChild(mailLink);
         }
 
         setTimeout(() => {

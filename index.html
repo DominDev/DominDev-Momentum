@@ -356,334 +356,20 @@
     <link rel="modulepreload" href="js/modules/hud.js" />
 
     <!-- ========================================
-         CRITICAL INLINE CSS - All Fonts (Async, Non-blocking)
-         Uses media="print" trick to defer CSS parse (eliminates 600ms render-blocking!)
+         CRITICAL CSS - All Fonts & Icons
+         Moved to external file for Strict CSP (no unsafe-inline).
+         Loaded with preload for performance.
          ======================================== -->
-    <style media="print" onload="this.media='all'">
-      @font-face {
-        font-family: "Outfit";
-        font-style: normal;
-        font-weight: 100 900;
-        font-display: swap;
-        src: url("assets/fonts/outfit-400.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
-          U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-          U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-      }
-      @font-face {
-        font-family: "Outfit Fallback";
-        src: local("Arial");
-        size-adjust: 102%;
-        ascent-override: 90%;
-        descent-override: 22%;
-        line-gap-override: 0%;
-      }
-      @font-face {
-        font-family: "Space Grotesk";
-        font-style: normal;
-        font-weight: 300 700;
-        font-display: swap;
-        src: url("assets/fonts/space-grotesk.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
-          U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-          U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-      }
-      @font-face {
-        font-family: "Space Grotesk Fallback";
-        src: local("Courier New");
-        size-adjust: 98%;
-        ascent-override: 88%;
-        descent-override: 24%;
-        line-gap-override: 0%;
-      }
-      @font-face {
-        font-family: "Font Awesome 6 Free";
-        font-style: normal;
-        font-weight: 900;
-        font-display: swap;
-        src: url("assets/fonts/fa-solid-900.woff2") format("woff2");
-      }
-      .fas,
-      .fa-solid {
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
-      }
-      .fa,
-      .fas,
-      .far,
-      .fal,
-      .fat,
-      .fad,
-      .fab,
-      .fa-solid,
-      .fa-regular,
-      .fa-light,
-      .fa-thin,
-      .fa-duotone,
-      .fa-brands {
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased;
-        display: inline-block;
-        font-style: normal;
-        font-variant: normal;
-        line-height: 1;
-        text-rendering: auto;
-      }
-      .fa-arrow-up::before {
-        content: "\f062";
-      }
-      .fa-robot::before {
-        content: "\f544";
-      }
-      .fa-terminal::before {
-        content: "\f120";
-      }
-      .fa-paper-plane::before {
-        content: "\f1d8";
-      }
-      .fa-check::before {
-        content: "\f00c";
-      }
-      .fa-code::before {
-        content: "\f121";
-      }
-      .fa-shield-halved::before {
-        content: "\f3ed";
-      }
-      .fa-database::before {
-        content: "\f1c0";
-      }
-      .fa-rocket::before {
-        content: "\f135";
-      }
-      .fa-layer-group::before {
-        content: "\f5fd";
-      }
-      .fa-lightbulb::before {
-        content: "\f0eb";
-      }
-      .fa-cog::before {
-        content: "\f013";
-      }
-      .fa-chart-line::before {
-        content: "\f201";
-      }
-      .fa-screwdriver-wrench::before {
-        content: "\f7d9";
-      }
-      .fa-money-bill-wave::before {
-        content: "\f53a";
-      }
-      .fa-ban::before {
-        content: "\f05e";
-      }
-      .fa-gauge-high::before {
-        content: "\f625";
-      }
-      .fa-handshake::before {
-        content: "\f2b5";
-      }
-      .fa-trash::before {
-        content: "\f1f8";
-      }
-      .fa-trash-can::before {
-        content: "\f2ed";
-      }
-      .fa-user-xmark::before {
-        content: "\f235";
-      }
-      @font-face {
-        font-family: "Font Awesome 6 Brands";
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url("assets/fonts/fa-brands-400.woff2") format("woff2");
-      }
-      .fab,
-      .fa-brands {
-        font-family: "Font Awesome 6 Brands";
-        font-weight: 400;
-      }
-      .fa-linkedin::before {
-        content: "\f08c";
-      }
-      .fa-linkedin-in::before {
-        content: "\f0e1";
-      }
-      .fa-github::before {
-        content: "\f09b";
-      }
-      .fa-instagram::before {
-        content: "\f16d";
-      }
-      .fa-aws::before {
-        content: "\f375";
-      }
-    </style>
+    <link rel="preload" href="assets/fonts/critical.min.css" as="style" />
+    <link rel="stylesheet" href="assets/fonts/critical.min.css" />
 
-    <!-- Fallback for browsers without JavaScript (~0.2% users) -->
-    <noscript>
-      <style>
-        @font-face {
-          font-family: "Outfit";
-          font-style: normal;
-          font-weight: 100 900;
-          font-display: swap;
-          src: url("assets/fonts/outfit-400.woff2") format("woff2");
-          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
-            U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-            U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-        }
-        @font-face {
-          font-family: "Outfit Fallback";
-          src: local("Arial");
-          size-adjust: 102%;
-          ascent-override: 90%;
-          descent-override: 22%;
-          line-gap-override: 0%;
-        }
-        @font-face {
-          font-family: "Space Grotesk";
-          font-style: normal;
-          font-weight: 300 700;
-          font-display: swap;
-          src: url("assets/fonts/space-grotesk.woff2") format("woff2");
-          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
-            U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-            U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-        }
-        @font-face {
-          font-family: "Space Grotesk Fallback";
-          src: local("Courier New");
-          size-adjust: 98%;
-          ascent-override: 88%;
-          descent-override: 24%;
-          line-gap-override: 0%;
-        }
-        @font-face {
-          font-family: "Font Awesome 6 Free";
-          font-style: normal;
-          font-weight: 900;
-          font-display: swap;
-          src: url("assets/fonts/fa-solid-900.woff2") format("woff2");
-        }
-        .fas,
-        .fa-solid {
-          font-family: "Font Awesome 6 Free";
-          font-weight: 900;
-        }
-        .fa,
-        .fas,
-        .far,
-        .fal,
-        .fat,
-        .fad,
-        .fab,
-        .fa-solid,
-        .fa-regular,
-        .fa-light,
-        .fa-thin,
-        .fa-duotone,
-        .fa-brands {
-          -moz-osx-font-smoothing: grayscale;
-          -webkit-font-smoothing: antialiased;
-          display: inline-block;
-          font-style: normal;
-          font-variant: normal;
-          line-height: 1;
-          text-rendering: auto;
-        }
-        .fa-arrow-up::before {
-          content: "\f062";
-        }
-        .fa-robot::before {
-          content: "\f544";
-        }
-        .fa-terminal::before {
-          content: "\f120";
-        }
-        .fa-paper-plane::before {
-          content: "\f1d8";
-        }
-        .fa-check::before {
-          content: "\f00c";
-        }
-        .fa-code::before {
-          content: "\f121";
-        }
-        .fa-shield-halved::before {
-          content: "\f3ed";
-        }
-        .fa-database::before {
-          content: "\f1c0";
-        }
-        .fa-rocket::before {
-          content: "\f135";
-        }
-        .fa-layer-group::before {
-          content: "\f5fd";
-        }
-        .fa-lightbulb::before {
-          content: "\f0eb";
-        }
-        .fa-cog::before {
-          content: "\f013";
-        }
-        .fa-chart-line::before {
-          content: "\f201";
-        }
-        .fa-screwdriver-wrench::before {
-          content: "\f7d9";
-        }
-        .fa-money-bill-wave::before {
-          content: "\f53a";
-        }
-        .fa-ban::before {
-          content: "\f05e";
-        }
-        .fa-gauge-high::before {
-          content: "\f625";
-        }
-              .fa-handshake::before {
-                content: "\f2b5";
-              }
-              .fa-trash::before {
-                content: "\f1f8";
-              }
-              .fa-trash-can::before {
-                content: "\f2ed";
-              }
-              .fa-user-xmark::before {
-                content: "\f235";
-              }
-              @font-face {          font-family: "Font Awesome 6 Brands";
-          font-style: normal;
-          font-weight: 400;
-          font-display: swap;
-          src: url("assets/fonts/fa-brands-400.woff2") format("woff2");
-        }
-        .fab,
-        .fa-brands {
-          font-family: "Font Awesome 6 Brands";
-          font-weight: 400;
-        }
-        .fa-linkedin::before {
-          content: "\f08c";
-        }
-        .fa-linkedin-in::before {
-          content: "\f0e1";
-        }
-        .fa-github::before {
-          content: "\f09b";
-        }
-        .fa-instagram::before {
-          content: "\f16d";
-        }
-        .fa-aws::before {
-          content: "\f375";
-        }
-      </style>
-    </noscript>
+            <!-- Fallback for browsers without JavaScript (~0.2% users) -->
+
+            <noscript>
+
+              <link rel="stylesheet" href="assets/fonts/critical.min.css" />
+
+            </noscript>
 
     <link rel="stylesheet" href="style.min.css" />
 
@@ -1082,7 +768,7 @@
           </h3>
 
           <div class="portfolio-grid">
-            <div class="project-card reveal" onclick="openModal('kraft')" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu Kraft Daily Pub">
+            <div class="project-card reveal" data-action="open-modal" data-target="kraft" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu Kraft Daily Pub">
               <picture>
                 <source
                   type="image/avif"
@@ -1126,7 +812,7 @@
               </div>
             </div>
 
-            <div class="project-card reveal" onclick="openModal('neon')" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu Neon Estate">
+            <div class="project-card reveal" data-action="open-modal" data-target="neon" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu Neon Estate">
               <picture>
                 <source
                   type="image/avif"
@@ -1170,7 +856,7 @@
               </div>
             </div>
 
-            <div class="project-card reveal" onclick="openModal('techgear')" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu TechGear Store">
+            <div class="project-card reveal" data-action="open-modal" data-target="techgear" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu TechGear Store">
               <picture>
                 <source
                   type="image/avif"
@@ -1317,7 +1003,7 @@
                 <a
                   href="#contact"
                   class="btn full-width center-text"
-                  onclick="prefillForm('landing', 1500)"
+                  data-action="prefill" data-service="landing" data-budget="1500"
                   >Chcę Konwersji</a
                 >
               </div>
@@ -1354,7 +1040,7 @@
                 <a
                   href="#contact"
                   class="btn full-width center-text"
-                  onclick="prefillForm('business', 3500)"
+                  data-action="prefill" data-service="business" data-budget="3500"
                   >Buduj Markę</a
                 >
               </div>
@@ -1390,7 +1076,7 @@
                 <a
                   href="#contact"
                   class="btn full-width center-text"
-                  onclick="prefillForm('ecommerce', 6000)"
+                  data-action="prefill" data-service="ecommerce" data-budget="6000"
                   >Zacznij Sprzedawać</a
                 >
               </div>
@@ -1417,7 +1103,7 @@
                 <a
                   href="#contact"
                   class="btn full-width center-text"
-                  onclick="prefillForm('webapp', 8000)"
+                  data-action="prefill" data-service="webapp" data-budget="8000"
                   >Stwórz System</a
                 >
               </div>
@@ -1442,7 +1128,7 @@
                 <a
                   href="#contact"
                   class="micro-link"
-                  onclick="prefillForm('audit', 500)"
+                  data-action="prefill" data-service="audit" data-budget="500"
                   >Zamów <i class="fa-solid fa-arrow-right" aria-hidden="true"></i
                 ></a>
               </div>
@@ -1461,7 +1147,7 @@
                 <a
                   href="#contact"
                   class="micro-link"
-                  onclick="prefillForm('speed', 800)"
+                  data-action="prefill" data-service="speed" data-budget="800"
                   >Przyspiesz <i class="fa-solid fa-arrow-right" aria-hidden="true"></i
                 ></a>
               </div>
@@ -1480,7 +1166,7 @@
                 <a
                   href="#contact"
                   class="micro-link"
-                  onclick="prefillForm('integration', 400)"
+                  data-action="prefill" data-service="integration" data-budget="400"
                   >Wdróż <i class="fa-solid fa-arrow-right" aria-hidden="true"></i
                 ></a>
               </div>
@@ -1500,7 +1186,7 @@
                 <a
                   href="#contact"
                   class="micro-link"
-                  onclick="prefillForm('other', 0)"
+                  data-action="prefill" data-service="other" data-budget="0"
                   >Zaproponuj <i class="fa-solid fa-arrow-right" aria-hidden="true"></i
                 ></a>
               </div>
@@ -1560,7 +1246,7 @@
                   Masz misję do wykonania? Wyślij sygnał.<br />
                   Resztę przejmą zawodowcy.
                 </p>
-                <button class="btn" onclick="openContactPanel()">
+                <button class="btn" data-action="open-contact">
                   <i class="fa-solid fa-power-off" aria-hidden="true"></i> NADAJ WIADOMOŚĆ
                 </button>
               </div>
@@ -1837,7 +1523,7 @@
               <a
                 href="#contact"
                 class="btn full-width"
-                onclick="closeModal(); prefillForm('other', 0)"
+                data-action="prefill" data-service="other" data-budget="0" data-close-context="true"
                 >Chcę podobny projekt</a
               >
             </div>
@@ -2001,12 +1687,12 @@
 
           <div class="modal-body privacy-content">
             <!-- HEADER -->
-            <div style="margin-bottom: 20px;">
-              <h2 style="font-size: 2rem; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 5px; border-bottom: none; padding-bottom: 0;">
+            <div class="privacy-header">
+              <h2>
                 Polityka prywatności 
                 <span class="logo" style="font-size: 2rem; display: inline-block;">Domin<span>Dev</span>.</span>
               </h2>
-              <p style="font-size: 0.8rem; opacity: 0.7; margin: 0;">
+              <p>
                 <strong>Ostatnia aktualizacja:</strong> 26.01.2026
               </p>
             </div>
@@ -2014,48 +1700,73 @@
             <!-- FAQ SECTION TITLE -->
             <h2>I. FAQ – Najczęściej zadawane pytania dotyczące prywatności</h2>
 
-            <!-- FAQ TILES (Section IV) -->
-            <div class="faq-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 30px; gap: 12px;">
+            <!-- FAQ ACCORDION (Section IV) -->
+            <div class="privacy-faq-container">
               
-              <article class="faq-item" style="background: rgba(255,255,255,0.03); padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                <h3 class="faq-question" style="font-size: 0.85rem; margin-bottom: 5px; margin-top: 0 !important;">
-                  <i class="fa-solid fa-shield-halved accent" aria-hidden="true" style="margin-right: 6px;"></i>
-                  Czy moje dane są bezpieczne?
-                </h3>
-                <div class="faq-answer">
-                  <p style="font-size: 0.75rem; margin: 0; line-height: 1.4;">Tak. Dane są przesyłane w sposób szyfrowany (SSL/TLS) i przetwarzane wyłącznie w celu odpowiedzi na zapytanie.</p>
+              <details class="privacy-details">
+                <summary class="privacy-summary">
+                  <span class="privacy-question-text">
+                    <i class="fa-solid fa-shield-halved accent" aria-hidden="true"></i>
+                    Czy moje dane są bezpieczne?
+                  </span>
+                  <i class="fa-solid fa-chevron-down chevron" aria-hidden="true"></i>
+                </summary>
+                <div class="privacy-answer">
+                  <p>Tak. Dane są przesyłane w sposób szyfrowany (SSL/TLS) i przetwarzane wyłącznie w celu odpowiedzi na zapytanie.</p>
                 </div>
-              </article>
+              </details>
 
-              <article class="faq-item" style="background: rgba(255,255,255,0.03); padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                <h3 class="faq-question" style="font-size: 0.85rem; margin-bottom: 5px; margin-top: 0 !important;">
-                  <i class="fa-solid fa-ban accent" aria-hidden="true" style="margin-right: 6px;"></i>
-                  Czy dane są sprzedawane?
-                </h3>
-                <div class="faq-answer">
-                  <p style="font-size: 0.75rem; margin: 0; line-height: 1.4;">Nie. Twoje dane nie są sprzedawane ani udostępniane firmom trzecim w celach marketingowych.</p>
+              <details class="privacy-details">
+                <summary class="privacy-summary">
+                  <span class="privacy-question-text">
+                    <i class="fa-solid fa-ban accent" aria-hidden="true"></i>
+                    Czy moje dane są sprzedawane lub przekazywane innym firmom?
+                  </span>
+                  <i class="fa-solid fa-chevron-down chevron" aria-hidden="true"></i>
+                </summary>
+                <div class="privacy-answer">
+                  <p>Nie. Dane nie są sprzedawane ani wykorzystywane marketingowo.</p>
                 </div>
-              </article>
+              </details>
 
-              <article class="faq-item" style="background: rgba(255,255,255,0.03); padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                <h3 class="faq-question" style="font-size: 0.85rem; margin-bottom: 5px; margin-top: 0 !important;">
-                  <i class="fa-solid fa-robot accent" aria-hidden="true" style="margin-right: 6px;"></i>
-                  Czy otrzymam spam?
-                </h3>
-                <div class="faq-answer">
-                  <p style="font-size: 0.75rem; margin: 0; line-height: 1.4;">Nie. Dane kontaktowe służą wyłącznie do jednorazowego kontaktu w sprawie Twojego zapytania.</p>
+              <details class="privacy-details">
+                <summary class="privacy-summary">
+                  <span class="privacy-question-text">
+                    <i class="fa-solid fa-robot accent" aria-hidden="true"></i>
+                    Czy otrzymam spam po wysłaniu formularza?
+                  </span>
+                  <i class="fa-solid fa-chevron-down chevron" aria-hidden="true"></i>
+                </summary>
+                <div class="privacy-answer">
+                  <p>Nie. Dane służą wyłącznie do jednorazowego kontaktu.</p>
                 </div>
-              </article>
+              </details>
 
-              <article class="faq-item" style="background: rgba(255,255,255,0.03); padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                <h3 class="faq-question" style="font-size: 0.85rem; margin-bottom: 5px; margin-top: 0 !important;">
-                  <i class="fa-solid fa-user-xmark accent" aria-hidden="true" style="margin-right: 6px;"></i>
-                  Czy mogę usunąć dane?
-                </h3>
-                <div class="faq-answer">
-                  <p style="font-size: 0.75rem; margin: 0; line-height: 1.4;">Tak. Przysługuje Ci pełne "prawo do bycia zapomnianym". Wystarczy prosta wiadomość e-mail.</p>
+              <details class="privacy-details">
+                <summary class="privacy-summary">
+                  <span class="privacy-question-text">
+                    <i class="fa-solid fa-user-xmark accent" aria-hidden="true"></i>
+                    Czy mogę poprosić o usunięcie moich danych?
+                  </span>
+                  <i class="fa-solid fa-chevron-down chevron" aria-hidden="true"></i>
+                </summary>
+                <div class="privacy-answer">
+                  <p>Tak. Wystarczy kontakt e-mailowy.</p>
                 </div>
-              </article>
+              </details>
+
+              <details class="privacy-details">
+                <summary class="privacy-summary">
+                  <span class="privacy-question-text">
+                    <i class="fa-solid fa-eye-slash accent" aria-hidden="true"></i>
+                    Czy strona mnie śledzi?
+                  </span>
+                  <i class="fa-solid fa-chevron-down chevron" aria-hidden="true"></i>
+                </summary>
+                <div class="privacy-answer">
+                  <p>Nie. Strona nie korzysta z narzędzi analitycznych ani marketingowych.</p>
+                </div>
+              </details>
 
             </div>
 
@@ -2163,7 +1874,7 @@
             </ul>
 
             <br><br>
-            <button class="btn full-width" onclick="document.getElementById('privacy-close-btn').click()">Rozumiem i Akceptuję</button>
+            <button class="btn full-width" data-action="close-privacy">Rozumiem i Akceptuję</button>
           </div>
         </div>
       </div>
