@@ -167,8 +167,8 @@ export function initChat() {
       // SEC-01: User messages use textContent to prevent XSS
       messageContent.textContent = text;
     } else {
-      // Bot messages can contain safe HTML (links, formatting)
-      messageContent.innerHTML = text;
+      // SEC-02: Bot messages use Safe Renderer (No innerHTML vulnerability)
+      renderSafeHTML(messageContent, text);
     }
 
     div.appendChild(messageContent);
@@ -186,11 +186,86 @@ export function initChat() {
     }
   }
 
+  /**
+   * Bezpiecznie renderuje HTML z dozwolonych tagów.
+   * Zapobiega XSS (Cross-Site Scripting).
+   */
+  function renderSafeHTML(container, htmlString) {
+    container.textContent = ""; // Clear
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, "text/html");
+    
+    // Dozwolone tagi (lowercase convention)
+    const allowedTags = ["p", "ul", "ol", "li", "strong", "b", "a", "br"];
+
+    function sanitizeNode(node) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        return document.createTextNode(node.textContent);
+      }
+      
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const tagName = node.tagName.toLowerCase();
+        
+        if (allowedTags.includes(tagName)) {
+          const el = document.createElement(tagName);
+          
+          // Kopiuj tylko bezpieczne atrybuty
+          if (tagName === "a") {
+            const href = node.getAttribute("href");
+            // Allow http, mailto, anchor, and relative paths
+            if (href && (href.startsWith("http") || href.startsWith("mailto") || href.startsWith("#") || href.startsWith("/"))) {
+              el.setAttribute("href", href.trim()); // Trim whitespace
+            }
+            if (node.classList.contains("chatbot-link")) {
+              el.classList.add("chatbot-link");
+            }
+            
+            // UX Fix: Open ONLY external HTTP links in new tab
+            if (href && href.startsWith("http")) {
+                el.setAttribute("target", "_blank");
+                el.setAttribute("rel", "noopener noreferrer");
+            }
+          }
+          
+          // Rekurencyjnie przetwarzaj dzieci
+          node.childNodes.forEach(child => {
+            const processedChild = sanitizeNode(child);
+            if (processedChild) el.appendChild(processedChild);
+          });
+          
+          return el;
+        } else {
+          // Jeśli tag niedozwolony, zwróć jego zawartość tekstową (lub przetwórz dzieci bez wrappera)
+          const fragment = document.createDocumentFragment();
+          node.childNodes.forEach(child => {
+            const processedChild = sanitizeNode(child);
+            if (processedChild) fragment.appendChild(processedChild);
+          });
+          return fragment;
+        }
+      }
+      return null;
+    }
+
+    doc.body.childNodes.forEach(node => {
+      const sanitized = sanitizeNode(node);
+      if (sanitized) container.appendChild(sanitized);
+    });
+  }
+
   function showTyping() {
     const div = document.createElement("div");
     div.className = "chat-message bot";
     div.id = "typing-indicator";
-    div.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
+    
+    // Safe DOM creation
+    const indicator = document.createElement("div");
+    indicator.className = "typing-indicator";
+    indicator.appendChild(document.createElement("span"));
+    indicator.appendChild(document.createElement("span"));
+    indicator.appendChild(document.createElement("span"));
+    
+    div.appendChild(indicator);
     chatbotMessages.appendChild(div);
     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
   }

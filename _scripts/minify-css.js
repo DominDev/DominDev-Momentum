@@ -49,7 +49,8 @@ function processFile(inputFile, outputFile) {
 // Process files
 const files = [
   { input: 'style.css', output: 'style.min.css' },
-  { input: 'style-404.css', output: 'style-404.min.css' }
+  { input: 'style-404.css', output: 'style-404.min.css' },
+  { input: 'assets/fonts/critical.css', output: 'assets/fonts/critical.min.css' }
 ];
 
 console.log('🚀 CSS Minification Started\n');

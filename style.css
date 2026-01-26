@@ -3752,10 +3752,103 @@ body {
 /* --- PRIVACY POLICY MODAL --- */
 
 .privacy-content {
-  padding: 40px;
+  padding: 60px 40px 40px; /* Increased top padding */
   color: #e8e8e8;
   font-family: "Space Grotesk", sans-serif;
   line-height: 1.6;
+}
+
+.privacy-header {
+  margin-bottom: 20px;
+}
+
+.privacy-header h2 {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 5px;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.privacy-header p {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* Privacy FAQ Accordion - Collapsible Cards */
+.privacy-faq-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.privacy-details {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.privacy-details[open] {
+  border-color: rgba(255, 31, 31, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.privacy-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+  list-style: none; /* Hide default marker */
+}
+
+/* Hide default marker in Webkit/Chrome */
+.privacy-summary::-webkit-details-marker {
+  display: none;
+}
+
+.privacy-question-text {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.privacy-question-text i {
+  margin-right: 10px;
+  font-size: 1rem;
+}
+
+.chevron {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  transition: transform 0.3s ease;
+}
+
+.privacy-details[open] .chevron {
+  transform: rotate(180deg);
+  color: var(--primary);
+}
+
+.privacy-answer {
+  padding: 0 15px 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 5px;
+  padding-top: 15px;
+}
+
+.privacy-answer p {
+  font-size: 0.85rem;
+  margin: 0;
+  line-height: 1.6;
+  color: #ccc;
 }
 
 .privacy-content h2 {
@@ -3830,7 +3923,7 @@ body {
 /* Mobile Adjustments for Privacy Policy */
 @media (max-width: 768px) {
   .privacy-content {
-    padding: 25px;
+    padding: 50px 25px 25px; /* Increased top padding for mobile */
   }
   
   .privacy-content h2 {
@@ -3846,6 +3939,42 @@ body {
   .privacy-content p, 
   .privacy-content ul li {
     font-size: 0.9rem;
+  }
+}
+
+/* --- NETWORK INDICATOR (Adaptive Images) --- */
+#network-indicator {
+  position: fixed;
+  top: 100px; /* Moved to top to avoid floating buttons overlap */
+  right: 20px;
+  background: rgba(204, 0, 0, 0.9);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 12px;
+  z-index: 9999;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(120%);
+    opacity: 0;
   }
 }
 

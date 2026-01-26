@@ -67,9 +67,13 @@ export function initPortfolio() {
       modalSolution.innerText = data.solution;
       modalResult.innerText = data.result;
 
-      modalTags.innerHTML = data.tags
-        .map((tag) => `<span class="tech-badge">${tag}</span>`)
-        .join("");
+      modalTags.innerText = ""; // Clear existing
+      data.tags.forEach(tag => {
+        const span = document.createElement("span");
+        span.className = "tech-badge";
+        span.textContent = tag;
+        modalTags.appendChild(span);
+      });
 
       modalImg.classList.add("scrolling");
 
@@ -127,12 +131,10 @@ export function initPortfolio() {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         
-        const onclickAttr = card.getAttribute("onclick");
-        if (onclickAttr) {
-          const match = onclickAttr.match(/'([^']+)'/);
-          if (match && match[1]) {
-            window.openModal(match[1]);
-          }
+        // Support new data-attributes
+        const target = card.dataset.target;
+        if (target) {
+          window.openModal(target);
         }
       }
     });

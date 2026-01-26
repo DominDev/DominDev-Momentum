@@ -198,22 +198,15 @@ function showNetworkIndicator(strategy) {
   // Stwórz nowy wskaźnik
   const indicator = document.createElement("div");
   indicator.id = "network-indicator";
-  indicator.style.cssText = `
-    position: fixed;
-    bottom: 60px;
-    right: 20px;
-    background: rgba(204, 0, 0, 0.9);
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 12px;
-    z-index: 9999;
-    animation: slideIn 0.3s ease-out;
-  `;
-  indicator.innerHTML = `
-    <strong>🐌 ${strategy.type.toUpperCase()}</strong><br>
-    Obrazy w trybie oszczędnym
-  `;
+  // Styles moved to style.css for CSP compliance
+  
+    // Safe DOM creation instead of innerHTML
+    const strong = document.createElement('strong');
+    strong.textContent = strategy.type.toUpperCase();
+    
+    indicator.appendChild(strong);
+    indicator.appendChild(document.createElement('br'));
+    indicator.appendChild(document.createTextNode('Obrazy w trybie oszczędnym'));
 
   document.body.appendChild(indicator);
 
@@ -223,30 +216,4 @@ function showNetworkIndicator(strategy) {
     setTimeout(() => indicator.remove(), 300);
   }, 5000);
 }
-
-// Dodaj animacje CSS
-const style = document.createElement("style");
-style.textContent = `
-  @keyframes slideIn {
-    from {
-      transform: translateX(120%);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes slideOut {
-    from {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateX(120%);
-      opacity: 0;
-    }
-  }
-`;
-document.head.appendChild(style);
+// Dynamic style injection removed for Strict CSP

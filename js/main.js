@@ -233,6 +233,53 @@ document.addEventListener("DOMContentLoaded", () => {
     initHud();
   }
 
+  // === GLOBAL EVENT DELEGATION (Replace inline onclick) ===
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-action]');
+    if (!trigger) return;
+
+    const action = trigger.dataset.action;
+
+    // Prevent default for links acting as buttons (avoid hash jump)
+    // Only block if href is empty, '#', or starts with '#' (anchor link handled by JS)
+    if (trigger.tagName === 'A') {
+      const href = trigger.getAttribute('href');
+      if (!href || href === '#' || href.startsWith('#')) {
+        e.preventDefault();
+      }
+    }
+
+    switch (action) {
+      case 'open-modal':
+        if (window.openModal && trigger.dataset.target) {
+          window.openModal(trigger.dataset.target);
+        }
+        break;
+
+      case 'prefill':
+        // Fix: Close project modal if requested (e.g., from "Similar Project" button)
+        if (trigger.dataset.closeContext === "true" && window.closeModal) {
+          window.closeModal();
+        }
+
+        if (window.prefillForm) {
+          const service = trigger.dataset.service;
+          const budget = trigger.dataset.budget ? parseInt(trigger.dataset.budget, 10) : 0;
+          window.prefillForm(service, budget);
+        }
+        break;
+
+      case 'open-contact':
+        if (window.openContactPanel) window.openContactPanel();
+        break;
+
+      case 'close-privacy':
+        const privacyCloseBtn = document.getElementById('privacy-close-btn');
+        if (privacyCloseBtn) privacyCloseBtn.click();
+        break;
+    }
+  });
+
   // === ULTRA LAZY CHATBOT (Load on Demand Only) ===
   const chatTrigger = document.getElementById("chatbot-trigger");
   if (chatTrigger) {
