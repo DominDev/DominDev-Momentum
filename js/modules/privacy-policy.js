@@ -1,0 +1,50 @@
+/**
+ * @module PrivacyPolicy
+ * @description Handles the Privacy Policy modal interactions.
+ */
+
+export function initPrivacyPolicy() {
+  const modal = document.getElementById('privacy-modal');
+  const closeBtn = document.getElementById('privacy-close-btn');
+  const triggers = document.querySelectorAll('.privacy-trigger');
+
+  if (!modal || !closeBtn) {
+    console.warn('Privacy Policy Modal or Close Button not found.');
+    return;
+  }
+
+  function openModal(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  triggers.forEach(trigger => {
+    trigger.addEventListener('click', openModal);
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+}

@@ -483,6 +483,15 @@
       .fa-handshake::before {
         content: "\f2b5";
       }
+      .fa-trash::before {
+        content: "\f1f8";
+      }
+      .fa-trash-can::before {
+        content: "\f2ed";
+      }
+      .fa-user-xmark::before {
+        content: "\f235";
+      }
       @font-face {
         font-family: "Font Awesome 6 Brands";
         font-style: normal;
@@ -635,11 +644,19 @@
         .fa-gauge-high::before {
           content: "\f625";
         }
-        .fa-handshake::before {
-          content: "\f2b5";
-        }
-        @font-face {
-          font-family: "Font Awesome 6 Brands";
+              .fa-handshake::before {
+                content: "\f2b5";
+              }
+              .fa-trash::before {
+                content: "\f1f8";
+              }
+              .fa-trash-can::before {
+                content: "\f2ed";
+              }
+              .fa-user-xmark::before {
+                content: "\f235";
+              }
+              @font-face {          font-family: "Font Awesome 6 Brands";
           font-style: normal;
           font-weight: 400;
           font-display: swap;
@@ -1710,6 +1727,8 @@
                 <li><a href="#faq">FAQ</a></li>
 
                 <li><a href="#contact">Kontakt</a></li>
+
+                <li><a href="#" class="privacy-trigger">Polityka Prywatności</a></li>
               </ul>
             </div>
 
@@ -1934,7 +1953,7 @@
               <div class="form-group checkbox-group">
                 <input type="checkbox" id="panel-rodo" name="rodo" required />
                 <label for="panel-rodo"
-                  >Zgoda na przetwarzanie danych (RODO Protocol).</label
+                  >Zgoda na przetwarzanie danych (<a href="#" class="privacy-trigger" style="color: var(--primary); text-decoration: underline;">Polityka Prywatności</a>).</label
                 >
               </div>
 
@@ -1964,6 +1983,187 @@
               </button>
               <div id="formMessage" class="form-message" role="alert" aria-live="polite"></div>
             </form>
+          </div>
+        </div>
+      </div>
+      <!-- PRIVACY POLICY MODAL -->
+      <div class="modal-overlay" id="privacy-modal" aria-hidden="true">
+        <div class="modal-content">
+          <button
+            class="close-btn modal-close"
+            id="privacy-close-btn"
+            aria-label="Zamknij"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <div class="modal-body privacy-content">
+            <!-- HEADER -->
+            <div style="margin-bottom: 20px;">
+              <h2 style="font-size: 2rem; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 5px; border-bottom: none; padding-bottom: 0;">
+                Polityka prywatności 
+                <span class="logo" style="font-size: 2rem; display: inline-block;">Domin<span>Dev</span>.</span>
+              </h2>
+              <p style="font-size: 0.8rem; opacity: 0.7; margin: 0;">
+                <strong>Ostatnia aktualizacja:</strong> 26.01.2026
+              </p>
+            </div>
+
+            <!-- FAQ SECTION TITLE -->
+            <h2>I. FAQ – Najczęściej zadawane pytania dotyczące prywatności</h2>
+
+            <!-- FAQ TILES (Section IV) -->
+            <div class="faq-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 30px; gap: 12px;">
+              
+              <article class="faq-item" style="background: rgba(255,255,255,0.03); padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                <h3 class="faq-question" style="font-size: 0.85rem; margin-bottom: 5px; margin-top: 0 !important;">
+                  <i class="fa-solid fa-shield-halved accent" aria-hidden="true" style="margin-right: 6px;"></i>
+                  Czy moje dane są bezpieczne?
+                </h3>
+                <div class="faq-answer">
+                  <p style="font-size: 0.75rem; margin: 0; line-height: 1.4;">Tak. Dane są przesyłane w sposób szyfrowany (SSL/TLS) i przetwarzane wyłącznie w celu odpowiedzi na zapytanie.</p>
+                </div>
+              </article>
+
+              <article class="faq-item" style="background: rgba(255,255,255,0.03); padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                <h3 class="faq-question" style="font-size: 0.85rem; margin-bottom: 5px; margin-top: 0 !important;">
+                  <i class="fa-solid fa-ban accent" aria-hidden="true" style="margin-right: 6px;"></i>
+                  Czy dane są sprzedawane?
+                </h3>
+                <div class="faq-answer">
+                  <p style="font-size: 0.75rem; margin: 0; line-height: 1.4;">Nie. Twoje dane nie są sprzedawane ani udostępniane firmom trzecim w celach marketingowych.</p>
+                </div>
+              </article>
+
+              <article class="faq-item" style="background: rgba(255,255,255,0.03); padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                <h3 class="faq-question" style="font-size: 0.85rem; margin-bottom: 5px; margin-top: 0 !important;">
+                  <i class="fa-solid fa-robot accent" aria-hidden="true" style="margin-right: 6px;"></i>
+                  Czy otrzymam spam?
+                </h3>
+                <div class="faq-answer">
+                  <p style="font-size: 0.75rem; margin: 0; line-height: 1.4;">Nie. Dane kontaktowe służą wyłącznie do jednorazowego kontaktu w sprawie Twojego zapytania.</p>
+                </div>
+              </article>
+
+              <article class="faq-item" style="background: rgba(255,255,255,0.03); padding: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                <h3 class="faq-question" style="font-size: 0.85rem; margin-bottom: 5px; margin-top: 0 !important;">
+                  <i class="fa-solid fa-user-xmark accent" aria-hidden="true" style="margin-right: 6px;"></i>
+                  Czy mogę usunąć dane?
+                </h3>
+                <div class="faq-answer">
+                  <p style="font-size: 0.75rem; margin: 0; line-height: 1.4;">Tak. Przysługuje Ci pełne "prawo do bycia zapomnianym". Wystarczy prosta wiadomość e-mail.</p>
+                </div>
+              </article>
+
+            </div>
+
+            <!-- SEPARATOR -->
+            <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin: 0 0 30px 0;"></div>
+
+            <!-- MAIN CONTENT (Section II) -->
+            <h2>II. Polityka Prywatności (treść właściwa)</h2>
+
+            <h3>1. Administrator danych osobowych</h3>
+            <p>Administratorem danych osobowych jest:</p>
+            <p>
+              <strong>Paweł Dominiak</strong><br>
+              działający pod nazwą <strong>DominDev</strong><br>
+              adres e-mail: <strong>contact@domindev.com</strong><br>
+              numer telefonu (opcjonalnie): <strong>+48 536 553 820</strong>
+            </p>
+            <p>Administrator jest osobą fizyczną, nieprowadzącą zarejestrowanej działalności gospodarczej.</p>
+
+            <h3>2. Zakres przetwarzanych danych</h3>
+            <p>W ramach korzystania ze strony mogą być przetwarzane następujące dane:</p>
+            <p><strong>a) Dane podawane dobrowolnie przez użytkownika w formularzu kontaktowym:</strong></p>
+            <ul>
+              <li>imię lub nazwa,</li>
+              <li>adres e-mail,</li>
+              <li>treść wiadomości (w tym informacje dotyczące zakresu zlecenia i budżetu),</li>
+              <li>wybór z listy rozwijalnej,</li>
+              <li>wartość suwaka,</li>
+              <li>potwierdzenie zgody (checkbox RODO).</li>
+            </ul>
+            <p><strong>b) Dane techniczne przetwarzane automatycznie:</strong></p>
+            <ul>
+              <li>adres IP użytkownika,</li>
+              <li>podstawowe dane techniczne przeglądarki i systemu operacyjnego,</li>
+              <li>informacje związane z bezpieczeństwem połączenia (np. w ramach mechanizmów rate-limit).</li>
+            </ul>
+
+            <h3>3. Cele i podstawy prawne przetwarzania danych</h3>
+            <p>Dane osobowe przetwarzane są w następujących celach:</p>
+            <ol style="padding-left: 20px; color: #ccc; margin-bottom: 20px;">
+              <li style="margin-bottom: 10px;">
+                <strong>Obsługa zapytań przesyłanych przez formularz kontaktowy</strong><br>
+                Podstawa prawna:<br>
+                - art. 6 ust. 1 lit. a RODO (zgoda użytkownika),<br>
+                - art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes administratora – udzielenie odpowiedzi).
+              </li>
+              <li style="margin-bottom: 10px;">
+                <strong>Zapewnienie bezpieczeństwa strony i zapobieganie nadużyciom (np. spam, ataki)</strong><br>
+                Podstawa prawna:<br>
+                - art. 6 ust. 1 lit. f RODO.
+              </li>
+              <li style="margin-bottom: 10px;">
+                <strong>Archiwizacja korespondencji e-mailowej</strong><br>
+                Podstawa prawna:<br>
+                - art. 6 ust. 1 lit. f RODO.
+              </li>
+            </ol>
+
+            <h3>4. Odbiorcy danych i podmioty przetwarzające</h3>
+            <p>Dane mogą być przekazywane wyłącznie podmiotom współpracującym z Administratorem w zakresie niezbędnym do realizacji usług:</p>
+            <ul>
+              <li><strong>Cloudflare, Inc.</strong> – hosting strony, zabezpieczenia, mechanizmy rate-limit oraz awaryjne przechowywanie danych (Cloudflare KV),</li>
+              <li><strong>Resend, Inc.</strong> – usługa wysyłki wiadomości e-mail (formularz kontaktowy).</li>
+            </ul>
+            <p>Podmioty te przetwarzają dane na podstawie umów powierzenia oraz stosują standardowe mechanizmy ochrony danych.</p>
+
+            <h3>5. Przekazywanie danych poza UE</h3>
+            <p>Dane osobowe mogą być przetwarzane poza Europejskim Obszarem Gospodarczym (np. przez Cloudflare lub Resend). W takich przypadkach stosowane są odpowiednie zabezpieczenia prawne, w tym standardowe klauzule umowne lub inne mechanizmy zgodne z RODO.</p>
+
+            <h3>6. Okres przechowywania danych</h3>
+            <ul>
+              <li>Dane przesłane w formularzu kontaktowym są przechowywane w formie korespondencji e-mailowej <strong>bez formalnie określonego terminu usunięcia</strong>, w celach archiwalnych oraz dowodowych.</li>
+              <li>Dane zapisywane awaryjnie w Cloudflare KV są przechowywane <strong>krótkoterminowo</strong> i wyłącznie w przypadku błędu wysyłki wiadomości e-mail.</li>
+            </ul>
+
+            <h3>7. Prawa użytkownika</h3>
+            <p>Użytkownikowi przysługują następujące prawa:</p>
+            <ul>
+              <li>prawo dostępu do danych,</li>
+              <li>prawo ich sprostowania,</li>
+              <li>prawo do usunięcia danych („prawo do bycia zapomnianym”),</li>
+              <li>prawo do ograniczenia przetwarzania,</li>
+              <li>prawo do przenoszenia danych,</li>
+              <li><strong>prawo wniesienia sprzeciwu wobec przetwarzania danych na podstawie art. 6 ust. 1 lit. f RODO</strong>,</li>
+              <li>prawo cofnięcia zgody w dowolnym momencie,</li>
+              <li>prawo wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych.</li>
+            </ul>
+
+            <h3>8. Pliki cookies</h3>
+            <p>Strona internetowa DominDev wykorzystuje <strong>wyłącznie pliki cookies o charakterze technicznym</strong>, niezbędne do jej prawidłowego działania oraz zapewnienia bezpieczeństwa.</p>
+            <p>Strona <strong>nie wykorzystuje</strong> plików cookies:</p>
+            <ul>
+              <li>analitycznych,</li>
+              <li>marketingowych,</li>
+              <li>służących do profilowania użytkowników.</li>
+            </ul>
+            <p>W związku z tym nie jest wymagane wyświetlanie banera zgody na cookies.</p>
+
+            <h3>9. Bezpieczeństwo danych</h3>
+            <p>Administrator stosuje odpowiednie środki techniczne i organizacyjne w celu ochrony danych osobowych, w tym:</p>
+            <ul>
+              <li>szyfrowanie połączenia (SSL/TLS),</li>
+              <li>zabezpieczenia infrastruktury (Cloudflare),</li>
+              <li>ograniczenie dostępu do danych wyłącznie do Administratora.</li>
+            </ul>
+
+            <br><br>
+            <button class="btn full-width" onclick="document.getElementById('privacy-close-btn').click()">Rozumiem i Akceptuję</button>
           </div>
         </div>
       </div>
