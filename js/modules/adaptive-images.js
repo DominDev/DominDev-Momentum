@@ -18,9 +18,8 @@ export function initAdaptiveImages() {
   // Wykryj typ połączenia i dostosuj strategie
   const networkStrategy = getNetworkStrategy(connection, saveData);
 
-  console.log(`🌐 Network Strategy: ${networkStrategy.type}`);
-  console.log(`📊 Effective Type: ${connection?.effectiveType || "unknown"}`);
-  console.log(`💾 Save-Data: ${saveData ? "ON" : "OFF"}`);
+  // Debug logs disabled for production
+  // console.log(`🌐 Network Strategy: ${networkStrategy.type}`);
 
   // Zastosuj strategię do wszystkich obrazów
   // WAŻNE: Dla 4G/WiFi funkcja NIE MODYFIKUJE srcset (pozwala przeglądarce samej wybrać)
@@ -38,7 +37,7 @@ export function initAdaptiveImages() {
           connection,
           connection?.saveData
         );
-        console.log(`🔄 Network changed: ${newStrategy.type}`);
+        // Debug: console.log(`🔄 Network changed: ${newStrategy.type}`);
         applyImageStrategy(newStrategy);
       }, 300); // Debounce 300ms
     });
@@ -118,8 +117,8 @@ function applyImageStrategy(strategy) {
   const shouldOptimize = strategy.type !== "4g" && strategy.type !== "wifi";
 
   if (!shouldOptimize) {
-    console.log("⚡ Fast connection detected - using native browser selection");
-    return; // NIE modyfikuj obrazów dla szybkich połączeń
+    // Fast connection - let browser handle image selection natively
+    return;
   }
 
   // Znajdź wszystkie <picture> elementy

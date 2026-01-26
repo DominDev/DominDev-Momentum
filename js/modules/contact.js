@@ -318,6 +318,8 @@ export function initContact() {
 
         if (CONFIG.mail.provider === "formspree") {
           response = await sendViaFormspree(data);
+        } else if (CONFIG.mail.provider === "cloudflare") {
+          response = await sendViaCloudflare(data);
         } else if (CONFIG.mail.provider === "custom") {
           throw new Error("Custom provider not implemented yet");
         } else {
@@ -355,8 +357,8 @@ export function initContact() {
         btn.style.color = "#ff1f1f";
 
         if (msgDiv) {
-          msgDiv.innerText =
-            "Błąd połączenia. Spróbuj ponownie lub napisz bezpośrednio.";
+          msgDiv.innerHTML =
+            'Błąd połączenia. Spróbuj ponownie lub <a href="mailto:contact@domindev.com" style="color: #ff1f1f; text-decoration: underline;">napisz bezpośrednio</a>.';
           msgDiv.style.color = "#ff1f1f";
         }
 
@@ -380,5 +382,34 @@ async function sendViaFormspree(data) {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+  });
+}
+
+async function sendViaCloudflare(data) {
+  // Get Turnstile token from the hidden input (auto-populated by Cloudflare widget)
+  const form = document.getElementById("contactForm");
+  const turnstileInput = form.querySelector('[name="cf-turnstile-response"]');
+  const turnstileToken = turnstileInput ? turnstileInput.value : "";
+
+  // Build payload - FormData uses 'name' attribute from inputs
+  // Form has: name="name", name="email", name="message", name="budget", name="service", name="rodo"
+  const payload = {
+    name: data.name || "",
+    email: data.email || "",
+    message: data.message || "",
+    budget: data.budget || "",
+    service: data.service || "",
+    rodoAccepted: data.rodo === "on", // checkbox value is "on" when checked
+    honey: document.getElementById("honey-field")?.value || "",
+    turnstileToken: turnstileToken,
+  };
+
+  return await fetch("/api/contact", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
   });
 }
