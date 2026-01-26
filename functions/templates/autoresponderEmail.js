@@ -109,8 +109,8 @@ export function generateAutoresponderHTML({ name }) {
                     </table>
                   </td>
                   <td align="right" valign="bottom" style="padding-bottom: 5px;">
-                     <div class="font-display" style="font-family: Arial, sans-serif; font-weight: 900; font-size: 16px; color: #1a1a1a; letter-spacing: -0.5px;">
-                        Domin<span style="color: #222222;">Dev</span>.
+                     <div class="font-display" style="font-family: Arial, sans-serif; font-weight: 900; font-size: 16px; color: #ffffff; letter-spacing: -0.5px; opacity: 0.5;">
+                        Domin<span style="color: #ff1f1f;">Dev</span>.
                       </div>
                   </td>
                 </tr>
