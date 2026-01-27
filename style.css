@@ -958,7 +958,7 @@ body.menu-open .progress-wrap {
   width: 100%;
   height: 100%;
   object-fit: cover;
-
+  object-position: top;
   transition: var(--transition);
 }
 
@@ -4028,8 +4028,7 @@ body {
 .modal-image-container img {
   width: 100%;
   height: auto;
-  object-fit: contain;
-  object-position: top;
+  max-height: none !important;
   opacity: 0.9;
   display: block;
   position: absolute;
@@ -4038,39 +4037,20 @@ body {
 }
 
 /* Animacja scrollowania długiego screenshota */
+/* Force animation even with prefers-reduced-motion (decorative, non-distracting) */
 .modal-image-container img.scrolling {
-  animation: scroll-screenshot 40s linear infinite alternate;
-}
-
-/* Scanlines overlay na obrazku */
-.modal-image-container::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background:
-    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-    linear-gradient(
-      90deg,
-      rgba(255, 0, 0, 0.06),
-      rgba(0, 255, 0, 0.02),
-      rgba(0, 0, 255, 0.06)
-    );
-  background-size:
-    100% 2px,
-    3px 100%;
-  pointer-events: none;
-  z-index: 2;
+  animation: scroll-screenshot 30s ease-in-out infinite alternate !important;
+  animation-duration: 30s !important;
+  animation-play-state: running !important;
+  will-change: transform;
 }
 
 @keyframes scroll-screenshot {
   0% {
     transform: translateY(0);
   }
-  5% {
-    transform: translateY(0);
+  15% {
+    transform: translateY(0); /* Longer pause at top */
   }
   100% {
     transform: translateY(calc(-100% + 400px));
@@ -4179,7 +4159,9 @@ body {
   }
   /* Animacja dla mobile - od góry do dołu (z poprawną wysokością) */
   .modal-image-container img.scrolling {
-    animation: scroll-screenshot-mobile 40s ease-in-out infinite alternate;
+    animation: scroll-screenshot-mobile 40s ease-in-out infinite alternate !important;
+    animation-duration: 40s !important;
+    animation-play-state: running !important;
   }
   .modal-info {
     padding: 20px;
@@ -4234,7 +4216,9 @@ body {
     height: 250px;
   }
   .modal-image-container img.scrolling {
-    animation: scroll-screenshot-small 40s ease-in-out infinite alternate;
+    animation: scroll-screenshot-small 40s ease-in-out infinite alternate !important;
+    animation-duration: 40s !important;
+    animation-play-state: running !important;
   }
   .modal-info {
     padding: 15px;
