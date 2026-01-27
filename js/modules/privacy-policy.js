@@ -47,4 +47,17 @@ export function initPrivacyPolicy() {
       closeModal();
     }
   });
+
+  // Accordion Logic for Privacy FAQ
+  const details = document.querySelectorAll('.privacy-details');
+  details.forEach((targetDetail) => {
+    targetDetail.addEventListener('click', () => {
+      // Close all others
+      details.forEach((detail) => {
+        if (detail !== targetDetail) {
+          detail.removeAttribute('open');
+        }
+      });
+    });
+  });
 }
