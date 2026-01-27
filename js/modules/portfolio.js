@@ -113,18 +113,71 @@ export function initPortfolio() {
   let autoScrollEndPauseTimer = null;
   let autoScrollDirection = 1;
   let lastAutoScrollAt = 0;
-  const AUTO_SCROLL_IDLE_DELAY = 1200;
-  const AUTO_SCROLL_END_PAUSE = 1200;
-  const AUTO_SCROLL_SPEED = 20; // px per second
+  let autoScrollStarted = false;
+  let isAutoScrolling = false;
+  let lastFrameTime = null;
+  let autoScrollPending = false;
+  let userInteracting = false;
+  let userInteractionTimer = null;
+  let prevScrollBehavior = "";
+  let scrollBehaviorForced = false;
+  const DEBUG_MODAL_SCROLL = true;
+  const AUTO_SCROLL_IDLE_DELAY = 500;
+  const AUTO_SCROLL_END_PAUSE = 200;
+  const AUTO_SCROLL_SPEED_DOWN = 40; // px per second
+  const AUTO_SCROLL_SPEED_UP = 80; // px per second
+  const AUTO_SCROLL_MIN_DURATION = 5000;
+  const AUTO_SCROLL_MAX_DURATION = 60000;
+  const MAX_FRAME_DELTA = 100;
+  const AUTO_SCROLL_START_MAX_ATTEMPTS = 30;
+
+  const debugLog = (event, payload = {}) => {
+    if (!DEBUG_MODAL_SCROLL) return;
+    console.log("[ModalScroll]", performance.now().toFixed(2), event, payload);
+  };
 
   // Detect best image format on init
   detectImageFormat();
 
+  const forceAutoScrollBehavior = () => {
+    if (!modalImageContainer || scrollBehaviorForced) return;
+    prevScrollBehavior = modalImageContainer.style.scrollBehavior || "";
+    modalImageContainer.style.scrollBehavior = "auto";
+    scrollBehaviorForced = true;
+    debugLog("scrollBehavior:force-auto", {
+      prev: prevScrollBehavior || "(empty)",
+      computed: getComputedStyle(modalImageContainer).scrollBehavior,
+    });
+  };
+
+  const restoreScrollBehavior = () => {
+    if (!modalImageContainer || !scrollBehaviorForced) return;
+    modalImageContainer.style.scrollBehavior = prevScrollBehavior;
+    scrollBehaviorForced = false;
+    debugLog("scrollBehavior:restore", {
+      restored: prevScrollBehavior || "(empty)",
+      computed: getComputedStyle(modalImageContainer).scrollBehavior,
+    });
+  };
+
   const stopAutoScroll = () => {
+    debugLog("stopAutoScroll", {
+      autoScrollStarted,
+      isAutoScrolling,
+      hasRaf: Boolean(autoScrollRaf),
+      hasResumeTimer: Boolean(autoScrollResumeTimer),
+      hasEndPauseTimer: Boolean(autoScrollEndPauseTimer),
+      userInteracting,
+    });
+    autoScrollStarted = false;
+    isAutoScrolling = false;
+    lastFrameTime = null;
     if (autoScrollRaf) {
       cancelAnimationFrame(autoScrollRaf);
       autoScrollRaf = null;
     }
+    clearAutoScrollTimers();
+    restoreScrollBehavior();
   };
 
   const clearAutoScrollTimers = () => {
@@ -138,21 +191,106 @@ export function initPortfolio() {
     }
   };
 
+  const clearUserInteractionTimer = () => {
+    if (userInteractionTimer) {
+      clearTimeout(userInteractionTimer);
+      userInteractionTimer = null;
+    }
+  };
+
+  const handleUserInteraction = (source, extra = {}) => {
+    userInteracting = true;
+    debugLog("userInteraction:start", { source, ...extra });
+    stopAutoScroll();
+    clearAutoScrollTimers();
+    clearUserInteractionTimer();
+    userInteractionTimer = setTimeout(() => {
+      userInteracting = false;
+      debugLog("userInteraction:idle");
+      scheduleAutoScrollResume();
+    }, AUTO_SCROLL_IDLE_DELAY);
+  };
+
   const getMaxScroll = () => {
     if (!modalImageContainer) return 0;
     return Math.max(0, modalImageContainer.scrollHeight - modalImageContainer.clientHeight);
   };
 
-  const easeInOut = (t) =>
-    t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  const ensureImageDecoded = () => {
+    if (!modalImg || typeof modalImg.decode !== "function") return Promise.resolve();
+    return modalImg.decode().catch(() => {});
+  };
+
+  const linear = (t) => t;
+
+  const requestAutoScrollStart = (attempt = 0) => {
+    if (!modalImageContainer) return;
+    if (userInteracting) {
+      debugLog("requestAutoScrollStart:blocked-user", { attempt });
+      return;
+    }
+    if (!modal.classList.contains("active")) {
+      autoScrollPending = true;
+      debugLog("requestAutoScrollStart:pending", { attempt });
+      return;
+    }
+    autoScrollPending = false;
+    const maxScroll = getMaxScroll();
+    if (maxScroll <= 1) {
+      debugLog("requestAutoScrollStart:retry", {
+        attempt,
+        maxScroll,
+        scrollHeight: modalImageContainer.scrollHeight,
+        clientHeight: modalImageContainer.clientHeight,
+      });
+      if (attempt < AUTO_SCROLL_START_MAX_ATTEMPTS) {
+        setTimeout(() => requestAutoScrollStart(attempt + 1), 100);
+      } else {
+        debugLog("requestAutoScrollStart:giveup", {
+          maxScroll,
+          scrollHeight: modalImageContainer.scrollHeight,
+          clientHeight: modalImageContainer.clientHeight,
+        });
+      }
+      return;
+    }
+    debugLog("requestAutoScrollStart:start", {
+      attempt,
+      maxScroll,
+      scrollHeight: modalImageContainer.scrollHeight,
+      clientHeight: modalImageContainer.clientHeight,
+    });
+    startAutoScroll();
+  };
 
   const startAutoScroll = () => {
+    if (userInteracting) {
+      debugLog("startAutoScroll:blocked-user");
+      return;
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      debugLog("startAutoScroll:reduced-motion");
+      return;
+    }
+    if (autoScrollStarted) {
+      debugLog("startAutoScroll:already-running");
+      return;
+    }
     if (!modalImageContainer || !modal.classList.contains("active")) return;
     const maxScroll = getMaxScroll();
-    if (maxScroll <= 1) return;
+    if (maxScroll <= 1) {
+      debugLog("startAutoScroll:abort-maxScroll", {
+        maxScroll,
+        scrollHeight: modalImageContainer.scrollHeight,
+        clientHeight: modalImageContainer.clientHeight,
+      });
+      return;
+    }
 
+    autoScrollStarted = true;
     stopAutoScroll();
-    clearAutoScrollTimers();
+    autoScrollStarted = true;
+    forceAutoScrollBehavior();
 
     const startTop = modalImageContainer.scrollTop;
     if (startTop <= 1) {
@@ -162,16 +300,64 @@ export function initPortfolio() {
     }
     const targetTop = autoScrollDirection === 1 ? maxScroll : 0;
     const distance = Math.abs(targetTop - startTop);
-    const duration = Math.max(8000, (distance / AUTO_SCROLL_SPEED) * 1000);
-    const startTime = performance.now();
+    const speed =
+      autoScrollDirection === 1 ? AUTO_SCROLL_SPEED_DOWN : AUTO_SCROLL_SPEED_UP;
+    const calculatedDuration = (distance / speed) * 1000;
+    const duration = Math.min(
+      AUTO_SCROLL_MAX_DURATION,
+      Math.max(AUTO_SCROLL_MIN_DURATION, calculatedDuration)
+    );
+    let startTime = performance.now();
+    lastFrameTime = null;
 
+    debugLog("startAutoScroll:params", {
+      startTop,
+      targetTop,
+      distance,
+      duration,
+      maxScroll,
+      scrollHeight: modalImageContainer.scrollHeight,
+      clientHeight: modalImageContainer.clientHeight,
+    });
+
+    let frameCount = 0;
     const step = (now) => {
+      if (lastFrameTime !== null) {
+        const frameDelta = now - lastFrameTime;
+        if (frameDelta > MAX_FRAME_DELTA) {
+          const excess = frameDelta - 1000 / 60;
+          startTime += excess;
+          debugLog("step:time-jump", { frameDelta, excess: Number(excess.toFixed(2)) });
+        }
+      }
+      lastFrameTime = now;
+
       const elapsed = now - startTime;
       const t = Math.min(1, elapsed / duration);
-      const eased = easeInOut(t);
+      const eased = linear(t);
       const nextTop = startTop + (targetTop - startTop) * eased;
-      modalImageContainer.scrollTop = nextTop;
+      isAutoScrolling = true;
+      if (typeof modalImageContainer.scrollTo === "function") {
+        modalImageContainer.scrollTo({ top: nextTop, behavior: "auto" });
+      } else {
+        modalImageContainer.scrollTop = nextTop;
+      }
       lastAutoScrollAt = now;
+      requestAnimationFrame(() => {
+        isAutoScrolling = false;
+      });
+
+      frameCount += 1;
+      if (frameCount % 30 === 0 || t >= 1) {
+        debugLog("step:progress", {
+          t: Number(t.toFixed(4)),
+          nextTop: Number(nextTop.toFixed(2)),
+          actualTop: Number(modalImageContainer.scrollTop.toFixed(2)),
+          maxScroll: getMaxScroll(),
+          scrollHeight: modalImageContainer.scrollHeight,
+          clientHeight: modalImageContainer.clientHeight,
+        });
+      }
 
       if (t < 1) {
         autoScrollRaf = requestAnimationFrame(step);
@@ -180,7 +366,10 @@ export function initPortfolio() {
 
       autoScrollRaf = null;
       autoScrollDirection *= -1;
+      autoScrollStarted = false;
+      debugLog("step:complete", { nextDirection: autoScrollDirection });
       autoScrollEndPauseTimer = setTimeout(() => {
+        debugLog("endPauseTimer:fire");
         startAutoScroll();
       }, AUTO_SCROLL_END_PAUSE);
     };
@@ -190,8 +379,10 @@ export function initPortfolio() {
 
   const scheduleAutoScrollResume = () => {
     if (!modalImageContainer || !modal.classList.contains("active")) return;
+    debugLog("scheduleAutoScrollResume");
     clearAutoScrollTimers();
     autoScrollResumeTimer = setTimeout(() => {
+      debugLog("resumeTimer:fire");
       startAutoScroll();
     }, AUTO_SCROLL_IDLE_DELAY);
   };
@@ -205,8 +396,17 @@ export function initPortfolio() {
     document.body.style.overflow = "hidden";
 
     setTimeout(() => {
+      debugLog("openModal:begin", { projectId });
       stopAutoScroll();
       clearAutoScrollTimers();
+      autoScrollStarted = false;
+      autoScrollDirection = 1;
+      lastAutoScrollAt = 0;
+      isAutoScrolling = false;
+      lastFrameTime = null;
+      autoScrollPending = false;
+      userInteracting = false;
+      clearUserInteractionTimer();
       if (modalImageContainer) {
         modalImageContainer.scrollTop = 0;
       }
@@ -228,6 +428,7 @@ export function initPortfolio() {
         newSrc,
         imageBase: data.imageBase,
       });
+      debugLog("image:set-src", { newSrc, containerWidth, bestFormat });
 
       // Clear previous src to force reload and reset complete state
       modalImg.removeAttribute("src");
@@ -236,20 +437,35 @@ export function initPortfolio() {
       // Set onload handler BEFORE setting src
       modalImg.onload = () => {
         modalImg.onload = null;
-        if (modalImageContainer) {
-          modalImageContainer.style.setProperty(
-            "--modal-image-height",
-            `${modalImageContainer.clientHeight}px`
-          );
-          modalImageContainer.scrollTop = 0;
-        }
-        startAutoScroll();
+        debugLog("image:onload", {
+          naturalWidth: modalImg.naturalWidth,
+          naturalHeight: modalImg.naturalHeight,
+        });
+        ensureImageDecoded().then(() => {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              if (modalImageContainer) {
+                modalImageContainer.style.setProperty(
+                  "--modal-image-height",
+                  `${modalImageContainer.clientHeight}px`
+                );
+                modalImageContainer.scrollTop = 0;
+                debugLog("image:layout-ready", {
+                  scrollHeight: modalImageContainer.scrollHeight,
+                  clientHeight: modalImageContainer.clientHeight,
+                });
+                requestAutoScrollStart();
+              }
+            });
+          });
+        });
       };
 
       // Handle load errors - fallback to JPG
       modalImg.onerror = () => {
         console.warn("[Portfolio] Image load failed, trying JPG fallback:", newSrc);
         const jpgFallback = newSrc.replace(/\.(avif|webp)$/, ".jpg");
+        debugLog("image:onerror", { newSrc, jpgFallback });
         if (newSrc !== jpgFallback) {
           modalImg.src = jpgFallback;
         }
@@ -270,7 +486,11 @@ export function initPortfolio() {
             );
             modalImageContainer.scrollTop = 0;
           }
-          startAutoScroll();
+          debugLog("image:cached-complete", {
+            naturalWidth: modalImg.naturalWidth,
+            naturalHeight: modalImg.naturalHeight,
+          });
+          ensureImageDecoded().then(() => requestAutoScrollStart());
         }
       });
 
@@ -295,6 +515,10 @@ export function initPortfolio() {
       modal.setAttribute("aria-hidden", "false");
       // 2. Show modal visually
       modal.classList.add("active");
+      if (autoScrollPending) {
+        debugLog("openModal:pending-start");
+        requestAutoScrollStart();
+      }
       // 3. Move focus to close button
       if (closeModalBtn) {
         requestAnimationFrame(() => closeModalBtn.focus());
@@ -332,11 +556,45 @@ export function initPortfolio() {
   if (modalImageContainer) {
     modalImageContainer.addEventListener("scroll", () => {
       if (!modal.classList.contains("active")) return;
-      const now = performance.now();
-      if (now - lastAutoScrollAt < 80) return;
-      stopAutoScroll();
-      scheduleAutoScrollResume();
+      if (isAutoScrolling) return;
+      debugLog("scroll:manual", {
+        scrollTop: modalImageContainer.scrollTop,
+        maxScroll: getMaxScroll(),
+      });
+      handleUserInteraction("scroll", {
+        scrollTop: modalImageContainer.scrollTop,
+        maxScroll: getMaxScroll(),
+      });
     });
+
+    modalImageContainer.addEventListener(
+      "wheel",
+      (e) => {
+        debugLog("wheel", {
+          deltaY: e.deltaY,
+          scrollTop: modalImageContainer.scrollTop,
+          autoScrollStarted,
+          isAutoScrolling,
+        });
+        handleUserInteraction("wheel", { deltaY: e.deltaY });
+      },
+      { passive: true }
+    );
+    modalImageContainer.addEventListener(
+      "touchstart",
+      () => {
+        debugLog("touchstart", { scrollTop: modalImageContainer.scrollTop });
+        handleUserInteraction("touchstart");
+      },
+      { passive: true }
+    );
+    modalImageContainer.addEventListener(
+      "touchmove",
+      () => {
+        debugLog("touchmove", { scrollTop: modalImageContainer.scrollTop });
+      },
+      { passive: true }
+    );
   }
 
   document.addEventListener("keydown", (e) => {
@@ -362,4 +620,23 @@ export function initPortfolio() {
       }
     });
   });
+
+  let resizeTimeout = null;
+  const handleResize = () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      if (modal && modal.classList.contains("active") && autoScrollStarted) {
+        console.log("[AutoScroll] Resize detected, restarting animation");
+        stopAutoScroll();
+        requestAnimationFrame(() => {
+          if (modal.classList.contains("active")) {
+            startAutoScroll();
+          }
+        });
+      }
+    }, 250);
+  };
+
+  window.addEventListener("resize", handleResize, { passive: true });
+  window.addEventListener("orientationchange", handleResize, { passive: true });
 }
