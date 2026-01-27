@@ -4021,8 +4021,11 @@ body {
   position: relative;
   background: #000;
   height: 400px;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  --modal-image-height: 400px;
 }
 
 .modal-image-container img {
@@ -4031,31 +4034,11 @@ body {
   max-height: none !important;
   opacity: 0.9;
   display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
 }
 
 /* Animacja scrollowania długiego screenshota */
 /* Force animation even with prefers-reduced-motion (decorative, non-distracting) */
-.modal-image-container img.scrolling {
-  animation: scroll-screenshot 30s ease-in-out infinite alternate !important;
-  animation-duration: 30s !important;
-  animation-play-state: running !important;
-  will-change: transform;
-}
-
-@keyframes scroll-screenshot {
-  0% {
-    transform: translateY(0);
-  }
-  15% {
-    transform: translateY(0); /* Longer pause at top */
-  }
-  100% {
-    transform: translateY(calc(-100% + 400px));
-  }
-}
 
 .modal-tech-stack {
   position: absolute;
@@ -4156,13 +4139,9 @@ body {
   }
   .modal-image-container {
     height: 300px;
+    --modal-image-height: 300px;
   }
   /* Animacja dla mobile - od góry do dołu (z poprawną wysokością) */
-  .modal-image-container img.scrolling {
-    animation: scroll-screenshot-mobile 40s ease-in-out infinite alternate !important;
-    animation-duration: 40s !important;
-    animation-play-state: running !important;
-  }
   .modal-info {
     padding: 20px;
   }
@@ -4187,38 +4166,10 @@ body {
   }
 }
 
-@keyframes scroll-screenshot-mobile {
-  0% {
-    transform: translateY(0);
-  }
-  20% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(calc(-100% + 300px));
-  }
-}
-
-@keyframes scroll-screenshot-small {
-  0% {
-    transform: translateY(0);
-  }
-  20% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(calc(-100% + 250px));
-  }
-}
-
 @media (max-width: 480px) {
   .modal-image-container {
     height: 250px;
-  }
-  .modal-image-container img.scrolling {
-    animation: scroll-screenshot-small 40s ease-in-out infinite alternate !important;
-    animation-duration: 40s !important;
-    animation-play-state: running !important;
+    --modal-image-height: 250px;
   }
   .modal-info {
     padding: 15px;

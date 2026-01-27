@@ -108,9 +108,93 @@ export function initPortfolio() {
   const closeModalBtn = document.getElementById("modal-close-btn");
   const glitchOverlay = document.getElementById("system-glitch");
   let lastFocusedElement = null;
+  let autoScrollRaf = null;
+  let autoScrollResumeTimer = null;
+  let autoScrollEndPauseTimer = null;
+  let autoScrollDirection = 1;
+  let lastAutoScrollAt = 0;
+  const AUTO_SCROLL_IDLE_DELAY = 1200;
+  const AUTO_SCROLL_END_PAUSE = 1200;
+  const AUTO_SCROLL_SPEED = 20; // px per second
 
   // Detect best image format on init
   detectImageFormat();
+
+  const stopAutoScroll = () => {
+    if (autoScrollRaf) {
+      cancelAnimationFrame(autoScrollRaf);
+      autoScrollRaf = null;
+    }
+  };
+
+  const clearAutoScrollTimers = () => {
+    if (autoScrollResumeTimer) {
+      clearTimeout(autoScrollResumeTimer);
+      autoScrollResumeTimer = null;
+    }
+    if (autoScrollEndPauseTimer) {
+      clearTimeout(autoScrollEndPauseTimer);
+      autoScrollEndPauseTimer = null;
+    }
+  };
+
+  const getMaxScroll = () => {
+    if (!modalImageContainer) return 0;
+    return Math.max(0, modalImageContainer.scrollHeight - modalImageContainer.clientHeight);
+  };
+
+  const easeInOut = (t) =>
+    t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+  const startAutoScroll = () => {
+    if (!modalImageContainer || !modal.classList.contains("active")) return;
+    const maxScroll = getMaxScroll();
+    if (maxScroll <= 1) return;
+
+    stopAutoScroll();
+    clearAutoScrollTimers();
+
+    const startTop = modalImageContainer.scrollTop;
+    if (startTop <= 1) {
+      autoScrollDirection = 1;
+    } else if (startTop >= maxScroll - 1) {
+      autoScrollDirection = -1;
+    }
+    const targetTop = autoScrollDirection === 1 ? maxScroll : 0;
+    const distance = Math.abs(targetTop - startTop);
+    const duration = Math.max(8000, (distance / AUTO_SCROLL_SPEED) * 1000);
+    const startTime = performance.now();
+
+    const step = (now) => {
+      const elapsed = now - startTime;
+      const t = Math.min(1, elapsed / duration);
+      const eased = easeInOut(t);
+      const nextTop = startTop + (targetTop - startTop) * eased;
+      modalImageContainer.scrollTop = nextTop;
+      lastAutoScrollAt = now;
+
+      if (t < 1) {
+        autoScrollRaf = requestAnimationFrame(step);
+        return;
+      }
+
+      autoScrollRaf = null;
+      autoScrollDirection *= -1;
+      autoScrollEndPauseTimer = setTimeout(() => {
+        startAutoScroll();
+      }, AUTO_SCROLL_END_PAUSE);
+    };
+
+    autoScrollRaf = requestAnimationFrame(step);
+  };
+
+  const scheduleAutoScrollResume = () => {
+    if (!modalImageContainer || !modal.classList.contains("active")) return;
+    clearAutoScrollTimers();
+    autoScrollResumeTimer = setTimeout(() => {
+      startAutoScroll();
+    }, AUTO_SCROLL_IDLE_DELAY);
+  };
 
   window.openModal = function (projectId) {
     const data = projectsDB[projectId];
@@ -121,9 +205,11 @@ export function initPortfolio() {
     document.body.style.overflow = "hidden";
 
     setTimeout(() => {
-      // Reset animation state
-      modalImg.classList.remove("scrolling");
-      void modalImg.offsetWidth; // Force reflow
+      stopAutoScroll();
+      clearAutoScrollTimers();
+      if (modalImageContainer) {
+        modalImageContainer.scrollTop = 0;
+      }
 
       // Get container width for responsive image selection
       // Use fallback if container not yet visible
@@ -143,19 +229,22 @@ export function initPortfolio() {
         imageBase: data.imageBase,
       });
 
-      // Animation start handler
-      const startAnimation = () => {
-        modalImg.classList.add("scrolling");
-        modalImg.onload = null; // Clean up handler
-        console.log("[Portfolio Debug] Animation started, class added:", modalImg.classList.contains("scrolling"));
-      };
-
       // Clear previous src to force reload and reset complete state
       modalImg.removeAttribute("src");
       void modalImg.offsetWidth; // Force reflow
 
       // Set onload handler BEFORE setting src
-      modalImg.onload = startAnimation;
+      modalImg.onload = () => {
+        modalImg.onload = null;
+        if (modalImageContainer) {
+          modalImageContainer.style.setProperty(
+            "--modal-image-height",
+            `${modalImageContainer.clientHeight}px`
+          );
+          modalImageContainer.scrollTop = 0;
+        }
+        startAutoScroll();
+      };
 
       // Handle load errors - fallback to JPG
       modalImg.onerror = () => {
@@ -174,7 +263,14 @@ export function initPortfolio() {
       requestAnimationFrame(() => {
         if (modalImg.complete && modalImg.naturalHeight > 0) {
           console.log("[Portfolio Debug] Image already complete, naturalHeight:", modalImg.naturalHeight);
-          startAnimation();
+          if (modalImageContainer) {
+            modalImageContainer.style.setProperty(
+              "--modal-image-height",
+              `${modalImageContainer.clientHeight}px`
+            );
+            modalImageContainer.scrollTop = 0;
+          }
+          startAutoScroll();
         }
       });
 
@@ -209,6 +305,8 @@ export function initPortfolio() {
   window.closeModal = function () {
     modal.classList.remove("active");
     document.body.style.overflow = "";
+    stopAutoScroll();
+    clearAutoScrollTimers();
 
     // Accessibility Fix: Move focus OUT of modal BEFORE setting aria-hidden
     if (lastFocusedElement && lastFocusedElement.focus) {
@@ -228,6 +326,16 @@ export function initPortfolio() {
   if (modal) {
     modal.addEventListener("click", (e) => {
       if (e.target === modal) window.closeModal();
+    });
+  }
+
+  if (modalImageContainer) {
+    modalImageContainer.addEventListener("scroll", () => {
+      if (!modal.classList.contains("active")) return;
+      const now = performance.now();
+      if (now - lastAutoScrollAt < 80) return;
+      stopAutoScroll();
+      scheduleAutoScrollResume();
     });
   }
 
