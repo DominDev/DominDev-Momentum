@@ -10,6 +10,7 @@
     "optimize:images": "node _scripts/optimize-images.js",
     "build": "npm run optimize:images && npm run minify",
     "dev": "echo 'Development server - just open index.html in browser'",
+    "dev:wrangler": "npx wrangler pages dev . --kv=LEADS_KV",
     "help": "echo '\nAvailable commands:\n  npm run minify:css      - Minify CSS files\n  npm run minify:js       - Minify JS files\n  npm run minify          - Minify CSS + JS\n  npm run watch           - Watch CSS/JS changes and auto-minify\n  npm run optimize:images - Generate optimized image variants (AVIF, WebP, JPEG)\n  npm run build           - Build for production (images + CSS + JS)\n'"
   },
   "keywords": [

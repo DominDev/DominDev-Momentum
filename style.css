@@ -3788,6 +3788,7 @@ body {
 }
 
 .privacy-details {
+  position: relative;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.3s ease;
@@ -3796,6 +3797,30 @@ body {
 .privacy-details[open] {
   border-color: rgba(255, 31, 31, 0.3);
   background: rgba(255, 255, 255, 0.05);
+}
+
+.privacy-details::after {
+  content: "";
+  position: absolute;
+  right: 40px;
+  top: 24px;
+  width: 6px;
+  height: 6px;
+  background: #555;
+  border-radius: 50%;
+  transition: 0.3s;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.privacy-details:hover::after {
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary);
+}
+
+.privacy-details[open]::after {
+  background: #4ade80;
+  box-shadow: 0 0 10px #4ade80;
 }
 
 .privacy-summary {

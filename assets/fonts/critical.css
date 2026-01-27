@@ -130,6 +130,9 @@
       .fa-user-xmark::before {
         content: "\f235";
       }
+      .fa-eye-slash::before {
+        content: "\f070";
+      }
       @font-face {
         font-family: "Font Awesome 6 Brands";
         font-style: normal;
