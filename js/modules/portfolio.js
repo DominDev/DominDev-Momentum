@@ -119,13 +119,15 @@ export function initPortfolio() {
   let autoScrollPending = false;
   let userInteracting = false;
   let userInteractionTimer = null;
+  let autoScrollInitialDelayDone = false;
   let prevScrollBehavior = "";
   let scrollBehaviorForced = false;
   const DEBUG_MODAL_SCROLL = true;
   const AUTO_SCROLL_IDLE_DELAY = 500;
   const AUTO_SCROLL_END_PAUSE = 200;
-  const AUTO_SCROLL_SPEED_DOWN = 40; // px per second
-  const AUTO_SCROLL_SPEED_UP = 80; // px per second
+  const AUTO_SCROLL_START_DELAY = 1000;
+  const AUTO_SCROLL_SPEED_DOWN = 100; // px per second
+  const AUTO_SCROLL_SPEED_UP = 200; // px per second
   const AUTO_SCROLL_MIN_DURATION = 5000;
   const AUTO_SCROLL_MAX_DURATION = 60000;
   const MAX_FRAME_DELTA = 100;
@@ -260,6 +262,15 @@ export function initPortfolio() {
       scrollHeight: modalImageContainer.scrollHeight,
       clientHeight: modalImageContainer.clientHeight,
     });
+    if (!autoScrollInitialDelayDone) {
+      autoScrollInitialDelayDone = true;
+      debugLog("requestAutoScrollStart:delay", { delayMs: AUTO_SCROLL_START_DELAY });
+      setTimeout(() => {
+        if (userInteracting || !modal.classList.contains("active")) return;
+        startAutoScroll();
+      }, AUTO_SCROLL_START_DELAY);
+      return;
+    }
     startAutoScroll();
   };
 
@@ -407,6 +418,7 @@ export function initPortfolio() {
       autoScrollPending = false;
       userInteracting = false;
       clearUserInteractionTimer();
+      autoScrollInitialDelayDone = false;
       if (modalImageContainer) {
         modalImageContainer.scrollTop = 0;
       }
