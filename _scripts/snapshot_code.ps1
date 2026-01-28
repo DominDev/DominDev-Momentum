@@ -1,164 +1,40 @@
-<#
-.SYNOPSIS
-    Zbiera caly kod projektu do jednego pliku z oznaczeniem sciezek.
-.DESCRIPTION
-    Skrypt skanuje katalog glowny projektu i laczy wszystkie pliki kodowe w jeden plik.
-    Automatycznie wykrywa katalog glowny nawet gdy uruchamiany z podkatalogu _scripts/.
-    Kazdy plik jest poprzedzony sciezka i oddzielony wyraznym separatorem.
-    Plik wynikowy jest zapisywany w katalogu _project_snapshots z timestampem.
-.NOTES
-    Autor: DominDev
-    Kodowanie: UTF-8 with BOM
-#>
+# Zbiera caly kod projektu do jednego pliku Markdown.
+# Autor: DominDev
 
-[CmdletBinding()]
 param(
     [string]$OutputDir = "_project_snapshots"
 )
 
-# Wymuszenie UTF-8 z BOM
 $OutputEncoding = [System.Text.Encoding]::UTF8
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-# === AUTODETEKCJA KATALOGU GLOWNEGO PROJEKTU ===
 $ScriptDir = if ($PSScriptRoot) { $PSScriptRoot } else { (Get-Location).Path }
 $CurrentDirName = Split-Path $ScriptDir -Leaf
 
-# Jesli skrypt jest w katalogu zaczynajacym sie od "_", przejdz do parenta
 if ($CurrentDirName -match '^_') {
     $ProjectPath = Split-Path $ScriptDir -Parent
-    Write-Host "Wykryto uruchomienie z podkatalogu '$CurrentDirName'" -ForegroundColor DarkGray
-    Write-Host "Katalog glowny projektu: $ProjectPath" -ForegroundColor DarkGray
 } else {
     $ProjectPath = $ScriptDir
 }
 
-# Separator miedzy plikami (format zgodny z promptem analizy)
-$Separator = @"
+$IncludedExtensions = @('.html', '.htm', '.css', '.scss', '.sass', '.less', '.js', '.ts', '.jsx', '.tsx', '.mjs', '.cjs', '.json', '.php', '.py', '.rb', '.java', '.c', '.cpp', '.h', '.hpp', '.cs', '.go', '.rs', '.swift', '.kt', '.kts', '.xml', '.xsl', '.xslt', '.yaml', '.yml', '.toml', '.md', '.markdown', '.txt', '.sql', '.sh', '.bash', '.bat', '.cmd', '.ps1', '.vue', '.svelte')
+$ExcludedDirs = @('.git', '.vscode', '.idea', '.wrangler', '.gemini', '.claude', '.codex', '.gemini-clipboard', 'node_modules', '__pycache__', 'vendor', 'dist', 'build', '.next', '.nuxt', 'coverage', '.cache', 'tmp', 'temp', '_project_snapshots', '_docs', 'archive')
+$ExcludedFiles = @('.gitignore', '.gitattributes', '.gitmodules', '.env', '.env*', '.DS_Store', 'Thumbs.db', 'desktop.ini', 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'composer.lock', 'Gemfile.lock', 'Cargo.lock', 'LICENSE', 'LICENSE*', 'CHANGELOG.md', '*.min.js', '*.min.css', '*.map', 'CLAUDE.md', 'GEMINI.md', 'CODEX.md')
+$BinaryDirs = @('images', 'img', 'assets/images', 'assets/img', 'fonts', 'assets/fonts', 'media', 'videos', 'audio')
+$LangMap = @{ '.js'='javascript'; '.mjs'='javascript'; '.cjs'='javascript'; '.jsx'='jsx'; '.ts'='typescript'; '.tsx'='tsx'; '.html'='html'; '.htm'='html'; '.css'='css'; '.scss'='scss'; '.sass'='sass'; '.less'='less'; '.json'='json'; '.ps1'='powershell'; '.bat'='batch'; '.cmd'='batch'; '.sh'='bash'; '.md'='markdown'; '.py'='python'; '.php'='php'; '.java'='java'; '.cs'='csharp'; '.go'='go'; '.rs'='rust'; '.xml'='xml'; '.yaml'='yaml'; '.yml'='yaml'; '.toml'='toml'; '.sql'='sql' }
 
-### FILE PATH: {0}
-
-"@
-
-# Rozszerzenia plikow kodowych do wlaczenia
-$IncludedExtensions = @(
-    '.html', '.htm',
-    '.css', '.scss', '.sass', '.less',
-    '.js', '.ts', '.jsx', '.tsx', '.mjs', '.cjs',
-    '.json',
-    '.php',
-    '.py',
-    '.rb',
-    '.java',
-    '.c', '.cpp', '.h', '.hpp',
-    '.cs',
-    '.go',
-    '.rs',
-    '.swift',
-    '.kt', '.kts',
-    '.xml', '.xsl', '.xslt',
-    '.yaml', '.yml',
-    '.toml',
-    '.md', '.markdown',
-    '.txt',
-    '.sql',
-    '.sh', '.bash',
-    '.bat', '.cmd',
-    '.vue', '.svelte'
-)
-
-# Katalogi do wykluczenia (statyczna lista - katalogi z prefixem "_" sa wykluczane automatycznie)
-$ExcludedDirsStatic = @(
-    '.git',
-    
-    'node_modules',
-    '.vscode',
-    '.idea',
-    '__pycache__',
-    'vendor',
-    'dist',
-    'build',
-    '.next',
-    '.nuxt',
-    'coverage',
-    '.cache',
-    'tmp',
-    'temp'
-)
-
-# Pliki do wykluczenia (nazwy i wzorce)
-$ExcludedFiles = @(
-    '.gitignore',
-    '.gitattributes',
-    '.gitmodules',
-    '.env',
-    '.env.local',
-    '.env.production',
-    '.env.development',
-    '.DS_Store',
-    'Thumbs.db',
-    'desktop.ini',
-    'nul',
-    'package-lock.json',
-    'yarn.lock',
-    'pnpm-lock.yaml',
-    'composer.lock',
-    'Gemfile.lock',
-    'Cargo.lock',
-    '.eslintrc*',
-    '.prettierrc*',
-    '.babelrc*',
-    'tsconfig.json',
-    'jsconfig.json',
-    '.editorconfig',
-    '.npmrc',
-    '.nvmrc',
-    '.node-version',
-    'LICENSE',
-    'LICENSE.md',
-    'LICENSE.txt',
-    'CHANGELOG.md',
-    'CONTRIBUTING.md',
-    'settings.local.json',
-    'snapshot_structure.ps1',
-    'snapshot_code.ps1'
-)
-
-# Katalogi z plikami binarnymi (obrazy, fonty) do calkowitego pominiecia
-$BinaryDirs = @(
-    'images',
-    'img',
-    'assets/images',
-    'assets/img',
-    'fonts',
-    'assets/fonts',
-    'media',
-    'videos',
-    'audio'
-)
-
-# Funkcja sprawdzajaca czy katalog jest wykluczony
 function Test-IsDirExcluded {
-    param([string]$DirName, [string]$RelativePath)
-    
-    # Wyklucz katalogi z prefixem "_" (np. _docs, _scripts, _project_snapshots)
-    if ($DirName -match '^_') { return $true }
-    
-    # Wyklucz katalogi ze statycznej listy
-    if ($ExcludedDirsStatic -contains $DirName) { return $true }
-    
-    # Sprawdz czy sciezka zawiera katalog binarny
+    param($DirName, $RelativePath)
+    if ($ExcludedDirs -contains $DirName) { return $true }
     foreach ($binDir in $BinaryDirs) {
-        if ($RelativePath -like "*$binDir*") { return $true }
+        $normRel = $RelativePath.Replace('\', '/')
+        if ($normRel -like ("*" + $binDir + "*")) { return $true }
     }
-    
     return $false
 }
 
-# Funkcja sprawdzajaca czy plik jest wykluczony
 function Test-IsFileExcluded {
-    param([string]$FileName)
-    
+    param($FileName)
     foreach ($pattern in $ExcludedFiles) {
         if ($pattern.Contains('*')) {
             if ($FileName -like $pattern) { return $true }
@@ -166,143 +42,104 @@ function Test-IsFileExcluded {
             if ($FileName -eq $pattern) { return $true }
         }
     }
-    
     return $false
 }
 
-# Funkcja sprawdzajaca czy plik jest plikiem kodowym
 function Test-IsCodeFile {
-    param([string]$FileName)
-    
+    param($FileName)
     $ext = [System.IO.Path]::GetExtension($FileName).ToLower()
     return $IncludedExtensions -contains $ext
 }
 
-# Funkcja rekurencyjnie zbierajaca pliki
+function Get-LanguageTag {
+    param($FileName)
+    $ext = [System.IO.Path]::GetExtension($FileName).ToLower()
+    if ($LangMap.ContainsKey($ext)) { return $LangMap[$ext] }
+    return "" 
+}
+
 function Get-CodeFiles {
-    param(
-        [string]$Path,
-        [string]$RelativePath = "."
-    )
-    
+    param($Path, $RelativePath = ".")
     $files = @()
-    
-    try {
-        $items = Get-ChildItem -Path $Path -Force -ErrorAction SilentlyContinue
-    }
-    catch {
-        return $files
-    }
+    try { $items = Get-ChildItem -Path $Path -Force -ErrorAction SilentlyContinue } catch { return $files }
     
     foreach ($item in $items) {
         $itemRelPath = if ($RelativePath -eq ".") { $item.Name } else { "$RelativePath/$($item.Name)" }
         
         if ($item.PSIsContainer) {
-            # Katalog - sprawdz czy nie jest wykluczony
             if (-not (Test-IsDirExcluded -DirName $item.Name -RelativePath $itemRelPath)) {
                 $files += Get-CodeFiles -Path $item.FullName -RelativePath $itemRelPath
             }
-        }
-        else {
-            # Plik - sprawdz czy jest plikiem kodowym i nie jest wykluczony
-            if ((Test-IsCodeFile -FileName $item.Name) -and 
-                (-not (Test-IsFileExcluded -FileName $item.Name))) {
-                $files += @{
-                    FullPath = $item.FullName
-                    RelativePath = "./$itemRelPath"
-                    Name = $item.Name
-                }
+        } else {
+            if ((Test-IsCodeFile -FileName $item.Name) -and (-not (Test-IsFileExcluded -FileName $item.Name))) {
+                $files += @{ FullPath = $item.FullName; RelativePath = "./$itemRelPath"; Name = $item.Name }
             }
         }
     }
-    
     return $files
 }
 
-# Utworz katalog wyjsciowy jesli nie istnieje
+# === START ===
 $outputPath = Join-Path $ProjectPath $OutputDir
-if (-not (Test-Path $outputPath)) {
-    New-Item -ItemType Directory -Path $outputPath -Force | Out-Null
-    Write-Host "Utworzono katalog: $OutputDir" -ForegroundColor Green
-}
+if (-not (Test-Path $outputPath)) { New-Item -ItemType Directory -Path $outputPath -Force | Out-Null }
 
-# Generuj timestamp
 $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
-$outputFile = Join-Path $outputPath "code_bundle_$timestamp.txt"
-
-# Pobierz nazwe projektu
 $projectName = Split-Path $ProjectPath -Leaf
+$outputFile = Join-Path $outputPath "code_snapshot_$timestamp.md"
 
-# Zbierz wszystkie pliki kodowe
 Write-Host "Skanowanie projektu..." -ForegroundColor Cyan
-$codeFiles = Get-CodeFiles -Path $ProjectPath
+$codeFiles = Get-CodeFiles -Path $ProjectPath | Sort-Object { $_.RelativePath }
+Write-Host ("Znaleziono " + $codeFiles.Count + " plikow kodowych.") -ForegroundColor Green
 
-# Sortuj pliki wedlug sciezki
-$codeFiles = $codeFiles | Sort-Object { $_.RelativePath }
-
-Write-Host "Znaleziono $($codeFiles.Count) plikow kodowych." -ForegroundColor Green
-
-# Buduj zawartosc pliku
-$contentBuilder = New-Object System.Text.StringBuilder
-
-# Naglowek pliku
-[void]$contentBuilder.AppendLine("================================================================================")
-[void]$contentBuilder.AppendLine("  BUNDLE KODU PROJEKTU: $projectName")
-[void]$contentBuilder.AppendLine("  Data wygenerowania: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')")
-[void]$contentBuilder.AppendLine("  Liczba plikow: $($codeFiles.Count)")
-[void]$contentBuilder.AppendLine("================================================================================")
-[void]$contentBuilder.AppendLine("")
-
-# Spis tresci
-[void]$contentBuilder.AppendLine("SPIS PLIKOW:")
-[void]$contentBuilder.AppendLine("-" * 80)
-$index = 1
+$sb = New-Object System.Text.StringBuilder
+[void]$sb.AppendLine("# SNAPSHOT KODU: " + $projectName)
+[void]$sb.AppendLine("> Data: " + (Get-Date -Format 'yyyy-MM-dd HH:mm:ss'))
+[void]$sb.AppendLine("> Pliki: " + $codeFiles.Count)
+[void]$sb.AppendLine("")
+[void]$sb.AppendLine("## SPIS TRESCI")
 foreach ($file in $codeFiles) {
-    [void]$contentBuilder.AppendLine("  $index. $($file.RelativePath)")
-    $index++
+    [void]$sb.AppendLine('- `' + $file.RelativePath + '`')
 }
-[void]$contentBuilder.AppendLine("-" * 80)
-[void]$contentBuilder.AppendLine("")
+[void]$sb.AppendLine("")
+[void]$sb.AppendLine("---")
+[void]$sb.AppendLine("")
 
-# Zawartosc plikow
 foreach ($file in $codeFiles) {
-    Write-Host "  Przetwarzanie: $($file.RelativePath)" -ForegroundColor Gray
+    Write-Host ("  Przetwarzanie: " + $file.RelativePath) -ForegroundColor Gray
+    $lang = Get-LanguageTag -FileName $file.Name
     
-    # Dodaj separator z nazwa pliku
-    $separatorLine = $Separator -f $file.RelativePath
-    [void]$contentBuilder.Append($separatorLine)
+    # Kuloodporna konkatenacja
+    $headerPart1 = '### [FILE] `'
+    $headerPart2 = '`'
+    $header = $headerPart1 + $file.RelativePath + $headerPart2
     
-    # Odczytaj zawartosc pliku
+    [void]$sb.AppendLine($header)
+    
+    [void]$sb.AppendLine('```' + $lang)
+    
     try {
-        $fileContent = Get-Content -Path $file.FullPath -Raw -Encoding UTF8 -ErrorAction Stop
-        if ($null -eq $fileContent) {
-            $fileContent = "// [PLIK PUSTY]"
+        # Wymuszenie UTF8
+        $content = Get-Content -Path $file.FullPath -Raw -Encoding UTF8 -ErrorAction Stop
+        if ([string]::IsNullOrWhiteSpace($content)) {
+            [void]$sb.AppendLine("// [PLIK PUSTY]")
+        } else {
+            [void]$sb.AppendLine($content.TrimEnd())
         }
-        [void]$contentBuilder.AppendLine($fileContent.TrimEnd())
-    }
-    catch {
-        [void]$contentBuilder.AppendLine("// [BLAD ODCZYTU PLIKU: $($_.Exception.Message)]")
+    } catch {
+        [void]$sb.AppendLine("// [BLAD ODCZYTU: " + $_.Exception.Message + "]")
     }
     
-    [void]$contentBuilder.AppendLine("")
+    [void]$sb.AppendLine('```')
+    [void]$sb.AppendLine("")
 }
 
-# Stopka
-[void]$contentBuilder.AppendLine("")
-[void]$contentBuilder.AppendLine("================================================================================")
-[void]$contentBuilder.AppendLine("  KONIEC BUNDLE - Wygenerowano przez snapshot_code.ps1")
-[void]$contentBuilder.AppendLine("================================================================================")
+[void]$sb.AppendLine("---")
+[void]$sb.AppendLine('Wygenerowano automatycznie przez snapshot_code.ps1')
 
-# Zapisz plik z kodowaniem UTF-8 BOM
 $utf8WithBom = New-Object System.Text.UTF8Encoding $true
-[System.IO.File]::WriteAllText($outputFile, $contentBuilder.ToString(), $utf8WithBom)
+[System.IO.File]::WriteAllText($outputFile, $sb.ToString(), $utf8WithBom)
 
 Write-Host ""
-Write-Host "Bundle kodu zapisany do:" -ForegroundColor Cyan
-Write-Host $outputFile -ForegroundColor Yellow
-Write-Host ""
-
-# Podsumowanie
-$totalSize = (Get-Item $outputFile).Length
-$sizeKB = [math]::Round($totalSize / 1KB, 2)
-Write-Host "Rozmiar pliku: $sizeKB KB" -ForegroundColor Gray
+Write-Host ("Snapshot zapisany do: " + $outputFile) -ForegroundColor Cyan
+$sizeKB = [math]::Round((Get-Item $outputFile).Length / 1KB, 2)
+Write-Host ("Rozmiar: " + $sizeKB + " KB") -ForegroundColor Gray

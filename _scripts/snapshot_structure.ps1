@@ -1,192 +1,102 @@
-<#
-.SYNOPSIS
-    Generuje plik Markdown ze struktura katalogow i plikow projektu.
-.DESCRIPTION
-    Skrypt skanuje katalog glowny projektu i tworzy plik .md z drzewem struktury.
-    Automatycznie wykrywa katalog glowny nawet gdy uruchamiany z podkatalogu _scripts/.
-    Plik wynikowy jest zapisywany w katalogu _project_snapshots z timestampem w nazwie.
-.NOTES
-    Autor: DominDev
-    Kodowanie: UTF-8 with BOM
-#>
-
-[CmdletBinding()]
 param(
     [string]$OutputDir = "_project_snapshots"
 )
 
-# Wymuszenie UTF-8 z BOM
+<#
+.SYNOPSIS
+    Generuje plik Markdown ze struktura katalogow projektu.
+.NOTES
+    Autor: DominDev
+#>
+
 $OutputEncoding = [System.Text.Encoding]::UTF8
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-# === AUTODETEKCJA KATALOGU GLOWNEGO PROJEKTU ===
 $ScriptDir = if ($PSScriptRoot) { $PSScriptRoot } else { (Get-Location).Path }
 $CurrentDirName = Split-Path $ScriptDir -Leaf
 
-# Jesli skrypt jest w katalogu zaczynajacym sie od "_", przejdz do parenta
 if ($CurrentDirName -match '^_') {
     $ProjectPath = Split-Path $ScriptDir -Parent
-    Write-Host "Wykryto uruchomienie z podkatalogu '$CurrentDirName'" -ForegroundColor DarkGray
-    Write-Host "Katalog glowny projektu: $ProjectPath" -ForegroundColor DarkGray
 } else {
     $ProjectPath = $ScriptDir
 }
 
-# === KATALOGI I PLIKI DO WYKLUCZENIA ===
+$FullyIgnoredDirs = @('.git', '.vscode', '.idea', '.wrangler', '.gemini', '.claude', '.codex', '.gemini-clipboard', 'node_modules', '__pycache__', 'dist', 'build', '.next', '.nuxt', 'coverage', '.cache', 'tmp', 'temp', '_project_snapshots', 'archive')
+$ShallowDirs = @('_docs', 'assets/fonts', 'assets/images')
+$ExcludedFiles = @('.DS_Store', 'Thumbs.db', 'desktop.ini', 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', '*.log', 'CLAUDE.md', 'GEMINI.md', 'CODEX.md')
 
-# Katalogi do wykluczenia (statyczna lista)
-$ExcludedDirsStatic = @(
-    '.git',
-    
-    'node_modules',
-    '.vscode',
-    '.idea',
-    '__pycache__',
-    'vendor',
-    'dist',
-    'build',
-    '.next',
-    '.nuxt'
-)
-
-$ExcludedFiles = @(
-    '.gitignore',
-    '.gitattributes',
-    '.gitmodules',
-    '.env',
-    '.env.local',
-    '.env.production',
-    '.DS_Store',
-    'Thumbs.db',
-    'desktop.ini',
-    'nul',
-    '*.log',
-    'package-lock.json',
-    'yarn.lock',
-    'composer.lock',
-    'snapshot_structure.ps1',
-    'snapshot_code.ps1'
-)
-
-$ExcludedExtensions = @(
-    '.exe', '.dll', '.so', '.dylib',
-    '.zip', '.tar', '.gz', '.rar', '.7z',
-    '.jpg', '.jpeg', '.png', '.gif', '.webp', '.ico', '.svg', '.bmp',
-    '.mp3', '.mp4', '.avi', '.mov', '.wav',
-    '.pdf', '.doc', '.docx', '.xls', '.xlsx',
-    '.ttf', '.woff', '.woff2', '.eot', '.otf'
-)
-
-# Funkcja sprawdzajaca czy plik/katalog jest wykluczony
-function Test-IsExcluded {
-    param(
-        [string]$Name,
-        [string]$FullPath,
-        [bool]$IsDirectory
-    )
-    
-    if ($IsDirectory) {
-        # Wyklucz katalogi z prefixem "_" (np. _docs, _scripts, _project_snapshots)
-        if ($Name -match '^_') { return $true }
-        # Wyklucz katalogi ze statycznej listy
-        return $ExcludedDirsStatic -contains $Name
-    }
-    
-    # Sprawdz nazwe pliku
+function Test-IsIgnored {
+    param($Name, $IsDirectory)
+    if ($IsDirectory) { return $FullyIgnoredDirs -contains $Name }
     foreach ($pattern in $ExcludedFiles) {
-        if ($pattern.Contains('*')) {
-            if ($Name -like $pattern) { return $true }
-        } else {
-            if ($Name -eq $pattern) { return $true }
-        }
+        if ($pattern.Contains('*')) { if ($Name -like $pattern) { return $true } }
+        elseif ($Name -eq $pattern) { return $true }
     }
-    
-    # Sprawdz rozszerzenie
-    $ext = [System.IO.Path]::GetExtension($Name).ToLower()
-    if ($ExcludedExtensions -contains $ext) { return $true }
-    
     return $false
 }
 
-# Funkcja budujaca drzewo struktury
-function Get-DirectoryTree {
-    param(
-        [string]$Path,
-        [string]$Prefix = "",
-        [string]$RelativePath = "."
-    )
-    
+function Test-IsShallowDir {
+    param($RelativePath)
+    $normPath = $RelativePath.Replace('\', '/')
+    foreach ($shallow in $ShallowDirs) {
+        if ($normPath -eq $shallow -or $normPath -like "*/$shallow") { return $true }
+    }
+    return $false
+}
+
+function Get-Tree {
+    param($Path, $Prefix = "", $RelativePath = "")
     $output = @()
-    
-    try {
-        $items = Get-ChildItem -Path $Path -Force -ErrorAction SilentlyContinue | 
-                 Where-Object { -not (Test-IsExcluded -Name $_.Name -FullPath $_.FullName -IsDirectory $_.PSIsContainer) } |
-                 Sort-Object { -not $_.PSIsContainer }, Name
-    }
-    catch {
-        return $output
-    }
-    
-    $count = $items.Count
+    try { $items = Get-ChildItem -Path $Path -Force -ErrorAction SilentlyContinue | Sort-Object { -not $_.PSIsContainer }, Name } catch { return $output }
+    $filteredItems = $items | Where-Object { -not (Test-IsIgnored -Name $_.Name -IsDirectory $_.PSIsContainer) }
+    $count = $filteredItems.Count
     $index = 0
-    
-    foreach ($item in $items) {
+    foreach ($item in $filteredItems) {
         $index++
         $isLast = ($index -eq $count)
-        
-        if ($isLast) {
-            $connector = [char]0x2514 + [string][char]0x2500 + [string][char]0x2500 + " "  # L--
-            $newPrefix = $Prefix + "    "
-        } else {
-            $connector = [char]0x251C + [string][char]0x2500 + [string][char]0x2500 + " "  # |--
-            $newPrefix = $Prefix + [char]0x2502 + "   "  # |
+        $connector = if ($isLast) { "+-- " } else { "|-- " }
+        $childPrefix = if ($isLast) { "    " } else { "|   " }
+        $itemRelPath = if ($RelativePath -eq "") { $item.Name } else { "$RelativePath/$($item.Name)" }
+        $sizeInfo = ""
+        if (-not $item.PSIsContainer) {
+            $sizeKB = [math]::Round($item.Length / 1KB, 1)
+            if ($sizeKB -gt 0) { $sizeInfo = " (" + $sizeKB + " KB)" }
         }
-        
-        $itemRelPath = Join-Path $RelativePath $item.Name
-        
+        $line = $Prefix + $connector + $item.Name + $sizeInfo
         if ($item.PSIsContainer) {
-            $output += "$Prefix$connector$($item.Name)/"
-            $output += Get-DirectoryTree -Path $item.FullName -Prefix $newPrefix -RelativePath $itemRelPath
-        } else {
-            $output += "$Prefix$connector$($item.Name)"
-        }
+            $line += "/"
+            if (Test-IsShallowDir -RelativePath $itemRelPath) {
+                $line += " ..."
+                $output += $line
+            } else {
+                $output += $line
+                $output += Get-Tree -Path $item.FullName -Prefix ($Prefix + $childPrefix) -RelativePath $itemRelPath
+            }
+        } else { $output += $line }
     }
-    
     return $output
 }
 
-# Utworz katalog wyjsciowy jesli nie istnieje
 $outputPath = Join-Path $ProjectPath $OutputDir
-if (-not (Test-Path $outputPath)) {
-    New-Item -ItemType Directory -Path $outputPath -Force | Out-Null
-    Write-Host "Utworzono katalog: $OutputDir" -ForegroundColor Green
-}
+if (-not (Test-Path $outputPath)) { New-Item -ItemType Directory -Path $outputPath -Force | Out-Null }
 
-# Generuj timestamp
 $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
-$outputFile = Join-Path $outputPath "structure_$timestamp.md"
-
-# Pobierz nazwe projektu
+$outputFile = Join-Path $outputPath "structure_snapshot_$timestamp.md"
 $projectName = Split-Path $ProjectPath -Leaf
 
-# Buduj zawartosc pliku MD
 $content = @()
-$content += "# Struktura projektu: $projectName"
+$content += "# STRUKTURA PROJEKTU: " + $projectName
+$content += "> Data: " + (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')
 $content += ""
-$content += "Data wygenerowania: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
-$content += ""
+$content += '```text'
+$content += $projectName + "/"
+$content += Get-Tree -Path $ProjectPath
 $content += '```'
-$content += "$projectName/"
-$content += (Get-DirectoryTree -Path $ProjectPath)
-$content += '```'
 $content += ""
-$content += "---"
-$content += "*Wygenerowano automatycznie przez snapshot_structure.ps1*"
+$content += 'Wygenerowano przez snapshot_structure.ps1'
 
-# Zapisz plik z kodowaniem UTF-8 BOM
-$content -join "`r`n" | Out-File -FilePath $outputFile -Encoding UTF8
+$finalContent = $content -join [Environment]::NewLine
+$utf8WithBom = New-Object System.Text.UTF8Encoding $true
+[System.IO.File]::WriteAllText($outputFile, $finalContent, $utf8WithBom)
 
-Write-Host ""
-Write-Host "Struktura projektu zapisana do:" -ForegroundColor Cyan
-Write-Host $outputFile -ForegroundColor Yellow
-Write-Host ""
+Write-Host ('Snapshot struktury zapisany do: ' + $outputFile) -ForegroundColor Cyan
