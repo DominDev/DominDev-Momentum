@@ -767,7 +767,7 @@
             Portfolio: Strony WordPress & Aplikacje Web
           </h3>
 
-          <div class="portfolio-grid">
+          <div class="portfolio-grid" id="portfolio-grid">
             <div class="project-card reveal" data-action="open-modal" data-target="kraft" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu Kraft Daily Pub">
               <picture>
                 <source
@@ -898,6 +898,155 @@
               </div>
             </div>
           </div>
+
+          <!-- Load More Button -->
+          <div class="portfolio-actions">
+            <button
+              type="button"
+              class="btn portfolio-load-more"
+              id="portfolio-load-more"
+              aria-expanded="false"
+              aria-controls="portfolio-grid"
+            >
+              <span class="btn__text">WIĘCEJ REALIZACJI</span>
+              <span class="btn__icon" aria-hidden="true">↓</span>
+            </button>
+          </div>
+
+          <!-- Hidden template for additional projects -->
+          <template id="portfolio-template">
+            <div class="project-card" data-action="open-modal" data-target="boxing" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu OG Boxing Coach">
+              <picture>
+                <source
+                  type="image/avif"
+                  srcset="
+                    assets/images/portfolio/portfolio-boxing-400.avif   400w,
+                    assets/images/portfolio/portfolio-boxing-800.avif   800w,
+                    assets/images/portfolio/portfolio-boxing-1200.avif 1200w,
+                    assets/images/portfolio/portfolio-boxing-1600.avif 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                />
+                <source
+                  type="image/webp"
+                  srcset="
+                    assets/images/portfolio/portfolio-boxing-400.webp   400w,
+                    assets/images/portfolio/portfolio-boxing-800.webp   800w,
+                    assets/images/portfolio/portfolio-boxing-1200.webp 1200w,
+                    assets/images/portfolio/portfolio-boxing-1600.webp 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                />
+                <img
+                  src="assets/images/portfolio/portfolio-boxing-800.jpg"
+                  srcset="
+                    assets/images/portfolio/portfolio-boxing-400.jpg   400w,
+                    assets/images/portfolio/portfolio-boxing-800.jpg   800w,
+                    assets/images/portfolio/portfolio-boxing-1200.jpg 1200w,
+                    assets/images/portfolio/portfolio-boxing-1600.jpg 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  alt="OG Boxing Coach - Landing Page for Professional Boxing Trainer"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="450"
+                />
+              </picture>
+              <div class="project-overlay">
+                <h4>OG Boxing Coach</h4>
+                <p class="accent">Realizacja / Landing Page</p>
+              </div>
+            </div>
+
+            <div class="project-card" data-action="open-modal" data-target="roofs" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu Precision Roofing">
+              <picture>
+                <source
+                  type="image/avif"
+                  srcset="
+                    assets/images/portfolio/portfolio-roofs-400.avif   400w,
+                    assets/images/portfolio/portfolio-roofs-800.avif   800w,
+                    assets/images/portfolio/portfolio-roofs-1200.avif 1200w,
+                    assets/images/portfolio/portfolio-roofs-1600.avif 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                />
+                <source
+                  type="image/webp"
+                  srcset="
+                    assets/images/portfolio/portfolio-roofs-400.webp   400w,
+                    assets/images/portfolio/portfolio-roofs-800.webp   800w,
+                    assets/images/portfolio/portfolio-roofs-1200.webp 1200w,
+                    assets/images/portfolio/portfolio-roofs-1600.webp 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                />
+                <img
+                  src="assets/images/portfolio/portfolio-roofs-800.jpg"
+                  srcset="
+                    assets/images/portfolio/portfolio-roofs-400.jpg   400w,
+                    assets/images/portfolio/portfolio-roofs-800.jpg   800w,
+                    assets/images/portfolio/portfolio-roofs-1200.jpg 1200w,
+                    assets/images/portfolio/portfolio-roofs-1600.jpg 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  alt="Precision Roofing - Multilingual Contractor Website"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="450"
+                />
+              </picture>
+              <div class="project-overlay">
+                <h4>Precision Roofing</h4>
+                <p class="accent">Concept / Multi-lang</p>
+              </div>
+            </div>
+
+            <div class="project-card" data-action="open-modal" data-target="trainer" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu KICKBOXING TRENER">
+              <picture>
+                <source
+                  type="image/avif"
+                  srcset="
+                    assets/images/portfolio/portfolio-trainer-400.avif   400w,
+                    assets/images/portfolio/portfolio-trainer-800.avif   800w,
+                    assets/images/portfolio/portfolio-trainer-1200.avif 1200w,
+                    assets/images/portfolio/portfolio-trainer-1600.avif 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                />
+                <source
+                  type="image/webp"
+                  srcset="
+                    assets/images/portfolio/portfolio-trainer-400.webp   400w,
+                    assets/images/portfolio/portfolio-trainer-800.webp   800w,
+                    assets/images/portfolio/portfolio-trainer-1200.webp 1200w,
+                    assets/images/portfolio/portfolio-trainer-1600.webp 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                />
+                <img
+                  src="assets/images/portfolio/portfolio-trainer-800.jpg"
+                  srcset="
+                    assets/images/portfolio/portfolio-trainer-400.jpg   400w,
+                    assets/images/portfolio/portfolio-trainer-800.jpg   800w,
+                    assets/images/portfolio/portfolio-trainer-1200.jpg 1200w,
+                    assets/images/portfolio/portfolio-trainer-1600.jpg 1600w
+                  "
+                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  alt="KICKBOXING TRENER - Kickboxing & MMA Trainer Landing Page"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="450"
+                />
+              </picture>
+              <div class="project-overlay">
+                <h4>KICKBOXING TRENER</h4>
+                <p class="accent">Concept / Landing Page</p>
+              </div>
+            </div>
+          </template>
         </div>
       </section>
 

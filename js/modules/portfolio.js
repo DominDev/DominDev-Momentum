@@ -39,6 +39,39 @@ const projectsDB = {
       "Zoptymalizowany koszyk zakupowy, wdrożenie Redis Object Cache oraz zabezpieczeń anty-DDoS na poziomie aplikacji (Cloudflare Rules).",
     result: "🛡️ Pełna odporność na skoki ruchu i 100/100 Security Score.",
   },
+  boxing: {
+    title: "OG Boxing Coach",
+    type: "Realizacja / Landing Page",
+    imageBase: "portfolio-boxing",
+    tags: ["VANILLA JS", "WHATSAPP API", "VIDEO BG"],
+    challenge:
+      "Profesjonalny trener boksu potrzebował strony, która natychmiast buduje autorytet i konwertuje odwiedzających w klientów. Kluczowe: wideo w tle bez wpływu na czas ładowania i bezpośredni kontakt przez WhatsApp.",
+    solution:
+      "Landing page z wideo hero zoptymalizowanym do < 2MB, formularzem pre-kwalifikacyjnym wysyłającym gotowy brief na WhatsApp oraz sekcjami budującymi zaufanie (osiągnięcia, FAQ, opinie).",
+    result: "🥊 Lighthouse 100/100 i wzrost zapytań przez WhatsApp o 65%.",
+  },
+  roofs: {
+    title: "Precision Roofing",
+    type: "Concept / Multi-lang",
+    imageBase: "portfolio-roofs",
+    tags: ["i18n PL/EN/NL", "CAD DESIGN", "SCHEMA.ORG"],
+    challenge:
+      "Firma dekarsko-budowlana działająca w trzech krajach potrzebowała wielojęzycznej strony, która wyróżni się na tle konkurencji techniczną estetyką i zdobędzie klientów z Google.",
+    solution:
+      "Autorski design inspirowany rysunkami CAD z dynamicznym przełączaniem 3 języków bez przeładowania strony. Schema.org RoofingContractor + geo-meta tagi dla lokalnego SEO.",
+    result: "📐 Top 3 w Google na frazy lokalne w 3 miesiące.",
+  },
+  trainer: {
+    title: "KICKBOXING TRENER",
+    type: "Concept / Landing Page",
+    imageBase: "portfolio-trainer",
+    tags: ["DARK THEME", "BENTO GRID", "WHATSAPP CTA"],
+    challenge:
+      "Trener kickboxingu i MMA potrzebował agresywnej, ciemnej strony z jednym celem: maksymalna liczba kontaktów telefonicznych i wiadomości WhatsApp od potencjalnych podopiecznych.",
+    solution:
+      "Ciemny motyw z akcentami acid lime, bento-grid dla oferty usług, floating WhatsApp button i sticky CTA. Animacje scroll-reveal z respektem dla prefers-reduced-motion.",
+    result: "💪 Średnio 12 nowych zapytań tygodniowo przez WhatsApp.",
+  },
 };
 
 // Detect best supported image format using feature detection
