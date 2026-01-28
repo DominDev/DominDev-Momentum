@@ -56,6 +56,7 @@ html {
 }
 
 body {
+
   background-color: var(--bg-color);
 
   color: var(--text-main);
@@ -65,6 +66,27 @@ body {
   overflow-x: hidden;
 
   line-height: 1.6;
+
+}
+
+
+
+body.modal-open,
+
+
+
+html.modal-open {
+
+
+
+  overflow: hidden !important;
+
+
+
+  padding-right: 0 !important;
+
+
+
 }
 
 a {
@@ -3738,11 +3760,21 @@ body {
   height: 100vh;
   max-height: 100vh;
   overflow-y: auto;
+  overscroll-behavior: none;
   position: relative;
   transform: translateX(100%);
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: -20px 0 50px rgba(0, 0, 0, 0.9);
   border-radius: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Hide scrollbar WebKit */
+.modal-content::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .modal-overlay.active .modal-content {
@@ -4017,12 +4049,44 @@ body {
   flex-direction: column;
 }
 
-.modal-image-container {
+.modal-image-frame {
   position: relative;
   background: #000;
   height: 400px;
-  overflow: hidden;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  --modal-image-height: 400px;
+}
+
+.modal-image-container {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.3s;
+}
+
+.modal-image-container::-webkit-scrollbar {
+  width: 4px;
+}
+.modal-image-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.modal-image-container::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 0;
+}
+
+.modal-image-container:hover {
+  scrollbar-color: var(--primary) rgba(255, 255, 255, 0.05);
+}
+.modal-image-container:hover::-webkit-scrollbar-thumb {
+  background: var(--primary);
+}
+.modal-image-container:hover::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .modal-image-container img {
@@ -4031,31 +4095,52 @@ body {
   max-height: none !important;
   opacity: 0.9;
   display: block;
+  position: relative;
+}
+
+.modal-scroll-hint {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 12px;
+  left: 50%;
+  transform: translate(-50%, 6px);
+  padding: 5px 12px;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: rgba(5, 5, 5, 0.85);
+  border: 1px solid var(--primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+}
+
+.modal-scroll-hint.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  animation: hintPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+  0% {
+    transform: translate(-50%, 0) scale(1);
+  }
+  50% {
+    transform: translate(-50%, 0) scale(1.03);
+  }
+  100% {
+    transform: translate(-50%, 0) scale(1);
+  }
 }
 
 /* Animacja scrollowania długiego screenshota */
 /* Force animation even with prefers-reduced-motion (decorative, non-distracting) */
-.modal-image-container img.scrolling {
-  animation: scroll-screenshot 30s ease-in-out infinite alternate !important;
-  animation-duration: 30s !important;
-  animation-play-state: running !important;
-  will-change: transform;
-}
-
-@keyframes scroll-screenshot {
-  0% {
-    transform: translateY(0);
-  }
-  15% {
-    transform: translateY(0); /* Longer pause at top */
-  }
-  100% {
-    transform: translateY(calc(-100% + 400px));
-  }
-}
 
 .modal-tech-stack {
   position: absolute;
@@ -4154,17 +4239,18 @@ body {
   .modal-body {
     flex-direction: column;
   }
-  .modal-image-container {
+  .modal-image-frame {
     height: 300px;
+    --modal-image-height: 300px;
   }
   /* Animacja dla mobile - od góry do dołu (z poprawną wysokością) */
-  .modal-image-container img.scrolling {
-    animation: scroll-screenshot-mobile 40s ease-in-out infinite alternate !important;
-    animation-duration: 40s !important;
-    animation-play-state: running !important;
-  }
   .modal-info {
     padding: 20px;
+  }
+  .modal-scroll-hint {
+    top: 10px;
+    padding: 4px 10px;
+    font-size: 0.65rem;
   }
   .modal-info h3 {
     font-size: 1.4rem;
@@ -4187,41 +4273,18 @@ body {
   }
 }
 
-@keyframes scroll-screenshot-mobile {
-  0% {
-    transform: translateY(0);
-  }
-  20% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(calc(-100% + 300px));
-  }
-}
-
-@keyframes scroll-screenshot-small {
-  0% {
-    transform: translateY(0);
-  }
-  20% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(calc(-100% + 250px));
-  }
-}
-
 @media (max-width: 480px) {
-  .modal-image-container {
+  .modal-image-frame {
     height: 250px;
-  }
-  .modal-image-container img.scrolling {
-    animation: scroll-screenshot-small 40s ease-in-out infinite alternate !important;
-    animation-duration: 40s !important;
-    animation-play-state: running !important;
+    --modal-image-height: 250px;
   }
   .modal-info {
     padding: 15px;
+  }
+  .modal-scroll-hint {
+    top: 8px;
+    padding: 3px 6px;
+    font-size: 0.6rem;
   }
   .modal-info h3 {
     font-size: 1.2rem;
