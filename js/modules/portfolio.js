@@ -125,7 +125,7 @@ export function initPortfolio() {
   let autoScrollInitialDelayDone = false;
   let prevScrollBehavior = "";
   let scrollBehaviorForced = false;
-  const DEBUG_MODAL_SCROLL = true;
+  const DEBUG_MODAL_SCROLL = false;
   const AUTO_SCROLL_IDLE_DELAY = 500;
   const AUTO_SCROLL_END_PAUSE = 200;
   const AUTO_SCROLL_START_DELAY = 1000;
@@ -137,10 +137,7 @@ export function initPortfolio() {
   const AUTO_SCROLL_START_MAX_ATTEMPTS = 30;
   const AUTO_SCROLL_HINT_DELAY = 2000;
 
-  const debugLog = (event, payload = {}) => {
-    if (!DEBUG_MODAL_SCROLL) return;
-    console.log("[ModalScroll]", performance.now().toFixed(2), event, payload);
-  };
+  const debugLog = () => {};
 
   // Detect best image format on init
   detectImageFormat();
@@ -150,20 +147,14 @@ export function initPortfolio() {
     prevScrollBehavior = modalImageContainer.style.scrollBehavior || "";
     modalImageContainer.style.scrollBehavior = "auto";
     scrollBehaviorForced = true;
-    debugLog("scrollBehavior:force-auto", {
-      prev: prevScrollBehavior || "(empty)",
-      computed: getComputedStyle(modalImageContainer).scrollBehavior,
-    });
+    debugLog();
   };
 
   const restoreScrollBehavior = () => {
     if (!modalImageContainer || !scrollBehaviorForced) return;
     modalImageContainer.style.scrollBehavior = prevScrollBehavior;
     scrollBehaviorForced = false;
-    debugLog("scrollBehavior:restore", {
-      restored: prevScrollBehavior || "(empty)",
-      computed: getComputedStyle(modalImageContainer).scrollBehavior,
-    });
+    debugLog();
   };
 
   const clearHintTimers = () => {
@@ -194,14 +185,7 @@ export function initPortfolio() {
   };
 
   const stopAutoScroll = () => {
-    debugLog("stopAutoScroll", {
-      autoScrollStarted,
-      isAutoScrolling,
-      hasRaf: Boolean(autoScrollRaf),
-      hasResumeTimer: Boolean(autoScrollResumeTimer),
-      hasEndPauseTimer: Boolean(autoScrollEndPauseTimer),
-      userInteracting,
-    });
+    debugLog();
     autoScrollStarted = false;
     isAutoScrolling = false;
     lastFrameTime = null;
@@ -233,7 +217,7 @@ export function initPortfolio() {
 
   const handleUserInteraction = (source, extra = {}) => {
     userInteracting = true;
-    debugLog("userInteraction:start", { source, ...extra });
+    debugLog();
     hideHint();
     clearHintTimers();
     stopAutoScroll();
@@ -241,7 +225,7 @@ export function initPortfolio() {
     clearUserInteractionTimer();
     userInteractionTimer = setTimeout(() => {
       userInteracting = false;
-      debugLog("userInteraction:idle");
+      debugLog();
       scheduleAutoScrollResume();
     }, AUTO_SCROLL_IDLE_DELAY);
   };
@@ -261,43 +245,29 @@ export function initPortfolio() {
   const requestAutoScrollStart = (attempt = 0) => {
     if (!modalImageContainer) return;
     if (userInteracting) {
-      debugLog("requestAutoScrollStart:blocked-user", { attempt });
+      debugLog();
       return;
     }
     if (!modal.classList.contains("active")) {
       autoScrollPending = true;
-      debugLog("requestAutoScrollStart:pending", { attempt });
+      debugLog();
       return;
     }
     autoScrollPending = false;
     const maxScroll = getMaxScroll();
     if (maxScroll <= 1) {
-      debugLog("requestAutoScrollStart:retry", {
-        attempt,
-        maxScroll,
-        scrollHeight: modalImageContainer.scrollHeight,
-        clientHeight: modalImageContainer.clientHeight,
-      });
+      debugLog();
       if (attempt < AUTO_SCROLL_START_MAX_ATTEMPTS) {
         setTimeout(() => requestAutoScrollStart(attempt + 1), 100);
       } else {
-        debugLog("requestAutoScrollStart:giveup", {
-          maxScroll,
-          scrollHeight: modalImageContainer.scrollHeight,
-          clientHeight: modalImageContainer.clientHeight,
-        });
+        debugLog();
       }
       return;
     }
-    debugLog("requestAutoScrollStart:start", {
-      attempt,
-      maxScroll,
-      scrollHeight: modalImageContainer.scrollHeight,
-      clientHeight: modalImageContainer.clientHeight,
-    });
+    debugLog();
     if (!autoScrollInitialDelayDone) {
       autoScrollInitialDelayDone = true;
-      debugLog("requestAutoScrollStart:delay", { delayMs: AUTO_SCROLL_START_DELAY });
+      debugLog();
       setTimeout(() => {
         if (userInteracting || !modal.classList.contains("active")) return;
         startAutoScroll();
@@ -309,25 +279,21 @@ export function initPortfolio() {
 
   const startAutoScroll = () => {
     if (userInteracting) {
-      debugLog("startAutoScroll:blocked-user");
+      debugLog();
       return;
     }
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      debugLog("startAutoScroll:reduced-motion");
+      debugLog();
       return;
     }
     if (autoScrollStarted) {
-      debugLog("startAutoScroll:already-running");
+      debugLog();
       return;
     }
     if (!modalImageContainer || !modal.classList.contains("active")) return;
     const maxScroll = getMaxScroll();
     if (maxScroll <= 1) {
-      debugLog("startAutoScroll:abort-maxScroll", {
-        maxScroll,
-        scrollHeight: modalImageContainer.scrollHeight,
-        clientHeight: modalImageContainer.clientHeight,
-      });
+      debugLog();
       return;
     }
 
@@ -355,15 +321,7 @@ export function initPortfolio() {
     let startTime = performance.now();
     lastFrameTime = null;
 
-    debugLog("startAutoScroll:params", {
-      startTop,
-      targetTop,
-      distance,
-      duration,
-      maxScroll,
-      scrollHeight: modalImageContainer.scrollHeight,
-      clientHeight: modalImageContainer.clientHeight,
-    });
+    debugLog();
 
     let frameCount = 0;
     const step = (now) => {
@@ -372,7 +330,7 @@ export function initPortfolio() {
         if (frameDelta > MAX_FRAME_DELTA) {
           const excess = frameDelta - 1000 / 60;
           startTime += excess;
-          debugLog("step:time-jump", { frameDelta, excess: Number(excess.toFixed(2)) });
+          debugLog();
         }
       }
       lastFrameTime = now;
@@ -394,14 +352,7 @@ export function initPortfolio() {
 
       frameCount += 1;
       if (frameCount % 30 === 0 || t >= 1) {
-        debugLog("step:progress", {
-          t: Number(t.toFixed(4)),
-          nextTop: Number(nextTop.toFixed(2)),
-          actualTop: Number(modalImageContainer.scrollTop.toFixed(2)),
-          maxScroll: getMaxScroll(),
-          scrollHeight: modalImageContainer.scrollHeight,
-          clientHeight: modalImageContainer.clientHeight,
-        });
+        debugLog();
       }
 
       if (t < 1) {
@@ -412,9 +363,9 @@ export function initPortfolio() {
       autoScrollRaf = null;
       autoScrollDirection *= -1;
       autoScrollStarted = false;
-      debugLog("step:complete", { nextDirection: autoScrollDirection });
+      debugLog();
       autoScrollEndPauseTimer = setTimeout(() => {
-        debugLog("endPauseTimer:fire");
+        debugLog();
         startAutoScroll();
       }, AUTO_SCROLL_END_PAUSE);
     };
@@ -424,10 +375,10 @@ export function initPortfolio() {
 
   const scheduleAutoScrollResume = () => {
     if (!modalImageContainer || !modal.classList.contains("active")) return;
-    debugLog("scheduleAutoScrollResume");
+    debugLog();
     clearAutoScrollTimers();
     autoScrollResumeTimer = setTimeout(() => {
-      debugLog("resumeTimer:fire");
+      debugLog();
       startAutoScroll();
     }, AUTO_SCROLL_IDLE_DELAY);
   };
@@ -438,10 +389,11 @@ export function initPortfolio() {
 
     lastFocusedElement = document.activeElement;
     glitchOverlay.classList.add("active");
-    document.body.style.overflow = "hidden";
+    document.body.classList.add("modal-open");
+    document.documentElement.classList.add("modal-open");
 
     setTimeout(() => {
-      debugLog("openModal:begin", { projectId });
+      debugLog();
       stopAutoScroll();
       clearAutoScrollTimers();
       autoScrollStarted = false;
@@ -470,14 +422,8 @@ export function initPortfolio() {
       // Build responsive image URL
       const newSrc = getResponsiveImageUrl(data.imageBase, containerWidth);
 
-      // Debug logging (remove in production)
-      console.log("[Portfolio Debug]", {
-        containerWidth,
-        bestFormat,
-        newSrc,
-        imageBase: data.imageBase,
-      });
-      debugLog("image:set-src", { newSrc, containerWidth, bestFormat });
+      debugLog();
+      debugLog();
 
       // Clear previous src to force reload and reset complete state
       modalImg.removeAttribute("src");
@@ -486,10 +432,7 @@ export function initPortfolio() {
       // Set onload handler BEFORE setting src
       modalImg.onload = () => {
         modalImg.onload = null;
-        debugLog("image:onload", {
-          naturalWidth: modalImg.naturalWidth,
-          naturalHeight: modalImg.naturalHeight,
-        });
+        debugLog();
         ensureImageDecoded().then(() => {
           requestAnimationFrame(() => {
             requestAnimationFrame(() => {
@@ -499,10 +442,7 @@ export function initPortfolio() {
                   `${modalImageContainer.clientHeight}px`
                 );
                 modalImageContainer.scrollTop = 0;
-                debugLog("image:layout-ready", {
-                  scrollHeight: modalImageContainer.scrollHeight,
-                  clientHeight: modalImageContainer.clientHeight,
-                });
+                debugLog();
                 requestAutoScrollStart();
               }
             });
@@ -512,9 +452,8 @@ export function initPortfolio() {
 
       // Handle load errors - fallback to JPG
       modalImg.onerror = () => {
-        console.warn("[Portfolio] Image load failed, trying JPG fallback:", newSrc);
         const jpgFallback = newSrc.replace(/\.(avif|webp)$/, ".jpg");
-        debugLog("image:onerror", { newSrc, jpgFallback });
+        debugLog();
         if (newSrc !== jpgFallback) {
           modalImg.src = jpgFallback;
         }
@@ -527,7 +466,6 @@ export function initPortfolio() {
       // Use requestAnimationFrame to ensure DOM has updated
       requestAnimationFrame(() => {
         if (modalImg.complete && modalImg.naturalHeight > 0) {
-          console.log("[Portfolio Debug] Image already complete, naturalHeight:", modalImg.naturalHeight);
           if (modalImageContainer) {
             modalImageContainer.style.setProperty(
               "--modal-image-height",
@@ -535,10 +473,7 @@ export function initPortfolio() {
             );
             modalImageContainer.scrollTop = 0;
           }
-          debugLog("image:cached-complete", {
-            naturalWidth: modalImg.naturalWidth,
-            naturalHeight: modalImg.naturalHeight,
-          });
+          debugLog();
           ensureImageDecoded().then(() => requestAutoScrollStart());
         }
       });
@@ -565,7 +500,7 @@ export function initPortfolio() {
       // 2. Show modal visually
       modal.classList.add("active");
       if (autoScrollPending) {
-        debugLog("openModal:pending-start");
+        debugLog();
         requestAutoScrollStart();
       }
       // 3. Move focus to close button
@@ -577,7 +512,8 @@ export function initPortfolio() {
 
   window.closeModal = function () {
     modal.classList.remove("active");
-    document.body.style.overflow = "";
+    document.body.classList.remove("modal-open");
+    document.documentElement.classList.remove("modal-open");
     stopAutoScroll();
     clearAutoScrollTimers();
     clearHintTimers();
@@ -608,10 +544,7 @@ export function initPortfolio() {
     modalImageContainer.addEventListener("scroll", () => {
       if (!modal.classList.contains("active")) return;
       if (isAutoScrolling) return;
-      debugLog("scroll:manual", {
-        scrollTop: modalImageContainer.scrollTop,
-        maxScroll: getMaxScroll(),
-      });
+      debugLog();
       handleUserInteraction("scroll", {
         scrollTop: modalImageContainer.scrollTop,
         maxScroll: getMaxScroll(),
@@ -621,29 +554,24 @@ export function initPortfolio() {
     modalImageContainer.addEventListener(
       "wheel",
       (e) => {
-        debugLog("wheel", {
-          deltaY: e.deltaY,
-          scrollTop: modalImageContainer.scrollTop,
-          autoScrollStarted,
-          isAutoScrolling,
-        });
-        handleUserInteraction("wheel", { deltaY: e.deltaY });
-      },
+      debugLog();
+      handleUserInteraction("wheel", { deltaY: e.deltaY });
+    },
       { passive: true }
     );
     modalImageContainer.addEventListener(
       "touchstart",
       () => {
-        debugLog("touchstart", { scrollTop: modalImageContainer.scrollTop });
-        handleUserInteraction("touchstart");
-      },
+      debugLog();
+      handleUserInteraction("touchstart");
+    },
       { passive: true }
     );
     modalImageContainer.addEventListener(
       "touchmove",
       () => {
-        debugLog("touchmove", { scrollTop: modalImageContainer.scrollTop });
-      },
+      debugLog();
+    },
       { passive: true }
     );
   }
