@@ -85,7 +85,7 @@ if (-not (Test-Path $outputPath)) { New-Item -ItemType Directory -Path $outputPa
 
 $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
 $projectName = Split-Path $ProjectPath -Leaf
-$outputFile = Join-Path $outputPath "code_snapshot_$timestamp.md"
+$outputFile = Join-Path $outputPath "snapshot_code_$timestamp.md"
 
 Write-Host "Skanowanie projektu..." -ForegroundColor Cyan
 $codeFiles = Get-CodeFiles -Path $ProjectPath | Sort-Object { $_.RelativePath }

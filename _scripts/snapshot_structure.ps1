@@ -81,7 +81,7 @@ $outputPath = Join-Path $ProjectPath $OutputDir
 if (-not (Test-Path $outputPath)) { New-Item -ItemType Directory -Path $outputPath -Force | Out-Null }
 
 $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
-$outputFile = Join-Path $outputPath "structure_snapshot_$timestamp.md"
+$outputFile = Join-Path $outputPath "snapshot_structure_$timestamp.md"
 $projectName = Split-Path $ProjectPath -Leaf
 
 $content = @()
