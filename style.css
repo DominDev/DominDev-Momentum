@@ -4018,16 +4018,20 @@ body {
   flex-direction: column;
 }
 
-.modal-image-container {
+.modal-image-frame {
   position: relative;
   background: #000;
   height: 400px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  --modal-image-height: 400px;
+}
+
+.modal-image-container {
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  --modal-image-height: 400px;
 }
 
 .modal-image-container img {
@@ -4037,6 +4041,47 @@ body {
   opacity: 0.9;
   display: block;
   position: relative;
+}
+
+.modal-scroll-hint {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translate(-50%, 6px);
+  padding: 5px 12px;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: rgba(5, 5, 5, 0.85);
+  border: 1px solid var(--primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+}
+
+.modal-scroll-hint.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  animation: hintPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+  0% {
+    transform: translate(-50%, 0) scale(1);
+  }
+  50% {
+    transform: translate(-50%, 0) scale(1.03);
+  }
+  100% {
+    transform: translate(-50%, 0) scale(1);
+  }
 }
 
 /* Animacja scrollowania długiego screenshota */
@@ -4139,13 +4184,18 @@ body {
   .modal-body {
     flex-direction: column;
   }
-  .modal-image-container {
+  .modal-image-frame {
     height: 300px;
     --modal-image-height: 300px;
   }
   /* Animacja dla mobile - od góry do dołu (z poprawną wysokością) */
   .modal-info {
     padding: 20px;
+  }
+  .modal-scroll-hint {
+    top: 10px;
+    padding: 4px 10px;
+    font-size: 0.65rem;
   }
   .modal-info h3 {
     font-size: 1.4rem;
@@ -4169,12 +4219,17 @@ body {
 }
 
 @media (max-width: 480px) {
-  .modal-image-container {
+  .modal-image-frame {
     height: 250px;
     --modal-image-height: 250px;
   }
   .modal-info {
     padding: 15px;
+  }
+  .modal-scroll-hint {
+    top: 8px;
+    padding: 3px 6px;
+    font-size: 0.6rem;
   }
   .modal-info h3 {
     font-size: 1.2rem;

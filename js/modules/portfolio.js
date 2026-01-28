@@ -105,6 +105,7 @@ export function initPortfolio() {
   const modalChallenge = document.getElementById("modal-challenge");
   const modalSolution = document.getElementById("modal-solution");
   const modalResult = document.getElementById("modal-result");
+  const modalScrollHint = document.getElementById("modal-scroll-hint");
   const closeModalBtn = document.getElementById("modal-close-btn");
   const glitchOverlay = document.getElementById("system-glitch");
   let lastFocusedElement = null;
@@ -119,6 +120,8 @@ export function initPortfolio() {
   let autoScrollPending = false;
   let userInteracting = false;
   let userInteractionTimer = null;
+  let hintShowTimer = null;
+  let hintShownThisSession = false;
   let autoScrollInitialDelayDone = false;
   let prevScrollBehavior = "";
   let scrollBehaviorForced = false;
@@ -132,6 +135,7 @@ export function initPortfolio() {
   const AUTO_SCROLL_MAX_DURATION = 60000;
   const MAX_FRAME_DELTA = 100;
   const AUTO_SCROLL_START_MAX_ATTEMPTS = 30;
+  const AUTO_SCROLL_HINT_DELAY = 2000;
 
   const debugLog = (event, payload = {}) => {
     if (!DEBUG_MODAL_SCROLL) return;
@@ -160,6 +164,33 @@ export function initPortfolio() {
       restored: prevScrollBehavior || "(empty)",
       computed: getComputedStyle(modalImageContainer).scrollBehavior,
     });
+  };
+
+  const clearHintTimers = () => {
+    if (hintShowTimer) {
+      clearTimeout(hintShowTimer);
+      hintShowTimer = null;
+    }
+  };
+
+  const showHint = () => {
+    if (!modalScrollHint) return;
+    modalScrollHint.classList.add("is-visible");
+  };
+
+  const hideHint = () => {
+    if (!modalScrollHint) return;
+    modalScrollHint.classList.remove("is-visible");
+  };
+
+  const scheduleHint = () => {
+    if (!modalScrollHint || hintShownThisSession) return;
+    hintShownThisSession = true;
+    clearHintTimers();
+    hintShowTimer = setTimeout(() => {
+      if (!modal.classList.contains("active") || userInteracting) return;
+      showHint();
+    }, AUTO_SCROLL_HINT_DELAY);
   };
 
   const stopAutoScroll = () => {
@@ -203,6 +234,8 @@ export function initPortfolio() {
   const handleUserInteraction = (source, extra = {}) => {
     userInteracting = true;
     debugLog("userInteraction:start", { source, ...extra });
+    hideHint();
+    clearHintTimers();
     stopAutoScroll();
     clearAutoScrollTimers();
     clearUserInteractionTimer();
@@ -302,6 +335,7 @@ export function initPortfolio() {
     stopAutoScroll();
     autoScrollStarted = true;
     forceAutoScrollBehavior();
+    scheduleHint();
 
     const startTop = modalImageContainer.scrollTop;
     if (startTop <= 1) {
@@ -418,6 +452,9 @@ export function initPortfolio() {
       autoScrollPending = false;
       userInteracting = false;
       clearUserInteractionTimer();
+      hintShownThisSession = false;
+      clearHintTimers();
+      hideHint();
       autoScrollInitialDelayDone = false;
       if (modalImageContainer) {
         modalImageContainer.scrollTop = 0;
@@ -543,6 +580,8 @@ export function initPortfolio() {
     document.body.style.overflow = "";
     stopAutoScroll();
     clearAutoScrollTimers();
+    clearHintTimers();
+    hideHint();
 
     // Accessibility Fix: Move focus OUT of modal BEFORE setting aria-hidden
     if (lastFocusedElement && lastFocusedElement.focus) {
