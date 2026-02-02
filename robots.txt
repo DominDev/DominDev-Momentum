@@ -12,6 +12,10 @@ Allow: /assets/
 Allow: /js/
 Allow: /css/
 
+# Brief page (private, token-gated)
+Disallow: /brief
+Disallow: /brief/
+
 # Disallow project snapshots (internal use only)
 Disallow: /_project_snapshots/
 Disallow: /_docs/

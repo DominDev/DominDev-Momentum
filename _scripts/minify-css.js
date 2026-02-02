@@ -46,19 +46,32 @@ function processFile(inputFile, outputFile) {
   }
 }
 
-// Process files
-const files = [
+// ============================================
+// Configuration
+// ============================================
+
+// Explicit files to minify
+const FILES_TO_MINIFY = [
   { input: 'style.css', output: 'style.min.css' },
   { input: 'style-404.css', output: 'style-404.min.css' },
   { input: 'assets/fonts/critical.css', output: 'assets/fonts/critical.min.css' }
 ];
 
-console.log('🚀 CSS Minification Started\n');
+// Directories to scan for .css files (auto-discover, no need to list each file)
+const DIRS_TO_SCAN = [
+  'css'
+];
 
-// Root directory (parent of _scripts/)
 const rootDir = path.join(__dirname, '..');
 
-files.forEach(({ input, output }) => {
+// ============================================
+// Main Execution
+// ============================================
+
+console.log('🚀 CSS Minification Started\n');
+
+// Process explicit files
+FILES_TO_MINIFY.forEach(({ input, output }) => {
   const inputPath = path.join(rootDir, input);
   const outputPath = path.join(rootDir, output);
 
@@ -67,6 +80,22 @@ files.forEach(({ input, output }) => {
     console.log('');
   } else {
     console.log(`⚠️  Skipping ${input} (not found)\n`);
+  }
+});
+
+// Process directories (auto-scan)
+DIRS_TO_SCAN.forEach(dir => {
+  const fullDir = path.join(rootDir, dir);
+  if (fs.existsSync(fullDir)) {
+    const files = fs.readdirSync(fullDir);
+    files.forEach(file => {
+      if (file.endsWith('.css') && !file.endsWith('.min.css')) {
+        const inputPath = path.join(fullDir, file);
+        const outputPath = path.join(fullDir, file.replace('.css', '.min.css'));
+        processFile(inputPath, outputPath);
+        console.log('');
+      }
+    });
   }
 });
 

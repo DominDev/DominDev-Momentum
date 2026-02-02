@@ -34,8 +34,8 @@ const ROOT_DIR = path.join(__dirname, '..');
 
 function minifyJS(code) {
   return code
-    // Remove single-line comments (careful with URLs)
-    .replace(/\/\/[^(\n|\r)]*/g, '')
+    // Remove single-line comments (careful with URLs and strings)
+    .replace(/\/\/[^\n\r]*/g, '')
     // Remove multi-line comments
     .replace(/\/\*[\s\S]*?\*\//g, '')
     // Remove extra whitespace

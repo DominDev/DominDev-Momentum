@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>DominDev | Brief projektowy</title>
+  <meta name="theme-color" content="#cc0000">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/icons/apple-touch-icon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/style.min.css">
+  <link rel="stylesheet" href="/css/brief.min.css">
+
+  <!-- Turnstile -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-outline" id="cursor-outline"></div>
+
+  <!-- PRELOADER (Boot Screen) -->
+  <div id="preloader">
+    <canvas id="preloader-matrix" class="preloader-canvas"></canvas>
+    <div class="screen-overlay"></div>
+    <div class="loader-content">
+      <div class="loader-code-block">
+        <div class="loader-label">SYSTEM_BOOT</div>
+        <div class="glitch-logo" data-text="DOMINDEV">Domin<span>Dev</span></div>
+      </div>
+      <div class="loading-text">INITIALIZING...</div>
+    </div>
+  </div>
+
+  <!-- MATRIX BACKGROUND CANVAS -->
+  <canvas id="matrixCanvas"></canvas>
+
+  <!-- Loading state (App level, after preloader) -->
+  <div id="state-loading" class="brief-state" aria-live="polite">
+    <div class="brief-container" style="text-align: center;">
+      <div class="brief-logo">Domin<span class="accent">Dev</span>.</div>
+      <p class="brief-status">Wczytywanie danych...</p>
+    </div>
+  </div>
+
+  <!-- Error: expired/invalid -->
+  <div id="state-expired" class="brief-state" hidden aria-live="polite">
+    <div class="brief-container">
+      <div class="brief-logo">Domin<span class="accent">Dev</span>.</div>
+      <h1>Link wygasł</h1>
+      <p>Ten link do briefu jest nieaktualny lub nieprawidłowy.</p>
+      <p>Wypełnij ponownie formularz kontaktowy, aby otrzymać nowy link.</p>
+      <a href="https://domindev.com/#contact" class="btn">Formularz kontaktowy</a>
+    </div>
+  </div>
+
+  <!-- Error: already used -->
+  <div id="state-used" class="brief-state" hidden aria-live="polite">
+    <div class="brief-container">
+      <div class="brief-logo">Domin<span class="accent">Dev</span>.</div>
+      <h1>Brief już wysłany</h1>
+      <p>Brief z tego linku został już przesłany. Jeśli potrzebujesz poprawić odpowiedzi, skontaktuj się ze mną.</p>
+      <a href="mailto:contact@domindev.com" class="btn">Napisz do mnie</a>
+    </div>
+  </div>
+
+  <!-- Main form -->
+  <div id="state-form" class="brief-state" hidden>
+    <div class="brief-container">
+
+      <header class="brief-header">
+        <div class="brief-logo">Domin<span class="accent">Dev</span>.</div>
+        <p class="brief-subtitle">Brief Projektowy</p>
+        <p class="brief-email-info">
+          Brief przypisany do: <strong id="brief-email" class="accent"></strong>
+        </p>
+      </header>
+
+      <!-- Stepper -->
+      <nav class="stepper" role="tablist" aria-label="Kroki briefu">
+        <button class="step-tab active" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1" data-step="1">
+          <span class="step-num">1</span>
+          <span class="step-label">O projekcie</span>
+        </button>
+        <button class="step-tab" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2" data-step="2">
+          <span class="step-num">2</span>
+          <span class="step-label">Zakres</span>
+        </button>
+        <button class="step-tab" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3" data-step="3">
+          <span class="step-num">3</span>
+          <span class="step-label">Styl</span>
+        </button>
+        <button class="step-tab" role="tab" aria-selected="false" aria-controls="panel-4" id="tab-4" data-step="4">
+          <span class="step-num">4</span>
+          <span class="step-label">Konwersja</span>
+        </button>
+        <button class="step-tab" role="tab" aria-selected="false" aria-controls="panel-5" id="tab-5" data-step="5">
+          <span class="step-num">5</span>
+          <span class="step-label">Podsumowanie</span>
+        </button>
+      </nav>
+
+      <form id="brief-form" novalidate>
+
+        <!-- Step 1: O projekcie -->
+        <div class="step-panel active" role="tabpanel" id="panel-1" aria-labelledby="tab-1">
+          <h2>O projekcie</h2>
+
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="f-businessGoal">Cel biznesowy <span class="required">*</span></label>
+              <button type="button" class="hint-trigger" aria-label="Pomoc">?</button>
+              <div class="hint-content">
+                <strong>O co chodzi?</strong> Nie pisz "chcę ładną stronę". Napisz, co ta strona ma robić dla Twojego biznesu i portfela.
+                <div class="example"><strong>Przykład:</strong> "Chcę zwiększyć liczbę zapytań o ofertę o 30% w ciągu kwartału" lub "Chcę automatyzacji zapisów, aby oszczędzić czas na telefonach."</div>
+              </div>
+            </div>
+            <textarea id="f-businessGoal" name="businessGoal" rows="4" required minlength="10" maxlength="2000"
+              placeholder="Co ma osiągnąć ta strona/aplikacja? Jaki problem rozwiązuje?"></textarea>
+            <div class="validation-msg" aria-live="polite"></div>
+          </div>
+
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="f-audience">Grupa docelowa <span class="required">*</span></label>
+              <button type="button" class="hint-trigger" aria-label="Pomoc">?</button>
+              <div class="hint-content">
+                <strong>O co chodzi?</strong> Do kogo mówimy? Język, styl i funkcje muszą pasować do Twojego idealnego klienta.
+                <div class="example"><strong>Przykład:</strong> "Kobiety 25-35 lat z dużych miast, dbające o ekologię" lub "Właściciele małych firm produkcyjnych szukający oszczędności."</div>
+              </div>
+            </div>
+            <textarea id="f-audience" name="audience" rows="4" required minlength="10" maxlength="2000"
+              placeholder="Kim są Twoi klienci/użytkownicy? Wiek, branża, potrzeby?"></textarea>
+            <div class="validation-msg" aria-live="polite"></div>
+          </div>
+
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="f-projectType">Typ projektu</label>
+              <button type="button" class="hint-trigger" aria-label="Pomoc">?</button>
+              <div class="hint-content">
+                <strong>O co chodzi?</strong> Czego technicznie potrzebujesz od strony konstrukcyjnej?
+                <div class="example"><strong>Przykład:</strong> "Prosty Landing Page pod kampanię FB", "Sklep internetowy (50 produktów)", "Strona firmowa z blogiem".</div>
+              </div>
+            </div>
+            <input type="text" id="f-projectType" name="projectType" maxlength="2000"
+              placeholder="np. Landing page, strona firmowa, e-commerce, web app">
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn btn-brief-next" data-goto="2">Dalej</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Zakres -->
+        <div class="step-panel" role="tabpanel" id="panel-2" aria-labelledby="tab-2" hidden>
+          <h2>Zakres projektu</h2>
+
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="f-sections">Sekcje / funkcje</label>
+              <button type="button" class="hint-trigger" aria-label="Pomoc">?</button>
+              <div class="hint-content">
+                <strong>O co chodzi?</strong> Wymień kluczowe podstrony lub funkcje specjalne, które muszą się znaleźć na stronie.
+                <div class="example"><strong>Przykład:</strong> "Strona główna, O nas, Oferta, Blog, Formularz, Mapa dojazdu, Kalkulator wyceny."</div>
+              </div>
+            </div>
+            <textarea id="f-sections" name="sections" rows="4" maxlength="2000"
+              placeholder="Jakie sekcje/podstrony potrzebujesz? Jakie funkcjonalności?"></textarea>
+          </div>
+
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="f-content">Treści</label>
+              <button type="button" class="hint-trigger" aria-label="Pomoc">?</button>
+              <div class="hint-content">
+                <strong>O co chodzi?</strong> Czy masz gotowe teksty? Tekst to szkielet strony – bez niego nie ruszymy z designem.
+                <div class="example"><strong>Przykład:</strong> "Mam gotowe teksty w Wordzie", "Potrzebuję korekty", "Szukam copywritera, który napisze wszystko od zera."</div>
+              </div>
+            </div>
+            <textarea id="f-content" name="content" rows="3" maxlength="2000"
+              placeholder="Masz gotowe teksty? Potrzebujesz copywritingu?"></textarea>
+          </div>
+
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="f-media">Media</label>
+              <button type="button" class="hint-trigger" aria-label="Pomoc">?</button>
+              <div class="hint-content">
+                <strong>O co chodzi?</strong> Czy posiadasz własne zdjęcia/wideo, czy mamy korzystać z banków zdjęć?
+                <div class="example"><strong>Przykład:</strong> "Mamy profesjonalną sesję wizerunkową", "Potrzebuję zdjęć stockowych", "Mam logo w wektorach."</div>
+              </div>
+            </div>
+            <textarea id="f-media" name="media" rows="3" maxlength="2000"
+              placeholder="Zdjęcia, filmy, logo — masz materiały czy potrzebujesz?"></textarea>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn-prev" data-goto="1">Wstecz</button>
+            <button type="button" class="btn btn-brief-next" data-goto="3">Dalej</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Styl -->
+        <div class="step-panel" role="tabpanel" id="panel-3" aria-labelledby="tab-3" hidden>
+          <h2>Styl i wygląd</h2>
+
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="f-uiux">Styl UI/UX</label>
+              <button type="button" class="hint-trigger" aria-label="Pomoc">?</button>
+              <div class="hint-content">
+                <strong>O co chodzi?</strong> Jakie wrażenie ma robić strona na kliencie? Wybierz kierunek wizualny.
+                <div class="example"><strong>Przykład:</strong> "Minimalistyczna i sterylna", "Ciemna, nowoczesna, neonowa (Cyberpunk)", "Elegancka, premium, złote akcenty".</div>
+              </div>
+            </div>
+            <textarea id="f-uiux" name="uiux" rows="3" maxlength="2000"
+              placeholder="Minimalistyczny? Nowoczesny? Korporacyjny? Ciemny/jasny motyw?"></textarea>
+          </div>
+
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="f-palette">Paleta kolorów</label>
+              <button type="button" class="hint-trigger" aria-label="Pomoc">?</button>
+              <div class="hint-content">
+                <strong>O co chodzi?</strong> Jakie kolory kojarzą się z Twoją marką? Możesz podać kody HEX, nazwy lub ogólny nastrój.
+                <div class="example"><strong>Przykład:</strong> "Ciemny granat i złoto (zaufanie)", "Żywy pomarańcz i czerń", "Pastelowe, jasne kolory (spokój)."</div>
+              </div>
+            </div>
+            <input type="text" id="f-palette" name="palette" maxlength="2000"
+              placeholder="Masz ustalone kolory? Podaj kody HEX lub opisz słownie">
+          </div>
+
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="f-fonts">Fonty</label>
+              <button type="button" class="hint-trigger" aria-label="Pomoc">?</button>
+              <div class="hint-content">
+                <strong>O co chodzi?</strong> Czy masz firmowy krój pisma? Jeśli nie, opisz charakter, jaki chcesz uzyskać.
+                <div class="example"><strong>Przykład:</strong> "Nowoczesny bezszeryfowy (jak Google)", "Klasyczny szeryfowy (jak Vogue)", "Techniczny/Monospace".</div>
+              </div>
+            </div>
+            <input type="text" id="f-fonts" name="fonts" maxlength="2000"
+              placeholder="Preferowane fonty? Styl typografii?">
+          </div>
+
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="f-inspirations">Inspiracje</label>
+              <button type="button" class="hint-trigger" aria-label="Pomoc">?</button>
+              <div class="hint-content">
+                <strong>O co chodzi?</strong> Pokaż mi co Ci się podoba (lub co Ci się nie podoba). To najszybsza droga do zrozumienia Twojego gustu.
+                <div class="example"><strong>Przykład:</strong> Linki do stron konkurencji, link do tablicy na Pinterest lub konkretne adresy URL z Twojej branży.</div>
+              </div>
+            </div>
+            <textarea id="f-inspirations" name="inspirations" rows="3" maxlength="2000"
+              placeholder="Podaj linki do stron, które Ci się podobają"></textarea>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn-prev" data-goto="2">Wstecz</button>
+            <button type="button" class="btn btn-brief-next" data-goto="4">Dalej</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Konwersja -->
+        <div class="step-panel" role="tabpanel" id="panel-4" aria-labelledby="tab-4" hidden>
+          <h2>Konwersja i ograniczenia</h2>
+
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="f-cta">Główne CTA (Call to Action)</label>
+              <button type="button" class="hint-trigger" aria-label="Pomoc">?</button>
+              <div class="hint-content">
+                <strong>O co chodzi?</strong> Co ma zrobić użytkownik po wejściu na stronę? To najważniejszy cel konwersji.
+                <div class="example"><strong>Przykład:</strong> "Wypełnić formularz wyceny", "Zadzwonić", "Kupić produkt", "Pobrać ebooka".</div>
+              </div>
+            </div>
+            <input type="text" id="f-cta" name="cta" maxlength="2000"
+              placeholder="Co ma zrobić użytkownik? np. 'Zamów wycenę', 'Kup teraz'">
+          </div>
+
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="f-seo">SEO</label>
+              <button type="button" class="hint-trigger" aria-label="Pomoc">?</button>
+              <div class="hint-content">
+                <strong>O co chodzi?</strong> Na jakie hasła klienci mają Cię znaleźć w Google? Kto jest Twoim największym rywalem w sieci?
+                <div class="example"><strong>Przykład:</strong> "Fryzjer psów Wrocław", "Pompy ciepła montaż", Konkurencja: firmaX.pl, firmaY.com.</div>
+              </div>
+            </div>
+            <textarea id="f-seo" name="seo" rows="3" maxlength="2000"
+              placeholder="Kluczowe frazy? Rynek (lokalni/ogólnopolski/global)? Główni konkurenci?"></textarea>
+          </div>
+
+          <div class="form-group">
+            <div class="label-wrapper">
+              <label for="f-constraints">Ograniczenia</label>
+              <button type="button" class="hint-trigger" aria-label="Pomoc">?</button>
+              <div class="hint-content">
+                <strong>O co chodzi?</strong> Co może nas zablokować lub co musimy uwzględnić? Czas, budżet, specyficzne wymogi techniczne.
+                <div class="example"><strong>Przykład:</strong> "Musimy ruszyć przed 1 września", "Budżet max 4000 PLN", "Mam już swój hosting i domenę".</div>
+              </div>
+            </div>
+            <textarea id="f-constraints" name="constraints" rows="3" maxlength="2000"
+              placeholder="Termin? Budżet? Hosting? Technologia narzucona?"></textarea>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn-prev" data-goto="3">Wstecz</button>
+            <button type="button" class="btn btn-brief-next" data-goto="5">Podsumowanie</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Summary + Submit -->
+        <div class="step-panel" role="tabpanel" id="panel-5" aria-labelledby="tab-5" hidden>
+          <h2>Podsumowanie</h2>
+          <p class="summary-intro">Sprawdź swoje odpowiedzi przed wysłaniem. Możesz wrócić do dowolnego kroku.</p>
+
+          <div id="brief-summary" class="summary-list">
+            <!-- Dynamically populated by JS -->
+          </div>
+
+          <!-- Turnstile widget -->
+          <div class="turnstile-wrapper">
+            <div class="cf-turnstile"
+              data-sitekey="0x4AAAAAACO2zXQdd6rlrshk"
+              data-theme="dark"
+              data-language="pl"
+              data-callback="onTurnstileSuccess">
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn-prev" data-goto="4">Wstecz</button>
+            <button type="submit" class="btn" id="btn-submit" disabled>Wyślij Brief</button>
+          </div>
+
+          <button type="button" class="btn-clear-draft" id="btn-clear-draft">Usuń zapisany szkic</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Submitting state -->
+  <div id="state-submitting" class="brief-state" hidden aria-live="polite">
+    <div class="brief-container">
+      <div class="brief-logo">Domin<span class="accent">Dev</span>.</div>
+      <p class="brief-status">Wysyłam brief...</p>
+    </div>
+  </div>
+
+  <!-- Success state -->
+  <div id="state-success" class="brief-state" hidden aria-live="polite">
+    <div class="brief-container">
+      <div class="brief-logo">Domin<span class="accent">Dev</span>.</div>
+      <h1>Brief wysłany!</h1>
+      <p>Dziękuję za wypełnienie briefu. Odezwę się w ciągu 1–3 dni roboczych z wstępną propozycją.</p>
+      <a href="https://domindev.com" class="btn">Wróć do strony</a>
+    </div>
+  </div>
+
+  <!-- Error state (network/500) -->
+  <div id="state-error" class="brief-state" hidden aria-live="polite">
+    <div class="brief-container">
+      <div class="brief-logo">Domin<span class="accent">Dev</span>.</div>
+      <h1>Coś poszło nie tak</h1>
+      <p id="error-message">Wystąpił błąd serwera. Twoje odpowiedzi są zapisane — spróbuj ponownie.</p>
+      <button class="btn" id="btn-retry">Spróbuj ponownie</button>
+    </div>
+  </div>
+
+  <!-- No JS fallback -->
+  <noscript>
+    <div class="brief-container" style="padding: 60px 20px; text-align: center;">
+      <h1>Wymagana obsługa JavaScript</h1>
+      <p>Włącz JavaScript w przeglądarce, aby wypełnić brief.</p>
+    </div>
+  </noscript>
+
+  <!-- Brief wizard logic (handles preloader & matrix) -->
+  <script type="module" src="/js/modules/brief-wizard.min.js"></script>
+</body>
+</html>
