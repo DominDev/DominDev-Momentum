@@ -9,3 +9,15 @@ id = "cead750dae3a456ea95983e9cd8df9d2"
 [[kv_namespaces]]
 binding = "BRIEF_KV"
 id = "46c0d9a8794147808c1835d45b90ce61"
+
+[vars]
+BRIEF_ENABLED = "true"
+BRIEF_TTL_SECONDS = "604800"
+BRIEF_EMAIL_MODE = "send"
+BRIEF_FROM_EMAIL = "Contact DominDev <contact@domindev.com>"
+BRIEF_OWNER_EMAIL = "contact@domindev.com"
+BRIEF_BASE_URL = "https://domindev.com"
+WEBDEV_SERVICES = "landing,business,ecommerce,webapp"
+ALLOWED_ORIGINS = "https://domindev.com"
+PROMPT_VERSION = "1"
+TURNSTILE_SITE_KEY = "0x4AAAAAACO2za3rpGlO2-HWSpENXbRl9l8"
