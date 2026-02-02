@@ -1,9 +1,19 @@
 // functions/api/contact.js
 // Cloudflare Pages Function - Contact Form Handler
-// Uses Resend for email delivery, Turnstile for anti-spam, KV for fallback
+// Extended with Brief Generator link for WebDev services
 
 import { generateLeadEmailHTML } from "../templates/leadEmail.js";
 import { generateAutoresponderHTML } from "../templates/autoresponderEmail.js";
+import { generateBriefLinkEmailHTML } from "../templates/briefLinkEmail.js";
+import { randomToken, hmacSign, sha256, buildHmacMessage } from "../_lib/crypto.js";
+import { verifyTurnstile } from "../_lib/turnstile.js";
+import { sendEmail } from "../_lib/resend.js";
+import { checkRateLimit } from "../_lib/rate-limit.js";
+import { putBriefRecord } from "../_lib/kv.js";
+import { jsonOk, jsonError } from "../_lib/response.js";
+
+// --- Constants ---
+const FALLBACK_TTL_SECONDS = 60 * 60 * 24 * 7; // 7 days
 
 export async function onRequestPost(context) {
   try {
@@ -12,215 +22,170 @@ export async function onRequestPost(context) {
     // 1. Parse request body
     const body = await request.json().catch(() => null);
     if (!body) {
-      return jsonResponse({ error: "Invalid JSON" }, 400);
+      return jsonError("BAD_REQUEST", "Invalid JSON", 400);
     }
 
     const { name, email, message, budget, service, rodoAccepted, honey, turnstileToken } = body;
 
-    // 2. Honeypot check (silent rejection for bots)
+    // 2. Honeypot check (silent acceptance for bots)
     if (honey) {
-      return jsonResponse({ ok: true }, 200);
+      return jsonOk({});
     }
 
     // 3. Basic validation
     if (!name || !email || !message) {
-      return jsonResponse({ error: "Wypełnij wymagane pola." }, 400);
+      return jsonError("VALIDATION_FAILED", "Wypełnij wymagane pola.", 400);
     }
-
     if (!rodoAccepted) {
-      return jsonResponse({ error: "Wymagana zgoda RODO." }, 400);
+      return jsonError("VALIDATION_FAILED", "Wymagana zgoda RODO.", 400);
     }
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return jsonResponse({ error: "Nieprawidłowy format e-mail." }, 400);
+      return jsonError("VALIDATION_FAILED", "Nieprawidłowy format e-mail.", 400);
     }
 
     // 4. Turnstile verification
-    const turnstileSecret = env.TURNSTILE_SECRET_KEY;
-    if (!turnstileSecret) {
-      console.error("Missing TURNSTILE_SECRET_KEY");
-      return jsonResponse({ error: "Server configuration error." }, 500);
-    }
-
-    if (!turnstileToken) {
-      return jsonResponse({ error: "Brak weryfikacji anty-spam." }, 400);
-    }
-
-    const formData = new URLSearchParams();
-    formData.append("secret", turnstileSecret);
-    formData.append("response", turnstileToken);
-    formData.append("remoteip", request.headers.get("CF-Connecting-IP") || "");
-
-    const turnstileResponse = await fetch(
-      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-      { method: "POST", body: formData }
+    const turnstileResult = await verifyTurnstile(
+      env.TURNSTILE_SECRET_KEY,
+      turnstileToken,
+      request.headers.get("CF-Connecting-IP") || ""
     );
-
-    const turnstileResult = await turnstileResponse.json();
     if (!turnstileResult.success) {
-      console.error("Turnstile verification failed:", turnstileResult);
-      return jsonResponse({ error: "Weryfikacja anty-spam nieudana." }, 403);
+      return jsonError("TURNSTILE_FAILED", "Weryfikacja anty-spam nieudana.", 403);
     }
 
-    // 5. Prepare lead payload (for emails and potential KV fallback)
-    const leadPayload = {
-      name,
-      email,
-      message,
-      budget: budget || null,
-      service: service || null,
-    };
+    // 5. Rate limiting
+    if (env.BRIEF_KV) {
+      const clientIp = request.headers.get("CF-Connecting-IP") || "unknown";
+      const ipHash = await sha256(clientIp);
+      const emailHash = await sha256(email.toLowerCase());
 
-    // 6. Send emails via Resend (with KV fallback on failure)
-    const resendKey = env.RESEND_API_KEY;
-    if (!resendKey) {
-      console.error("Missing RESEND_API_KEY");
-      // Save to KV if Resend not configured
-      if (env.LEADS_KV) {
-        const fallbackId = await saveLeadToKV(env, leadPayload, new Error("RESEND_API_KEY not configured"));
-        console.log("Lead saved to KV fallback:", fallbackId);
+      const ipRL = await checkRateLimit(env.BRIEF_KV, `rl:contact:ip:${ipHash}`, 5, 3600);
+      if (!ipRL.allowed) {
+        return jsonError("RATE_LIMITED", "Zbyt wiele prób. Spróbuj za godzinę.", 429);
       }
-      return jsonResponse({ error: "Server mail configuration error." }, 500);
+
+      const emailRL = await checkRateLimit(env.BRIEF_KV, `rl:contact:email:${emailHash}`, 3, 86400);
+      if (!emailRL.allowed) {
+        return jsonError("RATE_LIMITED", "Zbyt wiele zgłoszeń z tego adresu. Spróbuj jutro.", 429);
+      }
     }
 
+    // 6. Prepare display values
     const budgetDisplay = formatBudget(budget);
     const serviceDisplay = service || "Nie określono";
     const timestamp = new Date().toLocaleString("pl-PL", { timeZone: "Europe/Warsaw" });
 
-    try {
-      // A) Lead notification email (to you)
-      const leadEmailResult = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resendKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: "DominDev System <contact@domindev.com>",
-          to: ["contact@domindev.com"],
-          reply_to: email,
-          subject: `[LEAD] Nowy sygnał: ${name}`,
-          html: generateLeadEmailHTML({ name, email, message, budgetDisplay, serviceDisplay, timestamp }),
-        }),
-      });
+    // 7. Send lead notification email (to you)
+    const leadResult = await sendEmail(env.RESEND_API_KEY, {
+      from: "DominDev System <contact@domindev.com>",
+      to: env.BRIEF_OWNER_EMAIL || "contact@domindev.com",
+      replyTo: email,
+      subject: `[LEAD] Nowy sygnał: ${name}`,
+      html: generateLeadEmailHTML({ name, email, message, budgetDisplay, serviceDisplay, timestamp }),
+    });
 
-      if (!leadEmailResult.ok) {
-        const errorText = await leadEmailResult.text();
-        throw new Error(`Resend lead email failed: ${leadEmailResult.status} - ${errorText}`);
-      }
-
-      // B) Autoresponder email (to client)
-      const autoresponderResult = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resendKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: "Contact DominDev <contact@domindev.com>",
-          to: [email],
-          subject: "Sygnał odebrany — potwierdzenie kontaktu",
-          html: generateAutoresponderHTML({ name }),
-        }),
-      });
-
-      if (!autoresponderResult.ok) {
-        // Lead email sent, but autoresponder failed - log but don't fail the request
-        console.error("Autoresponder failed:", await autoresponderResult.text());
-      }
-
-      return jsonResponse({ ok: true }, 200);
-
-    } catch (resendError) {
-      // Resend failed - save lead to KV as fallback
-      console.error("Resend error:", resendError);
-
+    if (!leadResult.ok) {
+      // Fallback to KV if available
       if (env.LEADS_KV) {
-        const fallbackId = await saveLeadToKV(env, leadPayload, resendError);
+        const fallbackId = await saveLeadToKV(env, { name, email, message, budget, service }, new Error(leadResult.error));
         console.log("Lead saved to KV fallback:", fallbackId);
-
-        return jsonResponse({
-          ok: false,
-          error: "Tymczasowy problem z wysyłką. Twoja wiadomość została zapisana - skontaktujemy się wkrótce.",
-          ref: fallbackId,
-        }, 502);
+        return jsonError("SERVER_ERROR", "Tymczasowy problem z wysyłką. Twoja wiadomość została zapisana.", 502);
       }
-
-      return jsonResponse({ error: "Błąd wysyłki powiadomienia." }, 502);
+      return jsonError("SERVER_ERROR", "Błąd wysyłki powiadomienia.", 502);
     }
+
+    // 8. Determine autoresponder type
+    const webdevServices = (env.WEBDEV_SERVICES || "landing,business,ecommerce,webapp").split(",");
+    const briefEnabled = env.BRIEF_ENABLED === "true";
+    const isWebDev = webdevServices.includes(service);
+
+    if (briefEnabled && isWebDev && env.BRIEF_KV) {
+      // 8a. WebDev service — generate brief link
+      const token = randomToken();
+      const emailHash = await sha256(email.toLowerCase());
+      const now = Date.now();
+      const ttlSeconds = parseInt(env.BRIEF_TTL_SECONDS, 10) || 604800;
+      const expiresAt = now + ttlSeconds * 1000;
+
+      // Save to KV
+      const record = {
+        version: 1,
+        email,
+        name,
+        emailHash,
+        serviceId: service,
+        createdAt: now,
+        expiresAt,
+        usedAt: null,
+        meta: {
+          ipHash: await sha256(request.headers.get("CF-Connecting-IP") || "unknown"),
+        },
+      };
+      await putBriefRecord(env.BRIEF_KV, token, record, ttlSeconds);
+
+      // Generate signed URL
+      const sig = await hmacSign(env.BRIEF_HMAC_SECRET, buildHmacMessage(token, emailHash));
+      const baseUrl = env.BRIEF_BASE_URL || "https://domindev.com";
+      const briefLink = `${baseUrl}/brief/?t=${encodeURIComponent(token)}&sig=${encodeURIComponent(sig)}`;
+
+      // Send brief link email (or log in dev mode)
+      if (env.BRIEF_EMAIL_MODE === "log") {
+        const masked = token.slice(0, 6) + "..." + token.slice(-6);
+        console.log(`[BRIEF-DEV] Link generated for ${email}: token=${masked}`);
+        console.log(`[BRIEF-DEV] Full link: ${briefLink}`);
+      } else {
+        await sendEmail(env.RESEND_API_KEY, {
+          from: env.BRIEF_FROM_EMAIL || "Contact DominDev <contact@domindev.com>",
+          to: email,
+          subject: "Link do briefu projektowego (ważny 7 dni)",
+          html: generateBriefLinkEmailHTML({ name, briefLink }),
+        });
+      }
+    } else {
+      // 8b. Non-WebDev or brief disabled — standard autoresponder
+      const autoResult = await sendEmail(env.RESEND_API_KEY, {
+        from: "Contact DominDev <contact@domindev.com>",
+        to: email,
+        subject: "Sygnał odebrany — potwierdzenie kontaktu",
+        html: generateAutoresponderHTML({ name }),
+      });
+      if (!autoResult.ok) {
+        console.error("Autoresponder failed:", autoResult.error);
+      }
+    }
+
+    return jsonOk({});
 
   } catch (error) {
     console.error("Contact form error:", error);
-    return jsonResponse({ error: "Internal Server Error" }, 500);
+    return jsonError("SERVER_ERROR", "Internal Server Error", 500);
   }
 }
 
-// ============================================
-// KV Fallback Functions
-// ============================================
+// --- KV Fallback ---
 
-/**
- * Generate unique key for KV storage
- * Format: lead_2026-01-26T12:34:56.000Z_a1b2c3
- */
 function buildFallbackKey() {
   const stamp = new Date().toISOString();
   const rand = Math.random().toString(16).slice(2, 8);
   return `lead_${stamp}_${rand}`;
 }
 
-/**
- * Save lead to KV when Resend fails
- * @param {Object} env - Cloudflare environment with LEADS_KV binding
- * @param {Object} payload - Lead data (name, email, message, budget, service)
- * @param {Error} error - The error that caused the fallback
- * @returns {string} - The KV key (fallback ID)
- */
 async function saveLeadToKV(env, payload, error) {
   const key = buildFallbackKey();
-
   const record = {
     payload,
-    error: {
-      message: error?.message ?? String(error),
-      stack: error?.stack ?? null,
-    },
+    error: { message: error?.message ?? String(error), stack: error?.stack ?? null },
     createdAt: new Date().toISOString(),
-    status: "pending", // For future: could be "processed", "contacted"
+    status: "pending",
   };
-
-  // TTL: 7 days (in seconds) - enough time to notice and process
-  const TTL_SECONDS = 60 * 60 * 24 * 7;
-
-  await env.LEADS_KV.put(key, JSON.stringify(record), {
-    expirationTtl: TTL_SECONDS,
-  });
-
+  await env.LEADS_KV.put(key, JSON.stringify(record), { expirationTtl: FALLBACK_TTL_SECONDS });
   return key;
 }
 
-// ============================================
-// Helper Functions
-// ============================================
-
-function jsonResponse(data, status) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-    },
-  });
-}
-
 function formatBudget(budget) {
-  if (!budget || budget === "0" || budget === 0) {
-    return "Partnerstwo / Win-Win";
-  }
+  if (!budget || budget === "0" || budget === 0) return "Partnerstwo / Win-Win";
   const val = parseInt(budget, 10);
-  if (val >= 15000) {
-    return "15 000+ PLN";
-  }
+  if (val >= 15000) return "15 000+ PLN";
   return val.toLocaleString("pl-PL") + " PLN";
 }
