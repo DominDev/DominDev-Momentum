@@ -17,6 +17,13 @@ const WATCH_CONFIG = [
     script: 'node _scripts/minify-css.js'
   },
   {
+    path: 'css',
+    recursive: true,
+    ext: '.css',
+    ignore: '.min.css',
+    script: 'node _scripts/minify-css.js'
+  },
+  {
     path: 'js',
     recursive: true,
     ext: '.js',
