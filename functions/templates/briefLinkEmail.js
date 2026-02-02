@@ -93,7 +93,7 @@ export function generateBriefLinkEmailHTML({ name, briefLink }) {
                     <table role="presentation" cellspacing="0" cellpadding="0">
                       <tr>
                         <td style="padding: 5px;">
-                          <a href="https://domindev.com/#portfolio" class="font-display" style="display: block; padding: 12px 20px; background-color: #0f0f0f; color: #ffffff; text-decoration: none; font-family: Arial, sans-serif; font-size: 11px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; border: 1px solid #333333;">Portfolio</a>
+                          <a href="https://domindev.com/#portfolio" class="font-display" style="display: block; padding: 12px 20px; background-color: #ff1f1f; color: #000000; text-decoration: none; font-family: Arial, sans-serif; font-size: 11px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; border: none;">Portfolio</a>
                         </td>
                         <td style="padding: 5px;">
                           <a href="https://www.instagram.com/domindev_com/" class="font-display" style="display: block; padding: 12px 20px; background-color: #0f0f0f; color: #ffffff; text-decoration: none; font-family: Arial, sans-serif; font-size: 11px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; border: 1px solid #333333;">Instagram</a>
