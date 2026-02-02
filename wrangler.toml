@@ -1,0 +1,11 @@
+name = "domindev-momentum"
+compatibility_date = "2026-01-24"
+pages_build_output_dir = "."
+
+[[kv_namespaces]]
+binding = "LEADS_KV"
+id = "cead750dae3a456ea95983e9cd8df9d2"
+
+[[kv_namespaces]]
+binding = "BRIEF_KV"
+id = "46c0d9a8794147808c1835d45b90ce61"
