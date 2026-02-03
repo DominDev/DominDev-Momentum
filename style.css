@@ -253,12 +253,23 @@ h3 {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-color);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 4px;
+  background-color: rgba(255, 31, 31, 0);
+  border-radius: 20px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.3s ease;
+}
+
+body.is-scrolling ::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 31, 31, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary) !important;
 }
 
 /* --- PRIMARY BUTTON (SOLID TECH) --- */
