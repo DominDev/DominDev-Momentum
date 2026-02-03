@@ -81,8 +81,24 @@ export function initCursor() {
   });
 }
 
+// === SCROLLBAR VISIBILITY ===
+export function initScrollbar() {
+  let ticking = false;
+  let scrollTimeout;
+
+  window.addEventListener("scroll", () => {
+    document.body.classList.add("is-scrolling");
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      document.body.classList.remove("is-scrolling");
+    }, 1000);
+  }, { passive: true });
+}
+
 // === UI COMPONENTS (Normal mode only) ===
 export function initUI() {
+  initScrollbar();
+
   // CRITICAL FIX: Pre-activate ALL reveal animations on first hash link click
   // This ensures stable offsetTop for all sections (prevents layout shifts)
   let allRevealsActivated = false;
@@ -153,6 +169,7 @@ export function initUI() {
         "stroke-dashoffset 10ms linear";
 
       let ticking = false;
+
       window.addEventListener("scroll", () => {
         if (!ticking) {
           window.requestAnimationFrame(() => {

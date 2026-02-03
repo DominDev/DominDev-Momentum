@@ -3,7 +3,7 @@
 // Force rebuild for validation spacing fix
 
 import { initMatrix } from '../core/matrix.js';
-import { initCursor } from '../core/ui.js';
+import { initCursor, initScrollbar } from '../core/ui.js';
 
 const ALL_FIELDS = [
   "businessGoal", "audience", "projectType", "sections", "content",
@@ -153,6 +153,7 @@ window.onTurnstileSuccess = (token) => {
 document.addEventListener("DOMContentLoaded", () => {
   initPreloaderMatrix();
   initBriefApp();
+  initScrollbar(); // Activate custom scrollbar
 });
 
 async function initBriefApp() {
