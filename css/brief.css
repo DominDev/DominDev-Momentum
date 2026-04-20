@@ -471,6 +471,23 @@ body {
   justify-content: center;
 }
 
+.turnstile-status {
+  min-height: 1.5em;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.turnstile-status[data-state="success"] {
+  color: #4ade80;
+}
+
+.turnstile-status[data-state="error"] {
+  color: var(--primary);
+}
+
 /* --- STATES (Loading, Error, Success) --- */
 .brief-status {
   margin-top: 20px;
