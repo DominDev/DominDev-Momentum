@@ -26,6 +26,7 @@ export async function onRequestPost(context) {
     }
 
     const { name, email, message, budget, service, rodoAccepted, honey, turnstileToken } = body;
+    const normalizedService = typeof service === "string" ? service.trim().toLowerCase() : "";
 
     // 2. Honeypot check (silent acceptance for bots)
     if (honey) {
@@ -73,7 +74,7 @@ export async function onRequestPost(context) {
 
     // 6. Prepare display values
     const budgetDisplay = formatBudget(budget);
-    const serviceDisplay = service || "Nie określono";
+    const serviceDisplay = normalizedService || "Nie określono";
     const timestamp = new Date().toLocaleString("pl-PL", { timeZone: "Europe/Warsaw" });
 
     // 7. Send lead notification email (to you)
@@ -96,12 +97,24 @@ export async function onRequestPost(context) {
     }
 
     // 8. Determine autoresponder type
-    const webdevServices = (env.WEBDEV_SERVICES || "landing,business,ecommerce,webapp").split(",");
+    const webdevServices = (env.WEBDEV_SERVICES || "landing,business,ecommerce,webapp")
+      .split(",")
+      .map((item) => item.trim().toLowerCase())
+      .filter(Boolean);
     const briefEnabled = env.BRIEF_ENABLED === "true";
-    const isWebDev = webdevServices.includes(service);
+    const isWebDev = webdevServices.includes(normalizedService);
+
+    console.log("[CONTACT] autoresponder decision", JSON.stringify({
+      serviceRaw: service ?? null,
+      serviceNormalized: normalizedService || null,
+      briefEnabled,
+      isWebDev,
+      briefKvBound: Boolean(env.BRIEF_KV),
+      briefEmailMode: env.BRIEF_EMAIL_MODE || "send",
+    }));
 
     if (briefEnabled && isWebDev && env.BRIEF_KV) {
-      // 8a. WebDev service — generate brief link
+      // 8a. WebDev service - generate brief link
       const token = randomToken();
       const emailHash = await sha256(email.toLowerCase());
       const now = Date.now();
@@ -114,7 +127,7 @@ export async function onRequestPost(context) {
         email,
         name,
         emailHash,
-        serviceId: service,
+        serviceId: normalizedService,
         createdAt: now,
         expiresAt,
         usedAt: null,
@@ -134,29 +147,65 @@ export async function onRequestPost(context) {
         const masked = token.slice(0, 6) + "..." + token.slice(-6);
         console.log(`[BRIEF-DEV] Link generated for ${email}: token=${masked}`);
         console.log(`[BRIEF-DEV] Full link: ${briefLink}`);
-      } else {
-        await sendEmail(env.RESEND_API_KEY, {
-          from: env.BRIEF_FROM_EMAIL || "Contact DominDev <contact@domindev.com>",
-          to: email,
-          subject: "Link do briefu projektowego (ważny 7 dni)",
-          html: generateBriefLinkEmailHTML({ name, briefLink }),
+
+        return jsonOk({
+          mailType: "brief-link",
+          service: normalizedService,
+          briefEmailDelivery: "log",
         });
       }
-    } else {
-      // 8b. Non-WebDev or brief disabled — standard autoresponder
-      const autoResult = await sendEmail(env.RESEND_API_KEY, {
-        from: "Contact DominDev <contact@domindev.com>",
+
+      const briefEmailResult = await sendEmail(env.RESEND_API_KEY, {
+        from: env.BRIEF_FROM_EMAIL || "Contact DominDev <contact@domindev.com>",
         to: email,
-        subject: "Sygnał odebrany — potwierdzenie kontaktu",
-        html: generateAutoresponderHTML({ name }),
+        subject: "Link do briefu projektowego (ważny 7 dni)",
+        html: generateBriefLinkEmailHTML({ name, briefLink }),
       });
-      if (!autoResult.ok) {
-        console.error("Autoresponder failed:", autoResult.error);
+
+      if (!briefEmailResult.ok) {
+        console.error("[CONTACT] brief link email failed", JSON.stringify({
+          serviceRaw: service ?? null,
+          serviceNormalized: normalizedService || null,
+          error: briefEmailResult.error,
+        }));
+      } else {
+        console.log("[CONTACT] brief link email sent", JSON.stringify({
+          serviceNormalized: normalizedService,
+          emailId: briefEmailResult.id,
+        }));
       }
+
+      return jsonOk({
+        mailType: "brief-link",
+        service: normalizedService,
+        briefEmailDelivery: briefEmailResult.ok ? "sent" : "failed",
+      });
     }
 
-    return jsonOk({});
+    // 8b. Non-WebDev or brief disabled - standard autoresponder
+    const autoResult = await sendEmail(env.RESEND_API_KEY, {
+      from: "Contact DominDev <contact@domindev.com>",
+      to: email,
+      subject: "Sygnał odebrany - potwierdzenie kontaktu",
+      html: generateAutoresponderHTML({ name }),
+    });
+    if (!autoResult.ok) {
+      console.error("Autoresponder failed:", autoResult.error);
+    }
 
+    console.log("[CONTACT] standard autoresponder branch", JSON.stringify({
+      serviceRaw: service ?? null,
+      serviceNormalized: normalizedService || null,
+      briefEnabled,
+      isWebDev,
+      autoEmailDelivery: autoResult.ok ? "sent" : "failed",
+    }));
+
+    return jsonOk({
+      mailType: "standard-autoresponder",
+      service: normalizedService,
+      autoEmailDelivery: autoResult.ok ? "sent" : "failed",
+    });
   } catch (error) {
     console.error("Contact form error:", error);
     return jsonError("SERVER_ERROR", "Internal Server Error", 500);

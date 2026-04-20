@@ -45,9 +45,12 @@ const VALIDATION_MESSAGES = {
 let briefToken = null;
 let briefSig = null;
 let turnstileToken = null;
+let turnstileWidgetId = null;
+let turnstileRenderPromise = null;
 let demoMode = false;
 let preloaderAnimId = null;
 let preloaderResizeCleanup = null;
+const TURNSTILE_API_TIMEOUT_MS = 10000;
 
 // --- PRELOADER LOGIC ---
 function initPreloaderMatrix() {
@@ -142,12 +145,113 @@ const killPreloader = () => {
   }, 550);
 };
 
-// --- Turnstile callback ---
-window.onTurnstileSuccess = (token) => {
-  turnstileToken = token;
+function setSubmitEnabled(isEnabled) {
   const submitBtn = document.getElementById("btn-submit");
-  if(submitBtn) submitBtn.disabled = false;
-};
+  if (!submitBtn || demoMode) return;
+  submitBtn.disabled = !isEnabled;
+}
+
+function setTurnstileStatus(message, state = "") {
+  const statusEl = document.getElementById("turnstile-status");
+  if (!statusEl) return;
+
+  statusEl.textContent = message;
+
+  if (state) {
+    statusEl.dataset.state = state;
+  } else {
+    delete statusEl.dataset.state;
+  }
+}
+
+function handleTurnstileSuccess(token) {
+  turnstileToken = token;
+  setSubmitEnabled(true);
+  setTurnstileStatus("Weryfikacja potwierdzona. Możesz wysłać brief.", "success");
+}
+
+function resetTurnstileState(
+  message = "Potwierdź weryfikację bezpieczeństwa, aby odblokować wysyłkę.",
+  state = "idle"
+) {
+  turnstileToken = null;
+  setSubmitEnabled(false);
+  setTurnstileStatus(message, state);
+}
+
+function waitForTurnstileApi(timeoutMs = TURNSTILE_API_TIMEOUT_MS) {
+  return new Promise((resolve, reject) => {
+    if (window.turnstile?.render) {
+      resolve(window.turnstile);
+      return;
+    }
+
+    const startedAt = Date.now();
+    const poll = window.setInterval(() => {
+      if (window.turnstile?.render) {
+        window.clearInterval(poll);
+        resolve(window.turnstile);
+        return;
+      }
+
+      if (Date.now() - startedAt >= timeoutMs) {
+        window.clearInterval(poll);
+        reject(new Error("Turnstile API load timed out."));
+      }
+    }, 50);
+  });
+}
+
+function ensureTurnstileRendered({ reset = false } = {}) {
+  if (demoMode) return Promise.resolve();
+
+  const container = document.getElementById("brief-turnstile");
+  if (!container) return Promise.resolve();
+
+  if (turnstileWidgetId !== null && window.turnstile?.reset) {
+    if (reset) {
+      window.turnstile.reset(turnstileWidgetId);
+      resetTurnstileState("Potwierdź weryfikację bezpieczeństwa ponownie, aby wysłać brief.");
+    }
+
+    return Promise.resolve(turnstileWidgetId);
+  }
+
+  if (turnstileRenderPromise) return turnstileRenderPromise;
+
+  resetTurnstileState("Ładuję weryfikację bezpieczeństwa...", "loading");
+
+  turnstileRenderPromise = waitForTurnstileApi()
+    .then((turnstile) => {
+      if (turnstileWidgetId !== null) return turnstileWidgetId;
+
+      turnstileWidgetId = turnstile.render(container, {
+        sitekey: container.dataset.sitekey,
+        theme: container.dataset.theme || "auto",
+        language: container.dataset.language || "auto",
+        callback: handleTurnstileSuccess,
+        "expired-callback": () => {
+          resetTurnstileState("Weryfikacja wygasła. Potwierdź ją ponownie.");
+        },
+        "error-callback": () => {
+          resetTurnstileState("Nie udało się załadować weryfikacji. Odśwież stronę lub spróbuj ponownie.", "error");
+        },
+      });
+
+      setTurnstileStatus("Potwierdź weryfikację bezpieczeństwa, aby odblokować wysyłkę.", "idle");
+      return turnstileWidgetId;
+    })
+    .catch((error) => {
+      console.error("Failed to initialize Turnstile:", error);
+      resetTurnstileState("Nie udało się załadować weryfikacji. Odśwież stronę lub spróbuj ponownie.", "error");
+      return null;
+    })
+    .finally(() => {
+      turnstileRenderPromise = null;
+    });
+
+  return turnstileRenderPromise;
+}
 
 // --- Init ---
 document.addEventListener("DOMContentLoaded", () => {
@@ -233,6 +337,10 @@ function showState(name) {
   document.querySelectorAll(".brief-state").forEach((el) => {
     el.hidden = el.id !== `state-${name}`;
   });
+
+  if (name === "form" && getCurrentStep() === 5) {
+    ensureTurnstileRendered();
+  }
 }
 
 // --- Hints ---
@@ -302,7 +410,10 @@ function goToStep(step) {
   const firstInput = panel.querySelector("input, textarea, select");
   if (firstInput) firstInput.focus();
 
-  if (step === 5) buildSummary();
+  if (step === 5) {
+    buildSummary();
+    ensureTurnstileRendered();
+  }
   
   const container = document.querySelector('.brief-container');
   if(container) container.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -461,6 +572,8 @@ function setupSubmit() {
 
     if (!validateStep(1)) { goToStep(1); return; }
     if (!demoMode && !turnstileToken) {
+      ensureTurnstileRendered();
+      setTurnstileStatus("Potwierdz weryfikacje bezpieczenstwa aby wyslac brief.", "idle");
       alert("Proszę potwierdzić weryfikację Turnstile.");
       return;
     }
@@ -511,11 +624,6 @@ function setupRetry() {
   
   btn.addEventListener("click", () => {
     showState("form");
-    if (window.turnstile) {
-      window.turnstile.reset();
-      const submitBtn = document.getElementById("btn-submit");
-      if(submitBtn) submitBtn.disabled = true;
-      turnstileToken = null;
-    }
+    ensureTurnstileRendered({ reset: true });
   });
 }
