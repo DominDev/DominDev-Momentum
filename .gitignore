@@ -139,3 +139,6 @@ ffmpeg2pass-*.log
 
 # Local Obsidian AI memory junction
 .obsidian-memory/
+
+# Wrangler local state
+.wrangler/

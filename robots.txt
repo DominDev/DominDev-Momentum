@@ -1,6 +1,10 @@
 # DominDev Robots.txt - High Performance Web Development
 # WordPress Developer Wrocław
 
+# AI policy: retrieval/search allowed (AI assistants may read and cite this site),
+# training on our content is not permitted.
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+
 User-agent: *
 Allow: /
 
@@ -15,6 +19,9 @@ Allow: /css/
 # Brief page (private, token-gated)
 Disallow: /brief
 Disallow: /brief/
+
+# Maintenance page (served with 503 by middleware; direct hits are noindex)
+Disallow: /maintenance.html
 
 # Disallow project snapshots (internal use only)
 Disallow: /_project_snapshots/
@@ -34,6 +41,47 @@ Allow: /
 
 User-agent: Slurp
 Allow: /
+
+# AI retrieval/search bots - explicitly welcome (answer engines, citations)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+# AI training-only crawlers - blocked (no retrieval value, dataset scraping only)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
 
 # Bad bots
 User-agent: AhrefsBot

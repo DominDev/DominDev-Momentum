@@ -1,6 +1,5 @@
 // js/config.js
 export const CONFIG = {
-  maintenanceMode: false,
   enablePreloader: true,
 
   mail: {
