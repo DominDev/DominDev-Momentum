@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Przerwa techniczna | DominDev</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Trwają prace modernizacyjne. Wracamy wkrótce." />
+
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon/favicon.ico" />
+    <link rel="preload" href="assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="assets/fonts/critical.min.css" />
+    <link rel="stylesheet" href="css/maintenance.css" />
+  </head>
+  <body>
+    <div class="maintenance-overlay">
+      <canvas id="maintenance-matrix" class="maintenance-canvas"></canvas>
+      <div class="screen-overlay"></div>
+
+      <div class="maintenance-container">
+        <div class="maintenance-code-block">
+          <span class="maintenance-label">SYSTEM STATUS:</span>
+          <div class="glitch-maintenance" data-text="[OFFLINE]">[OFFLINE]</div>
+        </div>
+
+        <p class="terminal-msg">
+          > MAINTENANCE_MODE: INFRASTRUCTURE_UPGRADE<span class="blink-cursor">_</span>
+        </p>
+
+        <p class="maintenance-text">
+          Trwają prace modernizacyjne infrastruktury.<br />
+          Wdrażanie nowych protokołów bezpieczeństwa i optymalizacja systemów.
+        </p>
+
+        <div class="maintenance-progress">
+          <div class="progress-bar"></div>
+        </div>
+
+        <p class="eta">WRACAMY WKRÓTCE</p>
+      </div>
+    </div>
+
+    <script src="js/maintenance-page.js"></script>
+  </body>
+</html>

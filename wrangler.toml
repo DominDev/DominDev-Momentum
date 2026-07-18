@@ -10,6 +10,10 @@ id = "cead750dae3a456ea95983e9cd8df9d2"
 binding = "BRIEF_KV"
 id = "46c0d9a8794147808c1835d45b90ce61"
 
+[[kv_namespaces]]
+binding = "MAINTENANCE_KV"
+id = "f8464fff77c644b6b6492b3b07b60217"
+
 [vars]
 BRIEF_ENABLED = "true"
 BRIEF_TTL_SECONDS = "604800"

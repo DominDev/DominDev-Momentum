@@ -10,9 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Primary Meta Tags -->
-    <title>
-      DominDev | WordPress Developer Wrocław - Strony WWW & Sklepy WooCommerce
-    </title>
+    <title>DominDev | WordPress Developer Wrocław - Strony WWW & Sklepy WooCommerce</title>
     <meta
       name="title"
       content="DominDev | WordPress Developer Wrocław - Strony WWW & Sklepy WooCommerce"
@@ -125,7 +123,7 @@
             }
           },
           {
-            "@type": "LocalBusiness",
+            "@type": "ProfessionalService",
             "@id": "https://domindev.com/#organization",
             "name": "DominDev - High Performance Web Development",
             "legalName": "DominDev - Paweł Dominiak",
@@ -356,7 +354,6 @@
     <link rel="modulepreload" href="js/modules/adaptive-images.js" />
     <link rel="modulepreload" href="js/modules/portfolio.js" />
     <link rel="modulepreload" href="js/modules/contact.js" />
-    <link rel="modulepreload" href="js/modules/maintenance.js" />
     <link rel="modulepreload" href="js/modules/hud.js" />
 
     <!-- ========================================
@@ -419,37 +416,9 @@
       </div>
     </div>
 
-    <!-- MAINTENANCE SCREEN (Red Alert) -->
-    <div id="maintenance-screen" class="maintenance-overlay">
-      <canvas id="maintenance-matrix" class="maintenance-canvas"></canvas>
-      <div class="screen-overlay"></div>
-
-      <div class="maintenance-container">
-        <div class="maintenance-code-block">
-          <span class="maintenance-label">SYSTEM STATUS:</span>
-          <div class="glitch-maintenance" data-text="[OFFLINE]">[OFFLINE]</div>
-        </div>
-
-        <h1 class="terminal-msg">
-          > MAINTENANCE_MODE: INFRASTRUCTURE_UPGRADE<span class="blink-cursor"
-            >_</span
-          >
-        </h1>
-
-        <p class="maintenance-text">
-          Trwają prace modernizacyjne infrastruktury.<br />
-          Wdrażanie nowych protokołów bezpieczeństwa i optymalizacja systemów.
-        </p>
-
-        <div class="maintenance-progress">
-          <div class="progress-bar"></div>
-        </div>
-
-        <p class="eta">ESTIMATED TIME: ~2H</p>
-      </div>
-    </div>
-
     <!-- SITE CONTENT WRAPPER -->
+    <!-- Maintenance mode is server-side now: functions/_middleware.js + KV flag
+         serves maintenance.html with HTTP 503 (no maintenance markup in SEO-indexed HTML). -->
     <main id="site-content">
       <!-- Scroll Progress & Back to Top -->
       <div class="progress-wrap" id="progress-wrap">
