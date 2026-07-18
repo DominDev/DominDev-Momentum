@@ -4,7 +4,7 @@
 
 <div align="center">
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-success?style=for-the-badge&logo=vercel&logoColor=white)](https://domin737.github.io/DominDev-Momentum/)
+[![Live Site](https://img.shields.io/badge/Live_Site-domindev.com-success?style=for-the-badge&logo=cloudflare&logoColor=white)](https://domindev.com)
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/DominDev/DominDev-Momentum)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-97%2F100-brightgreen?style=for-the-badge&logo=lighthouse&logoColor=white)](https://pagespeed.web.dev/)
@@ -380,34 +380,26 @@ domindev-momentum/
 
 ## Deployment
 
-### GitHub Pages (Current)
+### Cloudflare Pages (Production)
 
-The project is configured for automatic GitHub Pages deployment:
+Production runs on **Cloudflare Pages** at [domindev.com](https://domindev.com), connected to this GitHub repository:
 
-1. Push changes to `main` branch
-2. GitHub Actions deploys to `https://[username].github.io/DominDev-Momentum/`
-3. Conditional base tag handles localhost vs production URLs automatically
+1. Work on a feature branch, open a PR to `main`
+2. Merge to `main` - Cloudflare Pages builds and deploys automatically
+3. Serverless backend: Pages Functions in `functions/` (brief + contact APIs), KV namespaces (`LEADS_KV`, `BRIEF_KV`), Turnstile anti-bot, Resend transactional email
+4. Config: `wrangler.toml` (bindings, vars), `_headers` (caching + CSP)
 
-### Other Platforms
-
-<div align="center">
-
-| Platform | Best For | Deploy Time |
-|----------|----------|-------------|
-| **Netlify** | Static sites, CI/CD | < 1 min |
-| **Vercel** | JAMstack projects | < 1 min |
-| **GitHub Pages** | Open source | < 5 min |
-| **Cloudflare Pages** | Global CDN | < 2 min |
-
-</div>
+Full setup walkthrough: `_docs/archive/guide-deployment-claudflare-pages.md`.
 
 ```bash
-# Build for any platform
+# Build before pushing (minify + images + sitemap)
 npm run build
 
-# Upload the entire directory to your hosting provider
-# Configure caching headers for optimal performance
+# Test Pages Functions locally (KV bindings included)
+npm run dev:wrangler
 ```
+
+> A legacy demo copy exists on GitHub Pages (`domin737.github.io/DominDev-Momentum`), but it is not the production deployment target.
 
 ---
 
