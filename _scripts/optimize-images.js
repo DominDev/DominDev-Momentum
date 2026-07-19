@@ -34,8 +34,16 @@
  *
  * 4. Zoptymalizowane obrazy zostaną wygenerowane obok originals/:
  *    - assets/images/portfolio/*.avif/webp/jpg (400w, 800w, 1200w, 1600w)
+ *      + miniatury *-thumb-400/800/1200 (kadr 4:3 do siatki portfolio)
  *    - assets/images/about/*.avif/webp/jpg (400w, 800w, 1200w, 1600w)
  *    - assets/images/social/*.avif/webp/jpg (1200x630 dla OG)
+ *
+ * 5. Opcjonalnie jeden katalog: node _scripts/optimize-images.js --dir portfolio
+ *
+ * UWAGA - PORTFOLIO MA DWA ZESTAWY PLIKÓW:
+ *   *-800.avif        pełny mockup (zrzut całej strony) -> modal, przewijany
+ *   *-thumb-800.avif  kadr 4:3 od góry -> karta w siatce portfolio
+ * Nie kadruj pełnych wariantów: modal projektu opiera się na ich wysokości.
  *
  * ═══════════════════════════════════════════════════════════════════
  * CO ROBI SKRYPT:
@@ -115,6 +123,32 @@ const CONFIG = {
     { ext: 'webp', quality: 80, options: { effort: 4 } },  // Dobra kompresja
     { ext: 'jpg',  quality: 80, options: { progressive: true, mozjpeg: true } }, // Legacy
   ],
+
+  // ─────────────────────────────────────────────────────────────────
+  // MINIATURY DLA SIATKI (klucz = katalog wejściowy)
+  // ─────────────────────────────────────────────────────────────────
+  //
+  // Portfolio to zrzuty CAŁYCH stron (mockupy, np. 1280x11846). Pełna wysokość
+  // jest potrzebna w modalu projektu - użytkownik przewija tam cały mockup
+  // zamiast oglądać gifa czy wideo. Tych plików NIE wolno kadrować.
+  //
+  // Ale karta w siatce portfolio ma 300px wysokości i `object-fit: cover;
+  // object-position: top`, więc pokazuje wyłącznie górę obrazu. Ładowanie tam
+  // pełnego zrzutu kosztowało setki KB na kartę przy samym wejściu na stronę.
+  //
+  // Dlatego dla siatki generujemy OSOBNY, kadrowany zestaw `-thumb-`:
+  //   portfolio-kraft-thumb-800.avif  (800x600, ~60 KB)
+  //   portfolio-kraft-800.avif        (800x5019, pełny mockup do modala)
+  //
+  // Siatka używa `-thumb-`, modal (js/modules/portfolio.js) pełnych wariantów,
+  // pobieranych dopiero po kliknięciu w projekt.
+  thumbnails: {
+    'assets/images/portfolio/originals': {
+      aspect: 4 / 3,          // zgodne z width="600" height="450" w <img>
+      sizes: [400, 800, 1200],
+      suffix: 'thumb',
+    },
+  },
 
   // Dedykowane rozmiary dla specjalnych przypadków
   special: {
@@ -274,6 +308,55 @@ async function generateVariant(inputPath, outputPath, width, format) {
 }
 
 /**
+ * Generuje kadrowane miniatury dla siatki (patrz CONFIG.thumbnails).
+ *
+ * Kadr liczony od GÓRY obrazu, bo tak samo zachowuje się CSS karty
+ * (`object-position: top`) - miniatura pokazuje dokładnie ten sam fragment,
+ * który użytkownik widzi dziś, tylko bez reszty zrzutu w pliku.
+ */
+async function generateThumbnails(image, outputDir, thumbConfig) {
+  const { aspect, sizes, suffix } = thumbConfig;
+  console.log(`\n  ✂️  Miniatury dla siatki (${suffix}, proporcje ${aspect.toFixed(3)}):`);
+
+  for (const size of sizes) {
+    for (const format of CONFIG.formats) {
+      const outputPath = path.join(
+        outputDir,
+        `${image.filename}-${suffix}-${size}.${format.ext}`
+      );
+
+      const pipeline = sharp(image.fullPath)
+        .rotate()
+        .resize(size, Math.round(size / aspect), {
+          withoutEnlargement: true,
+          fit: 'cover',
+          position: 'top',
+        });
+
+      let output;
+      switch (format.ext) {
+        case 'avif':
+          output = pipeline.avif({ quality: format.quality, effort: format.options.effort });
+          break;
+        case 'webp':
+          output = pipeline.webp({ quality: format.quality, effort: format.options.effort });
+          break;
+        default:
+          output = pipeline.jpeg({
+            quality: format.quality,
+            progressive: format.options.progressive,
+            mozjpeg: format.options.mozjpeg,
+          });
+      }
+
+      await output.toFile(outputPath);
+      const stats = await fs.stat(outputPath);
+      console.log(`    ✅ ${format.ext.toUpperCase()} ${size}px: ${formatBytes(stats.size)}`);
+    }
+  }
+}
+
+/**
  * Generuje dedykowany obraz dla Social Media (OG/Twitter)
  */
 async function generateSocialImage(inputPath, outputDir, filename) {
@@ -311,7 +394,7 @@ async function generateSocialImage(inputPath, outputDir, filename) {
 /**
  * Przetwarza pojedynczy obraz
  */
-async function processImage(image, outputDir) {
+async function processImage(image, outputDir, thumbConfig) {
   console.log(`\n🖼️  Przetwarzam: ${image.filename}${image.ext}`);
 
   const originalStats = await fs.stat(image.fullPath);
@@ -351,6 +434,11 @@ async function processImage(image, outputDir) {
     }
   }
 
+  // Miniatury dla siatki (portfolio) - obok pełnych wariantów
+  if (thumbConfig) {
+    await generateThumbnails(image, outputDir, thumbConfig);
+  }
+
   // Jeśli to obraz z folderu social, wygeneruj dedykowany wariant OG
   if (outputDir.includes('social')) {
     await generateSocialImage(image.fullPath, outputDir, image.filename);
@@ -373,10 +461,22 @@ async function main() {
   let totalVariants = 0;
   const startTime = Date.now();
 
-  for (const inputDir of CONFIG.inputDirs) {
+  // Opcjonalny filtr: `node _scripts/optimize-images.js --dir portfolio`
+  const dirFilterIndex = process.argv.indexOf('--dir');
+  const dirFilter = dirFilterIndex !== -1 ? process.argv[dirFilterIndex + 1] : null;
+  const inputDirs = dirFilter
+    ? CONFIG.inputDirs.filter((d) => d.includes(dirFilter))
+    : CONFIG.inputDirs;
+
+  if (dirFilter) {
+    console.log(`🔎 Filtr --dir "${dirFilter}" -> ${inputDirs.length} katalog(i)\n`);
+  }
+
+  for (const inputDir of inputDirs) {
     console.log(`\n📂 Przetwarzam katalog: ${inputDir}`);
     console.log('─────────────────────────────────────────────────────────────────\n');
 
+    const thumbConfig = CONFIG.thumbnails[inputDir];
     const images = await getImages(inputDir);
 
     if (images.length === 0) {
@@ -391,7 +491,7 @@ async function main() {
     await ensureDir(outputDir);
 
     for (const image of images) {
-      await processImage(image, outputDir);
+      await processImage(image, outputDir, thumbConfig);
       totalImages++;
       totalVariants += (CONFIG.sizes.length * CONFIG.formats.length);
     }
@@ -459,7 +559,7 @@ async function watchForChanges() {
               ext: path.parse(filename).ext,
             };
 
-            await processImage(image, outputDir);
+            await processImage(image, outputDir, CONFIG.thumbnails[inputDir]);
             console.log('✓ Ready for next image...\n');
           } catch (err) {
             // File was deleted or moved
