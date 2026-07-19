@@ -37,6 +37,13 @@
  *    - assets/images/about/*.avif/webp/jpg (400w, 800w, 1200w, 1600w)
  *    - assets/images/social/*.avif/webp/jpg (1200x630 dla OG)
  *
+ * 5. Opcjonalnie tylko jeden katalog:
+ *    node _scripts/optimize-images.js --dir portfolio
+ *
+ * UWAGA: katalogi wymienione w CONFIG.cropAspect są kadrowane do stałych
+ * proporcji (portfolio = 4:3 od góry), bo karty portfolio pokazują tylko górę
+ * zrzutu. Zrzuty całych stron bez kadrowania dawały pliki po 300-425 KB.
+ *
  * ═══════════════════════════════════════════════════════════════════
  * CO ROBI SKRYPT:
  * ═══════════════════════════════════════════════════════════════════
@@ -115,6 +122,22 @@ const CONFIG = {
     { ext: 'webp', quality: 80, options: { effort: 4 } },  // Dobra kompresja
     { ext: 'jpg',  quality: 80, options: { progressive: true, mozjpeg: true } }, // Legacy
   ],
+
+  // Kadrowanie do stałych proporcji (klucz = katalog wejściowy).
+  //
+  // Portfolio to zrzuty CAŁYCH stron (np. 1280x11846). Karta w siatce ma 300px
+  // wysokości i używa `object-fit: cover; object-position: top`, więc widoczna
+  // jest wyłącznie górna część obrazu. Bez kadrowania wysyłamy megabajty pikseli,
+  // których użytkownik nigdy nie zobaczy (kraft-800.avif: 425 KB zamiast ~50 KB).
+  //
+  // 4/3 odpowiada atrybutom width="600" height="450" w <img>, więc proporcje
+  // pliku i deklaracja w HTML są wreszcie zgodne.
+  //
+  // Jeśli kiedyś powstanie podgląd pełnego zrzutu (lightbox), regeneruj warianty
+  // z originals/ bez tego wpisu - oryginały PNG są nienaruszone.
+  cropAspect: {
+    'assets/images/portfolio/originals': 4 / 3,
+  },
 
   // Dedykowane rozmiary dla specjalnych przypadków
   special: {
@@ -214,13 +237,15 @@ function canGenerateFormat(width, height, formatExt) {
 /**
  * Generuje zoptymalizowany wariant obrazu
  */
-async function generateVariant(inputPath, outputPath, width, format) {
+async function generateVariant(inputPath, outputPath, width, format, cropAspect) {
   const image = sharp(inputPath);
   const metadata = await image.metadata();
 
   // Oblicz docelowe wymiary
   const targetWidth = Math.min(width, metadata.width);
-  const targetHeight = Math.round((targetWidth / metadata.width) * metadata.height);
+  const targetHeight = cropAspect
+    ? Math.round(targetWidth / cropAspect)
+    : Math.round((targetWidth / metadata.width) * metadata.height);
 
   // Sprawdź czy można wygenerować ten format
   if (!canGenerateFormat(targetWidth, targetHeight, format.ext)) {
@@ -230,11 +255,18 @@ async function generateVariant(inputPath, outputPath, width, format) {
     );
   }
 
-  // Resize z zachowaniem aspect ratio
-  let resized = image.resize(width, null, {
-    withoutEnlargement: true,  // Nie powiększaj jeśli oryginalny jest mniejszy
-    fit: 'inside',              // Zachowaj proporcje
-  });
+  // Resize: albo kadrowanie do stałych proporcji (patrz CONFIG.cropAspect),
+  // albo zachowanie oryginalnych proporcji.
+  let resized = cropAspect
+    ? image.resize(width, Math.round(width / cropAspect), {
+        withoutEnlargement: true,
+        fit: 'cover',       // Wypełnij ramkę, utnij nadmiar
+        position: 'top',    // Utnij od dołu - zgodnie z object-position: top w CSS
+      })
+    : image.resize(width, null, {
+        withoutEnlargement: true,  // Nie powiększaj jeśli oryginalny jest mniejszy
+        fit: 'inside',              // Zachowaj proporcje
+      });
 
   // Usuń metadata EXIF (prywatność + mniejszy rozmiar)
   resized = resized.rotate(); // Auto-rotate based on EXIF before stripping
@@ -311,8 +343,11 @@ async function generateSocialImage(inputPath, outputDir, filename) {
 /**
  * Przetwarza pojedynczy obraz
  */
-async function processImage(image, outputDir) {
+async function processImage(image, outputDir, cropAspect) {
   console.log(`\n🖼️  Przetwarzam: ${image.filename}${image.ext}`);
+  if (cropAspect) {
+    console.log(`  ✂️  Kadrowanie do proporcji ${cropAspect.toFixed(3)} (od góry)`);
+  }
 
   const originalStats = await fs.stat(image.fullPath);
   const originalSize = originalStats.size;
@@ -334,7 +369,8 @@ async function processImage(image, outputDir) {
           image.fullPath,
           outputPath,
           size,
-          format
+          format,
+          cropAspect
         );
 
         const savings = calculateSavings(originalSize, result.size);
@@ -373,10 +409,23 @@ async function main() {
   let totalVariants = 0;
   const startTime = Date.now();
 
-  for (const inputDir of CONFIG.inputDirs) {
+  // Opcjonalny filtr: `node _scripts/optimize-images.js --dir portfolio`
+  // przetwarza tylko pasujące katalogi (bez ruszania pozostałych wariantów).
+  const dirFilterIndex = process.argv.indexOf('--dir');
+  const dirFilter = dirFilterIndex !== -1 ? process.argv[dirFilterIndex + 1] : null;
+  const inputDirs = dirFilter
+    ? CONFIG.inputDirs.filter((d) => d.includes(dirFilter))
+    : CONFIG.inputDirs;
+
+  if (dirFilter) {
+    console.log(`🔎 Filtr --dir "${dirFilter}" -> ${inputDirs.length} katalog(i)\n`);
+  }
+
+  for (const inputDir of inputDirs) {
     console.log(`\n📂 Przetwarzam katalog: ${inputDir}`);
     console.log('─────────────────────────────────────────────────────────────────\n');
 
+    const cropAspect = CONFIG.cropAspect[inputDir];
     const images = await getImages(inputDir);
 
     if (images.length === 0) {
@@ -391,7 +440,7 @@ async function main() {
     await ensureDir(outputDir);
 
     for (const image of images) {
-      await processImage(image, outputDir);
+      await processImage(image, outputDir, cropAspect);
       totalImages++;
       totalVariants += (CONFIG.sizes.length * CONFIG.formats.length);
     }
@@ -459,7 +508,7 @@ async function watchForChanges() {
               ext: path.parse(filename).ext,
             };
 
-            await processImage(image, outputDir);
+            await processImage(image, outputDir, CONFIG.cropAspect[inputDir]);
             console.log('✓ Ready for next image...\n');
           } catch (err) {
             // File was deleted or moved
