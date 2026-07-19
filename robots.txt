@@ -11,6 +11,9 @@ Allow: /
 # Sitemap Location
 Sitemap: https://domindev.com/sitemap.xml
 
+# For AI agents: site summary at /llms.txt, markdown version of the homepage
+# at /index.md (also served at / with request header Accept: text/markdown)
+
 # Allow crawling of assets
 Allow: /assets/
 Allow: /js/

@@ -1,5 +1,5 @@
 // functions/_middleware.js
-// Site-wide maintenance mode gate.
+// Site-wide gate: maintenance mode + Markdown content negotiation for AI agents.
 //
 // Flag lives in KV (binding: MAINTENANCE_KV, key: "maintenance"):
 //   - key absent / "off" / "0" / "false"  -> normal traffic
@@ -24,23 +24,31 @@ const ALLOWED_PREFIXES = [
   "/favicon",
 ];
 
+// Pages that have a markdown twin for agents: request path -> asset path.
+const MARKDOWN_ALTERNATES = {
+  "/": "/index.md",
+  "/index.html": "/index.md",
+};
+
 export async function onRequest(context) {
   const { request, env, next } = context;
 
-  // No KV binding configured -> feature disabled, never block traffic.
+  let flag = null;
   const kv = env.MAINTENANCE_KV;
-  if (!kv) return next();
-
-  let flag;
-  try {
-    flag = await kv.get("maintenance");
-  } catch {
-    // KV outage must never take the site down.
-    return next();
+  if (kv) {
+    try {
+      flag = await kv.get("maintenance");
+    } catch {
+      // KV outage must never take the site down.
+      flag = null;
+    }
   }
 
-  if (!flag || flag === "off" || flag === "0" || flag === "false") {
-    return next();
+  const maintenanceOff =
+    !flag || flag === "off" || flag === "0" || flag === "false";
+
+  if (maintenanceOff) {
+    return (await serveMarkdown(context)) ?? next();
   }
 
   const url = new URL(request.url);
@@ -101,4 +109,35 @@ export async function onRequest(context) {
 function retryAfterFrom(flag) {
   const n = Number(flag);
   return Number.isFinite(n) && n > 0 ? String(Math.floor(n)) : DEFAULT_RETRY_AFTER;
+}
+
+/**
+ * Markdown for Agents: when a client explicitly asks for `text/markdown`,
+ * serve the markdown twin of the page instead of the full HTML. Browsers send
+ * `text/html` and are unaffected. Returns null when the request is not a
+ * markdown request, so the caller falls through to the normal asset pipeline.
+ */
+async function serveMarkdown({ request, env }) {
+  if (request.method !== "GET" && request.method !== "HEAD") return null;
+
+  const accept = request.headers.get("Accept") || "";
+  if (!accept.includes("text/markdown")) return null;
+
+  const url = new URL(request.url);
+  const assetPath = MARKDOWN_ALTERNATES[url.pathname];
+  if (!assetPath) return null;
+
+  const asset = await env.ASSETS.fetch(new URL(assetPath, url.origin));
+  if (!asset.ok) return null;
+
+  return new Response(asset.body, {
+    status: 200,
+    headers: {
+      "Content-Type": "text/markdown; charset=utf-8",
+      // Same URL serves HTML or markdown depending on Accept - caches must split.
+      Vary: "Accept",
+      "Cache-Control": "public, max-age=3600, must-revalidate",
+      Link: `<${url.origin}${url.pathname}>; rel="canonical"`,
+    },
+  });
 }
