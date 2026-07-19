@@ -1602,7 +1602,10 @@
             <div class="modal-body">
               <div class="modal-image-frame">
                 <div class="modal-image-container">
-                  <img id="modal-img" src="" alt="Project Preview" />
+                  <!-- src and alt are set per project in js/modules/portfolio.js.
+                       No src attribute here: an empty one resolves to the page URL
+                       and makes some browsers refetch the document. -->
+                  <img id="modal-img" alt="" decoding="async" />
                 </div>
                 <div class="modal-tech-stack" id="modal-tags"></div>
                 <div class="modal-scroll-hint" id="modal-scroll-hint" aria-hidden="true">
