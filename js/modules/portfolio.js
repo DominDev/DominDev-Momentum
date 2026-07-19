@@ -455,6 +455,9 @@ export function initPortfolio() {
       // Build responsive image URL
       const newSrc = getResponsiveImageUrl(data.imageBase, containerWidth);
 
+      // Describe the actual project - the markup ships a generic placeholder alt
+      modalImg.alt = `${data.title} - pełny podgląd projektu (${data.type})`;
+
       debugLog();
       debugLog();
 
