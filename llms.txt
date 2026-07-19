@@ -1,0 +1,33 @@
+# DominDev
+
+> Studio web development z Wrocławia prowadzone przez Pawła Dominiaka. Buduję
+> wysokowydajne strony WordPress, sklepy WooCommerce i aplikacje React/Next.js
+> z wynikiem PageSpeed 90-100/100. Custom development zamiast szablonów i builderów.
+> Obsługa: Wrocław i cała Polska, również zdalnie.
+
+## Kontakt
+
+- E-mail: contact@domindev.com
+- Telefon: +48 536 553 820
+- Strona: https://domindev.com
+- Godziny pracy: poniedziałek - piątek, 09:00-18:00
+
+## Usługi i ceny
+
+- [Landing Page High-Performance](https://domindev.com/#uslugi): od 1500 PLN, realizacja 1-2 tygodnie. Wysokokonwertujące landing page, PageSpeed 100/100, ładowanie poniżej 1s. Pod kampanie Ads i szybkie starty produktu.
+- [Strona WordPress Firmowa](https://domindev.com/#uslugi): od 3500 PLN, realizacja 2-4 tygodnie. CMS, struktura pod blog i SEO, integracje social media, 1 miesiąc opieki gratis.
+- [Sklep WooCommerce](https://domindev.com/#uslugi): od 6000 PLN, realizacja 4-8 tygodni. Płatności (BLIK, karty), kurierzy i paczkomaty, odporność na duży ruch, 1 miesiąc opieki gratis.
+- [Aplikacje webowe React/Next.js](https://domindev.com/#uslugi): od 8000 PLN. Dashboardy, CRM, systemy biznesowe, custom logic, skalowalne API.
+- [Speed Boost Pack - optymalizacja WordPress](https://domindev.com/#uslugi): od 800 PLN. Optymalizacja Core Web Vitals, gwarantowany wynik 90+ na mobile, naprawa wolnych stron po innych wykonawcach.
+
+## Strony
+
+- [Strona główna (wersja markdown)](https://domindev.com/index.md): pełna treść serwisu w markdown - o mnie, portfolio, proces współpracy, usługi, FAQ, kontakt.
+- [Brief projektowy](https://domindev.com/brief): formularz kwalifikacji projektu (dostęp na zaproszenie, chroniony tokenem).
+- [Polityka prywatności](https://domindev.com/#polityka-prywatnosci)
+
+## Zasady wykorzystania treści
+
+- Wyszukiwanie i cytowanie w odpowiedziach AI: dozwolone (`search=yes`, `ai-input=yes`).
+- Trenowanie modeli na tej treści: niedozwolone (`ai-train=no`).
+- Szczegóły: https://domindev.com/robots.txt
