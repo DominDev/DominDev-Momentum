@@ -109,15 +109,6 @@
       .fa-layer-group::before {
         content: "\f5fd";
       }
-      .fa-lightbulb::before {
-        content: "\f0eb";
-      }
-      .fa-cog::before {
-        content: "\f013";
-      }
-      .fa-chart-line::before {
-        content: "\f201";
-      }
       .fa-screwdriver-wrench::before {
         content: "\f7d9";
       }
@@ -132,12 +123,6 @@
       }
       .fa-handshake::before {
         content: "\f2b5";
-      }
-      .fa-trash::before {
-        content: "\f1f8";
-      }
-      .fa-trash-can::before {
-        content: "\f2ed";
       }
       .fa-user-xmark::before {
         content: "\f235";
@@ -171,4 +156,28 @@
       }
       .fa-aws::before {
         content: "\f375";
+      }
+      .fa-arrow-right::before {
+        content: "\f061";
+      }
+      .fa-bolt::before {
+        content: "\f0e7";
+      }
+      .fa-cart-shopping::before {
+        content: "\f07a";
+      }
+      .fa-chevron-down::before {
+        content: "\f078";
+      }
+      .fa-plug::before {
+        content: "\f1e6";
+      }
+      .fa-power-off::before {
+        content: "\f011";
+      }
+      .fa-react::before {
+        content: "\f41b";
+      }
+      .fa-stethoscope::before {
+        content: "\f0f1";
       }
