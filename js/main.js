@@ -184,18 +184,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Delayed HUD initialization to avoid blocking animations
       setTimeout(initHud, 200);
-    }, 550);
+      // Must outlast the .hiding opacity transition in style.css (0.3s) so the
+      // element is only hidden once it has finished fading out.
+    }, 350);
   };
 
-  // Strategy: Hide preloader ~700ms after DOMContentLoaded
+  // Strategy: hide the preloader shortly after DOMContentLoaded.
   // Don't wait for all images/fonts - Content First!
+  // These delays gate LCP: the preloader covers the viewport, so real content
+  // cannot paint until it is gone. Keep them short.
   if (CONFIG.enablePreloader && preloader) {
     if (document.readyState === 'complete') {
       // Page already loaded (cached)
-      setTimeout(killPreloader, 300);
+      setTimeout(killPreloader, 150);
     } else {
       // Normal flow - hide after reasonable time
-      setTimeout(killPreloader, 700);
+      setTimeout(killPreloader, 200);
     }
   } else {
     // No preloader mode
