@@ -54,7 +54,7 @@ function processFile(inputFile, outputFile) {
 const FILES_TO_MINIFY = [
   { input: 'style.css', output: 'style.min.css' },
   { input: 'style-404.css', output: 'style-404.min.css' },
-  { input: 'assets/fonts/critical.css', output: 'assets/fonts/critical.min.css' }
+  { input: 'css/critical.css', output: 'css/critical.min.css' }
 ];
 
 // Directories to scan for .css files (auto-discover, no need to list each file)

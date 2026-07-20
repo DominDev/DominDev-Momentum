@@ -34,18 +34,13 @@
 /*.js
   Cache-Control: public, max-age=3600, must-revalidate
 
+# Everything under /assets/ is content that does not change in place: images,
+# text fonts, icon fonts. Stylesheets must NOT live here - Cloudflare merges
+# matching _headers rules instead of letting a more specific one win, so a CSS
+# file placed here would be pinned as immutable for a year. Keep stylesheets
+# in /css/ (they match the /*.css rule above, one hour with revalidation).
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
-
-# CSS under /assets/ is NOT immutable - critical.css changes whenever fonts or
-# icon rules change. Without this override it inherits the one-year immutable
-# rule above, and returning visitors keep a stale stylesheet for a year.
-# Filenames here are not content-hashed, so use ?v=N on the link when it changes.
-/assets/*.css
-  Cache-Control: public, max-age=3600, must-revalidate
-
-/assets/fonts/*.css
-  Cache-Control: public, max-age=3600, must-revalidate
 
 /brief/*
   Cache-Control: no-store
