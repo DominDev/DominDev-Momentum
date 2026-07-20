@@ -4753,15 +4753,15 @@ body {
   justify-content: center;
   align-items: center;
   transition:
-    opacity 0.3s ease,
-    visibility 0.3s ease;
+    opacity 0.5s ease,
+    visibility 0.5s ease;
   overflow: hidden;
   flex-direction: column;
 }
 
 #preloader.hiding {
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.5s ease;
 }
 
 #preloader.loaded {
