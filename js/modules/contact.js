@@ -1,6 +1,21 @@
 // js/modules/contact.js
 import { CONFIG } from "../config.js";
 
+// Load Cloudflare Turnstile's api.js on demand, the first time the contact
+// panel opens. The widget uses implicit rendering (the .cf-turnstile div is
+// already in the DOM), so Cloudflare auto-scans and renders it once the script
+// loads. Idempotent - injected at most once per page.
+let turnstileLoadStarted = false;
+function ensureTurnstileScript() {
+  if (turnstileLoadStarted) return;
+  turnstileLoadStarted = true;
+  const s = document.createElement("script");
+  s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+  s.async = true;
+  s.defer = true;
+  document.head.appendChild(s);
+}
+
 export function initContact() {
   const contactPanel = document.getElementById("contact-panel");
   const contactCloseBtn = document.getElementById("contact-close-btn");
@@ -8,6 +23,10 @@ export function initContact() {
 
   window.openContactPanel = function () {
     if (!contactPanel) return;
+
+    // Start fetching Turnstile as soon as the panel begins to open, so the
+    // widget is ready by the time the user finishes the form.
+    ensureTurnstileScript();
 
     if (glitchOverlay) {
       glitchOverlay.classList.add("active");
