@@ -371,12 +371,9 @@
 
     <link rel="stylesheet" href="style.min.css" />
 
-    <!-- Cloudflare Turnstile (Anti-spam) -->
-    <script
-      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-      async
-      defer
-    ></script>
+    <!-- Cloudflare Turnstile (anti-spam) is loaded on demand when the contact
+         panel opens - see js/modules/contact.js. It pulled ~500 KB on every
+         visit for a widget that only appears inside the contact modal. -->
   </head>
 
   <body style="overflow: hidden; height: 100vh">
