@@ -30,7 +30,7 @@ w okrojonym foncie automatycznie - dopoki nie przegenerujesz, bedzie
 niewidoczna.
 
 Skrypt sam ostrzega, jesli ikona jest uzyta w HTML, ale nie ma reguly
-`content:` w assets/fonts/critical.css - to wlasnie ten blad sprawil, ze
+`content:` w css/critical.css - to wlasnie ten blad sprawil, ze
 8 ikon (m.in. strzalki rozwijania w FAQ) nie wyswietlalo sie na produkcji.
 
 ZRODLA PRAWDY
@@ -38,7 +38,7 @@ ZRODLA PRAWDY
   index.html                      -> ktore ikony i w jakiej rodzinie
   assets/fonts/fontawesome.min.css -> kanoniczne kody unicode (pelna dystrybucja)
   assets/fonts/originals/*.woff2   -> pelne fonty, z nich tniemy
-  assets/fonts/critical.css        -> reguly content: uzywane przez strone
+  css/critical.css        -> reguly content: uzywane przez strone
 
 Pelne fonty i pelny CSS zostaja w repo celowo - bez nich nie da sie
 odtworzyc subsetu ani dodac nowej ikony.
@@ -53,7 +53,7 @@ import subprocess
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HTML = os.path.join(ROOT, 'index.html')
 FULL_CSS = os.path.join(ROOT, 'assets', 'fonts', 'fontawesome.min.css')
-CRIT_CSS = os.path.join(ROOT, 'assets', 'fonts', 'critical.css')
+CRIT_CSS = os.path.join(ROOT, 'css', 'critical.css')
 ORIG_DIR = os.path.join(ROOT, 'assets', 'fonts', 'originals')
 OUT_DIR = os.path.join(ROOT, 'assets', 'fonts')
 
