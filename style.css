@@ -5651,3 +5651,14 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* Cross-sell line under the narrowed service grid on landing pages */
+.services-crosssell {
+  margin-top: 32px;
+  font-size: 0.95rem;
+}
+
+.services-crosssell a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
