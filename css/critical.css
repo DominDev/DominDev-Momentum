@@ -181,3 +181,9 @@
       .fa-stethoscope::before {
         content: "\f0f1";
       }
+      .fa-arrow-left::before {
+        content: "\f060";
+      }
+      .fa-rotate-left::before {
+        content: "\f2ea";
+      }
