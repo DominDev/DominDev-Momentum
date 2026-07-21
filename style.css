@@ -5701,3 +5701,25 @@ body {
     padding-right: 0;
   }
 }
+
+/* Link from a service card to its dedicated landing page */
+.service-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--primary);
+  transition: gap 0.25s, opacity 0.25s;
+}
+
+.service-more i {
+  font-size: 0.75em;
+}
+
+.service-more:hover {
+  gap: 12px;
+  opacity: 0.85;
+}
