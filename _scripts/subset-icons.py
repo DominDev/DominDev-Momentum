@@ -51,7 +51,20 @@ import sys
 import subprocess
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-HTML = os.path.join(ROOT, 'index.html')
+
+# WSZYSTKIE strony serwisu, nie tylko index.html. Kazda podstrona uslugowa moze
+# uzywac ikony, ktorej nie ma na stronie glownej - jesli skanujemy tylko
+# index.html, taka ikona nie trafia do subsetu i renderuje sie jako nic
+# (element o zerowej szerokosci, bez zadnego bledu w konsoli).
+HTML_PAGES = [
+    os.path.join(ROOT, 'index.html'),
+    os.path.join(ROOT, '404.html'),
+    os.path.join(ROOT, 'maintenance.html'),
+    os.path.join(ROOT, 'brief', 'index.html'),
+]
+# + kazda podstrona uslugowa w roocie (strony-*.html, sklepy-*.html itd.)
+HTML_PAGES += [os.path.join(ROOT, f) for f in sorted(os.listdir(ROOT))
+               if f.endswith('.html') and os.path.join(ROOT, f) not in HTML_PAGES]
 FULL_CSS = os.path.join(ROOT, 'assets', 'fonts', 'fontawesome.min.css')
 CRIT_CSS = os.path.join(ROOT, 'css', 'critical.css')
 ORIG_DIR = os.path.join(ROOT, 'assets', 'fonts', 'originals')
@@ -78,8 +91,11 @@ def kanoniczne_kody():
 
 
 def uzyte_ikony(mapa):
-    """Klasa -> rodzina, na podstawie atrybutow class w index.html."""
-    html = io.open(HTML, encoding='utf-8').read()
+    """Klasa -> rodzina, na podstawie atrybutow class we wszystkich stronach."""
+    html = ''
+    for strona in HTML_PAGES:
+        if os.path.exists(strona):
+            html += io.open(strona, encoding='utf-8').read()
     uzyte = {}
     for m in re.finditer(r'class="([^"]*\bfa-[a-z0-9-]+[^"]*)"', html):
         klasy = m.group(1).split()
@@ -102,7 +118,7 @@ def main():
     uzyte = uzyte_ikony(mapa)
     zdef = zdefiniowane_w_critical()
 
-    print('Ikon uzytych w index.html: %d' % len(uzyte))
+    print('Ikon uzytych na %d stronach: %d' % (len([x for x in HTML_PAGES if os.path.exists(x)]), len(uzyte)))
 
     brak = sorted(k for k in uzyte if k not in zdef)
     if brak:

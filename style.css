@@ -5532,3 +5532,194 @@ body {
   contain-intrinsic-size: 0 1000px;
 }
 */
+
+/* ========================================
+   CASE STUDY (service landing pages)
+   Deep single-project block used instead of the homepage portfolio grid.
+   On a service page depth converts better than breadth: one real WordPress
+   implementation described concretely beats six thumbnails, most of which
+   are concepts in other technologies.
+   ======================================== */
+
+.case-study {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+  margin-top: 40px;
+}
+
+.case-study__media {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.case-study__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.case-study__tags {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.case-study__content {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.case-block__label {
+  display: block;
+  font-family: var(--font-main);
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.case-block p {
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin: 0;
+}
+
+.case-block p strong {
+  color: var(--text-main);
+}
+
+.case-block--result {
+  border-left: 3px solid var(--primary);
+  padding-left: 20px;
+}
+
+.case-result {
+  font-size: 1.1rem;
+  color: var(--text-main) !important;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.case-result strong {
+  color: var(--primary) !important;
+}
+
+/* Ghost button: secondary action that must not compete with the main CTA */
+.btn-ghost {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--text-main);
+}
+
+.btn-ghost:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+@media (max-width: 900px) {
+  .case-study {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+/* Service landing pages narrow the offer to one topic, so their grids hold
+   three cards instead of the homepage's four. Without this the cards keep the
+   4-column track and huddle on the left with dead space beside them. */
+.services-grid--trio {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .services-grid--trio {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .services-grid--trio {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Cross-sell line under the narrowed service grid on landing pages */
+.services-crosssell {
+  margin-top: 32px;
+  font-size: 0.95rem;
+}
+
+.services-crosssell a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ========================================
+   BACK TO HOMEPAGE (service landing pages)
+   A service page is entered cold from Google, so the way back to the main site
+   must be obvious. The logo links home (convention), plus this labelled item -
+   set apart from the on-page section anchors next to it.
+   ======================================== */
+
+.nav-home,
+.menu-home {
+  opacity: 0.75;
+  transition: opacity 0.25s, color 0.25s;
+}
+
+.nav-home i,
+.menu-home i {
+  font-size: 0.8em;
+  margin-right: 4px;
+}
+
+.nav-home:hover,
+.menu-home:hover {
+  opacity: 1;
+  color: var(--primary);
+}
+
+/* Separate the "leave this page" action from the section anchors */
+.nav-links .nav-home {
+  padding-right: 18px;
+  margin-right: 4px;
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 1100px) {
+  .nav-links .nav-home {
+    border-right: none;
+    padding-right: 0;
+  }
+}
+
+/* Link from a service card to its dedicated landing page */
+.service-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--primary);
+  transition: gap 0.25s, opacity 0.25s;
+}
+
+.service-more i {
+  font-size: 0.75em;
+}
+
+.service-more:hover {
+  gap: 12px;
+  opacity: 0.85;
+}
