@@ -5632,3 +5632,22 @@ body {
     gap: 28px;
   }
 }
+
+/* Service landing pages narrow the offer to one topic, so their grids hold
+   three cards instead of the homepage's four. Without this the cards keep the
+   4-column track and huddle on the left with dead space beside them. */
+.services-grid--trio {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .services-grid--trio {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .services-grid--trio {
+    grid-template-columns: 1fr;
+  }
+}
