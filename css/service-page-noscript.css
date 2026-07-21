@@ -1,0 +1,8 @@
+/* Fallback for visitors without JavaScript.
+   Scroll-reveal is driven by the IntersectionObserver in core/ui.js; without
+   JS the .reveal elements would stay hidden. This forces them visible so the
+   page is fully readable regardless. */
+.reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
