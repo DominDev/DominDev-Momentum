@@ -5532,3 +5532,103 @@ body {
   contain-intrinsic-size: 0 1000px;
 }
 */
+
+/* ========================================
+   CASE STUDY (service landing pages)
+   Deep single-project block used instead of the homepage portfolio grid.
+   On a service page depth converts better than breadth: one real WordPress
+   implementation described concretely beats six thumbnails, most of which
+   are concepts in other technologies.
+   ======================================== */
+
+.case-study {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+  margin-top: 40px;
+}
+
+.case-study__media {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.case-study__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.case-study__tags {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.case-study__content {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.case-block__label {
+  display: block;
+  font-family: var(--font-main);
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.case-block p {
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin: 0;
+}
+
+.case-block p strong {
+  color: var(--text-main);
+}
+
+.case-block--result {
+  border-left: 3px solid var(--primary);
+  padding-left: 20px;
+}
+
+.case-result {
+  font-size: 1.1rem;
+  color: var(--text-main) !important;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.case-result strong {
+  color: var(--primary) !important;
+}
+
+/* Ghost button: secondary action that must not compete with the main CTA */
+.btn-ghost {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--text-main);
+}
+
+.btn-ghost:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+@media (max-width: 900px) {
+  .case-study {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
