@@ -481,71 +481,187 @@
         <div class="container nav-container">
           <div class="logo">Domin<span>Dev</span>.</div>
 
-          <ul class="nav-links">
+          <ul class="nav-links" aria-label="Główna nawigacja">
             <li><a href="#about">O mnie</a></li>
 
             <li><a href="#portfolio">Realizacje</a></li>
 
             <li><a href="#process">Proces</a></li>
 
-            <li><a href="#services">Usługi</a></li>
+            <li class="nav-services">
+              <a href="#services" class="nav-services__overview">Usługi</a>
+              <button
+                type="button"
+                class="nav-services__trigger"
+                id="services-menu-trigger"
+                aria-expanded="false"
+                aria-controls="services-dropdown"
+              >
+                <span class="sr-only">Otwórz listę usług</span>
+                <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+              </button>
+
+              <div class="services-dropdown" id="services-dropdown" hidden>
+                <p class="services-dropdown__label">Usługi</p>
+                <p class="services-dropdown__status">Dostępne</p>
+                <ul class="services-dropdown__list">
+                  <li>
+                    <a href="/strony-wordpress-wroclaw" class="service-menu-link service-menu-link--live">
+                      <span>
+                        <strong>Strony WordPress</strong>
+                        <small>Firmowa strona, CMS, SEO i wydajność</small>
+                      </span>
+                      <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                  </li>
+                </ul>
+
+                <p class="services-dropdown__status services-dropdown__status--pending">W przygotowaniu</p>
+                <ul class="services-dropdown__list">
+                  <li>
+                    <a href="/maintenance.html" class="service-menu-link service-menu-link--pending">
+                      <span>Landing page</span>
+                      <span class="service-menu-link__meta">W przygotowaniu</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/maintenance.html" class="service-menu-link service-menu-link--pending">
+                      <span>Sklepy WooCommerce</span>
+                      <span class="service-menu-link__meta">W przygotowaniu</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/maintenance.html" class="service-menu-link service-menu-link--pending">
+                      <span>Aplikacje webowe</span>
+                      <span class="service-menu-link__meta">W przygotowaniu</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/maintenance.html" class="service-menu-link service-menu-link--pending">
+                      <span>Optymalizacja i ratunek</span>
+                      <span class="service-menu-link__meta">W przygotowaniu</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/maintenance.html" class="service-menu-link service-menu-link--pending">
+                      <span>Integracje API</span>
+                      <span class="service-menu-link__meta">W przygotowaniu</span>
+                    </a>
+                  </li>
+                </ul>
+
+                <a href="#services" class="services-dropdown__overview">
+                  Zobacz pełną ofertę <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+            </li>
 
             <li><a href="#faq">FAQ</a></li>
 
             <li><a href="#contact" class="btn btn-nav">Kontakt</a></li>
           </ul>
 
-          <div class="hamburger" id="hamburger-menu">
+          <button
+            type="button"
+            class="hamburger"
+            id="hamburger-menu"
+            aria-label="Otwórz menu"
+            aria-expanded="false"
+            aria-controls="fullscreen-menu"
+          >
             <span></span>
 
             <span></span>
 
             <span></span>
-          </div>
+          </button>
         </div>
       </nav>
 
       <div class="fullscreen-menu" id="fullscreen-menu">
-        <ul>
-          <li><a href="#about">O MNIE</a></li>
+        <div class="mobile-menu-main" id="mobile-menu-main">
+          <ul aria-label="Menu mobilne">
+            <li><a href="#about">O MNIE</a></li>
 
-          <li><a href="#portfolio">REALIZACJE</a></li>
+            <li><a href="#portfolio">REALIZACJE</a></li>
 
-          <li><a href="#process">PROCES</a></li>
+            <li><a href="#process">PROCES</a></li>
 
-          <li><a href="#services">USŁUGI</a></li>
+            <li>
+              <button
+                type="button"
+                class="mobile-services-open"
+                id="mobile-services-open"
+                aria-expanded="false"
+                aria-controls="mobile-services-panel"
+              >
+                USŁUGI <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </button>
+            </li>
 
-          <li><a href="#faq">FAQ</a></li>
+            <li><a href="#faq">FAQ</a></li>
 
-          <li><a href="#contact">KONTAKT</a></li>
-        </ul>
+            <li><a href="#contact">KONTAKT</a></li>
+          </ul>
 
-        <div class="menu-social">
-          <a
-            class="social-link"
-            href="https://www.linkedin.com/in/p-dominiak-pd/"
-            aria-label="LinkedIn Profile"
-            target="_blank"
-            rel="noopener noreferrer"
-            ><i class="fa-brands fa-linkedin" aria-hidden="true"></i
-          ></a>
-          <a
-            class="social-link"
-            href="https://github.com/DominDev"
-            aria-label="GitHub Profile"
-            target="_blank"
-            rel="noopener noreferrer"
-            ><i class="fa-brands fa-github" aria-hidden="true"></i
-          ></a>
-          <a
-            class="social-link"
-            href="https://www.instagram.com/domindev_com/"
-            aria-label="Instagram Profile"
-            target="_blank"
-            rel="noopener noreferrer"
-            ><i class="fa-brands fa-instagram" aria-hidden="true"></i
-          ></a>
+          <div class="menu-social">
+            <a
+              class="social-link"
+              href="https://www.linkedin.com/in/p-dominiak-pd/"
+              aria-label="LinkedIn Profile"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="fa-brands fa-linkedin" aria-hidden="true"></i
+            ></a>
+            <a
+              class="social-link"
+              href="https://github.com/DominDev"
+              aria-label="GitHub Profile"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="fa-brands fa-github" aria-hidden="true"></i
+            ></a>
+            <a
+              class="social-link"
+              href="https://www.instagram.com/domindev_com/"
+              aria-label="Instagram Profile"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="fa-brands fa-instagram" aria-hidden="true"></i
+            ></a>
+          </div>
         </div>
+
+        <section class="mobile-services-panel" id="mobile-services-panel" aria-label="Usługi" hidden>
+          <button type="button" class="mobile-services-back" id="mobile-services-back">
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Menu
+          </button>
+          <p class="mobile-services-panel__eyebrow">Usługi</p>
+          <h2>Wybierz obszar działania</h2>
+
+          <p class="mobile-services-panel__status">Dostępne</p>
+          <ul class="mobile-services-list">
+            <li>
+              <a href="/strony-wordpress-wroclaw" class="mobile-service-link mobile-service-link--live">
+                <span>Strony WordPress</span>
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </li>
+          </ul>
+
+          <p class="mobile-services-panel__status mobile-services-panel__status--pending">W przygotowaniu</p>
+          <ul class="mobile-services-list">
+            <li><a href="/maintenance.html" class="mobile-service-link">Landing page <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
+            <li><a href="/maintenance.html" class="mobile-service-link">Sklepy WooCommerce <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
+            <li><a href="/maintenance.html" class="mobile-service-link">Aplikacje webowe <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
+            <li><a href="/maintenance.html" class="mobile-service-link">Optymalizacja i ratunek <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
+            <li><a href="/maintenance.html" class="mobile-service-link">Integracje API <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
+          </ul>
+
+          <a href="#services" class="mobile-services-overview">
+            Pełna oferta na stronie głównej <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </a>
+        </section>
       </div>
 
       <section id="hero" tabindex="-1">

@@ -7,6 +7,7 @@ import { initHud } from './modules/hud.js';
 import { initAdaptiveImages } from './modules/adaptive-images.js';
 import { initPrivacyPolicy } from './modules/privacy-policy.js';
 import { initPortfolioExpand } from './modules/portfolio-expand.js';
+import { initServiceNavigation } from './modules/service-navigation.js';
 
 // Globalne zmienne do kontroli pętli animacji preloadera i cleanup
 let preloaderAnimId = null;
@@ -163,6 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Start heavy operations (Matrix + UI)
       initMatrix();
       initUI();
+      initServiceNavigation();
 
       // Check if we have a hash that needs scrolling
       if (window.location.hash) {
@@ -204,6 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.style.height = '';
     initMatrix();
     initUI();
+    initServiceNavigation();
     initHud();
   }
 
