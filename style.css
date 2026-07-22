@@ -5729,7 +5729,8 @@ body {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  /* Leave room for the dropdown trigger's visible keyboard-focus outline. */
+  gap: 8px;
 }
 
 .nav-services__trigger {
