@@ -5922,19 +5922,15 @@ body {
 }
 
 .mobile-services-nav__row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
   align-items: center;
-  gap: 12px;
+  column-gap: 12px;
 }
 
 .fullscreen-menu .mobile-services-nav__overview {
-  flex: 1 1 auto;
-  margin: 20px 0;
-  color: #ffffff;
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  font-weight: 900;
-  line-height: 1.1;
+  grid-column: 2;
+  width: 100%;
   text-align: center;
 }
 
@@ -5943,7 +5939,7 @@ body {
 }
 
 .mobile-services-open {
-  flex: 0 0 48px;
+  grid-column: 3;
   display: inline-grid;
   width: 48px;
   min-height: 48px;
@@ -6047,21 +6043,12 @@ body {
 }
 
 @media (max-width: 768px) {
-  .fullscreen-menu .mobile-services-nav__overview {
-    font-size: 2rem;
-  }
-
   .mobile-menu-main {
     padding-inline: 24px;
   }
 }
 
 @media (max-width: 480px) {
-  .fullscreen-menu .mobile-services-nav__overview {
-    font-size: 1.2rem;
-    margin: 12px 0;
-  }
-
   .mobile-menu-main {
     padding: 96px 20px 28px;
   }

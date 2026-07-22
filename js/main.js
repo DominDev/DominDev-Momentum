@@ -7,7 +7,7 @@ import { initHud } from './modules/hud.js';
 import { initAdaptiveImages } from './modules/adaptive-images.js';
 import { initPrivacyPolicy } from './modules/privacy-policy.js';
 import { initPortfolioExpand } from './modules/portfolio-expand.js';
-import { initServiceNavigation } from './modules/service-navigation.js';
+import { initServiceNavigation } from './modules/service-navigation.js?v=2';
 
 // Globalne zmienne do kontroli pętli animacji preloadera i cleanup
 let preloaderAnimId = null;

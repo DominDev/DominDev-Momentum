@@ -39,6 +39,20 @@ async function loadPage(browser, path, viewport, errors) {
       1
     );
     assert.equal(await desktop.locator('#services-dropdown a[href="/maintenance.html"]').count(), 5);
+    assert.match(
+      await desktop.locator('script[type="module"]').getAttribute('src'),
+      /js\/main\.js\?v=/
+    );
+    assert.match(
+      await desktop.locator('link[rel="stylesheet"][href*="style.min.css"]').getAttribute('href'),
+      /style\.min\.css\?v=/
+    );
+
+    await desktop.locator('#services-menu-trigger').click();
+    assert.equal(await desktop.locator('#services-menu-trigger').getAttribute('aria-expanded'), 'true');
+    assert.equal(await desktop.locator('#services-dropdown').isVisible(), true);
+    await desktop.locator('#services-menu-trigger').click();
+    assert.equal(await desktop.locator('#services-menu-trigger').getAttribute('aria-expanded'), 'false');
 
     await desktop.locator('#services-menu-trigger').focus();
     await desktop.keyboard.press('Enter');
@@ -69,6 +83,22 @@ async function loadPage(browser, path, viewport, errors) {
       await mobile.locator('#fullscreen-menu').evaluate((element) => getComputedStyle(element).overflowY),
       'auto'
     );
+    const mobileOverviewLayout = await mobile.locator('.mobile-services-nav__overview').evaluate((element) => {
+      const row = element.closest('.mobile-services-nav__row').getBoundingClientRect();
+      const link = element.getBoundingClientRect();
+      const processLink = document.querySelector('#mobile-menu-main a[href="#process"]');
+
+      return {
+        isCentered: Math.abs(link.left + link.width / 2 - (row.left + row.width / 2)) < 1,
+        matchesMenuFont: getComputedStyle(element).fontFamily === getComputedStyle(processLink).fontFamily,
+        matchesMenuSize: getComputedStyle(element).fontSize === getComputedStyle(processLink).fontSize,
+      };
+    });
+    assert.deepEqual(mobileOverviewLayout, {
+      isCentered: true,
+      matchesMenuFont: true,
+      matchesMenuSize: true,
+    });
     assert.equal(
       await mobile.locator('#mobile-services-open').getAttribute('aria-label'),
       'Zwiń listę usług'
