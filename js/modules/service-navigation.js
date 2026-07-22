@@ -1,13 +1,10 @@
-// Homepage-only service navigation.
-// Existing service landing pages do not include these IDs, so this module exits without
-// changing their current navigation behavior.
+// Shared service navigation for the homepage and dedicated service landing pages.
+// Pages without these controls retain their existing navigation behavior.
 export function initServiceNavigation() {
   const desktopTrigger = document.getElementById('services-menu-trigger');
   const desktopDropdown = document.getElementById('services-dropdown');
   const mobileOpen = document.getElementById('mobile-services-open');
   const mobilePanel = document.getElementById('mobile-services-panel');
-  const mobileBack = document.getElementById('mobile-services-back');
-  const mobileMain = document.getElementById('mobile-menu-main');
   const menu = document.getElementById('fullscreen-menu');
   const hamburger = document.getElementById('hamburger-menu');
 
@@ -16,8 +13,6 @@ export function initServiceNavigation() {
     !desktopDropdown ||
     !mobileOpen ||
     !mobilePanel ||
-    !mobileBack ||
-    !mobileMain ||
     !menu ||
     !hamburger
   ) {
@@ -38,13 +33,13 @@ export function initServiceNavigation() {
 
   const setMobileServicesPanel = (isOpen, { restoreFocus = false } = {}) => {
     mobileOpen.setAttribute('aria-expanded', String(isOpen));
+    mobileOpen.setAttribute(
+      'aria-label',
+      isOpen ? 'Zwiń listę usług' : 'Rozwiń listę usług'
+    );
     mobilePanel.hidden = !isOpen;
-    mobileMain.hidden = isOpen;
-    menu.classList.toggle('is-services-panel-open', isOpen);
 
-    if (isOpen) {
-      mobileBack.focus();
-    } else if (restoreFocus) {
+    if (!isOpen && restoreFocus) {
       mobileOpen.focus();
     }
   };
@@ -78,9 +73,11 @@ export function initServiceNavigation() {
     }
   });
 
-  mobileOpen.addEventListener('click', () => setMobileServicesPanel(true));
-  mobileBack.addEventListener('click', () => setMobileServicesPanel(false, { restoreFocus: true }));
-  mobilePanel.addEventListener('click', (event) => {
+  mobileOpen.addEventListener('click', () => {
+    const isOpen = mobileOpen.getAttribute('aria-expanded') === 'true';
+    setMobileServicesPanel(!isOpen);
+  });
+  menu.addEventListener('click', (event) => {
     if (event.target.closest('a')) setMobileServicesPanel(false);
   });
 

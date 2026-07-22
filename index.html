@@ -587,16 +587,41 @@
 
             <li><a href="#process">PROCES</a></li>
 
-            <li>
-              <button
-                type="button"
-                class="mobile-services-open"
-                id="mobile-services-open"
-                aria-expanded="false"
-                aria-controls="mobile-services-panel"
-              >
-                USŁUGI <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-              </button>
+            <li class="mobile-services-nav">
+              <div class="mobile-services-nav__row">
+                <a href="#services" class="mobile-services-nav__overview">USŁUGI</a>
+                <button
+                  type="button"
+                  class="mobile-services-open"
+                  id="mobile-services-open"
+                  aria-label="Rozwiń listę usług"
+                  aria-expanded="false"
+                  aria-controls="mobile-services-panel"
+                >
+                  <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                </button>
+              </div>
+
+              <div class="mobile-services-panel" id="mobile-services-panel" hidden>
+                <p class="mobile-services-panel__status">Dostępne</p>
+                <ul class="mobile-services-list" aria-label="Dostępne usługi">
+                  <li>
+                    <a href="/strony-wordpress-wroclaw" class="mobile-service-link mobile-service-link--live">
+                      <span>Strony WordPress</span>
+                      <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                  </li>
+                </ul>
+
+                <p class="mobile-services-panel__status mobile-services-panel__status--pending">W przygotowaniu</p>
+                <ul class="mobile-services-list" aria-label="Usługi w przygotowaniu">
+                  <li><a href="/maintenance.html" class="mobile-service-link">Landing page <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
+                  <li><a href="/maintenance.html" class="mobile-service-link">Sklepy WooCommerce <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
+                  <li><a href="/maintenance.html" class="mobile-service-link">Aplikacje webowe <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
+                  <li><a href="/maintenance.html" class="mobile-service-link">Optymalizacja i ratunek <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
+                  <li><a href="/maintenance.html" class="mobile-service-link">Integracje API <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
+                </ul>
+              </div>
             </li>
 
             <li><a href="#faq">FAQ</a></li>
@@ -632,36 +657,6 @@
           </div>
         </div>
 
-        <section class="mobile-services-panel" id="mobile-services-panel" aria-label="Usługi" hidden>
-          <button type="button" class="mobile-services-back" id="mobile-services-back">
-            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Menu
-          </button>
-          <p class="mobile-services-panel__eyebrow">Usługi</p>
-          <h2>Wybierz obszar działania</h2>
-
-          <p class="mobile-services-panel__status">Dostępne</p>
-          <ul class="mobile-services-list">
-            <li>
-              <a href="/strony-wordpress-wroclaw" class="mobile-service-link mobile-service-link--live">
-                <span>Strony WordPress</span>
-                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-              </a>
-            </li>
-          </ul>
-
-          <p class="mobile-services-panel__status mobile-services-panel__status--pending">W przygotowaniu</p>
-          <ul class="mobile-services-list">
-            <li><a href="/maintenance.html" class="mobile-service-link">Landing page <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
-            <li><a href="/maintenance.html" class="mobile-service-link">Sklepy WooCommerce <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
-            <li><a href="/maintenance.html" class="mobile-service-link">Aplikacje webowe <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
-            <li><a href="/maintenance.html" class="mobile-service-link">Optymalizacja i ratunek <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
-            <li><a href="/maintenance.html" class="mobile-service-link">Integracje API <span class="mobile-service-link__meta">W przygotowaniu</span></a></li>
-          </ul>
-
-          <a href="#services" class="mobile-services-overview">
-            Pełna oferta na stronie głównej <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-          </a>
-        </section>
       </div>
 
       <section id="hero" tabindex="-1">
