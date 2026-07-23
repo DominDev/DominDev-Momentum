@@ -118,6 +118,20 @@ async function askChatbot(page, question) {
     const rodoQuestion = await askChatbot(desktop, 'RODO');
     assert.match(rodoQuestion, /RODO|GDPR/);
 
+    const botCountBeforeBurst = await desktop.locator('#chatbot-messages .chat-message.bot').count();
+    await desktop.locator('#chatbot-input').fill('cennik');
+    await desktop.locator('#chatbot-send').click();
+    await desktop.waitForTimeout(600);
+    await desktop.locator('#chatbot-input').fill('usługi');
+    await desktop.locator('#chatbot-send').click();
+    await desktop.waitForFunction(
+      (before) => !document.querySelector('#typing-indicator')
+        && document.querySelectorAll('#chatbot-messages .chat-message.bot').length > before + 1,
+      botCountBeforeBurst,
+      { timeout: 5000 }
+    );
+    assert.equal(await desktop.locator('#typing-indicator').count(), 0);
+
     await desktop.locator('#chatbot-close').click();
     await desktop.locator('#chatbot-window.active').waitFor({ state: 'hidden' });
 
@@ -132,6 +146,20 @@ async function askChatbot(page, question) {
     await servicePage.locator('#chatbot-window.active').waitFor({ state: 'hidden' });
     await servicePage.close();
     assert.deepEqual(serviceContext.errors, []);
+
+    const failureContext = await loadPage(browser, { width: 1440, height: 900 });
+    const failurePage = failureContext.page;
+    await failurePage.route('**/data/chatbot-db.json', (route) => route.abort());
+    await failurePage.locator('#chatbot-trigger').click();
+    await failurePage.locator('#chatbot-window.active').waitFor({ state: 'visible', timeout: 5000 });
+    const failedResponse = await askChatbot(failurePage, 'usługi');
+    assert.match(failedResponse, /nie udało się wczytać|odświeżyć|napisz ponownie/i);
+    await failurePage.waitForTimeout(600);
+    const failedSecondResponse = await askChatbot(failurePage, 'cennik');
+    assert.match(failedSecondResponse, /nie udało się wczytać|odświeżyć|napisz ponownie/i);
+    assert.equal(await failurePage.locator('#typing-indicator').count(), 0);
+    await failurePage.close();
+    assert.deepEqual(failureContext.errors, []);
 
     const mobileContext = await loadPage(browser, { width: 375, height: 667 });
     const mobile = mobileContext.page;

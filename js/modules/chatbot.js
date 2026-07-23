@@ -1,6 +1,8 @@
 // js/modules/chatbot.js
 let botData = null;
+let botDataPromise = null;
 const SPLIT_REGEX = /[\s,.;!?]+/;
+const DATA_LOAD_ERROR_RESPONSE = "⚠️ Nie udało się wczytać bazy odpowiedzi. Spróbuj odświeżyć stronę lub napisz ponownie za chwilę.";
 
 /**
  * Normalizuje tekst, usuwając polskie znaki diakrytyczne.
@@ -11,9 +13,20 @@ const normalize = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
 async function loadBotData() {
   if (botData) return botData;
+  if (botDataPromise) return botDataPromise;
+
+  botDataPromise = (async () => {
   try {
     const response = await fetch("data/chatbot-db.json");
+    if (!response.ok) {
+      throw new Error(`Chatbot data request failed with ${response.status}`);
+    }
+
     const data = await response.json();
+    if (!data || typeof data !== "object" || !Array.isArray(data.vulgarWords)
+      || !data.keywordMap || !data.responses || !data.glossary) {
+      throw new Error("Chatbot data has an invalid shape");
+    }
 
     // Pre-kompilacja i normalizacja danych dla maksymalnej wydajności
     data.normalizedVulgarWords = data.vulgarWords.map(normalize);
@@ -43,7 +56,12 @@ async function loadBotData() {
   } catch (error) {
     console.error("Failed to load chatbot data:", error);
     return null;
+  } finally {
+    botDataPromise = null;
   }
+  })();
+
+  return botDataPromise;
 }
 
 export function initChat() {
@@ -199,6 +217,29 @@ export function initChat() {
 
   let lastMessageTime = 0;
   const COOLDOWN_MS = 500;
+  let responseQueue = Promise.resolve();
+
+  function wait(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async function deliverResponse(msg) {
+    showTyping();
+
+    try {
+      if (!botData && !(await loadBotData())) {
+        throw new Error("Chatbot data is unavailable");
+      }
+
+      await wait(600 + Math.random() * 500);
+      removeTyping();
+      addMessage(getBotResponse(msg));
+    } catch (error) {
+      console.error("Failed to prepare chatbot response:", error);
+      removeTyping();
+      addMessage(DATA_LOAD_ERROR_RESPONSE);
+    }
+  }
 
   function sendMessage() {
     const now = Date.now();
@@ -212,20 +253,9 @@ export function initChat() {
     chatbotInput.value = "";
     chatbotSend.classList.remove("active"); // Usuń aktywny stan po wysłaniu
 
-    if (!botData) {
-      addMessage("System initializing...", false);
-      loadBotData().then(() => {
-        const response = getBotResponse(msg);
-        addMessage(response);
-      });
-    } else {
-      showTyping();
-      setTimeout(() => {
-        removeTyping();
-        const response = getBotResponse(msg);
-        addMessage(response);
-      }, 600 + Math.random() * 500);
-    }
+    // Serializuje odpowiedzi, aby szybkie kolejne wysyłki nie tworzyły
+    // kilku elementów `typing-indicator` z tym samym identyfikatorem.
+    responseQueue = responseQueue.then(() => deliverResponse(msg));
   }
 
   if (chatbotSend) chatbotSend.addEventListener("click", sendMessage);
