@@ -5928,9 +5928,18 @@ body {
   }
 
   .fullscreen-menu.active {
+    display: block;
     height: 100dvh;
     max-height: 100dvh;
     scroll-padding-bottom: var(--mobile-menu-hud-clearance);
+  }
+
+  .mobile-menu-main {
+    /* An expanded services list can be taller than the viewport. Start it
+       below the fixed navigation instead of vertically centering overflow. */
+    min-height: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
   }
 }
 

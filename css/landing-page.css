@@ -157,6 +157,25 @@
   object-position: center top;
 }
 
+/* Integrations use a reference capture as supporting evidence, not a
+   full-page screenshot. Keep it at the same deliberate scale as the other
+   service case studies on every viewport. */
+.integration-page .case-study__media {
+  aspect-ratio: 16 / 10;
+}
+
+.integration-page .case-study__media picture,
+.integration-page .case-study__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.integration-page .case-study__media img {
+  object-fit: cover;
+  object-position: center top;
+}
+
 @media (max-width: 1000px) {
   .landing-page .landing-deliverables {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -188,6 +207,10 @@
   }
 
   .recovery-page .case-study__media {
+    aspect-ratio: 16 / 9;
+  }
+
+  .integration-page .case-study__media {
     aspect-ratio: 16 / 9;
   }
 }
