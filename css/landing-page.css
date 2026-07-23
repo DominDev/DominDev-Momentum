@@ -102,6 +102,25 @@
   min-width: 0;
 }
 
+/* The TechGear concept is a long product UI capture. Crop it only on the
+   WooCommerce page so it supports the architecture copy instead of pushing
+   the following content below the fold. */
+.woocommerce-page .case-study__media {
+  aspect-ratio: 16 / 10;
+}
+
+.woocommerce-page .case-study__media picture,
+.woocommerce-page .case-study__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.woocommerce-page .case-study__media img {
+  object-fit: cover;
+  object-position: center top;
+}
+
 @media (max-width: 1000px) {
   .landing-page .landing-deliverables {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -122,5 +141,9 @@
 
   .landing-page .landing-deliverable {
     min-height: auto;
+  }
+
+  .woocommerce-page .case-study__media {
+    aspect-ratio: 16 / 9;
   }
 }
