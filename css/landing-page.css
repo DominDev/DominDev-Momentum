@@ -97,6 +97,11 @@
   color: #ffffff;
 }
 
+.landing-page .case-result__copy {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
 @media (max-width: 1000px) {
   .landing-page .landing-deliverables {
     grid-template-columns: repeat(3, minmax(0, 1fr));

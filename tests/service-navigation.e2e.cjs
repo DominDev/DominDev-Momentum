@@ -306,6 +306,23 @@ async function loadPage(browser, path, viewport, errors) {
       1
     );
     assert.equal(await landingPageMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 4);
+    await landingPageMobile.locator('#hamburger-menu').click();
+    await landingPageMobile.locator('#portfolio').scrollIntoViewIfNeeded();
+    await landingPageMobile.waitForTimeout(300);
+    const mobileCaseResultLayout = await landingPageMobile.locator('.case-result').evaluate((element) => {
+      const result = element.getBoundingClientRect();
+      const copy = element.querySelector('.case-result__copy').getBoundingClientRect();
+      return {
+        pageDoesNotOverflow: document.documentElement.scrollWidth <= window.innerWidth,
+        resultFitsViewport: result.left >= 0 && result.right <= window.innerWidth,
+        copyFitsResult: copy.left >= result.left && copy.right <= result.right,
+      };
+    });
+    assert.deepEqual(mobileCaseResultLayout, {
+      pageDoesNotOverflow: true,
+      resultFitsViewport: true,
+      copyFitsResult: true,
+    });
     assert.deepEqual(errors, []);
 
     console.log('Service navigation browser checks passed.');
