@@ -46,7 +46,8 @@ async function loadPage(browser, path, viewport, errors) {
       await desktop.locator('#services-dropdown a[href="/sklepy-woocommerce-wroclaw"]').count(),
       1
     );
-    assert.equal(await desktop.locator('#services-dropdown a[href="/maintenance.html"]').count(), 3);
+    assert.equal(await desktop.locator('#services-dropdown a[href="/aplikacje-webowe-wroclaw"]').count(), 1);
+    assert.equal(await desktop.locator('#services-dropdown a[href="/maintenance.html"]').count(), 2);
     assert.match(
       await desktop.locator('script[type="module"]').getAttribute('src'),
       /js\/main\.js\?v=/
@@ -178,7 +179,8 @@ async function loadPage(browser, path, viewport, errors) {
       await mobile.locator('#mobile-services-panel a[href="/sklepy-woocommerce-wroclaw"]').count(),
       1
     );
-    assert.equal(await mobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 3);
+    assert.equal(await mobile.locator('#mobile-services-panel a[href="/aplikacje-webowe-wroclaw"]').count(), 1);
+    assert.equal(await mobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 2);
     await mobile.keyboard.press('Escape');
     assert.equal(await mobile.locator('#mobile-services-panel').isVisible(), false);
     assert.equal(await mobile.locator('#mobile-services-open').getAttribute('aria-expanded'), 'false');
@@ -215,7 +217,8 @@ async function loadPage(browser, path, viewport, errors) {
       await landing.locator('#services-dropdown a[href="/sklepy-woocommerce-wroclaw"]').count(),
       1
     );
-    assert.equal(await landing.locator('#services-dropdown a[href="/maintenance.html"]').count(), 3);
+    assert.equal(await landing.locator('#services-dropdown a[href="/aplikacje-webowe-wroclaw"]').count(), 1);
+    assert.equal(await landing.locator('#services-dropdown a[href="/maintenance.html"]').count(), 2);
     await landing.keyboard.press('Escape');
 
     const landingMobile = await loadPage(
@@ -254,7 +257,7 @@ async function loadPage(browser, path, viewport, errors) {
     );
     assert.equal(
       await landingMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(),
-      3
+      2
     );
 
     const landingPage = await loadPage(
@@ -279,7 +282,8 @@ async function loadPage(browser, path, viewport, errors) {
       await landingPage.locator('#services-dropdown a[href="/sklepy-woocommerce-wroclaw"]').count(),
       1
     );
-    assert.equal(await landingPage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 3);
+    assert.equal(await landingPage.locator('#services-dropdown a[href="/aplikacje-webowe-wroclaw"]').count(), 1);
+    assert.equal(await landingPage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 2);
     const landingIconFontLoaded = await landingPage.evaluate(async () => {
       await document.fonts.ready;
       return document.fonts.check('900 16px "Font Awesome 6 Free"', '\uf036\uf140\uf201\uf017\uf15c\uf5ae');
@@ -329,7 +333,7 @@ async function loadPage(browser, path, viewport, errors) {
       await landingPageMobile.locator('#mobile-services-panel a[href="/sklepy-woocommerce-wroclaw"]').count(),
       1
     );
-    assert.equal(await landingPageMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 3);
+    assert.equal(await landingPageMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 2);
     await landingPageMobile.locator('#hamburger-menu').click();
     await landingPageMobile.locator('#portfolio').scrollIntoViewIfNeeded();
     await landingPageMobile.waitForTimeout(300);
@@ -369,7 +373,8 @@ async function loadPage(browser, path, viewport, errors) {
       await wooCommercePage.locator('#services-dropdown a[href="/sklepy-woocommerce-wroclaw"]').count(),
       1
     );
-    assert.equal(await wooCommercePage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 3);
+    assert.equal(await wooCommercePage.locator('#services-dropdown a[href="/aplikacje-webowe-wroclaw"]').count(), 1);
+    assert.equal(await wooCommercePage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 2);
     assert.equal(await wooCommercePage.locator('.landing-deliverable').count(), 5);
     await wooCommercePage.locator('a[data-action="prefill"][data-service="ecommerce"]').first().click();
     await wooCommercePage.locator('#contact-panel').waitFor({ state: 'visible' });
@@ -393,7 +398,7 @@ async function loadPage(browser, path, viewport, errors) {
     );
     assert.equal(
       await wooCommercePageMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(),
-      3
+      2
     );
     await wooCommercePageMobile.locator('#hamburger-menu').click();
     await wooCommercePageMobile.locator('#architecture').scrollIntoViewIfNeeded();
@@ -412,6 +417,72 @@ async function loadPage(browser, path, viewport, errors) {
       };
     });
     assert.deepEqual(mobileArchitectureLayout, {
+      pageDoesNotOverflow: true,
+      resultFitsViewport: true,
+      copyFitsResult: true,
+      imageUsesCroppedLandscapeFrame: true,
+      imageUsesObjectFitCover: true,
+    });
+
+    const webAppPage = await loadPage(
+      browser,
+      '/aplikacje-webowe-wroclaw.html',
+      { width: 1440, height: 900 },
+      errors
+    );
+
+    assert.equal(await webAppPage.locator('h1').count(), 1);
+    assert.match((await webAppPage.locator('h1').textContent()).trim(), /^Aplikacja webowa,/);
+    assert.equal(
+      await webAppPage.locator('link[rel="canonical"]').getAttribute('href'),
+      'https://domindev.com/aplikacje-webowe-wroclaw'
+    );
+    assert.equal(await webAppPage.locator('link[href*="landing-page.min.css"]').count(), 1);
+    assert.equal(await webAppPage.locator('.tech-strip').count(), 1);
+    assert.equal(await webAppPage.getByText('REACT', { exact: true }).count(), 2);
+    assert.equal(
+      await webAppPage.locator('#services-dropdown a[href="/aplikacje-webowe-wroclaw"]').count(),
+      1
+    );
+    assert.equal(await webAppPage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 2);
+    assert.equal(await webAppPage.locator('.landing-deliverable').count(), 5);
+    await webAppPage.locator('a[data-action="prefill"][data-service="webapp"]').first().click();
+    await webAppPage.locator('#contact-panel').waitFor({ state: 'visible' });
+    assert.equal(await webAppPage.locator('#panel-service').inputValue(), 'webapp');
+    assert.equal(await webAppPage.locator('#panel-budget').inputValue(), '8000');
+    await webAppPage.locator('#contact-close-btn').click();
+
+    const webAppPageMobile = await loadPage(
+      browser,
+      '/aplikacje-webowe-wroclaw.html',
+      { width: 375, height: 667 },
+      errors
+    );
+    await webAppPageMobile.locator('#hamburger-menu').click();
+    await webAppPageMobile.locator('#mobile-services-open').click();
+    await webAppPageMobile.locator('#mobile-services-panel').waitFor({ state: 'visible' });
+    assert.equal(
+      await webAppPageMobile.locator('#mobile-services-panel a[href="/aplikacje-webowe-wroclaw"]').count(),
+      1
+    );
+    assert.equal(await webAppPageMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 2);
+    await webAppPageMobile.locator('#hamburger-menu').click();
+    await webAppPageMobile.locator('#architecture').scrollIntoViewIfNeeded();
+    await webAppPageMobile.waitForTimeout(300);
+    const webAppMobileLayout = await webAppPageMobile.locator('.case-result').evaluate((element) => {
+      const result = element.getBoundingClientRect();
+      const copy = element.querySelector('.case-result__copy').getBoundingClientRect();
+      const media = document.querySelector('.webapp-page .case-study__media').getBoundingClientRect();
+      const image = document.querySelector('.webapp-page .case-study__media img');
+      return {
+        pageDoesNotOverflow: document.documentElement.scrollWidth <= window.innerWidth,
+        resultFitsViewport: result.left >= 0 && result.right <= window.innerWidth,
+        copyFitsResult: copy.left >= result.left && copy.right <= result.right,
+        imageUsesCroppedLandscapeFrame: media.height / media.width < 0.6,
+        imageUsesObjectFitCover: getComputedStyle(image).objectFit === 'cover',
+      };
+    });
+    assert.deepEqual(webAppMobileLayout, {
       pageDoesNotOverflow: true,
       resultFitsViewport: true,
       copyFitsResult: true,
