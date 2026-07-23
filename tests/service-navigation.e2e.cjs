@@ -23,8 +23,7 @@ async function loadPage(browser, path, viewport, errors) {
   return page;
 }
 
-async function assertWebAppsListedAsAvailable(page) {
-  const path = '[href="/aplikacje-webowe-wroclaw"]';
+async function assertLiveServicesListedAsAvailable(page) {
   const desktopAvailable =
     '#services-dropdown .services-dropdown__status:not(.services-dropdown__status--pending) + .services-dropdown__list';
   const desktopPending =
@@ -34,10 +33,15 @@ async function assertWebAppsListedAsAvailable(page) {
   const mobilePending =
     '#mobile-services-panel .mobile-services-panel__status--pending + .mobile-services-list';
 
-  assert.equal(await page.locator(`${desktopAvailable} ${path}`).count(), 1);
-  assert.equal(await page.locator(`${desktopPending} ${path}`).count(), 0);
-  assert.equal(await page.locator(`${mobileAvailable} ${path}`).count(), 1);
-  assert.equal(await page.locator(`${mobilePending} ${path}`).count(), 0);
+  for (const path of [
+    '[href="/aplikacje-webowe-wroclaw"]',
+    '[href="/optymalizacja-i-ratunek-wroclaw"]',
+  ]) {
+    assert.equal(await page.locator(`${desktopAvailable} ${path}`).count(), 1);
+    assert.equal(await page.locator(`${desktopPending} ${path}`).count(), 0);
+    assert.equal(await page.locator(`${mobileAvailable} ${path}`).count(), 1);
+    assert.equal(await page.locator(`${mobilePending} ${path}`).count(), 0);
+  }
 }
 
 (async () => {
@@ -47,7 +51,7 @@ async function assertWebAppsListedAsAvailable(page) {
   try {
     const desktop = await loadPage(browser, '/', { width: 1440, height: 900 }, errors);
 
-    await assertWebAppsListedAsAvailable(desktop);
+    await assertLiveServicesListedAsAvailable(desktop);
     assert.equal(await desktop.locator('#services-menu-trigger').count(), 1);
     assert.equal(await desktop.locator('#services-dropdown').count(), 1);
     assert.equal(await desktop.locator('.nav-services__overview').getAttribute('href'), '#services');
@@ -65,7 +69,7 @@ async function assertWebAppsListedAsAvailable(page) {
       1
     );
     assert.equal(await desktop.locator('#services-dropdown a[href="/aplikacje-webowe-wroclaw"]').count(), 1);
-    assert.equal(await desktop.locator('#services-dropdown a[href="/maintenance.html"]').count(), 2);
+    assert.equal(await desktop.locator('#services-dropdown a[href="/maintenance.html"]').count(), 1);
     assert.match(
       await desktop.locator('script[type="module"]').getAttribute('src'),
       /js\/main\.js\?v=/
@@ -198,7 +202,7 @@ async function assertWebAppsListedAsAvailable(page) {
       1
     );
     assert.equal(await mobile.locator('#mobile-services-panel a[href="/aplikacje-webowe-wroclaw"]').count(), 1);
-    assert.equal(await mobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 2);
+    assert.equal(await mobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 1);
     await mobile.keyboard.press('Escape');
     assert.equal(await mobile.locator('#mobile-services-panel').isVisible(), false);
     assert.equal(await mobile.locator('#mobile-services-open').getAttribute('aria-expanded'), 'false');
@@ -221,7 +225,7 @@ async function assertWebAppsListedAsAvailable(page) {
       errors
     );
 
-    await assertWebAppsListedAsAvailable(landing);
+    await assertLiveServicesListedAsAvailable(landing);
     assert.equal(await landing.locator('#services-menu-trigger').count(), 1);
     assert.equal(await landing.locator('#services-dropdown').count(), 1);
     assert.equal(await landing.locator('.nav-services__overview').getAttribute('href'), '/#services');
@@ -237,7 +241,7 @@ async function assertWebAppsListedAsAvailable(page) {
       1
     );
     assert.equal(await landing.locator('#services-dropdown a[href="/aplikacje-webowe-wroclaw"]').count(), 1);
-    assert.equal(await landing.locator('#services-dropdown a[href="/maintenance.html"]').count(), 2);
+    assert.equal(await landing.locator('#services-dropdown a[href="/maintenance.html"]').count(), 1);
     await landing.keyboard.press('Escape');
 
     const landingMobile = await loadPage(
@@ -276,7 +280,7 @@ async function assertWebAppsListedAsAvailable(page) {
     );
     assert.equal(
       await landingMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(),
-      2
+      1
     );
 
     const landingPage = await loadPage(
@@ -286,7 +290,7 @@ async function assertWebAppsListedAsAvailable(page) {
       errors
     );
 
-    await assertWebAppsListedAsAvailable(landingPage);
+    await assertLiveServicesListedAsAvailable(landingPage);
     assert.equal(await landingPage.locator('h1').count(), 1);
     assert.equal(
       await landingPage.locator('h1').textContent(),
@@ -303,7 +307,7 @@ async function assertWebAppsListedAsAvailable(page) {
       1
     );
     assert.equal(await landingPage.locator('#services-dropdown a[href="/aplikacje-webowe-wroclaw"]').count(), 1);
-    assert.equal(await landingPage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 2);
+    assert.equal(await landingPage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 1);
     const landingIconFontLoaded = await landingPage.evaluate(async () => {
       await document.fonts.ready;
       return document.fonts.check('900 16px "Font Awesome 6 Free"', '\uf036\uf140\uf201\uf017\uf15c\uf5ae');
@@ -353,7 +357,7 @@ async function assertWebAppsListedAsAvailable(page) {
       await landingPageMobile.locator('#mobile-services-panel a[href="/sklepy-woocommerce-wroclaw"]').count(),
       1
     );
-    assert.equal(await landingPageMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 2);
+    assert.equal(await landingPageMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 1);
     await landingPageMobile.locator('#hamburger-menu').click();
     await landingPageMobile.locator('#portfolio').scrollIntoViewIfNeeded();
     await landingPageMobile.waitForTimeout(300);
@@ -379,7 +383,7 @@ async function assertWebAppsListedAsAvailable(page) {
       errors
     );
 
-    await assertWebAppsListedAsAvailable(wooCommercePage);
+    await assertLiveServicesListedAsAvailable(wooCommercePage);
     assert.equal(await wooCommercePage.locator('h1').count(), 1);
     assert.equal(
       await wooCommercePage.locator('h1').textContent(),
@@ -395,7 +399,7 @@ async function assertWebAppsListedAsAvailable(page) {
       1
     );
     assert.equal(await wooCommercePage.locator('#services-dropdown a[href="/aplikacje-webowe-wroclaw"]').count(), 1);
-    assert.equal(await wooCommercePage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 2);
+    assert.equal(await wooCommercePage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 1);
     assert.equal(await wooCommercePage.locator('.landing-deliverable').count(), 5);
     await wooCommercePage.locator('a[data-action="prefill"][data-service="ecommerce"]').first().click();
     await wooCommercePage.locator('#contact-panel').waitFor({ state: 'visible' });
@@ -419,7 +423,7 @@ async function assertWebAppsListedAsAvailable(page) {
     );
     assert.equal(
       await wooCommercePageMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(),
-      2
+      1
     );
     await wooCommercePageMobile.locator('#hamburger-menu').click();
     await wooCommercePageMobile.locator('#architecture').scrollIntoViewIfNeeded();
@@ -452,7 +456,7 @@ async function assertWebAppsListedAsAvailable(page) {
       errors
     );
 
-    await assertWebAppsListedAsAvailable(webAppPage);
+    await assertLiveServicesListedAsAvailable(webAppPage);
     assert.equal(await webAppPage.locator('h1').count(), 1);
     assert.match((await webAppPage.locator('h1').textContent()).trim(), /^Aplikacja webowa,/);
     assert.equal(
@@ -466,7 +470,7 @@ async function assertWebAppsListedAsAvailable(page) {
       await webAppPage.locator('#services-dropdown a[href="/aplikacje-webowe-wroclaw"]').count(),
       1
     );
-    assert.equal(await webAppPage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 2);
+    assert.equal(await webAppPage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 1);
     assert.equal(await webAppPage.locator('.landing-deliverable').count(), 5);
     assert.equal(await webAppPage.locator('.timeline .timeline__line').count(), 1);
     assert.equal(await webAppPage.locator('.timeline .timeline__item').count(), 4);
@@ -489,7 +493,7 @@ async function assertWebAppsListedAsAvailable(page) {
       await webAppPageMobile.locator('#mobile-services-panel a[href="/aplikacje-webowe-wroclaw"]').count(),
       1
     );
-    assert.equal(await webAppPageMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 2);
+    assert.equal(await webAppPageMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 1);
     await webAppPageMobile.locator('#hamburger-menu').click();
     await webAppPageMobile.locator('#architecture').scrollIntoViewIfNeeded();
     await webAppPageMobile.waitForTimeout(300);
@@ -512,6 +516,72 @@ async function assertWebAppsListedAsAvailable(page) {
       copyFitsResult: true,
       imageUsesCroppedLandscapeFrame: true,
       imageUsesObjectFitCover: true,
+    });
+
+    const recoveryPage = await loadPage(
+      browser,
+      '/optymalizacja-i-ratunek-wroclaw.html',
+      { width: 1440, height: 900 },
+      errors
+    );
+
+    await assertLiveServicesListedAsAvailable(recoveryPage);
+    assert.equal(await recoveryPage.locator('h1').count(), 1);
+    assert.match((await recoveryPage.locator('h1').textContent()).trim(), /^Strona lub aplikacja,/);
+    assert.equal(
+      await recoveryPage.locator('link[rel="canonical"]').getAttribute('href'),
+      'https://domindev.com/optymalizacja-i-ratunek-wroclaw'
+    );
+    assert.equal(await recoveryPage.locator('link[href*="landing-page.min.css"]').count(), 1);
+    assert.equal(await recoveryPage.locator('.tech-strip').count(), 1);
+    assert.equal(await recoveryPage.getByText('AUDYT TECHNICZNY', { exact: true }).count(), 2);
+    assert.equal(
+      await recoveryPage.locator('#services-dropdown a[href="/optymalizacja-i-ratunek-wroclaw"]').count(),
+      1
+    );
+    assert.equal(await recoveryPage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 1);
+    assert.equal(await recoveryPage.locator('.landing-deliverable').count(), 5);
+    assert.equal(await recoveryPage.locator('.timeline .timeline__line').count(), 1);
+    assert.equal(await recoveryPage.locator('.timeline .timeline__item').count(), 4);
+    await recoveryPage.locator('a[data-action="prefill"][data-service="speed"]').first().click();
+    await recoveryPage.locator('#contact-panel').waitFor({ state: 'visible' });
+    assert.equal(await recoveryPage.locator('#panel-service').inputValue(), 'speed');
+    assert.equal(await recoveryPage.locator('#panel-budget').inputValue(), '1000');
+    await recoveryPage.locator('#contact-close-btn').click();
+
+    const recoveryPageMobile = await loadPage(
+      browser,
+      '/optymalizacja-i-ratunek-wroclaw.html',
+      { width: 375, height: 667 },
+      errors
+    );
+    await recoveryPageMobile.locator('#hamburger-menu').click();
+    await recoveryPageMobile.locator('#mobile-services-open').click();
+    await recoveryPageMobile.locator('#mobile-services-panel').waitFor({ state: 'visible' });
+    assert.equal(
+      await recoveryPageMobile.locator('#mobile-services-panel a[href="/optymalizacja-i-ratunek-wroclaw"]').count(),
+      1
+    );
+    assert.equal(await recoveryPageMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 1);
+    await recoveryPageMobile.locator('#hamburger-menu').click();
+    await recoveryPageMobile.locator('#architecture').scrollIntoViewIfNeeded();
+    await recoveryPageMobile.waitForTimeout(300);
+    const recoveryMobileLayout = await recoveryPageMobile.locator('.case-result').evaluate((element) => {
+      const result = element.getBoundingClientRect();
+      const copy = element.querySelector('.case-result__copy').getBoundingClientRect();
+      const media = document.querySelector('.recovery-page .case-study__media').getBoundingClientRect();
+      return {
+        pageDoesNotOverflow: document.documentElement.scrollWidth <= window.innerWidth,
+        resultFitsViewport: result.left >= 0 && result.right <= window.innerWidth,
+        copyFitsResult: copy.left >= result.left && copy.right <= result.right,
+        mediaFitsViewport: media.left >= 0 && media.right <= window.innerWidth,
+      };
+    });
+    assert.deepEqual(recoveryMobileLayout, {
+      pageDoesNotOverflow: true,
+      resultFitsViewport: true,
+      copyFitsResult: true,
+      mediaFitsViewport: true,
     });
     assert.deepEqual(errors, []);
 

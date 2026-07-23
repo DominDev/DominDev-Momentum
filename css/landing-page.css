@@ -139,6 +139,24 @@
   object-position: center top;
 }
 
+/* The recovery page uses a full-page reference capture. Keep it at the same
+   readable, supporting scale as the other service case studies. */
+.recovery-page .case-study__media {
+  aspect-ratio: 16 / 10;
+}
+
+.recovery-page .case-study__media picture,
+.recovery-page .case-study__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.recovery-page .case-study__media img {
+  object-fit: cover;
+  object-position: center top;
+}
+
 @media (max-width: 1000px) {
   .landing-page .landing-deliverables {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -166,6 +184,10 @@
   }
 
   .webapp-page .case-study__media {
+    aspect-ratio: 16 / 9;
+  }
+
+  .recovery-page .case-study__media {
     aspect-ratio: 16 / 9;
   }
 }
