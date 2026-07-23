@@ -564,7 +564,7 @@ async function assertLiveServicesListedAsAvailable(page) {
     );
     assert.equal(await recoveryPageMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 1);
     await recoveryPageMobile.locator('#hamburger-menu').click();
-    await recoveryPageMobile.loc('#architecture').scrollIntoViewIfNeeded();
+    await recoveryPageMobile.locator('#architecture').scrollIntoViewIfNeeded();
     await recoveryPageMobile.waitForTimeout(300);
     const recoveryMobileLayout = await recoveryPageMobile.locator('.case-result').evaluate((element) => {
       const result = element.getBoundingClientRect();
