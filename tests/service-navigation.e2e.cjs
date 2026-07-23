@@ -446,6 +446,8 @@ async function loadPage(browser, path, viewport, errors) {
     );
     assert.equal(await webAppPage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 2);
     assert.equal(await webAppPage.locator('.landing-deliverable').count(), 5);
+    assert.equal(await webAppPage.locator('.timeline .timeline__line').count(), 1);
+    assert.equal(await webAppPage.locator('.timeline .timeline__item').count(), 4);
     await webAppPage.locator('a[data-action="prefill"][data-service="webapp"]').first().click();
     await webAppPage.locator('#contact-panel').waitFor({ state: 'visible' });
     assert.equal(await webAppPage.locator('#panel-service').inputValue(), 'webapp');
