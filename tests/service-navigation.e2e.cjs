@@ -114,6 +114,17 @@ async function loadPage(browser, path, viewport, errors) {
       await mobile.locator('body').evaluate((element) => element.style.top),
       `-${pageScrollBeforeMenu}px`
     );
+    const mobileSocialHudClearance = await mobile.locator('#fullscreen-menu').evaluate((element) => {
+      const previousScrollBehavior = element.style.scrollBehavior;
+      element.style.scrollBehavior = 'auto';
+      element.scrollTop = element.scrollHeight;
+      const social = document.querySelector('.menu-social').getBoundingClientRect();
+      const hud = document.querySelector('.system-bar').getBoundingClientRect();
+      element.style.scrollBehavior = previousScrollBehavior;
+
+      return hud.top - social.bottom;
+    });
+    assert.ok(mobileSocialHudClearance >= 16);
     const mobileOverviewLayout = await mobile.locator('.mobile-services-nav__overview').evaluate((element) => {
       const row = element.closest('.mobile-services-nav__row').getBoundingClientRect();
       const link = element.getBoundingClientRect();
@@ -202,6 +213,17 @@ async function loadPage(browser, path, viewport, errors) {
     await landingMobile.keyboard.press('Enter');
     await landingMobile.locator('#mobile-services-panel').waitFor({ state: 'visible' });
     assert.equal(await landingMobile.locator('#mobile-services-panel').isVisible(), true);
+    const landscapeSocialHudClearance = await landingMobile.locator('#fullscreen-menu').evaluate((element) => {
+      const previousScrollBehavior = element.style.scrollBehavior;
+      element.style.scrollBehavior = 'auto';
+      element.scrollTop = element.scrollHeight;
+      const social = document.querySelector('.menu-social').getBoundingClientRect();
+      const hud = document.querySelector('.system-bar').getBoundingClientRect();
+      element.style.scrollBehavior = previousScrollBehavior;
+
+      return hud.top - social.bottom;
+    });
+    assert.ok(landscapeSocialHudClearance >= 16);
     assert.equal(
       await landingMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(),
       5

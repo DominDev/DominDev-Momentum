@@ -38,6 +38,9 @@
   --z-modal: 500;
   --z-tooltip: 700;
   --z-cursor: 900;
+
+  --system-bar-height: 36px;
+  --mobile-menu-hud-clearance: 52px;
 }
 
 * {
@@ -3606,7 +3609,7 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 36px;
+  height: var(--system-bar-height);
   background: rgba(5, 5, 5, 0.95);
   border-top: 1px solid rgba(255, 31, 31, 0.3);
   z-index: 800;
@@ -5927,6 +5930,7 @@ body {
   .fullscreen-menu.active {
     height: 100dvh;
     max-height: 100dvh;
+    scroll-padding-bottom: var(--mobile-menu-hud-clearance);
   }
 }
 
@@ -5934,6 +5938,13 @@ body {
   width: min(100%, 460px);
   margin: auto;
   padding: 108px 24px 36px;
+}
+
+@media (max-width: 1024px) {
+  .mobile-menu-main {
+    /* Reserve the fixed HUD height plus a visible gap below the last menu item. */
+    padding-bottom: 88px;
+  }
 }
 
 .mobile-services-nav {
@@ -6068,7 +6079,7 @@ body {
 
 @media (max-width: 480px) {
   .mobile-menu-main {
-    padding: 96px 20px 28px;
+    padding: 96px 20px 80px;
   }
 
   .mobile-service-link {
