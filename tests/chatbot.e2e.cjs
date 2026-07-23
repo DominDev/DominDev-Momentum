@@ -165,6 +165,9 @@ async function askChatbot(page, question) {
       await servicePage.locator('.chatbot-suggestion').first().innerText(),
       'Ile kosztuje aplikacja webowa?'
     );
+    const systemConnections = await askChatbot(servicePage, 'jakie systemy można połączyć');
+    assert.match(systemConnections, /integracj|CRM|newsletter|płatnośc/i);
+    assert.doesNotMatch(systemConnections, /nie mam tego w bazie/i);
     const portfolioQuestion = await askChatbot(servicePage, 'jakie masz realizacje');
     assert.match(portfolioQuestion, /realizac|portfolio/i);
     assert.equal(await servicePage.locator('#chatbot-messages .chat-message.bot').last().locator('a[href="/#portfolio"]').count(), 1);
