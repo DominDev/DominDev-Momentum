@@ -7,6 +7,7 @@
     "minify:js": "node _scripts/minify-js.js",
     "minify": "npm run minify:css && npm run minify:js",
     "test:service-navigation": "node tests/service-navigation.e2e.cjs",
+    "test:chatbot": "node tests/chatbot.e2e.cjs",
     "watch": "node _scripts/watch.js",
     "optimize:images": "node _scripts/optimize-images.js",
     "update:sitemap": "node _scripts/update-sitemap.js",

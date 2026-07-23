@@ -260,34 +260,31 @@ document.addEventListener("DOMContentLoaded", () => {
   // === ULTRA LAZY CHATBOT (Load on Demand Only) ===
   const chatTrigger = document.getElementById("chatbot-trigger");
   if (chatTrigger) {
-    let chatbotLoaded = false;
-    let pendingOpen = false;
+    let chatbotAPI = null;
+    let chatbotLoading = null;
 
     const loadChatbot = async () => {
-      if (chatbotLoaded) return;
-      chatbotLoaded = true;
+      if (chatbotAPI) return chatbotAPI;
+      if (chatbotLoading) return chatbotLoading;
 
-      try {
-        const { initChat } = await import('./modules/chatbot.js');
-        const chatAPI = initChat();
+      chatbotLoading = (async () => {
+        try {
+          const { initChat } = await import('./modules/chatbot.js');
+          chatbotAPI = initChat();
+          return chatbotAPI;
+        } catch (error) {
+          console.error("❌ Failed to load chatbot:", error);
 
-        // Jeśli user kliknął podczas ładowania, otwórz teraz
-        if (pendingOpen) {
-          pendingOpen = false;
-          if (chatAPI && typeof chatAPI.open === 'function') {
-            chatAPI.open();
-          }
-        }
-      } catch (error) {
-        console.error("❌ Failed to load chatbot:", error);
-        chatbotLoaded = false;
-
-        if (chatTrigger) {
           chatTrigger.style.opacity = "0.5";
           chatTrigger.title = "Chatbot temporarily unavailable";
           chatTrigger.style.cursor = "not-allowed";
+          return null;
+        } finally {
+          chatbotLoading = null;
         }
-      }
+      })();
+
+      return chatbotLoading;
     };
 
     let touchFired = false;
@@ -301,11 +298,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return; // Ignoruj click po touchend
       }
 
-      if (!chatbotLoaded) {
-        e.preventDefault();
-        pendingOpen = true;
-        await loadChatbot();
-      }
+      e.preventDefault();
+
+      const chatAPI = chatbotAPI || await loadChatbot();
+      if (!chatAPI || typeof chatAPI.toggle !== 'function') return;
+
+      chatAPI.toggle();
     };
 
     // Preload on hover (desktop only)

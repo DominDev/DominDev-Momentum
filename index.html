@@ -428,33 +428,33 @@
       </div>
 
       <!-- Chatbot Trigger Button -->
-      <div class="chatbot-trigger" id="chatbot-trigger">
+      <button type="button" class="chatbot-trigger" id="chatbot-trigger" aria-expanded="false" aria-controls="chatbot-window" aria-label="Otwórz asystenta DominDev">
         <i class="fa-solid fa-robot" aria-hidden="true"></i>
-      </div>
+      </button>
 
       <!-- Chatbot Backdrop (tylko mobile/tablet) -->
-      <div class="chatbot-backdrop" id="chatbot-backdrop"></div>
+      <div class="chatbot-backdrop" id="chatbot-backdrop" aria-hidden="true"></div>
 
       <!-- Chatbot Window -->
-      <div class="chatbot-window" id="chatbot-window">
+      <div class="chatbot-window" id="chatbot-window" role="dialog" aria-modal="true" aria-labelledby="chatbot-title" aria-hidden="true">
         <div class="chatbot-header">
           <div class="chatbot-header-info">
             <div class="chatbot-avatar">
               <i class="fa-solid fa-terminal" aria-hidden="true"></i>
             </div>
             <div class="chatbot-header-text">
-              <span class="chatbot-name">DominDev Bot</span>
+              <span class="chatbot-name" id="chatbot-title">DominDev Bot</span>
               <span class="chatbot-status">Online</span>
             </div>
           </div>
-          <button class="close-btn chatbot-close" id="chatbot-close">
+          <button type="button" class="close-btn chatbot-close" id="chatbot-close" aria-label="Zamknij czat">
             <span></span>
             <span></span>
             <span></span>
           </button>
         </div>
 
-        <div class="chatbot-messages" id="chatbot-messages">
+        <div class="chatbot-messages" id="chatbot-messages" role="log" aria-live="polite" aria-relevant="additions text" aria-label="Wiadomości asystenta">
           <div class="chat-message bot">
             <div class="message-content">
               Cześć! Jestem asystentem DominDev. W czym mogę Ci pomóc?
@@ -468,10 +468,10 @@
             class="chatbot-input"
             id="chatbot-input"
             placeholder="Napisz wiadomość (Enter = wyślij)"
-            aria-label="Wpisz wiadomość do asystenta AI"
+            aria-label="Wpisz wiadomość do asystenta DominDev"
             autocomplete="off"
           />
-          <button class="chatbot-send" id="chatbot-send">
+          <button type="button" class="chatbot-send" id="chatbot-send" aria-label="Wyślij wiadomość">
             <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
           </button>
         </div>

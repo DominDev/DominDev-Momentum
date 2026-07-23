@@ -46,19 +46,85 @@ async function loadBotData() {
 
 export function initChat() {
   const chatbotTrigger = document.getElementById("chatbot-trigger");
+  const chatbotBackdrop = document.getElementById("chatbot-backdrop");
   const chatbotWindow = document.getElementById("chatbot-window");
   const chatbotClose = document.getElementById("chatbot-close");
   const chatbotInput = document.getElementById("chatbot-input");
   const chatbotSend = document.getElementById("chatbot-send");
   const chatbotMessages = document.getElementById("chatbot-messages");
+  let previousFocus = null;
+  let lockedScrollY = 0;
+  let savedBodyStyles = null;
+
+  const focusableSelector = [
+    "button:not([disabled])",
+    "[href]",
+    "input:not([disabled])",
+    "select:not([disabled])",
+    "textarea:not([disabled])",
+    "[tabindex]:not([tabindex=\"-1\"])",
+  ].join(",");
+
+  function lockPageScroll() {
+    if (!window.matchMedia("(max-width: 1024px)").matches || savedBodyStyles) {
+      return;
+    }
+
+    const body = document.body;
+    lockedScrollY = window.scrollY;
+    savedBodyStyles = {
+      position: body.style.position,
+      top: body.style.top,
+      left: body.style.left,
+      right: body.style.right,
+      width: body.style.width,
+      overflow: body.style.overflow,
+    };
+
+    body.style.position = "fixed";
+    body.style.top = `-${lockedScrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+    body.classList.add("chatbot-open");
+  }
+
+  function unlockPageScroll() {
+    if (!savedBodyStyles) return;
+
+    const body = document.body;
+    Object.assign(body.style, savedBodyStyles);
+    body.classList.remove("chatbot-open");
+
+    const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo(0, lockedScrollY);
+    document.documentElement.style.scrollBehavior = previousScrollBehavior;
+    savedBodyStyles = null;
+  }
 
   async function openChat() {
+    if (!chatbotWindow || !chatbotTrigger || chatbotWindow.classList.contains("active")) {
+      return;
+    }
+
+    previousFocus = document.activeElement;
     chatbotWindow.classList.add("active");
     chatbotTrigger.classList.add("active");
+    chatbotTrigger.setAttribute("aria-expanded", "true");
+    chatbotWindow.setAttribute("aria-hidden", "false");
+    if (chatbotBackdrop) {
+      chatbotBackdrop.classList.add("active");
+      chatbotBackdrop.setAttribute("aria-hidden", "false");
+    }
+    lockPageScroll();
 
     // Delay focus aby poczekać na animację otwarcia
     setTimeout(() => {
-      chatbotInput.focus();
+      if (chatbotWindow.classList.contains("active") && chatbotInput) {
+        chatbotInput.focus();
+      }
     }, 100);
 
     if (!botData) {
@@ -67,45 +133,65 @@ export function initChat() {
   }
 
   function closeChat() {
+    if (!chatbotWindow || !chatbotWindow.classList.contains("active")) return;
+
     chatbotWindow.classList.remove("active");
     chatbotTrigger.classList.remove("active");
+    chatbotTrigger.setAttribute("aria-expanded", "false");
+    chatbotWindow.setAttribute("aria-hidden", "true");
+    if (chatbotBackdrop) {
+      chatbotBackdrop.classList.remove("active");
+      chatbotBackdrop.setAttribute("aria-hidden", "true");
+    }
+    unlockPageScroll();
+
+    const focusTarget = chatbotTrigger || previousFocus;
+    if (focusTarget && typeof focusTarget.focus === "function") {
+      requestAnimationFrame(() => focusTarget.focus({ preventScroll: true }));
+    }
+    previousFocus = null;
   }
 
-  if (chatbotTrigger) {
-    let touchStarted = false;
-
-    const toggleChat = () => {
-      if (chatbotWindow.classList.contains("active")) {
-        closeChat();
-      } else {
-        openChat();
-      }
-    };
-
-    // Unified handler - zapobiega double-fire touch+click
-    const handleToggle = (e) => {
-      e.preventDefault();
-
-      // Na mobile, touchend może wywołać także click - ignoruj click po touch
-      if (e.type === 'touchend') {
-        touchStarted = true;
-        toggleChat();
-        setTimeout(() => { touchStarted = false; }, 400);
-      } else if (e.type === 'click' && !touchStarted) {
-        toggleChat();
-      }
-    };
-
-    chatbotTrigger.addEventListener("touchend", handleToggle, { passive: false });
-    chatbotTrigger.addEventListener("click", handleToggle);
+  function toggleChat() {
+    if (chatbotWindow.classList.contains("active")) {
+      closeChat();
+    } else {
+      openChat();
+    }
   }
 
   if (chatbotClose) chatbotClose.addEventListener("click", closeChat);
+  if (chatbotBackdrop) {
+    chatbotBackdrop.addEventListener("click", (event) => {
+      if (event.target === chatbotBackdrop) closeChat();
+    });
+  }
 
-  // Zamknij chat klawiszem ESC
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && chatbotWindow.classList.contains("active")) {
+  // Escape zamyka dialog, a Tab pozostaje w jego obrębie.
+  if (chatbotWindow) chatbotWindow.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
       closeChat();
+      return;
+    }
+
+    if (e.key !== "Tab") return;
+
+    const focusable = [...chatbotWindow.querySelectorAll(focusableSelector)]
+      .filter((element) => element.getClientRects().length > 0);
+    if (!focusable.length) {
+      e.preventDefault();
+      return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
     }
   });
 
@@ -257,6 +343,8 @@ export function initChat() {
     const div = document.createElement("div");
     div.className = "chat-message bot";
     div.id = "typing-indicator";
+    div.setAttribute("role", "status");
+    div.setAttribute("aria-label", "Asystent przygotowuje odpowiedź");
     
     // Safe DOM creation
     const indicator = document.createElement("div");
@@ -343,6 +431,7 @@ export function initChat() {
   // Return API dla external control
   return {
     open: openChat,
-    close: closeChat
+    close: closeChat,
+    toggle: toggleChat,
   };
 }

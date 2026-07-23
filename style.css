@@ -1977,6 +1977,7 @@ body.disable-transitions * {
 /* --- CHATBOT TRIGGER BUTTON (Cyber-Circle) --- */
 
 .chatbot-trigger {
+  appearance: none;
   position: fixed;
   left: 30px;
   bottom: 50px; /* Podniesione nad System Bar */
@@ -1994,6 +1995,9 @@ body.disable-transitions * {
   /* Ikona - dopasowana do mniejszego przycisku */
   font-size: 1.3rem;
   color: white;
+  padding: 0;
+  font-family: inherit;
+  line-height: 1;
   /* Neonowy cień */
   box-shadow: 0 0 20px rgba(255, 31, 31, 0.6);
   z-index: 2501; /* Nad backdropem (2499) i chatbotem (2500) */
@@ -2059,18 +2063,20 @@ body.disable-transitions * {
     0 0 30px rgba(255, 31, 31, 0.15);
   display: flex;
   flex-direction: column;
-  z-index: 50;
+  z-index: 2500;
   opacity: 0;
   visibility: hidden;
   transform: translateY(20px) scale(0.95);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
+  pointer-events: none;
 }
 
 .chatbot-window.active {
   opacity: 1;
   visibility: visible;
   transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 
 /* Backdrop rozmazany dla chatbota */
@@ -2099,9 +2105,21 @@ body.disable-transitions * {
 
 /* Pokaż backdrop tylko na mobile/tablet */
 @media (max-width: 1024px) {
+  body.chatbot-open {
+    overflow: hidden;
+  }
+
   .chatbot-backdrop {
     display: block;
   }
+}
+
+.chatbot-trigger:focus-visible,
+.chatbot-close:focus-visible,
+.chatbot-send:focus-visible,
+.chatbot-input:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
 }
 
 /* --- CHATBOT HEADER (System Status Look) --- */
