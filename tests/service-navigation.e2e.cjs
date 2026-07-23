@@ -23,6 +23,23 @@ async function loadPage(browser, path, viewport, errors) {
   return page;
 }
 
+async function assertWebAppsListedAsAvailable(page) {
+  const path = '[href="/aplikacje-webowe-wroclaw"]';
+  const desktopAvailable =
+    '#services-dropdown .services-dropdown__status:not(.services-dropdown__status--pending) + .services-dropdown__list';
+  const desktopPending =
+    '#services-dropdown .services-dropdown__status--pending + .services-dropdown__list';
+  const mobileAvailable =
+    '#mobile-services-panel .mobile-services-panel__status:not(.mobile-services-panel__status--pending) + .mobile-services-list';
+  const mobilePending =
+    '#mobile-services-panel .mobile-services-panel__status--pending + .mobile-services-list';
+
+  assert.equal(await page.locator(`${desktopAvailable} ${path}`).count(), 1);
+  assert.equal(await page.locator(`${desktopPending} ${path}`).count(), 0);
+  assert.equal(await page.locator(`${mobileAvailable} ${path}`).count(), 1);
+  assert.equal(await page.locator(`${mobilePending} ${path}`).count(), 0);
+}
+
 (async () => {
   const browser = await chromium.launch({ headless: true });
   const errors = [];
@@ -30,6 +47,7 @@ async function loadPage(browser, path, viewport, errors) {
   try {
     const desktop = await loadPage(browser, '/', { width: 1440, height: 900 }, errors);
 
+    await assertWebAppsListedAsAvailable(desktop);
     assert.equal(await desktop.locator('#services-menu-trigger').count(), 1);
     assert.equal(await desktop.locator('#services-dropdown').count(), 1);
     assert.equal(await desktop.locator('.nav-services__overview').getAttribute('href'), '#services');
@@ -203,6 +221,7 @@ async function loadPage(browser, path, viewport, errors) {
       errors
     );
 
+    await assertWebAppsListedAsAvailable(landing);
     assert.equal(await landing.locator('#services-menu-trigger').count(), 1);
     assert.equal(await landing.locator('#services-dropdown').count(), 1);
     assert.equal(await landing.locator('.nav-services__overview').getAttribute('href'), '/#services');
@@ -267,6 +286,7 @@ async function loadPage(browser, path, viewport, errors) {
       errors
     );
 
+    await assertWebAppsListedAsAvailable(landingPage);
     assert.equal(await landingPage.locator('h1').count(), 1);
     assert.equal(
       await landingPage.locator('h1').textContent(),
@@ -359,6 +379,7 @@ async function loadPage(browser, path, viewport, errors) {
       errors
     );
 
+    await assertWebAppsListedAsAvailable(wooCommercePage);
     assert.equal(await wooCommercePage.locator('h1').count(), 1);
     assert.equal(
       await wooCommercePage.locator('h1').textContent(),
@@ -431,6 +452,7 @@ async function loadPage(browser, path, viewport, errors) {
       errors
     );
 
+    await assertWebAppsListedAsAvailable(webAppPage);
     assert.equal(await webAppPage.locator('h1').count(), 1);
     assert.match((await webAppPage.locator('h1').textContent()).trim(), /^Aplikacja webowa,/);
     assert.equal(
