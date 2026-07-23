@@ -370,6 +370,32 @@
     "rękojmia": "guarantee",
     "co jeśli coś się zepsuje": "guarantee"
   },
+  "pageContexts": {
+    "strony-wordpress-wroclaw": {
+      "intro": "Jesteś na stronie o stronach WordPress. Mogę od razu opowiedzieć o wariantach, CMS-ie, czasie realizacji i wycenie.",
+      "followUps": ["Ile kosztuje strona firmowa?", "Jak długo trwa realizacja?", "Czy dostanę CMS?"]
+    },
+    "landing-page-wroclaw": {
+      "intro": "Oglądasz ofertę landing page. Mogę wyjaśnić koszt, tempo realizacji i dopasowanie do kampanii.",
+      "followUps": ["Ile kosztuje landing page?", "Jak szybko powstaje landing?", "Czy nadaje się pod kampanię?"]
+    },
+    "sklepy-woocommerce-wroclaw": {
+      "intro": "Jesteś na stronie sklepów WooCommerce. Mogę opowiedzieć o wdrożeniu, płatnościach, integracjach i utrzymaniu.",
+      "followUps": ["Ile kosztuje sklep WooCommerce?", "Ile trwa wdrożenie sklepu?", "Czy integrujesz płatności?"]
+    },
+    "aplikacje-webowe-wroclaw": {
+      "intro": "Oglądasz ofertę aplikacji webowych. Mogę opowiedzieć o dashboardach, API, czasie realizacji i wycenie systemu.",
+      "followUps": ["Ile kosztuje aplikacja webowa?", "Ile trwa aplikacja?", "Czy budujesz dashboardy?"]
+    },
+    "optymalizacja-i-ratunek-wroclaw": {
+      "intro": "Jesteś na stronie audytu i optymalizacji. Mogę pomóc rozróżnić diagnozę, naprawę i dalsze przyspieszanie strony lub aplikacji.",
+      "followUps": ["Ile kosztuje diagnoza?", "Czy optymalizujesz aplikacje?", "Jak mierzysz poprawę?"]
+    },
+    "integracje-api-wroclaw": {
+      "intro": "Oglądasz ofertę integracji API. Mogę opowiedzieć o łączeniu systemów, automatyzacjach, n8n i wycenie.",
+      "followUps": ["Ile kosztuje integracja API?", "Czy integrujesz n8n?", "Jakie systemy można połączyć?"]
+    }
+  },
   "followUps": {
     "greeting": ["Ile kosztuje strona?", "Jakie masz realizacje?", "Jak wygląda współpraca?"],
     "services": ["Ile kosztuje aplikacja?", "Strona firmowa czy landing?", "Jak szybko realizujesz?"],

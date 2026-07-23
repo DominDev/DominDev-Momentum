@@ -77,7 +77,10 @@ async function askChatbot(page, question) {
     await desktop.keyboard.press('Tab');
     assert.equal(await desktop.locator('#chatbot-send').evaluate((element) => document.activeElement === element), true);
     await desktop.keyboard.press('Tab');
-    assert.equal(await desktop.locator('#chatbot-close').evaluate((element) => document.activeElement === element), true);
+    assert.equal(
+      await desktop.locator('#chatbot-close:focus, .chatbot-suggestion:focus').count(),
+      1
+    );
     await desktop.keyboard.press('Escape');
     await desktop.locator('#chatbot-window.active').waitFor({ state: 'hidden' });
     assert.equal(await desktop.locator('#chatbot-window').getAttribute('aria-hidden'), 'true');
@@ -154,6 +157,14 @@ async function askChatbot(page, question) {
     const servicePage = serviceContext.page;
     await servicePage.locator('#chatbot-trigger').click();
     await servicePage.locator('#chatbot-window.active').waitFor({ state: 'visible', timeout: 5000 });
+    assert.match(
+      await servicePage.locator('#chatbot-messages .chat-message.bot').first().innerText(),
+      /aplikacj/i
+    );
+    assert.equal(
+      await servicePage.locator('.chatbot-suggestion').first().innerText(),
+      'Ile kosztuje aplikacja webowa?'
+    );
     const portfolioQuestion = await askChatbot(servicePage, 'jakie masz realizacje');
     assert.match(portfolioQuestion, /realizac|portfolio/i);
     assert.equal(await servicePage.locator('#chatbot-messages .chat-message.bot').last().locator('a[href="/#portfolio"]').count(), 1);

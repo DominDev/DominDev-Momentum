@@ -125,6 +125,25 @@ export function initChat() {
     savedBodyStyles = null;
   }
 
+  function getPageContext() {
+    if (!botData || !botData.pageContexts) return null;
+
+    const pathSegment = window.location.pathname.split("/").filter(Boolean).pop() || "";
+    const slug = pathSegment.replace(/\.html$/, "").toLowerCase();
+    const context = botData.pageContexts[slug];
+    return context ? { slug, ...context } : null;
+  }
+
+  function applyPageContext(context) {
+    if (!context) return;
+
+    const initialMessage = chatbotMessages.querySelector(".chat-message.bot .message-content");
+    if (!initialMessage || initialMessage.dataset.pageContext === context.slug) return;
+
+    initialMessage.textContent = context.intro;
+    initialMessage.dataset.pageContext = context.slug;
+  }
+
   async function openChat() {
     if (!chatbotWindow || !chatbotTrigger || chatbotWindow.classList.contains("active")) {
       return;
@@ -152,8 +171,12 @@ export function initChat() {
       await loadBotData();
     }
 
-    if (botData && !chatbotMessages.querySelector(".chatbot-suggestions")) {
-      renderSuggestions("greeting");
+    if (botData) {
+      const pageContext = getPageContext();
+      applyPageContext(pageContext);
+      if (!chatbotMessages.querySelector(".chatbot-suggestions")) {
+        renderSuggestions(pageContext ? "page-context" : "greeting");
+      }
     }
   }
 
@@ -322,12 +345,13 @@ export function initChat() {
   function renderSuggestions(intent) {
     if (!botData || !botData.followUps) return;
 
+    const pageContext = intent === "page-context" ? getPageContext() : null;
     const suggestionKey = botData.followUps[intent]
       ? intent
       : intent === "glossary"
         ? "glossary"
         : "unknown";
-    const suggestions = botData.followUps[suggestionKey];
+    const suggestions = pageContext?.followUps || botData.followUps[suggestionKey];
     if (!Array.isArray(suggestions) || suggestions.length === 0) return;
 
     clearSuggestions();
