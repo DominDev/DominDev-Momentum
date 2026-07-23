@@ -719,6 +719,7 @@ body.menu-open .progress-wrap {
 /* Menu Social Icons */
 .menu-social {
   display: flex;
+  justify-content: center;
   gap: 20px;
   margin-top: 50px;
 }
@@ -5923,14 +5924,13 @@ body {
 
 .mobile-services-nav__row {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   column-gap: 12px;
 }
 
 .fullscreen-menu .mobile-services-nav__overview {
   grid-column: 2;
-  width: 100%;
   text-align: center;
 }
 
@@ -5940,23 +5940,23 @@ body {
 
 .mobile-services-open {
   grid-column: 3;
+  justify-self: start;
   display: inline-grid;
   width: 48px;
   min-height: 48px;
   place-items: center;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  background: rgba(255, 255, 255, 0.04);
-  color: #ffffff;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.82);
   cursor: pointer;
-  transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease;
+  touch-action: manipulation;
+  transition: color 0.18s ease;
 }
 
 .mobile-services-open:hover,
 .mobile-services-open[aria-expanded="true"] {
-  border-color: var(--primary);
   color: var(--primary);
-  background: rgba(255, 31, 31, 0.08);
 }
 
 .mobile-services-open i {

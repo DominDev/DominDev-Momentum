@@ -92,13 +92,27 @@ async function loadPage(browser, path, viewport, errors) {
         isCentered: Math.abs(link.left + link.width / 2 - (row.left + row.width / 2)) < 1,
         matchesMenuFont: getComputedStyle(element).fontFamily === getComputedStyle(processLink).fontFamily,
         matchesMenuSize: getComputedStyle(element).fontSize === getComputedStyle(processLink).fontSize,
+        buttonGap: Math.round(document.querySelector('#mobile-services-open').getBoundingClientRect().left - link.right),
+        buttonHasNoBorder: getComputedStyle(document.querySelector('#mobile-services-open')).borderTopWidth === '0px',
       };
     });
     assert.deepEqual(mobileOverviewLayout, {
       isCentered: true,
       matchesMenuFont: true,
       matchesMenuSize: true,
+      buttonGap: 12,
+      buttonHasNoBorder: true,
     });
+    const mobileSocialCentering = await mobile.locator('.menu-social').evaluate((element) => {
+      const links = Array.from(element.querySelectorAll('.social-link'));
+      const first = links[0].getBoundingClientRect();
+      const last = links.at(-1).getBoundingClientRect();
+      const menu = document.querySelector('#mobile-menu-main').getBoundingClientRect();
+      const linksCenter = first.left + (last.right - first.left) / 2;
+
+      return Math.abs(linksCenter - (menu.left + menu.width / 2)) < 1;
+    });
+    assert.equal(mobileSocialCentering, true);
     assert.equal(
       await mobile.locator('#mobile-services-open').getAttribute('aria-label'),
       'Zwiń listę usług'
