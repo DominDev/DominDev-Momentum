@@ -90,8 +90,16 @@ async function askChatbot(page, question) {
     assert.equal(await desktop.locator('.chatbot-suggestion').count(), 3);
     assert.equal(await desktop.locator('.chatbot-suggestions').getAttribute('role'), 'group');
     const firstSuggestion = await desktop.locator('.chatbot-suggestion').first().innerText();
+    const botCountBeforeSuggestion = await desktop.locator('#chatbot-messages .chat-message.bot').count();
     await desktop.locator('.chatbot-suggestion').first().click();
-    assert.equal(await desktop.locator('#chatbot-input').inputValue(), firstSuggestion);
+    await desktop.waitForFunction(
+      (before) => !document.querySelector('#typing-indicator')
+        && document.querySelectorAll('#chatbot-messages .chat-message.bot').length > before,
+      botCountBeforeSuggestion,
+      { timeout: 5000 }
+    );
+    assert.equal(await desktop.locator('#chatbot-input').inputValue(), '');
+    assert.equal(await desktop.locator('#chatbot-messages .chat-message.user').last().innerText(), firstSuggestion);
 
     const integrationPrice = await askChatbot(desktop, 'ile kosztuje integracja API');
     assert.match(integrationPrice, /400 PLN/);

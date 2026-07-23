@@ -247,12 +247,13 @@ export function initChat() {
     }
   }
 
-  function sendMessage() {
+  function sendMessage(question = null) {
     const now = Date.now();
     if (now - lastMessageTime < COOLDOWN_MS) return;
     lastMessageTime = now;
 
-    const msg = chatbotInput.value.trim();
+    const submittedQuestion = typeof question === "string" ? question : chatbotInput.value;
+    const msg = submittedQuestion.trim();
     if (!msg) return;
 
     addMessage(msg, true);
@@ -342,9 +343,7 @@ export function initChat() {
       button.className = "chatbot-suggestion";
       button.textContent = question;
       button.addEventListener("click", () => {
-        chatbotInput.value = question;
-        chatbotInput.dispatchEvent(new Event("input", { bubbles: true }));
-        chatbotInput.focus();
+        sendMessage(question);
       });
       group.appendChild(button);
     });
