@@ -1,6 +1,6 @@
 import { CONFIG } from './config.js';
 import { initMatrix } from './core/matrix.js';
-import { initUI, initCursor } from './core/ui.js';
+import { initUI, initCursor } from './core/ui.js?v=2';
 import { initPortfolio } from './modules/portfolio.js';
 import { initContact } from './modules/contact.js';
 import { initHud } from './modules/hud.js';

@@ -136,20 +136,76 @@ export function initUI() {
 
   if (hamburger && menu) {
     const links = menu.querySelectorAll("a");
+    const mobileMenuQuery = window.matchMedia("(max-width: 1024px)");
+    let lockedMenuScrollY = 0;
+    let savedBodyStyles = null;
+
+    const lockPageForMobileMenu = () => {
+      if (!mobileMenuQuery.matches || savedBodyStyles) return;
+
+      const body = document.body;
+      lockedMenuScrollY = window.scrollY;
+      savedBodyStyles = {
+        position: body.style.position,
+        top: body.style.top,
+        left: body.style.left,
+        right: body.style.right,
+        width: body.style.width,
+        overflow: body.style.overflow,
+      };
+
+      body.style.position = "fixed";
+      body.style.top = `-${lockedMenuScrollY}px`;
+      body.style.left = "0";
+      body.style.right = "0";
+      body.style.width = "100%";
+      body.style.overflow = "hidden";
+      document.documentElement.classList.add("menu-open");
+    };
+
+    const unlockPageForMobileMenu = () => {
+      if (!savedBodyStyles) return;
+
+      const body = document.body;
+      Object.assign(body.style, savedBodyStyles);
+      document.documentElement.classList.remove("menu-open");
+
+      const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = "auto";
+      window.scrollTo(0, lockedMenuScrollY);
+      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      savedBodyStyles = null;
+    };
+
+    const setMenuOpen = (isOpen) => {
+      hamburger.classList.toggle("active", isOpen);
+      menu.classList.toggle("active", isOpen);
+      document.body.classList.toggle("menu-open", isOpen);
+
+      if (isOpen) {
+        lockPageForMobileMenu();
+      } else {
+        unlockPageForMobileMenu();
+      }
+    };
 
     hamburger.addEventListener("click", () => {
-      hamburger.classList.toggle("active");
-      menu.classList.toggle("active");
-      document.body.classList.toggle("menu-open");
+      setMenuOpen(!menu.classList.contains("active"));
     });
 
     links.forEach((link) => {
       link.addEventListener("click", () => {
-        hamburger.classList.remove("active");
-        menu.classList.remove("active");
-        document.body.classList.remove("menu-open");
+        setMenuOpen(false);
       });
     });
+
+    window.addEventListener(
+      "resize",
+      () => {
+        if (!mobileMenuQuery.matches) unlockPageForMobileMenu();
+      },
+      { passive: true }
+    );
   }
 
   // === SCROLL PROGRESS ===

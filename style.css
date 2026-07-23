@@ -5910,6 +5910,24 @@ body {
 
 .fullscreen-menu.active {
   overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 1024px) {
+  html.menu-open {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  .fullscreen-menu.active {
+    height: 100dvh;
+    max-height: 100dvh;
+  }
 }
 
 .mobile-menu-main {

@@ -64,10 +64,23 @@ async function loadPage(browser, path, viewport, errors) {
 
     const mobile = await loadPage(browser, '/', { width: 375, height: 667 }, errors);
 
+    await mobile.evaluate(() => {
+      const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.scrollTo(0, 900);
+      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+    });
+    await mobile.waitForFunction(() => Math.abs(window.scrollY - 900) < 1);
+    const pageScrollBeforeMenu = await mobile.evaluate(() => window.scrollY);
     await mobile.locator('#hamburger-menu').focus();
     await mobile.keyboard.press('Enter');
     assert.equal(await mobile.locator('#hamburger-menu').getAttribute('aria-expanded'), 'true');
     await mobile.locator('#mobile-services-open').waitFor({ state: 'visible' });
+    assert.equal(await mobile.locator('body').evaluate((element) => element.style.position), 'fixed');
+    assert.equal(
+      await mobile.locator('body').evaluate((element) => element.style.top),
+      `-${pageScrollBeforeMenu}px`
+    );
     assert.equal(await mobile.locator('#mobile-services-open').isVisible(), true);
     assert.equal(
       await mobile.locator('.mobile-services-nav__overview').getAttribute('href'),
@@ -79,9 +92,27 @@ async function loadPage(browser, path, viewport, errors) {
     await mobile.locator('#mobile-services-panel').waitFor({ state: 'visible' });
     assert.equal(await mobile.locator('#mobile-services-panel').isVisible(), true);
     assert.equal(await mobile.locator('#mobile-menu-main').isVisible(), true);
+    const menuScrollBehavior = await mobile.locator('#fullscreen-menu').evaluate((element) => ({
+      overflowY: getComputedStyle(element).overflowY,
+      overscrollBehaviorY: getComputedStyle(element).overscrollBehaviorY,
+      scrollHeight: element.scrollHeight,
+      clientHeight: element.clientHeight,
+    }));
+    assert.equal(menuScrollBehavior.overflowY, 'auto');
+    assert.equal(menuScrollBehavior.overscrollBehaviorY, 'contain');
+    assert.ok(menuScrollBehavior.scrollHeight > menuScrollBehavior.clientHeight);
+    const menuScrollTop = await mobile.locator('#fullscreen-menu').evaluate((element) => {
+      const previousScrollBehavior = element.style.scrollBehavior;
+      element.style.scrollBehavior = 'auto';
+      element.scrollTop = 180;
+      const scrollTop = element.scrollTop;
+      element.style.scrollBehavior = previousScrollBehavior;
+      return scrollTop;
+    });
+    assert.ok(menuScrollTop > 0);
     assert.equal(
-      await mobile.locator('#fullscreen-menu').evaluate((element) => getComputedStyle(element).overflowY),
-      'auto'
+      await mobile.locator('body').evaluate((element) => element.style.top),
+      `-${pageScrollBeforeMenu}px`
     );
     const mobileOverviewLayout = await mobile.locator('.mobile-services-nav__overview').evaluate((element) => {
       const row = element.closest('.mobile-services-nav__row').getBoundingClientRect();
@@ -129,6 +160,12 @@ async function loadPage(browser, path, viewport, errors) {
     assert.equal(await mobile.locator('#mobile-services-panel').isVisible(), true);
     await mobile.keyboard.press('Enter');
     assert.equal(await mobile.locator('#mobile-services-panel').isVisible(), false);
+    await mobile.locator('#hamburger-menu').click();
+    await mobile.waitForFunction(
+      (scrollY) => Math.abs(window.scrollY - scrollY) < 1,
+      pageScrollBeforeMenu
+    );
+    assert.equal(await mobile.locator('body').evaluate((element) => element.style.position), '');
 
     const landing = await loadPage(
       browser,
