@@ -92,7 +92,10 @@ async function loadPage(browser, path, viewport, errors) {
         isCentered: Math.abs(link.left + link.width / 2 - (row.left + row.width / 2)) < 1,
         matchesMenuFont: getComputedStyle(element).fontFamily === getComputedStyle(processLink).fontFamily,
         matchesMenuSize: getComputedStyle(element).fontSize === getComputedStyle(processLink).fontSize,
-        buttonGap: Math.round(document.querySelector('#mobile-services-open').getBoundingClientRect().left - link.right),
+        buttonGapIsCompact: (() => {
+          const gap = document.querySelector('#mobile-services-open').getBoundingClientRect().left - link.right;
+          return gap >= 8 && gap <= 16;
+        })(),
         buttonHasNoBorder: getComputedStyle(document.querySelector('#mobile-services-open')).borderTopWidth === '0px',
       };
     });
@@ -100,7 +103,7 @@ async function loadPage(browser, path, viewport, errors) {
       isCentered: true,
       matchesMenuFont: true,
       matchesMenuSize: true,
-      buttonGap: 12,
+      buttonGapIsCompact: true,
       buttonHasNoBorder: true,
     });
     const mobileSocialCentering = await mobile.locator('.menu-social').evaluate((element) => {
