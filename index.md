@@ -71,6 +71,12 @@ skalowalne API. Dedykowane oprogramowanie dla wymagających procesów.
 Optymalizacja Core Web Vitals, gwarantowany wynik 90+ na mobile. Strona działa wolno?
 Wirusy? Błędy? Zdiagnozuję i naprawię problem.
 
+### Integracje API i automatyzacje - od 400 PLN
+
+Łączenie CRM, formularzy, płatności, newsletterów i systemów wewnętrznych. Projektuję
+przepływy danych z jasnym kierunkiem synchronizacji, obsługą błędów i weryfikacją wyniku.
+Szczegóły: https://domindev.com/integracje-api-wroclaw
+
 ### Dodatkowo
 
 - Integracje: newsletter, CRM, chatbot, płatności - łączę systemy w całość.
