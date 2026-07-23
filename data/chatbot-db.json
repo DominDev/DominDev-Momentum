@@ -82,6 +82,7 @@
     "co tam": "greeting",
     "hejka": "greeting",
     "yo": "greeting",
+    "hello": "greeting",
     "pa": "farewell",
     "do widzenia": "farewell",
     "narazie": "farewell",
@@ -111,6 +112,7 @@
     "wizytówka": "business",
     "wizytowka": "business",
     "strona firmowa": "business",
+    "ile kosztuje strona firmowa": "business",
     "business hub": "business",
     "czym jest business": "business",
     "cyum jest business": "business",
@@ -124,6 +126,7 @@
     "czym jest ecommerce": "ecommerce",
     "co to ecommerce": "ecommerce",
     "jak zrobić sklep": "ecommerce",
+    "ile kosztuje sklep": "ecommerce",
     "strona": "services",
     "zrobienie strony": "services",
     "www": "services",
@@ -138,6 +141,7 @@
     "czym jest webapp": "webapp",
     "co to webapp": "webapp",
     "jak działa webapp": "webapp",
+    "ile kosztuje aplikacja": "webapp",
     "cena": "price",
     "koszt": "price",
     "ceny": "price",
@@ -153,6 +157,11 @@
     "ile kosztuje": "price",
     "drogo": "price",
     "tanio": "price",
+    "ile kosztuje landing": "landing",
+    "ile kosztuje integracja api": "integration",
+    "cena integracji api": "integration",
+    "koszt integracji api": "integration",
+    "cena optymalizacji": "speedboost",
     "kontakt": "contact",
     "email": "contact",
     "e-mail": "contact",
@@ -224,6 +233,10 @@
     "optymalizacja": "performance",
     "slow": "performance",
     "wolna strona": "performance",
+    "audyt strony": "audit",
+    "audyt strony internetowej": "audit",
+    "audyt aplikacji": "audit",
+    "aplikacja nie dziala": "audit",
     "bezpieczeństwo": "security",
     "bezpieczenstwo": "security",
     "security": "security",
@@ -289,7 +302,19 @@
     "wolno laduje": "speedboost",
     "wolno się ładuje": "speedboost",
     "strona wolna": "speedboost",
+    "strona wolno": "speedboost",
+    "strona wolno się ładuje": "speedboost",
+    "aplikacja wolno działa": "speedboost",
+    "aplikacje wolno działają": "speedboost",
+    "aplikacja wolna": "speedboost",
     "integracja": "integration",
+    "integracje": "integration",
+    "integracji": "integration",
+    "integracjach": "integration",
+    "integracja api": "integration",
+    "automatyzacja": "integration",
+    "automatyzacje": "integration",
+    "n8n": "integration",
     "api": "integration",
     "crm": "integration",
     "newsletter": "integration",
@@ -318,6 +343,7 @@
     "zhackowana strona": "audit",
     "zhakowana": "audit",
     "strona nie ładuje": "audit",
+    "strona nie laduje": "audit",
     "błędy na stronie": "audit",
     "diagnoza": "audit",
     "naprawa strony": "audit",
@@ -333,9 +359,14 @@
     "płatność": "payment",
     "platnosc": "payment",
     "faktura": "payment",
+    "fakture": "payment",
+    "faktury vat": "payment",
+    "wystawiasz fakture": "payment",
+    "vat": "payment",
     "zaliczka": "payment",
     "przedpłata": "payment",
     "gwarancja": "guarantee",
+    "gwarancje": "guarantee",
     "rękojmia": "guarantee",
     "co jeśli coś się zepsuje": "guarantee"
   },
@@ -353,9 +384,9 @@
       "Cześć! 🚀 Miło było pogadać. Jeśli będziesz potrzebować wsparcia - wiesz gdzie mnie znaleźć."
     ],
     "services": [
-      "<p>🚀 <strong>CORE SYSTEMS:</strong></p><ul><li>1️⃣ Landing Page → Konwersja & Sprzedaż</li><li>2️⃣ Business Hub → Strona firmowa z CMS</li><li>3️⃣ E-Commerce Pro → Sklep WooCommerce</li><li>4️⃣ Web App / React → Aplikacje custom</li></ul><p><strong>MIKROUSŁUGI:</strong></p><ul><li>🩺 Audyt & Ratunek WP (300-500 PLN)</li><li>⚡ Speed Boost Pack (od 800 PLN)</li><li>🔌 Integracje API (od 400 PLN)</li></ul><p>Możesz zapytać o konkretną usługę lub przejść do <a href='#services' class='chatbot-link'>sekcji Usługi</a> / <a href='#contact' class='chatbot-link'>Kontaktu</a>! 💬</p>",
-      "<p>💼 Specjalizacja: <strong>High-Performance WordPress</strong> + React. Buduję strony, które ładują się szybciej niż konkurencja myśli. Oferuję też mikrousługi: audyty bezpieczeństwa, speed boost, integracje API. Chcesz szczegóły? Pytaj śmiało! <a href='#services' class='chatbot-link'>Pełna oferta tutaj</a> 🚀</p>",
-      "<p>⚡ Oferuję pełen stack webowy:</p><p><strong>BUILD:</strong></p><ul><li>• Landing Page (od 1500 PLN)</li><li>• Strony firmowe z CMS (od 3500 PLN)</li><li>• Sklepy e-commerce (od 6000 PLN)</li><li>• Aplikacje React (od 8000 PLN)</li></ul><p><strong>SUPPORT & OPTIMIZATION:</strong></p><ul><li>• Audyt & Ratunek WP (300-500 PLN)</li><li>• Speed Boost (od 800 PLN)</li><li>• Integracje API (od 400 PLN)</li></ul><p><a href='#services' class='chatbot-link'>Sprawdź szczegóły</a> 🔥</p>"
+      "<p>🚀 <strong>USŁUGI:</strong></p><ul><li>1️⃣ Landing Page — od 1500 PLN</li><li>2️⃣ Strona firmowa z CMS — od 3500 PLN</li><li>3️⃣ Sklep WooCommerce — od 6000 PLN</li><li>4️⃣ Aplikacja webowa — od 8000 PLN</li></ul><p><strong>OPTYMALIZACJA I INTEGRACJE:</strong></p><ul><li>🩺 Diagnoza techniczna — od 300 PLN</li><li>⚡ Optymalizacja — od 800 PLN</li><li>🔌 Integracje API — od 400 PLN</li></ul><p>Zakres i cena zależą od systemu. <a href='#services' class='chatbot-link'>Zobacz usługi</a> lub <a href='#contact' class='chatbot-link'>opisz projekt</a>. 💬</p>",
+      "<p>💼 Tworzę strony, sklepy i aplikacje webowe z naciskiem na wydajność, SEO i utrzymanie. WordPress/ WooCommerce sprawdzają się w serwisach treściowych i e-commerce, a React/Next.js w dedykowanych systemach. Oferuję też audyty, optymalizację i integracje API. <a href='#services' class='chatbot-link'>Pełna oferta tutaj</a> 🚀</p>",
+      "<p>⚡ Oferuję pełen stack webowy:</p><p><strong>BUILD:</strong></p><ul><li>• Landing Page (od 1500 PLN)</li><li>• Strony firmowe z CMS (od 3500 PLN)</li><li>• Sklepy e-commerce (od 6000 PLN)</li><li>• Aplikacje webowe (od 8000 PLN)</li></ul><p><strong>OPTYMALIZACJA:</strong></p><ul><li>• Diagnoza techniczna (od 300 PLN)</li><li>• Optymalizacja (od 800 PLN)</li><li>• Integracje API (od 400 PLN)</li></ul><p><a href='#services' class='chatbot-link'>Sprawdź szczegóły</a> 🔥</p>"
     ],
     "landing": [
       "<p>🎯 <strong>Landing Page</strong> to strona jednego celu - konwersja.</p><ul><li>✅ Szybkość < 1s</li><li>✅ Copywriting sprzedażowy</li><li>✅ Idealna pod kampanie Ads</li></ul><p>💰 Cena: <strong>od 1500 PLN netto</strong></p><p>Chcesz szczegóły? <a href='#services' class='chatbot-link'>Zobacz w sekcji Usługi</a> lub <a href='#contact' class='chatbot-link'>Napisz do mnie</a>! 🚀</p>",
@@ -374,8 +405,8 @@
       "🚀 WebApp to opcja dla tych, którzy potrzebują czegoś więcej niż strona. Dashboardy, panele adminowe, CRM, custom logic - wszystko w React/Next.js. Skalowalność i czysty kod. Od <strong>8000 PLN</strong> budujesz potężne narzędzie. <a href='#contact' class='chatbot-link'>Omówmy projekt</a> 💪"
     ],
     "price": [
-      "<p>💰 <strong>CENNIK:</strong></p><p><strong>PROJEKTY:</strong></p><ul><li>• Landing Page: od 1500 PLN</li><li>• Business Hub: od 3500 PLN</li><li>• E-Commerce: od 6000 PLN</li><li>• Web App / React: od 8000 PLN</li></ul><p><strong>MIKROUSŁUGI:</strong></p><ul><li>• Audyt & Ratunek WP: 300-500 PLN</li><li>• Speed Boost Pack: od 800 PLN</li><li>• Integracje API: od 400 PLN</li></ul><p>Wszystkie ceny są netto. <a href='#services' class='chatbot-link'>Pełna oferta tutaj</a> 📊</p>",
-      "<p>💸 Ceny zależą od zakresu, ale mam transparentne stawki:</p><p><strong>Projekty:</strong> Landing 1500+ | Business 3500+ | Sklep 6000+ | WebApp 8000+</p><p><strong>Mikrousługi:</strong> Audyt 300-500 | Speed Boost 800+ | API 400+</p><p>Chcesz dokładną wycenę? <a href='#contact' class='chatbot-link'>Napisz do mnie</a> - dostaniesz konkretną ofertę w 24h. ⚡</p>",
+      "<p>💰 <strong>CENNIK OD:</strong></p><ul><li>• Landing Page: 1500 PLN</li><li>• Strona firmowa z CMS: 3500 PLN</li><li>• Sklep WooCommerce: 6000 PLN</li><li>• Aplikacja webowa: 8000 PLN</li><li>• Diagnoza techniczna: 300 PLN</li><li>• Optymalizacja: 800 PLN</li><li>• Integracje API: 400 PLN</li></ul><p>Wszystkie ceny są netto i zależą od zakresu. <a href='#services' class='chatbot-link'>Pełna oferta</a> 📊</p>",
+      "<p>💸 Ceny zależą od zakresu, ale stawki startowe są jasne: Landing 1500+, Business 3500+, Sklep 6000+, WebApp 8000+, diagnoza 300+, optymalizacja 800+, API 400+ PLN netto.</p><p>Chcesz dokładną wycenę? <a href='#contact' class='chatbot-link'>Opisz projekt</a>, a przygotuję zakres oparty na konkretnym problemie. ⚡</p>",
       "💵 Nie mam ukrytych kosztów - wszystko jest jasne. Od małych napraw (300 PLN) po duże projekty (8000+ PLN). Projekt to inwestycja, nie wydatek. Powiedz mi o swoim celu, a zaproponuję rozwiązanie w Twoim budżecie. <a href='#contact' class='chatbot-link'>Skontaktuj się</a> 🎯"
     ],
     "contact": [
@@ -396,24 +427,24 @@
       "⚡ Jestem Dominem - developer, który traktuje kod jak strategię biznesową. Nie wystarczy mi 'działa' - musi być <strong>szybko, bezpiecznie i sprzedawać</strong>. Certyfikaty: Fullstack Dev, Cybersecurity, AWS Cloud. Ale najważniejsze to portfolio - gadają same projekty. <a href='#about' class='chatbot-link'>Więcej o mnie</a> 💼"
     ],
     "seo": [
-      "<p>🔍 <strong>SEO</strong> to nie magiczna zaklęcia - to techniczna precyzja.</p><ul><li>✅ Semantyczny HTML5</li><li>✅ Core Web Vitals (PageSpeed 90+)</li><li>✅ Szybkość ładowania < 1s</li><li>✅ Mobile-first indexing</li><li>✅ Schema.org (structured data)</li></ul><p>Nie robię 'SEO na końcu' - wpisuję je w fundament. Google lubi szybkie strony. 🚀</p>",
-      "🎯 SEO w moich projektach to standard, nie dodatek. Szybkość + semantyka + structured data = wysokie pozycje w Google. Każda strona wychodzi z PageSpeed 90+ i pełną optymalizacją techniczną. Pozycjonowanie zaczyna się od kodu. 💪"
+      "<p>🔍 <strong>SEO</strong> opieram na technicznych podstawach:</p><ul><li>✅ Semantyczny HTML5</li><li>✅ Core Web Vitals i dostępność</li><li>✅ Szybkie ładowanie bez obietnic jednego wyniku</li><li>✅ Mobile-first i dane strukturalne</li></ul><p>Cel pomiaru ustalamy dla konkretnej strony, treści i hostingu. 🚀</p>",
+      "🎯 SEO w projektach łączę z szybkością, semantyką, structured data i dobrym UX. PageSpeed jest narzędziem diagnostycznym, nie uniwersalną gwarancją — wynik zależy też od treści, hostingu i skryptów zewnętrznych. 💪"
     ],
     "performance": [
-      "<p>⚡ <strong>PERFORMANCE = PRZEWAGA</strong></p><p>Każda moja strona ma:</p><ul><li>✅ PageSpeed Score 90-100/100</li><li>✅ Ładowanie < 1s</li><li>✅ Core Web Vitals w zieleni</li><li>✅ Optymalizacja obrazów (WebP)</li><li>✅ Lazy loading + caching</li></ul><p>Wolna strona = stracone pieniądze. Szybka strona = konwersja. To takie proste. 🔥</p>",
-      "🚀 Performance to moja obsesja. Nie wystarczy mi 'ładuje się szybko' - muszę widzieć PageSpeed 90+ i Core Web Vitals w zieleni. Optymalizuję wszystko: obrazy, zapytania DB, cache, CDN. Każda milisekunda się liczy. ⚡"
+      "<p>⚡ <strong>PERFORMANCE = PRZEWAGA</strong></p><p>Sprawdzam i poprawiam:</p><ul><li>✅ Core Web Vitals (LCP, INP, CLS)</li><li>✅ Obrazy, CSS i JavaScript</li><li>✅ Cache, CDN i zapytania</li><li>✅ Stabilność na mobile i desktop</li></ul><p>Nie obiecuję jednego wyniku bez diagnozy — ustalamy mierzalny cel dla konkretnego systemu. 🔥</p>",
+      "🚀 Performance zaczyna się od pomiaru. Analizuję obrazy, zapytania, cache, CDN i skrypty zewnętrzne, a potem sprawdzam efekt po wdrożeniu. PageSpeed i Core Web Vitals pomagają mierzyć poprawę, ale nie zastępują diagnozy. ⚡"
     ],
     "security": [
       "<p>🔒 <strong>BEZPIECZEŃSTWO = FUNDAMENT</strong></p><p>Każdy projekt:</p><ul><li>✅ SSL/HTTPS w standardzie</li><li>✅ Zabezpieczenia WordPress (hardening)</li><li>✅ Firewall + monitoring</li><li>✅ Backup & disaster recovery</li><li>✅ GDPR compliance</li></ul><p>Cisco Cybersecurity Certified. Traktuję security jak inwestycję, nie koszt. 🛡️</p>",
       "🛡️ Security to nie opcja - to obowiązek. Wszystkie moje projekty mają: SSL, firewall, WordPress hardening, monitoring, backup. Certyfikat Cisco Cybersecurity to nie ozdoba - to gwarancja, że wiem co robię. Zero kompromisów. 💪"
     ],
     "audit": [
-      "<p>🩺 <strong>AUDYT & RATUNEK WP:</strong></p><p>Strona nie działa? Wirusy? Wolno się ładuje?<br>Diagnozuję problem + naprawiam.</p><ul><li>✅ Audyt bezpieczeństwa</li><li>✅ Usuwanie malware</li><li>✅ Naprawa błędów</li><li>✅ Speed boost</li></ul><p>💰 Cena: <strong>300-500 PLN</strong></p><p>Ratujemy tonący statek. ⛑️</p>",
-      "🚑 WordPress padł? Wolno się ładuje? Dziwne rzeczy w Google? Nie panikuj. Audyt + naprawa to moja codzienność. Diagnoza problemu, fix, raport. <strong>300-500 PLN</strong> i wracasz do gry. <a href='#contact' class='chatbot-link'>Pisz, jeśli płonie!</a> 🔥"
+      "<p>🩺 <strong>AUDYT I RATUNEK STRON ORAZ APLIKACJI:</strong></p><p>System nie działa, jest zainfekowany albo zwolnił?<br>Najpierw diagnozuję źródło problemu, potem ustalam bezpieczny zakres naprawy.</p><ul><li>✅ Audyt bezpieczeństwa i błędów</li><li>✅ Stabilizacja oraz usuwanie zagrożeń</li><li>✅ Optymalizacja wydajności</li><li>✅ Raport i pomiary po zmianach</li></ul><p>💰 Diagnoza techniczna: <strong>od 300 PLN netto</strong>. <a href='#contact' class='chatbot-link'>Opisz problem</a> ⛑️</p>",
+      "🚑 Strona lub aplikacja działa źle? Sprawdzam błędy, wydajność, bezpieczeństwo i konfigurację. Po diagnozie dostajesz priorytety oraz wycenę naprawy — diagnoza zaczyna się od <strong>300 PLN netto</strong>. <a href='#contact' class='chatbot-link'>Napisz, co się dzieje</a>. 🔥"
     ],
     "deadline": [
-      "<p>⏱️ <strong>CZAS REALIZACJI:</strong></p><ul><li>• Landing Page: 1-2 tygodnie</li><li>• Business Hub: 3-4 tygodnie</li><li>• E-Commerce: 4-6 tygodni</li><li>• Web App: indywidualnie (min. 6 tygodni)</li></ul><p>Terminy zależą od zakresu i feedbacku. Masz pilny deadline? Możemy pogadać o Fast Track. ⚡</p>",
-      "📅 Standardowe czasy: Landing 1-2 tyg, Business 3-4 tyg, Sklep 4-6 tyg. WebAppy zależą od złożoności. Ale najważniejsze: <strong>nie puszczam projektu, póki nie jest idealny</strong>. Jakość > pośpiech. Chcesz szybciej? Możemy ustalić Fast Track. 🚀"
+      "<p>⏱️ <strong>ORIENTACYJNE CZASY:</strong></p><ul><li>• Landing Page: 1-2 tygodnie</li><li>• Strona firmowa: 2-4 tygodnie</li><li>• Sklep WooCommerce: 4-8 tygodni</li><li>• Aplikacja webowa: zwykle minimum 6 tygodni</li></ul><p>Termin zależy od zakresu, materiałów, decyzji i integracji. ⚡</p>",
+      "🚀 Typowy punkt startowy to Landing 1-2 tyg., strona firmowa 2-4 tyg., sklep 4-8 tyg. i aplikacja od około 6 tygodni. Większe systemy dzielimy na etapy, żeby szybko dostarczyć pierwszą użyteczną wersję."
     ],
     "process": [
       "<p>🔧 <strong>JAK DZIAŁAM?</strong></p><ol><li>1️⃣ <strong>Brief strategiczny</strong> - analiza celu, nie 'jaki kolor'</li><li>2️⃣ <strong>Design & UX</strong> - interfejs prowadzący do konwersji</li><li>3️⃣ <strong>Hardcore Dev</strong> - czysty kod, szybkość, SEO</li><li>4️⃣ <strong>Review & Testy</strong> - Twoja weryfikacja + security tests</li><li>5️⃣ <strong>Deploy</strong> - start + szkolenie z CMS</li></ol><p><a href='#process' class='chatbot-link'>Sprawdź szczegóły procesu</a> 📋</p>",
@@ -428,12 +459,12 @@
       "💡 Startup? Innowacyjny pomysł? Ograniczony cash? Nie musi być problemem. Jeśli projekt ma sens biznesowy, mogę wejść na zasadzie equity, revenue share albo długoterminowej współpracy. Piszę kod, Ty rozwijasz biznes. Win-win. 🚀"
     ],
     "speedboost": [
-      "<p>⚡ <strong>SPEED BOOST PACK:</strong></p><p>Twoja strona ładuje się wolno? Naprawmy to!</p><ul><li>✅ Optymalizacja Core Web Vitals</li><li>✅ Kompresja obrazów (WebP)</li><li>✅ Lazy loading + caching</li><li>✅ Minifikacja CSS/JS</li><li>✅ PageSpeed 90+ gwarantowany</li></ul><p>💰 Cena: <strong>od 800 PLN</strong></p><p>Wolna strona = stracone pieniądze. <a href='#contact' class='chatbot-link'>Przyspiesz swoją stronę</a> 🚀</p>",
-      "🚀 Strona wolna jak ślimak? Speed Boost Pack to kompletna optymalizacja wydajności. Compresja, cache, CDN, minifikacja - wszystko, co potrzebne, żeby osiągnąć PageSpeed 90+. Cena: <strong>od 800 PLN</strong>. <a href='#contact' class='chatbot-link'>Chcę przyspieszenie</a> ⚡"
+      "<p>⚡ <strong>OPTYMALIZACJA WYDAJNOŚCI:</strong></p><p>Strona lub aplikacja działa wolno? Zaczynam od pomiaru i diagnozy.</p><ul><li>✅ Core Web Vitals: LCP, INP i CLS</li><li>✅ Kompresja obrazów oraz lazy loading</li><li>✅ CSS/JS, cache, CDN i zapytania</li><li>✅ Pomiar efektu po wdrożeniu</li></ul><p>💰 Optymalizacja: <strong>od 800 PLN netto</strong>. Wynik zależy od systemu — bez uniwersalnej gwarancji PageSpeed. <a href='#contact' class='chatbot-link'>Opisz problem</a> 🚀</p>",
+      "🚀 Wolna strona lub aplikacja wymaga najpierw pomiaru, nie obietnicy wyniku. Sprawdzam obrazy, cache, CDN, skrypty i zapytania, a następnie pokazuję różnicę po wdrożeniu. Optymalizacja zaczyna się od <strong>800 PLN netto</strong>. <a href='#contact' class='chatbot-link'>Chcę diagnozę</a> ⚡"
     ],
     "integration": [
-      "<p>🔌 <strong>INTEGRACJE API:</strong></p><p>Łączę Twoją stronę z zewnętrznymi systemami:</p><ul><li>✅ Newsletter (Mailchimp, MailerLite)</li><li>✅ CRM (HubSpot, Pipedrive)</li><li>✅ Chatbot (własny lub zewnętrzny)</li><li>✅ Płatności (Stripe, PayU, Przelewy24)</li><li>✅ Social Media feeds</li></ul><p>💰 Cena: <strong>od 400 PLN</strong></p><p>Automatyzacja = oszczędność czasu. <a href='#contact' class='chatbot-link'>Wdróż integrację</a> 🤖</p>",
-      "🤖 Potrzebujesz połączyć stronę z CRM, newsletterem, płatnościami? Integracje API to moja specjalność. Newsletter, chatbot, social media, płatności - łączę systemy w całość. Od <strong>400 PLN</strong> automatyzujesz procesy. <a href='#contact' class='chatbot-link'>Omówmy integrację</a> 🔥"
+      "<p>🔌 <strong>INTEGRACJE API I AUTOMATYZACJE:</strong></p><p>Łączę CRM, formularze, newslettery, płatności i systemy wewnętrzne.</p><ul><li>✅ Kierunek i właściciel danych</li><li>✅ Webhooki, synchronizacja i scenariusze błędów</li><li>✅ Automatyzacje, również po analizie n8n</li><li>✅ Weryfikacja krytycznych przepływów</li></ul><p>💰 Integracje API: <strong>od 400 PLN netto</strong>. <a href='#contact' class='chatbot-link'>Opisz systemy</a> 🤖</p>",
+      "🤖 Potrzebujesz połączyć CRM, formularz, newsletter albo płatności? Projektuję przepływ danych, obsługę błędów i automatyzacje. Jeśli chodzi o n8n, najpierw sprawdzam systemy, dostęp i utrzymanie. Integracje zaczynają się od <strong>400 PLN netto</strong>. <a href='#contact' class='chatbot-link'>Omówmy zakres</a> 🔥"
     ],
     "certifications": [
       "<p>🎓 <strong>CERTYFIKACJA & KOMPETENCJE:</strong></p><p>Nie tylko koduję - mam za sobą solidne fundamenty:</p><ul><li>✅ <strong>Fullstack Developer</strong> - GoIT Certified</li><li>✅ <strong>Cybersecurity Essentials</strong> - Cisco</li><li>✅ <strong>AWS Cloud Practitioner</strong> - AWS Academy Graduate</li><li>✅ <strong>PostgreSQL DB Admin</strong> - Database Management</li></ul><p>Certyfikaty to nie ozdoba CV - to gwarancja, że wiem co robię. <a href='#about' class='chatbot-link'>Poznaj mnie bliżej</a> 🔥</p>",
@@ -496,8 +527,8 @@
       "💰 Jasna sprawa! Działam legalnie, więc wystawiam faktury VAT. Zazwyczaj praca wygląda tak: 50% zaliczki na start, 50% po skończonym projekcie. Proste i uczciwe. Przy większych budżetach możemy być bardziej elastyczni. <a href='#contact' class='chatbot-link'>Masz pytania? Pisz!</a> 💬"
     ],
     "guarantee": [
-      "<p>✅ <strong>GWARANCJA JAKOŚCI:</strong></p><p>Udzielam <strong>12-miesięcznej gwarancji</strong> na kod. Jeśli w tym czasie pojawi się błąd wynikający z mojej pracy, naprawiam go za darmo.</p><p>Gwarancja nie obejmuje błędów po samodzielnych modyfikacjach kodu, aktualizacjach wtyczek firm trzecich czy problemów z serwerem. Jakość to mój priorytet! 🛠️</p>",
-      "💯 Oczywiście! Daję 12 miesięcy gwarancji na swój kod. Jeśli coś, co zaprogramowałem, przestanie działać (a nie było modyfikowane), naprawiam to w ramach gwarancji. To jak ubezpieczenie na jakość. Śpisz spokojnie. 😴"
+      "<p>✅ <strong>GWARANCJA I ODPOWIEDZIALNOŚĆ:</strong></p><p>Warunki gwarancji ustalamy w umowie i dopasowujemy do zakresu projektu. Obejmują błędy wynikające z dostarczonego kodu; nie obejmują samodzielnych modyfikacji, zmian po stronie usług firm trzecich ani problemów z serwerem poza zakresem utrzymania.</p><p>Przed startem jasno opisuję zakres wsparcia i sposób zgłaszania usterek. 🛠️</p>",
+      "Tak — zakres gwarancji i wsparcia zapisujemy w umowie, odpowiednio do projektu. Błędy wynikające z mojego kodu usuwam w ustalonym trybie; osobno traktujemy własne modyfikacje, aktualizacje usług firm trzecich i problemy infrastruktury poza zakresem."
     ],
     "unknown": [
       "<p>🤔 Hmm, nie mam tego w bazie. Mogę Ci pomóc z:</p><ul><li>• <strong>Usługi & Ceny</strong> → <a href='#services' class='chatbot-link'>zobacz ofertę</a></li><li>• <strong>Realizacje</strong> → <a href='#portfolio' class='chatbot-link'>portfolio</a></li><li>• <strong>Tech Stack</strong> (WordPress, React, technologie)</li><li>• <strong>Kontakt</strong> → <a href='#contact' class='chatbot-link'>napisz do mnie</a></li></ul><p>Albo po prostu napisz konkretnie - postaram się pomóc! 💬</p>",
@@ -517,8 +548,8 @@
     "next.js": "🔷 <strong>Next.js</strong> to framework React z server-side rendering (SSR). Szybsze ładowanie, lepsze SEO, lepszy performance. Używam do web apps i zaawansowanych projektów. Vercel tech. ⚡",
     "api": "🔌 <strong>API (Application Programming Interface)</strong> to sposób komunikacji między systemami. Łączę strony z CRM, newsletter, chatbot, płatności. API pozwala automatyzować procesy biznesowe. 🤖",
     "ssl": "🔒 <strong>SSL (HTTPS)</strong> to szyfrowanie połączenia między użytkownikiem a serwerem. Standard bezpieczeństwa. Google premiuje HTTPS w rankingu. Każda moja strona ma SSL w pakiecie. 🛡️",
-    "pagespeed": "⚡ <strong>PageSpeed</strong> to narzędzie Google do mierzenia wydajności strony. Skala 0-100. Poniżej 90 to porażka. Moje projekty: 90-100 na mobile i desktop. Performance = konwersja. 🚀",
-    "core web vitals": "📊 <strong>Core Web Vitals</strong> to metryki Google określające UX: LCP (ładowanie), FID (interaktywność), CLS (stabilność wizualna). Wpływają na ranking SEO. Moje projekty: wszystkie w zieleni. ✅",
+    "pagespeed": "⚡ <strong>PageSpeed</strong> to narzędzie Google do pomiaru wydajności w skali 0-100. Wynik zależy od urządzenia, treści, hostingu i skryptów zewnętrznych — nie ma jednego uniwersalnego progu ani gwarancji. Traktuję go jako wskazówkę do diagnozy. 🚀",
+    "core web vitals": "📊 <strong>Core Web Vitals</strong> to metryki UX: LCP (ładowanie), INP (interakcja) i CLS (stabilność wizualna). Pomagają ocenić doświadczenie użytkownika i kierunek optymalizacji. ✅",
     "acf": "🎯 <strong>ACF (Advanced Custom Fields)</strong> to plugin WordPress do tworzenia custom fields. Pozwala budować elastyczne CMS bez kodu. Używam w projektach Business Hub i E-Commerce. 🔧",
     "hosting": "🖥️ <strong>Hosting</strong> to usługa serwerowa, na której 'leży' Twoja strona. Ważne: szybkość serwera = szybkość strony. Polecam: LH.pl, home.pl, OVH lub premium: WP Engine, Kinsta. W wycenie mogę pomóc dobrać hosting. ⚡",
     "domena": "🌐 <strong>Domena</strong> to adres Twojej strony (np. domindev.com). Kupujesz ją u rejestratora (np. home.pl, OVH, Namecheap). Koszt: 30-100 PLN/rok. Mogę pomóc z rejestracją i podpięciem do hostingu. 📍",
@@ -529,7 +560,7 @@
     "ux": "🎨 <strong>UX (User Experience)</strong> to doświadczenie użytkownika. Czy strona jest intuicyjna? Czy użytkownik łatwo znajdzie to, czego szuka? Dobry UX = wyższa konwersja. Design bez UX to tylko ładny obraz. 💡",
     "ui": "🖌️ <strong>UI (User Interface)</strong> to warstwa wizualna - kolory, przyciski, fonty, layout. UI to 'jak wygląda', UX to 'jak działa'. Razem tworzą kompletny design. 🎨",
     "conversion": "🎯 <strong>Konwersja (Conversion)</strong> to moment, gdy użytkownik wykonuje pożądaną akcję: kupuje, wypełnia formularz, dzwoni. Cel każdej strony: maksymalizacja konwersji. Wszystko podporządkowuję temu celowi. 💰",
-    "speed boost": "⚡ <strong>Speed Boost</strong> to kompleksowa optymalizacja wydajności strony. Obejmuje: kompresję obrazów, lazy loading, minifikację CSS/JS, konfigurację cache i CDN. Cel: PageSpeed Score 90+ i ładowanie < 1s. 🚀",
+    "speed boost": "⚡ <strong>Speed Boost</strong> to optymalizacja wydajności strony lub aplikacji. Obejmuje pomiary, obrazy, lazy loading, CSS/JS, cache, CDN i zapytania. Cel ustalamy po diagnozie, a efekt weryfikujemy po wdrożeniu. 🚀",
     "integracja api": "🔌 <strong>Integracja API</strong> to połączenie strony z zewnętrznymi systemami (CRM, newsletter, płatności, chatbot). API pozwala automatyzować procesy biznesowe i synchronizować dane między systemami. 🤖",
     "malware": "🦠 <strong>Malware</strong> to złośliwe oprogramowanie na stronie (wirusy, backdoory, skrypty). Objaw: przekierowania, spam w Google, błędy. Rozwiązanie: audyt bezpieczeństwa + usunięcie zagrożeń + hardening WordPress. 🛡️",
     "goit": "🎓 <strong>GoIT</strong> to akademia programowania, z której ukończyłem Fullstack Developer Bootcamp. Intensywny program obejmujący HTML, CSS, JavaScript, React, Node.js, bazy danych. Praktyka projektowa + mentor + code review. 💻",
@@ -539,6 +570,7 @@
     "headless cms": "🚀 <strong>Headless CMS</strong> to nowoczesne podejście, gdzie system zarządzania treścią (backend) jest oddzielony od warstwy prezentacji (frontend). Umożliwia to użycie React/Next.js do budowy ultra-szybkiego frontendu, podczas gdy treścią zarządza się np. w WordPressie. Maksymalna wydajność i elastyczność. ⚡",
     "brief": "📋 <strong>Brief Strategiczny</strong> to dokument, który jest fundamentem projektu. Zamiast pytać 'jaki kolor', pytam 'jaki jest cel biznesowy?'. Analizujemy grupę docelową, konkurencję i cele konwersji. Dobry brief to 50% sukcesu projektu. 🎯",
     "prototyp": "📐 <strong>Prototyp / Wireframe</strong> to interaktywna makieta strony, która pokazuje jej strukturę i działanie, ale bez finalnego designu. Pozwala przetestować UX (doświadczenie użytkownika) i układ, zanim napiszę pierwszą linijkę kodu. Oszczędza czas i pieniądze. 💡",
-    "gdpr": "⚖️ <strong>GDPR / RODO</strong> to unijne rozporządzenie o ochronie danych osobowych. Każda strona zbierająca dane (np. przez formularz) musi być zgodna z RODO. Obejmuje to m.in. politykę prywatności, zgody na przetwarzanie danych i zabezpieczenie bazy. Dbaję o to w każdym projekcie. ✅"
+    "gdpr": "⚖️ <strong>GDPR / RODO</strong> to unijne rozporządzenie o ochronie danych osobowych. Przy formularzach i innych danych trzeba uwzględnić m.in. politykę prywatności, podstawę zgody, minimalizację danych i zabezpieczenia. Zakres zgodności ustalamy dla konkretnego projektu. ✅",
+    "rodo": "⚖️ <strong>RODO / GDPR</strong> dotyczy ochrony danych osobowych. Przy formularzach i innych danych trzeba uwzględnić m.in. politykę prywatności, podstawę zgody, minimalizację danych i zabezpieczenia. Zakres zgodności ustalamy dla konkretnego projektu. ✅"
   }
 }

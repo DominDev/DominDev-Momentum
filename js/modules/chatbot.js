@@ -18,10 +18,12 @@ async function loadBotData() {
     // Pre-kompilacja i normalizacja danych dla maksymalnej wydajności
     data.normalizedVulgarWords = data.vulgarWords.map(normalize);
 
-    data.precomputedGlossary = Object.keys(data.glossary).map((term) => ({
-      original: term,
-      normalized: normalize(term),
-    }));
+    data.precomputedGlossary = Object.keys(data.glossary)
+      .map((term) => ({
+        original: term,
+        normalized: normalize(term),
+      }))
+      .sort((a, b) => b.normalized.length - a.normalized.length);
 
     data.normalizedKeywordMap = {};
     data.precomputedPhrases = [];
@@ -298,16 +300,21 @@ export function initChat() {
           // Kopiuj tylko bezpieczne atrybuty
           if (tagName === "a") {
             const href = node.getAttribute("href");
+            const safeHref = href ? href.trim() : "";
             // Allow http, mailto, anchor, and relative paths
-            if (href && (href.startsWith("http") || href.startsWith("mailto") || href.startsWith("#") || href.startsWith("/"))) {
-              el.setAttribute("href", href.trim()); // Trim whitespace
+            if (safeHref && (safeHref.startsWith("http") || safeHref.startsWith("mailto") || safeHref.startsWith("#") || safeHref.startsWith("/"))) {
+              const anchorTarget = safeHref.startsWith("#") ? safeHref.slice(1) : "";
+              const resolvedHref = anchorTarget && !document.getElementById(anchorTarget)
+                ? `/${safeHref}`
+                : safeHref;
+              el.setAttribute("href", resolvedHref);
             }
             if (node.classList.contains("chatbot-link")) {
               el.classList.add("chatbot-link");
             }
             
             // UX Fix: Open ONLY external HTTP links in new tab
-            if (href && href.startsWith("http")) {
+            if (safeHref && safeHref.startsWith("http")) {
                 el.setAttribute("target", "_blank");
                 el.setAttribute("rel", "noopener noreferrer");
             }
@@ -379,47 +386,62 @@ export function initChat() {
 
     const lowerInput = msg.toLowerCase().trim();
     const normalizedInput = normalize(lowerInput);
-    let intent = "unknown";
+    const words = normalizedInput.split(SPLIT_REGEX).filter(Boolean);
+    const serviceIntents = new Set([
+      "landing",
+      "business",
+      "ecommerce",
+      "webapp",
+      "audit",
+      "speedboost",
+      "integration",
+      "performance",
+    ]);
+    const matchesTerm = (term) => term.includes(" ")
+      ? normalizedInput.includes(term)
+      : words.includes(term);
 
-    // ETAP 1: Wulgaryzmy
-    if (
-      botData.normalizedVulgarWords.some((word) =>
-        normalizedInput.includes(word)
-      )
-    ) {
-      intent = "vulgar";
-    }
-    // ETAP 2: Dokładne frazy ze słownika (glossary)
-    else {
-      const glossaryMatch = botData.precomputedGlossary.find((term) =>
-        normalizedInput.includes(term.normalized)
-      );
-      if (glossaryMatch) {
-        return botData.glossary[glossaryMatch.original]; // Zwracamy od razu definicję
-      }
-    }
-    // ETAP 3: Dokładne frazy z keywordMap
-    if (intent === "unknown") {
-      const phraseMatch = botData.precomputedPhrases.find((phrase) =>
-        normalizedInput.includes(phrase.normalized)
-      );
-      if (phraseMatch) {
-        intent = botData.keywordMap[phraseMatch.original];
-      }
-    }
-    // ETAP 4: Pojedyncze słowa z keywordMap
-    if (intent === "unknown") {
-      const words = normalizedInput.split(SPLIT_REGEX);
-      for (const word of words) {
-        // Bezpośredni, błyskawiczny dostęp O(1) do znormalizowanej mapy
-        if (botData.normalizedKeywordMap[word]) {
-          intent = botData.normalizedKeywordMap[word];
-          break;
-        }
-      }
+    // Wulgaryzmy są sprawdzane jako pełne słowa, aby np. „hello” nie zawierało
+    // fałszywie wykrytego „hell”.
+    if (botData.normalizedVulgarWords.some(matchesTerm)) {
+      return getRandom(botData.responses.vulgar);
     }
 
-    return getRandom(botData.responses[intent]);
+    const glossaryMatch = botData.precomputedGlossary.find((term) => matchesTerm(term.normalized));
+    const phraseMatches = botData.precomputedPhrases
+      .filter((phrase) => normalizedInput.includes(phrase.normalized))
+      .map((phrase) => ({
+        ...phrase,
+        intent: botData.normalizedKeywordMap[phrase.normalized],
+      }))
+      .filter((phrase) => phrase.intent);
+    const wordMatches = words
+      .map((word) => ({ word, intent: botData.normalizedKeywordMap[word] }))
+      .filter((match) => match.intent);
+    const scores = new Map();
+
+    phraseMatches.forEach((match) => {
+      scores.set(match.intent, (scores.get(match.intent) || 0) + match.normalized.length + 10);
+    });
+    wordMatches.forEach((match) => {
+      scores.set(match.intent, (scores.get(match.intent) || 0) + 1);
+    });
+
+    const asksDefinition = /^(co to|czym jest|co oznacza|definicja|jak dziala)\b/.test(normalizedInput);
+    if (glossaryMatch && (asksDefinition || normalizedInput === glossaryMatch.normalized)) {
+      return botData.glossary[glossaryMatch.original];
+    }
+
+    const priceRequested = scores.has("price");
+    const rankedServices = [...scores.entries()]
+      .filter(([candidate]) => serviceIntents.has(candidate))
+      .sort((a, b) => b[1] - a[1]);
+    const rankedIntents = [...scores.entries()].sort((a, b) => b[1] - a[1]);
+    const intent = priceRequested && rankedServices.length
+      ? rankedServices[0][0]
+      : rankedIntents[0]?.[0] || (glossaryMatch ? glossaryMatch.original : "unknown");
+
+    return getRandom(botData.responses[intent] || botData.responses.unknown);
   }
 
   function getRandom(arr) {

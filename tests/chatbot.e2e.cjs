@@ -3,11 +3,11 @@ const { chromium } = require('playwright');
 
 const baseUrl = process.env.APP_URL || 'http://127.0.0.1:8788';
 
-async function loadPage(browser, viewport) {
+async function loadPage(browser, viewport, path = '/') {
   const page = await browser.newPage({ viewport });
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
-  await page.goto(`${baseUrl}/`, { waitUntil: 'commit' });
+  await page.goto(`${baseUrl}${path}`, { waitUntil: 'commit' });
   await page.locator('nav').waitFor({ state: 'visible', timeout: 10000 });
 
   const preloader = page.locator('#preloader');
@@ -39,6 +39,22 @@ async function assertChatbotSemantics(page) {
   assert.equal(await page.locator('#chatbot-send').getAttribute('aria-label'), 'Wyślij wiadomość');
 }
 
+async function askChatbot(page, question) {
+  const botMessages = page.locator('#chatbot-messages .chat-message.bot');
+  const messageCountBefore = await botMessages.count();
+
+  await page.locator('#chatbot-input').fill(question);
+  await page.locator('#chatbot-send').click();
+  await page.waitForFunction(
+    (before) => !document.querySelector('#typing-indicator')
+      && document.querySelectorAll('#chatbot-messages .chat-message.bot').length > before,
+    messageCountBefore,
+    { timeout: 5000 }
+  );
+
+  return (await botMessages.last().innerText()).trim();
+}
+
 (async () => {
   const browser = await chromium.launch({ headless: true });
 
@@ -67,6 +83,55 @@ async function assertChatbotSemantics(page) {
     assert.equal(await desktop.locator('#chatbot-window').getAttribute('aria-hidden'), 'true');
     await desktop.waitForFunction(() => document.activeElement?.id === 'chatbot-trigger');
     assert.equal(await desktopTrigger.evaluate((element) => document.activeElement === element), true);
+
+    await desktopTrigger.click();
+    await desktop.locator('#chatbot-window.active').waitFor({ state: 'visible', timeout: 5000 });
+
+    const integrationPrice = await askChatbot(desktop, 'ile kosztuje integracja API');
+    assert.match(integrationPrice, /400 PLN/);
+    assert.match(integrationPrice, /integracj|API/i);
+
+    const performanceQuestion = await askChatbot(desktop, 'moja strona wolno się ładuje');
+    assert.match(performanceQuestion, /800 PLN/);
+    assert.match(performanceQuestion, /optymaliz|PageSpeed|LCP|INP|CLS/i);
+
+    const auditQuestion = await askChatbot(desktop, 'audyt strony internetowej');
+    assert.match(auditQuestion, /300 PLN/);
+    assert.match(auditQuestion, /stron|aplikac/i);
+
+    const n8nQuestion = await askChatbot(desktop, 'czy wdrażasz n8n');
+    assert.match(n8nQuestion, /n8n/i);
+    assert.match(n8nQuestion, /400 PLN/);
+
+    const invoiceQuestion = await askChatbot(desktop, 'czy wystawiasz fakturę VAT');
+    assert.match(invoiceQuestion, /VAT/i);
+
+    const coreVitalsQuestion = await askChatbot(desktop, 'Core Web Vitals');
+    assert.match(coreVitalsQuestion, /LCP/);
+    assert.match(coreVitalsQuestion, /INP/);
+    assert.match(coreVitalsQuestion, /CLS/);
+
+    const helloQuestion = await askChatbot(desktop, 'hello');
+    assert.doesNotMatch(helloQuestion, /Error 406|wulg/i);
+    assert.match(helloQuestion, /DominDev|system|terminal|cennik|portfolio/i);
+
+    const rodoQuestion = await askChatbot(desktop, 'RODO');
+    assert.match(rodoQuestion, /RODO|GDPR/);
+
+    await desktop.locator('#chatbot-close').click();
+    await desktop.locator('#chatbot-window.active').waitFor({ state: 'hidden' });
+
+    const serviceContext = await loadPage(browser, { width: 1440, height: 900 }, '/aplikacje-webowe-wroclaw.html');
+    const servicePage = serviceContext.page;
+    await servicePage.locator('#chatbot-trigger').click();
+    await servicePage.locator('#chatbot-window.active').waitFor({ state: 'visible', timeout: 5000 });
+    const portfolioQuestion = await askChatbot(servicePage, 'jakie masz realizacje');
+    assert.match(portfolioQuestion, /realizac|portfolio/i);
+    assert.equal(await servicePage.locator('#chatbot-messages .chat-message.bot').last().locator('a[href="/#portfolio"]').count(), 1);
+    await servicePage.locator('#chatbot-close').click();
+    await servicePage.locator('#chatbot-window.active').waitFor({ state: 'hidden' });
+    await servicePage.close();
+    assert.deepEqual(serviceContext.errors, []);
 
     const mobileContext = await loadPage(browser, { width: 375, height: 667 });
     const mobile = mobileContext.page;

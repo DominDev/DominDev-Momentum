@@ -303,7 +303,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const chatAPI = chatbotAPI || await loadChatbot();
       if (!chatAPI || typeof chatAPI.toggle !== 'function') return;
 
-      chatAPI.toggle();
+      await chatAPI.toggle();
+
+      // Click defaults can restore focus to the trigger after the lazy module
+      // finishes loading. Re-apply the dialog focus on the next frame so the
+      // hover-then-click path remains keyboard usable as well.
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          if (document.querySelector("#chatbot-window.active")) {
+            document.getElementById("chatbot-input")?.focus();
+          }
+        }, 150);
+      });
     };
 
     // Preload on hover (desktop only)
