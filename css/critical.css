@@ -51,7 +51,7 @@
         font-style: normal;
         font-weight: 900;
         font-display: swap;
-        src: url("../assets/fonts/fa-solid-900.woff2?v=2") format("woff2");
+        src: url("../assets/fonts/fa-solid-900.woff2?v=3") format("woff2");
       }
       .fas,
       .fa-solid {
@@ -186,4 +186,22 @@
       }
       .fa-rotate-left::before {
         content: "\f2ea";
+      }
+      .fa-align-left::before {
+        content: "\f036";
+      }
+      .fa-bullseye::before {
+        content: "\f140";
+      }
+      .fa-chart-line::before {
+        content: "\f201";
+      }
+      .fa-clock::before {
+        content: "\f017";
+      }
+      .fa-file-lines::before {
+        content: "\f15c";
+      }
+      .fa-pen-ruler::before {
+        content: "\f5ae";
       }

@@ -260,6 +260,28 @@ async function loadPage(browser, path, viewport, errors) {
     assert.equal(await landingPage.locator('link[href*="landing-page.min.css"]').count(), 1);
     assert.equal(await landingPage.locator('#services-dropdown a[href="/landing-page-wroclaw"]').count(), 1);
     assert.equal(await landingPage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 4);
+    const landingIconFontLoaded = await landingPage.evaluate(async () => {
+      await document.fonts.ready;
+      return document.fonts.check('900 16px "Font Awesome 6 Free"', '\uf036\uf140\uf201\uf017\uf15c\uf5ae');
+    });
+    assert.equal(landingIconFontLoaded, true);
+    const landingDeliverableIcons = await landingPage.locator('.landing-deliverable i').evaluateAll((icons) =>
+      icons.map((icon) => {
+        const pseudo = getComputedStyle(icon, '::before');
+        return {
+          className: icon.className,
+          content: pseudo.content,
+          width: icon.getBoundingClientRect().width,
+          fontFamily: getComputedStyle(icon).fontFamily,
+        };
+      })
+    );
+    assert.equal(landingDeliverableIcons.length, 5);
+    for (const icon of landingDeliverableIcons) {
+      assert.notEqual(icon.content, 'none');
+      assert.ok(icon.width > 0);
+      assert.match(icon.fontFamily, /Font Awesome 6 Free/);
+    }
     await landingPage.locator('#services-menu-trigger').click();
     assert.equal(await landingPage.locator('#services-dropdown').isVisible(), true);
     await landingPage.locator('#services-menu-trigger').click();
