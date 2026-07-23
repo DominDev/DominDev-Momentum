@@ -370,6 +370,24 @@
     "rękojmia": "guarantee",
     "co jeśli coś się zepsuje": "guarantee"
   },
+  "followUps": {
+    "greeting": ["Ile kosztuje strona?", "Jakie masz realizacje?", "Jak wygląda współpraca?"],
+    "services": ["Ile kosztuje aplikacja?", "Strona firmowa czy landing?", "Jak szybko realizujesz?"],
+    "price": ["Ile kosztuje integracja API?", "Co obejmuje diagnoza?", "Jak rozpocząć projekt?"],
+    "landing": ["Ile trwa landing page?", "Czy landing nadaje się pod Ads?", "Jak przejść do wyceny?"],
+    "business": ["Ile trwa strona firmowa?", "Czy dostanę CMS?", "Jak wygląda opieka?"],
+    "ecommerce": ["Ile trwa sklep WooCommerce?", "Czy integrujesz płatności?", "Jak wygląda utrzymanie sklepu?"],
+    "webapp": ["Ile trwa aplikacja webowa?", "Czy budujesz dashboardy?", "Jak planujesz API?"],
+    "audit": ["Ile kosztuje diagnoza?", "Co sprawdzasz w audycie?", "Jak zgłosić problem?"],
+    "speedboost": ["Ile kosztuje optymalizacja?", "Jak mierzysz poprawę?", "Czy optymalizujesz aplikacje?"],
+    "integration": ["Czy integrujesz n8n?", "Jakie systemy można połączyć?", "Ile kosztuje integracja API?"],
+    "performance": ["Czym są Core Web Vitals?", "Co spowalnia stronę?", "Ile kosztuje optymalizacja?"],
+    "portfolio": ["Czy masz case study WordPress?", "Czy budujesz aplikacje webowe?", "Jak omówić mój projekt?"],
+    "contact": ["Jak wygląda pierwszy kontakt?", "Czy wystawiasz fakturę VAT?", "Gdzie działasz?"],
+    "process": ["Ile trwa realizacja?", "Ile rund poprawek obejmuje projekt?", "Jak wygląda start współpracy?"],
+    "glossary": ["Jak to wykorzystujesz w projekcie?", "Ile kosztuje ta usługa?", "Jak rozpocząć rozmowę?"],
+    "unknown": ["Ile kosztuje strona?", "Jakie masz usługi?", "Jak się skontaktować?"]
+  },
   "responses": {
     "greeting": [
       "Hej! 👋 Witaj w systemie DominDev. Bot operacyjny na stanowisku. Czego potrzebujesz? (Usługi | Projekty | Tech Stack)",

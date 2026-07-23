@@ -86,10 +86,17 @@ async function askChatbot(page, question) {
 
     await desktopTrigger.click();
     await desktop.locator('#chatbot-window.active').waitFor({ state: 'visible', timeout: 5000 });
+    assert.equal(await desktop.locator('.chatbot-suggestions').count(), 1);
+    assert.equal(await desktop.locator('.chatbot-suggestion').count(), 3);
+    assert.equal(await desktop.locator('.chatbot-suggestions').getAttribute('role'), 'group');
+    const firstSuggestion = await desktop.locator('.chatbot-suggestion').first().innerText();
+    await desktop.locator('.chatbot-suggestion').first().click();
+    assert.equal(await desktop.locator('#chatbot-input').inputValue(), firstSuggestion);
 
     const integrationPrice = await askChatbot(desktop, 'ile kosztuje integracja API');
     assert.match(integrationPrice, /400 PLN/);
     assert.match(integrationPrice, /integracj|API/i);
+    assert.equal(await desktop.locator('.chatbot-suggestions').count(), 1);
 
     const performanceQuestion = await askChatbot(desktop, 'moja strona wolno się ładuje');
     assert.match(performanceQuestion, /800 PLN/);

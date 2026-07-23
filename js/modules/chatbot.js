@@ -1,6 +1,7 @@
 // js/modules/chatbot.js
 let botData = null;
 let botDataPromise = null;
+let lastIntent = "unknown";
 const SPLIT_REGEX = /[\s,.;!?]+/;
 const DATA_LOAD_ERROR_RESPONSE = "⚠️ Nie udało się wczytać bazy odpowiedzi. Spróbuj odświeżyć stronę lub napisz ponownie za chwilę.";
 
@@ -150,6 +151,10 @@ export function initChat() {
     if (!botData) {
       await loadBotData();
     }
+
+    if (botData && !chatbotMessages.querySelector(".chatbot-suggestions")) {
+      renderSuggestions("greeting");
+    }
   }
 
   function closeChat() {
@@ -233,7 +238,8 @@ export function initChat() {
 
       await wait(600 + Math.random() * 500);
       removeTyping();
-      addMessage(getBotResponse(msg));
+      const response = getBotResponse(msg);
+      addMessage(response, false, lastIntent);
     } catch (error) {
       console.error("Failed to prepare chatbot response:", error);
       removeTyping();
@@ -274,7 +280,9 @@ export function initChat() {
     });
   }
 
-  function addMessage(text, isUser = false) {
+  function addMessage(text, isUser = false, intent = null) {
+    if (isUser) clearSuggestions();
+
     const div = document.createElement("div");
     div.className = `chat-message ${isUser ? "user" : "bot"}`;
 
@@ -302,6 +310,47 @@ export function initChat() {
         });
       });
     }
+
+    if (!isUser && intent) renderSuggestions(intent);
+  }
+
+  function clearSuggestions() {
+    chatbotMessages.querySelectorAll(".chatbot-suggestions").forEach((element) => element.remove());
+  }
+
+  function renderSuggestions(intent) {
+    if (!botData || !botData.followUps) return;
+
+    const suggestionKey = botData.followUps[intent]
+      ? intent
+      : intent === "glossary"
+        ? "glossary"
+        : "unknown";
+    const suggestions = botData.followUps[suggestionKey];
+    if (!Array.isArray(suggestions) || suggestions.length === 0) return;
+
+    clearSuggestions();
+
+    const group = document.createElement("div");
+    group.className = "chatbot-suggestions";
+    group.setAttribute("role", "group");
+    group.setAttribute("aria-label", "Sugerowane pytania");
+
+    suggestions.slice(0, 3).forEach((question) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "chatbot-suggestion";
+      button.textContent = question;
+      button.addEventListener("click", () => {
+        chatbotInput.value = question;
+        chatbotInput.dispatchEvent(new Event("input", { bubbles: true }));
+        chatbotInput.focus();
+      });
+      group.appendChild(button);
+    });
+
+    chatbotMessages.appendChild(group);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
   }
 
   /**
@@ -407,10 +456,14 @@ export function initChat() {
    * @returns {string} - Odpowiedź bota.
    */
   function getBotResponse(msg) {
-    if (!botData) return "⚠️ System niedostępny. Spróbuj odświeżyć stronę.";
+    if (!botData) {
+      lastIntent = "error";
+      return "⚠️ System niedostępny. Spróbuj odświeżyć stronę.";
+    }
 
     // Walidacja pustej wiadomości
     if (!msg || msg.trim() === "") {
+      lastIntent = "unknown";
       return "🤔 Nie rozumiem. Napisz coś!";
     }
 
@@ -434,6 +487,7 @@ export function initChat() {
     // Wulgaryzmy są sprawdzane jako pełne słowa, aby np. „hello” nie zawierało
     // fałszywie wykrytego „hell”.
     if (botData.normalizedVulgarWords.some(matchesTerm)) {
+      lastIntent = "vulgar";
       return getRandom(botData.responses.vulgar);
     }
 
@@ -459,6 +513,7 @@ export function initChat() {
 
     const asksDefinition = /^(co to|czym jest|co oznacza|definicja|jak dziala)\b/.test(normalizedInput);
     if (glossaryMatch && (asksDefinition || normalizedInput === glossaryMatch.normalized)) {
+      lastIntent = "glossary";
       return botData.glossary[glossaryMatch.original];
     }
 
@@ -470,6 +525,7 @@ export function initChat() {
     const intent = priceRequested && rankedServices.length
       ? rankedServices[0][0]
       : rankedIntents[0]?.[0] || (glossaryMatch ? glossaryMatch.original : "unknown");
+    lastIntent = botData.responses[intent] ? intent : "unknown";
 
     return getRandom(botData.responses[intent] || botData.responses.unknown);
   }
