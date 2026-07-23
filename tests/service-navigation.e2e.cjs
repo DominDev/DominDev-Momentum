@@ -401,16 +401,22 @@ async function loadPage(browser, path, viewport, errors) {
     const mobileArchitectureLayout = await wooCommercePageMobile.locator('.case-result').evaluate((element) => {
       const result = element.getBoundingClientRect();
       const copy = element.querySelector('.case-result__copy').getBoundingClientRect();
+      const media = document.querySelector('.woocommerce-page .case-study__media').getBoundingClientRect();
+      const image = document.querySelector('.woocommerce-page .case-study__media img');
       return {
         pageDoesNotOverflow: document.documentElement.scrollWidth <= window.innerWidth,
         resultFitsViewport: result.left >= 0 && result.right <= window.innerWidth,
         copyFitsResult: copy.left >= result.left && copy.right <= result.right,
+        imageUsesCroppedLandscapeFrame: media.height / media.width < 0.6,
+        imageUsesObjectFitCover: getComputedStyle(image).objectFit === 'cover',
       };
     });
     assert.deepEqual(mobileArchitectureLayout, {
       pageDoesNotOverflow: true,
       resultFitsViewport: true,
       copyFitsResult: true,
+      imageUsesCroppedLandscapeFrame: true,
+      imageUsesObjectFitCover: true,
     });
     assert.deepEqual(errors, []);
 
