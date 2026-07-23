@@ -38,7 +38,11 @@ async function loadPage(browser, path, viewport, errors) {
       await desktop.locator('#services-dropdown a[href="/strony-wordpress-wroclaw"]').count(),
       1
     );
-    assert.equal(await desktop.locator('#services-dropdown a[href="/maintenance.html"]').count(), 5);
+    assert.equal(
+      await desktop.locator('#services-dropdown a[href="/landing-page-wroclaw"]').count(),
+      1
+    );
+    assert.equal(await desktop.locator('#services-dropdown a[href="/maintenance.html"]').count(), 4);
     assert.match(
       await desktop.locator('script[type="module"]').getAttribute('src'),
       /js\/main\.js\?v=/
@@ -162,7 +166,11 @@ async function loadPage(browser, path, viewport, errors) {
       await mobile.locator('#mobile-services-open').getAttribute('aria-label'),
       'Zwiń listę usług'
     );
-    assert.equal(await mobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 5);
+    assert.equal(
+      await mobile.locator('#mobile-services-panel a[href="/landing-page-wroclaw"]').count(),
+      1
+    );
+    assert.equal(await mobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 4);
     await mobile.keyboard.press('Escape');
     assert.equal(await mobile.locator('#mobile-services-panel').isVisible(), false);
     assert.equal(await mobile.locator('#mobile-services-open').getAttribute('aria-expanded'), 'false');
@@ -191,7 +199,11 @@ async function loadPage(browser, path, viewport, errors) {
     await landing.locator('#services-menu-trigger').focus();
     await landing.keyboard.press('Enter');
     assert.equal(await landing.locator('#services-dropdown').isVisible(), true);
-    assert.equal(await landing.locator('#services-dropdown a[href="/maintenance.html"]').count(), 5);
+    assert.equal(
+      await landing.locator('#services-dropdown a[href="/landing-page-wroclaw"]').count(),
+      1
+    );
+    assert.equal(await landing.locator('#services-dropdown a[href="/maintenance.html"]').count(), 4);
     await landing.keyboard.press('Escape');
 
     const landingMobile = await loadPage(
@@ -226,8 +238,91 @@ async function loadPage(browser, path, viewport, errors) {
     assert.ok(landscapeSocialHudClearance >= 16);
     assert.equal(
       await landingMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(),
-      5
+      4
     );
+
+    const landingPage = await loadPage(
+      browser,
+      '/landing-page-wroclaw.html',
+      { width: 1440, height: 900 },
+      errors
+    );
+
+    assert.equal(await landingPage.locator('h1').count(), 1);
+    assert.equal(
+      await landingPage.locator('h1').textContent(),
+      'Landing page,który prowadzi do działania.'
+    );
+    assert.equal(
+      await landingPage.locator('link[rel="canonical"]').getAttribute('href'),
+      'https://domindev.com/landing-page-wroclaw'
+    );
+    assert.equal(await landingPage.locator('link[href*="landing-page.min.css"]').count(), 1);
+    assert.equal(await landingPage.locator('#services-dropdown a[href="/landing-page-wroclaw"]').count(), 1);
+    assert.equal(await landingPage.locator('#services-dropdown a[href="/maintenance.html"]').count(), 4);
+    const landingIconFontLoaded = await landingPage.evaluate(async () => {
+      await document.fonts.ready;
+      return document.fonts.check('900 16px "Font Awesome 6 Free"', '\uf036\uf140\uf201\uf017\uf15c\uf5ae');
+    });
+    assert.equal(landingIconFontLoaded, true);
+    const landingDeliverableIcons = await landingPage.locator('.landing-deliverable i').evaluateAll((icons) =>
+      icons.map((icon) => {
+        const pseudo = getComputedStyle(icon, '::before');
+        return {
+          className: icon.className,
+          content: pseudo.content,
+          width: icon.getBoundingClientRect().width,
+          fontFamily: getComputedStyle(icon).fontFamily,
+        };
+      })
+    );
+    assert.equal(landingDeliverableIcons.length, 5);
+    for (const icon of landingDeliverableIcons) {
+      assert.notEqual(icon.content, 'none');
+      assert.ok(icon.width > 0);
+      assert.match(icon.fontFamily, /Font Awesome 6 Free/);
+    }
+    await landingPage.locator('#services-menu-trigger').click();
+    assert.equal(await landingPage.locator('#services-dropdown').isVisible(), true);
+    await landingPage.locator('#services-menu-trigger').click();
+    await landingPage.locator('a[data-action="prefill"][data-service="landing"]').first().click();
+    await landingPage.locator('#contact-panel').waitFor({ state: 'visible' });
+    assert.equal(await landingPage.locator('#contact-panel').getAttribute('aria-hidden'), 'false');
+    assert.equal(await landingPage.locator('#panel-service').inputValue(), 'landing');
+    assert.equal(await landingPage.locator('#panel-budget').inputValue(), '1500');
+    await landingPage.locator('#contact-close-btn').click();
+
+    const landingPageMobile = await loadPage(
+      browser,
+      '/landing-page-wroclaw.html',
+      { width: 375, height: 667 },
+      errors
+    );
+    await landingPageMobile.locator('#hamburger-menu').click();
+    await landingPageMobile.locator('#mobile-services-open').click();
+    await landingPageMobile.locator('#mobile-services-panel').waitFor({ state: 'visible' });
+    assert.equal(
+      await landingPageMobile.locator('#mobile-services-panel a[href="/landing-page-wroclaw"]').count(),
+      1
+    );
+    assert.equal(await landingPageMobile.locator('#mobile-services-panel a[href="/maintenance.html"]').count(), 4);
+    await landingPageMobile.locator('#hamburger-menu').click();
+    await landingPageMobile.locator('#portfolio').scrollIntoViewIfNeeded();
+    await landingPageMobile.waitForTimeout(300);
+    const mobileCaseResultLayout = await landingPageMobile.locator('.case-result').evaluate((element) => {
+      const result = element.getBoundingClientRect();
+      const copy = element.querySelector('.case-result__copy').getBoundingClientRect();
+      return {
+        pageDoesNotOverflow: document.documentElement.scrollWidth <= window.innerWidth,
+        resultFitsViewport: result.left >= 0 && result.right <= window.innerWidth,
+        copyFitsResult: copy.left >= result.left && copy.right <= result.right,
+      };
+    });
+    assert.deepEqual(mobileCaseResultLayout, {
+      pageDoesNotOverflow: true,
+      resultFitsViewport: true,
+      copyFitsResult: true,
+    });
     assert.deepEqual(errors, []);
 
     console.log('Service navigation browser checks passed.');
