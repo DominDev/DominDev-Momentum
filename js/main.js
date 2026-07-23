@@ -1,12 +1,13 @@
 import { CONFIG } from './config.js';
 import { initMatrix } from './core/matrix.js';
-import { initUI, initCursor } from './core/ui.js';
+import { initUI, initCursor } from './core/ui.js?v=2';
 import { initPortfolio } from './modules/portfolio.js';
 import { initContact } from './modules/contact.js';
 import { initHud } from './modules/hud.js';
 import { initAdaptiveImages } from './modules/adaptive-images.js';
 import { initPrivacyPolicy } from './modules/privacy-policy.js';
 import { initPortfolioExpand } from './modules/portfolio-expand.js';
+import { initServiceNavigation } from './modules/service-navigation.js?v=2';
 
 // Globalne zmienne do kontroli pętli animacji preloadera i cleanup
 let preloaderAnimId = null;
@@ -163,6 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Start heavy operations (Matrix + UI)
       initMatrix();
       initUI();
+      initServiceNavigation();
 
       // Check if we have a hash that needs scrolling
       if (window.location.hash) {
@@ -204,6 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.style.height = '';
     initMatrix();
     initUI();
+    initServiceNavigation();
     initHud();
   }
 
