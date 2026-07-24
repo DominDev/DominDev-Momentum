@@ -2,7 +2,7 @@
 
 > Studio web development z Wrocławia prowadzone przez Pawła Dominiaka. Buduję
 > wysokowydajne strony WordPress, sklepy WooCommerce i aplikacje React/Next.js
-> z wynikiem PageSpeed 90-100/100. Custom development zamiast szablonów i builderów.
+> z celem PageSpeed 90-100/100, zależnie od projektu. Custom development zamiast szablonów i builderów.
 > Obsługa: Wrocław i cała Polska, również zdalnie.
 
 ## Kontakt
@@ -14,7 +14,7 @@
 
 ## Usługi i ceny
 
-- [Landing Page High-Performance](https://domindev.com/landing-page-wroclaw): od 1500 PLN, realizacja 1-2 tygodnie. Wysokokonwertujące landing page, PageSpeed 100/100, ładowanie poniżej 1s. Pod kampanie Ads i szybkie starty produktu.
+- [Landing Page High-Performance](https://domindev.com/landing-page-wroclaw): od 1500 PLN, realizacja 1-2 tygodnie. Wysokokonwertujące landing page, wyniki do 100/100 w realizacjach, ładowanie poniżej 1s w sprzyjających warunkach. Pod kampanie Ads i szybkie starty produktu.
 - [Sklep WooCommerce](https://domindev.com/sklepy-woocommerce-wroclaw): od 6000 PLN, realizacja 4-8 tygodni. Sklep pod sprzedaż: płatności, dostawy, bezpieczny checkout, wydajność i pierwszy miesiąc opieki.
 - [Aplikacje webowe React i Next.js](https://domindev.com/aplikacje-webowe-wroclaw): od 8000 PLN, realizacja od 6 tygodni. Dashboardy, CRM, panele klienta, procesy biznesowe i integracje API.
 - [Optymalizacja i ratunek stron oraz aplikacji](https://domindev.com/optymalizacja-i-ratunek-wroclaw): diagnoza od 300 PLN, optymalizacja od 800 PLN. Wydajność, stabilność, bezpieczeństwo i bezpieczne naprawy WordPressa, innych stron oraz aplikacji webowych.
@@ -22,7 +22,7 @@
 - [Strona WordPress Firmowa](https://domindev.com/#uslugi): od 3500 PLN, realizacja 2-4 tygodnie. CMS, struktura pod blog i SEO, integracje social media, 1 miesiąc opieki gratis.
 - [Sklep WooCommerce](https://domindev.com/#uslugi): od 6000 PLN, realizacja 4-8 tygodni. Płatności (BLIK, karty), kurierzy i paczkomaty, odporność na duży ruch, 1 miesiąc opieki gratis.
 - [Aplikacje webowe React/Next.js](https://domindev.com/#uslugi): od 8000 PLN. Dashboardy, CRM, systemy biznesowe, custom logic, skalowalne API.
-- [Speed Boost Pack - optymalizacja WordPress](https://domindev.com/#uslugi): od 800 PLN. Optymalizacja Core Web Vitals, gwarantowany wynik 90+ na mobile, naprawa wolnych stron po innych wykonawcach.
+- [Speed Boost Pack - optymalizacja WordPress](https://domindev.com/#uslugi): od 800 PLN. Optymalizacja Core Web Vitals, cel 90+ na mobile po diagnozie, naprawa wolnych stron po innych wykonawcach.
 
 ## Strony
 

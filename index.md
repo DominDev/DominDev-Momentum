@@ -2,7 +2,7 @@
 
 DominDev - agresywny web development dla liderów rynku. Wrocław, Polska.
 Fullstack Developer Paweł Dominiak: ultraszybkie strony WordPress, sklepy WooCommerce
-i aplikacje React/Next.js. PageSpeed 90-100/100.
+i aplikacje React/Next.js. Celujemy w PageSpeed 90-100/100, zależnie od projektu.
 
 Kontakt: contact@domindev.com | +48 536 553 820 | https://domindev.com
 Godziny pracy: poniedziałek - piątek, 09:00-18:00. Obszar: Wrocław i cała Polska.
@@ -45,7 +45,7 @@ Od strategii do wdrożenia, w pięciu krokach:
 
 ### Landing Page High-Performance - od 1500 PLN
 
-Wysokokonwertujące landing page z PageSpeed 100/100, szybkość ładowania poniżej 1s.
+Wysokokonwertujące landing page z wynikami do 100/100 w realizacjach, szybkość ładowania poniżej 1s w sprzyjających warunkach.
 Copywriting sprzedażowy, nastawienie na konwersję. Idealny do kampanii Ads i szybkich
 startów produktu. Realizacja: 1-2 tygodnie.
 
@@ -68,7 +68,7 @@ skalowalne API. Dedykowane oprogramowanie dla wymagających procesów.
 
 ### Speed Boost Pack - optymalizacja WordPress - od 800 PLN
 
-Optymalizacja Core Web Vitals, gwarantowany wynik 90+ na mobile. Strona działa wolno?
+Optymalizacja Core Web Vitals, cel 90+ na mobile po diagnozie. Strona działa wolno?
 Wirusy? Błędy? Zdiagnozuję i naprawię problem.
 
 ### Integracje API i automatyzacje - od 400 PLN
@@ -88,8 +88,8 @@ Szczegóły: https://domindev.com/integracje-api-wroclaw
 
 Bo nie sprzedaję "klikanych" stron, tylko inżynierię. Strony z builderów są wolne,
 ciężkie i psują się przy każdej aktualizacji WordPress. U mnie dostajesz czysty kod,
-pełną kontrolę i performance, który przebija 95% internetu. PageSpeed 90-100/100
-gwarantowany.
+pełną kontrolę i performance, który przebija 95% internetu. Celujemy w PageSpeed
+90-100/100, gdy warunki projektu na to pozwalają.
 
 ### Czy możesz naprawić stronę po innym wykonawcy?
 
