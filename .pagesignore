@@ -1,0 +1,12 @@
+.git/
+.gitnexus/
+.codex/
+.claude/
+.gemini/
+.obsidian-memory/
+.codex-remote-attachments/
+node_modules/
+.wrangler/
+_project_snapshots/
+tests/
+_scripts/
