@@ -137,6 +137,7 @@ async function serveMarkdown({ request, env }) {
       // Same URL serves HTML or markdown depending on Accept - caches must split.
       Vary: "Accept",
       "Cache-Control": "public, max-age=3600, must-revalidate",
+      "X-Robots-Tag": "noindex",
       Link: `<${url.origin}${url.pathname}>; rel="canonical"`,
     },
   });
