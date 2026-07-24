@@ -259,6 +259,8 @@ export function initUI() {
   const cursorSpan = document.querySelector(".typewriter-cursor");
 
   if (typeTextSpan) {
+    // Keep a meaningful no-JS fallback in the static H1, then let the typewriter take over.
+    typeTextSpan.textContent = "";
     const words = ["BROŃ.", "PRZEWAGA.", "DOMINACJA.", "MASZYNA."];
     const typingDelay = 150;
     const erasingDelay = 80;
