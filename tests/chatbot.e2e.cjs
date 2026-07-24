@@ -136,6 +136,36 @@ async function askChatbot(page, question) {
     const rodoQuestion = await askChatbot(desktop, 'RODO');
     assert.match(rodoQuestion, /RODO|GDPR/);
 
+    const analyticsQuestion = await askChatbot(desktop, 'czy pomagasz z analityką i GA4');
+    assert.match(analyticsQuestion, /analityk|GA4|konwersj/i);
+
+    const wcagQuestion = await askChatbot(desktop, 'WCAG');
+    assert.match(wcagQuestion, /dostępnoś|klawiatur|kontrast/i);
+
+    const migrationQuestion = await askChatbot(desktop, 'czy zrobisz migrację strony');
+    assert.match(migrationQuestion, /migracj|DNS|hostingu/i);
+
+    const deploymentQuestion = await askChatbot(desktop, 'czy wdrażasz na Cloudflare Pages');
+    assert.match(deploymentQuestion, /wdroż|Cloudflare|DNS/i);
+
+    const testingQuestion = await askChatbot(desktop, 'czy testujesz stronę na mobile');
+    assert.match(testingQuestion, /test|mobile|przeglądar/i);
+
+    const authQuestion = await askChatbot(desktop, 'czy aplikacja może mieć logowanie');
+    assert.match(authQuestion, /logowan|użytkownik|uprawnie/i);
+
+    const privacyQuestion = await askChatbot(desktop, 'jak obsłużyć cookies');
+    assert.match(privacyQuestion, /cookies|zgod|RODO|prywatno/i);
+
+    const sillyQuestion = await askChatbot(desktop, 'czy jesteś botem');
+    assert.match(sillyQuestion, /bot|DominDev|rakiet|kaw|piksele|rachunki|bugi|developer|żart/i);
+
+    // Krótkie dopytanie zachowuje kontekst poprzedniej usługi.
+    const landingContextQuestion = await askChatbot(desktop, 'landing');
+    assert.match(landingContextQuestion, /landing|1500/i);
+    const contextualLandingPrice = await askChatbot(desktop, 'a ile?');
+    assert.match(contextualLandingPrice, /1500/);
+
     const botCountBeforeBurst = await desktop.locator('#chatbot-messages .chat-message.bot').count();
     await desktop.locator('#chatbot-input').fill('cennik');
     await desktop.locator('#chatbot-send').click();

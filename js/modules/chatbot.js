@@ -541,11 +541,22 @@ export function initChat() {
     }
 
     const priceRequested = scores.has("price");
+    const timeRequested = scores.has("deadline");
+    const previousServiceIntent = serviceIntents.has(lastIntent) ? lastIntent : null;
+    const contextualServiceRequest = Boolean(previousServiceIntent && (priceRequested || timeRequested));
+    if (contextualServiceRequest) {
+      // Krótkie dopytania typu „a ile?” albo „jak szybko?” zachowują
+      // kontekst poprzedniej usługi zamiast wracać do ogólnego cennika.
+      scores.set(
+        previousServiceIntent,
+        (scores.get(previousServiceIntent) || 0) + 12
+      );
+    }
     const rankedServices = [...scores.entries()]
       .filter(([candidate]) => serviceIntents.has(candidate))
       .sort((a, b) => b[1] - a[1]);
     const rankedIntents = [...scores.entries()].sort((a, b) => b[1] - a[1]);
-    const intent = priceRequested && rankedServices.length
+    const intent = (priceRequested || contextualServiceRequest) && rankedServices.length
       ? rankedServices[0][0]
       : rankedIntents[0]?.[0] || (glossaryMatch ? glossaryMatch.original : "unknown");
     lastIntent = botData.responses[intent] ? intent : "unknown";
