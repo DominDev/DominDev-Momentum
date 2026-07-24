@@ -128,7 +128,7 @@ Przestań walczyć z technologią. Niech ona walczy dla Ciebie.
 
 - E-mail: contact@domindev.com
 - Telefon: +48 536 553 820
-- Formularz kontaktowy: https://domindev.com/#kontakt
+- Formularz kontaktowy: https://domindev.com/#contact
 - LinkedIn, GitHub, Instagram: linki w stopce https://domindev.com
 
 ## Zasady wykorzystania treści
