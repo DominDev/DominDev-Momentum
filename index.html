@@ -313,21 +313,6 @@
       crossorigin
     />
 
-    <!-- Preload LCP image (Portfolio TechGear - actual LCP per Lighthouse) -->
-    <link
-      rel="preload"
-      as="image"
-      type="image/avif"
-      href="assets/images/portfolio/portfolio-techgear-thumb-800.avif"
-      imagesrcset="
-                    assets/images/portfolio/portfolio-techgear-thumb-400.avif   400w,
-                    assets/images/portfolio/portfolio-techgear-thumb-800.avif   800w,
-                    assets/images/portfolio/portfolio-techgear-thumb-1200.avif 1200w
-                  "
-      imagesizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
-      fetchpriority="high"
-    />
-
     <!-- ========================================
          CRITICAL FIX: Preload JavaScript Modules
          Reduces JS chain from 472ms to ~280ms
@@ -335,17 +320,17 @@
          ======================================== -->
 
     <!-- Core entry point -->
-    <link rel="modulepreload" href="js/main.js?v=6" />
+    <link rel="modulepreload" href="js/main.js?v=7" />
     <link rel="modulepreload" href="js/config.js" />
 
     <!-- Core modules (needed immediately) -->
-    <link rel="modulepreload" href="js/core/matrix.js" />
-    <link rel="modulepreload" href="js/core/ui.js?v=2" />
+    <link rel="modulepreload" href="js/core/matrix.js?v=2" />
+    <link rel="modulepreload" href="js/core/ui.js?v=3" />
 
     <!-- Feature modules (needed for DOMContentLoaded) -->
-    <link rel="modulepreload" href="js/modules/adaptive-images.js" />
-    <link rel="modulepreload" href="js/modules/portfolio.js" />
-    <link rel="modulepreload" href="js/modules/contact.js" />
+    <link rel="modulepreload" href="js/modules/adaptive-images.js?v=2" />
+    <link rel="modulepreload" href="js/modules/portfolio.js?v=2" />
+    <link rel="modulepreload" href="js/modules/contact.js?v=3" />
     <link rel="modulepreload" href="js/modules/hud.js" />
 
     <!-- ========================================
@@ -834,7 +819,7 @@
                   "
                   sizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 500px"
                   alt="DominDev Coding Setup - WordPress Development Environment"
-                  loading="eager"
+                  loading="lazy"
                   decoding="async"
                   width="500"
                   height="400"
@@ -863,7 +848,7 @@
                     assets/images/portfolio/portfolio-kraft-thumb-800.avif   800w,
                     assets/images/portfolio/portfolio-kraft-thumb-1200.avif 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                 />
                 <source
                   type="image/webp"
@@ -872,7 +857,7 @@
                     assets/images/portfolio/portfolio-kraft-thumb-800.webp   800w,
                     assets/images/portfolio/portfolio-kraft-thumb-1200.webp 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                 />
                 <img
                   src="assets/images/portfolio/portfolio-kraft-thumb-800.jpg"
@@ -881,7 +866,7 @@
                     assets/images/portfolio/portfolio-kraft-thumb-800.jpg   800w,
                     assets/images/portfolio/portfolio-kraft-thumb-1200.jpg 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                   alt="Kraft Daily Pub - WordPress Project"
                   loading="lazy"
                   decoding="async"
@@ -904,7 +889,7 @@
                     assets/images/portfolio/portfolio-neon-thumb-800.avif   800w,
                     assets/images/portfolio/portfolio-neon-thumb-1200.avif 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                 />
                 <source
                   type="image/webp"
@@ -913,7 +898,7 @@
                     assets/images/portfolio/portfolio-neon-thumb-800.webp   800w,
                     assets/images/portfolio/portfolio-neon-thumb-1200.webp 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                 />
                 <img
                   src="assets/images/portfolio/portfolio-neon-thumb-800.jpg"
@@ -922,7 +907,7 @@
                     assets/images/portfolio/portfolio-neon-thumb-800.jpg   800w,
                     assets/images/portfolio/portfolio-neon-thumb-1200.jpg 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                   alt="Neon Estate - Real Estate Project"
                   loading="lazy"
                   decoding="async"
@@ -945,7 +930,7 @@
                     assets/images/portfolio/portfolio-techgear-thumb-800.avif   800w,
                     assets/images/portfolio/portfolio-techgear-thumb-1200.avif 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                 />
                 <source
                   type="image/webp"
@@ -954,7 +939,7 @@
                     assets/images/portfolio/portfolio-techgear-thumb-800.webp   800w,
                     assets/images/portfolio/portfolio-techgear-thumb-1200.webp 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                 />
                 <img
                   src="assets/images/portfolio/portfolio-techgear-thumb-800.jpg"
@@ -963,10 +948,9 @@
                     assets/images/portfolio/portfolio-techgear-thumb-800.jpg   800w,
                     assets/images/portfolio/portfolio-techgear-thumb-1200.jpg 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                   alt="TechGear Store - E-Commerce Project"
-                  loading="eager"
-                  fetchpriority="high"
+                  loading="lazy"
                   decoding="async"
                   width="600"
                   height="450"
@@ -1004,7 +988,7 @@
                     assets/images/portfolio/portfolio-boxing-thumb-800.avif   800w,
                     assets/images/portfolio/portfolio-boxing-thumb-1200.avif 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                 />
                 <source
                   type="image/webp"
@@ -1013,7 +997,7 @@
                     assets/images/portfolio/portfolio-boxing-thumb-800.webp   800w,
                     assets/images/portfolio/portfolio-boxing-thumb-1200.webp 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                 />
                 <img
                   src="assets/images/portfolio/portfolio-boxing-thumb-800.jpg"
@@ -1022,7 +1006,7 @@
                     assets/images/portfolio/portfolio-boxing-thumb-800.jpg   800w,
                     assets/images/portfolio/portfolio-boxing-thumb-1200.jpg 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                   alt="OG Boxing Coach - Landing Page for Professional Boxing Trainer"
                   loading="lazy"
                   decoding="async"
@@ -1045,7 +1029,7 @@
                     assets/images/portfolio/portfolio-roofs-thumb-800.avif   800w,
                     assets/images/portfolio/portfolio-roofs-thumb-1200.avif 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                 />
                 <source
                   type="image/webp"
@@ -1054,7 +1038,7 @@
                     assets/images/portfolio/portfolio-roofs-thumb-800.webp   800w,
                     assets/images/portfolio/portfolio-roofs-thumb-1200.webp 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                 />
                 <img
                   src="assets/images/portfolio/portfolio-roofs-thumb-800.jpg"
@@ -1063,7 +1047,7 @@
                     assets/images/portfolio/portfolio-roofs-thumb-800.jpg   800w,
                     assets/images/portfolio/portfolio-roofs-thumb-1200.jpg 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                   alt="Precision Roofing - Multilingual Contractor Website"
                   loading="lazy"
                   decoding="async"
@@ -1086,7 +1070,7 @@
                     assets/images/portfolio/portfolio-trainer-thumb-800.avif   800w,
                     assets/images/portfolio/portfolio-trainer-thumb-1200.avif 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                 />
                 <source
                   type="image/webp"
@@ -1095,7 +1079,7 @@
                     assets/images/portfolio/portfolio-trainer-thumb-800.webp   800w,
                     assets/images/portfolio/portfolio-trainer-thumb-1200.webp 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                 />
                 <img
                   src="assets/images/portfolio/portfolio-trainer-thumb-800.jpg"
@@ -1104,7 +1088,7 @@
                     assets/images/portfolio/portfolio-trainer-thumb-800.jpg   800w,
                     assets/images/portfolio/portfolio-trainer-thumb-1200.jpg 1200w
                   "
-                  sizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
                   alt="KICKBOXING TRENER - Kickboxing & MMA Trainer Landing Page"
                   loading="lazy"
                   decoding="async"
@@ -1950,7 +1934,7 @@
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-outline" id="cursor-outline"></div>
 
-    <script type="module" src="js/main.js?v=6"></script>
+    <script type="module" src="js/main.js?v=7"></script>
 
     <!-- Cloudflare Web Analytics -->
     <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ad2f7432f7c3448d9f18f3a1fc714ff2"}'></script>

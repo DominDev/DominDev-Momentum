@@ -256,21 +256,6 @@
       crossorigin
     />
 
-    <!-- Preload LCP image (Portfolio TechGear - actual LCP per Lighthouse) -->
-    <link
-      rel="preload"
-      as="image"
-      type="image/avif"
-      href="assets/images/portfolio/portfolio-techgear-thumb-800.avif"
-      imagesrcset="
-                    assets/images/portfolio/portfolio-techgear-thumb-400.avif   400w,
-                    assets/images/portfolio/portfolio-techgear-thumb-800.avif   800w,
-                    assets/images/portfolio/portfolio-techgear-thumb-1200.avif 1200w
-                  "
-      imagesizes="(max-width: 480px) 95vw, (max-width: 768px) 90vw, (max-width: 1200px) 45vw, 600px"
-      fetchpriority="high"
-    />
-
     <!-- ========================================
          CRITICAL FIX: Preload JavaScript Modules
          Reduces JS chain from 472ms to ~280ms
@@ -278,17 +263,17 @@
          ======================================== -->
 
     <!-- Core entry point -->
-    <link rel="modulepreload" href="js/main.js?v=6" />
+    <link rel="modulepreload" href="js/main.js?v=7" />
     <link rel="modulepreload" href="js/config.js" />
 
     <!-- Core modules (needed immediately) -->
-    <link rel="modulepreload" href="js/core/matrix.js" />
-    <link rel="modulepreload" href="js/core/ui.js?v=2" />
+    <link rel="modulepreload" href="js/core/matrix.js?v=2" />
+    <link rel="modulepreload" href="js/core/ui.js?v=3" />
 
     <!-- Feature modules (needed for DOMContentLoaded) -->
-    <link rel="modulepreload" href="js/modules/adaptive-images.js" />
-    <link rel="modulepreload" href="js/modules/portfolio.js" />
-    <link rel="modulepreload" href="js/modules/contact.js" />
+    <link rel="modulepreload" href="js/modules/adaptive-images.js?v=2" />
+    <link rel="modulepreload" href="js/modules/portfolio.js?v=2" />
+    <link rel="modulepreload" href="js/modules/contact.js?v=3" />
     <link rel="modulepreload" href="js/modules/hud.js" />
 
     <!-- ========================================
@@ -753,7 +738,7 @@
                   "
                   sizes="(max-width: 768px) 95vw, (max-width: 1200px) 50vw, 500px"
                   alt="Edytor kodu z otwartym plikiem PHP - autorski motyw WordPress zamiast buildera"
-                  loading="eager"
+                  loading="lazy"
                   decoding="async"
                   width="500"
                   height="400"
@@ -1547,7 +1532,7 @@
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-outline" id="cursor-outline"></div>
 
-    <script type="module" src="js/main.js?v=6"></script>
+    <script type="module" src="js/main.js?v=7"></script>
 
     <!-- Cloudflare Web Analytics -->
     <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ad2f7432f7c3448d9f18f3a1fc714ff2"}'></script>
