@@ -1,97 +1,40 @@
 # DominDev Robots.txt - High Performance Web Development
 # WordPress Developer Wrocław
+# Public discovery, search and real-time AI answers are welcome. Training is not.
+# /llms.txt describes the offer; /index.md is the noindex Markdown alternate.
+# Private/application paths stay outside every crawler's public surface.
 
-# AI policy: retrieval/search allowed (AI assistants may read and cite this site),
-# training on our content is not permitted.
-Content-Signal: search=yes, ai-input=yes, ai-train=no
-
-User-agent: *
-Allow: /
-
-# Sitemap Location
 Sitemap: https://domindev.com/sitemap.xml
 
-# For AI agents: site summary at /llms.txt, markdown version of the homepage
-# at /index.md (also served at / with request header Accept: text/markdown)
-
-# Allow crawling of assets
-Allow: /assets/
-Allow: /js/
-Allow: /css/
-
-# Brief page (private, token-gated)
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no, use=reference
 Disallow: /brief
 Disallow: /brief/
-
-# Maintenance page (served with 503 by middleware; direct hits are noindex)
+Disallow: /api/
+Disallow: /cdn-cgi/
 Disallow: /maintenance.html
-
-# Disallow project snapshots (internal use only)
 Disallow: /_project_snapshots/
 Disallow: /_docs/
 Disallow: /_scripts/
-
-# Disallow config files
 Disallow: /package.json
+Disallow: /package-lock.json
 Disallow: /.gitignore
-
-# Allow all bots to index main content
-User-agent: Googlebot
+Disallow: /wrangler.toml
+Disallow: /README.md
 Allow: /
 
-User-agent: Bingbot
-Allow: /
-
-User-agent: Slurp
-Allow: /
-
-# AI retrieval/search bots - explicitly welcome (answer engines, citations)
-User-agent: OAI-SearchBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Perplexity-User
-Allow: /
-
-User-agent: Claude-User
-Allow: /
-
-User-agent: Claude-SearchBot
-Allow: /
-
-# AI training-only crawlers - blocked (no retrieval value, dataset scraping only)
+# Training-oriented crawlers are blocked. Search/retrieval crawlers such as
+# OAI-SearchBot, Claude-SearchBot, PerplexityBot and Applebot follow the public
+# wildcard group above, including all private-path exclusions.
 User-agent: GPTBot
-Disallow: /
-
 User-agent: ClaudeBot
-Disallow: /
-
 User-agent: CCBot
-Disallow: /
-
 User-agent: Bytespider
-Disallow: /
-
-User-agent: meta-externalagent
-Disallow: /
-
 User-agent: Applebot-Extended
 Disallow: /
 
-User-agent: Google-Extended
-Disallow: /
-
-# Bad bots
+# Third-party SEO dataset crawlers are unnecessary for public discovery.
 User-agent: AhrefsBot
-Crawl-delay: 10
-
 User-agent: SemrushBot
-Crawl-delay: 10
-
 User-agent: DotBot
-Crawl-delay: 10
+Disallow: /
