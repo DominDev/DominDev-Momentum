@@ -13,6 +13,15 @@ import { motionSafeScrollBehavior, prefersReducedMotion } from './utils/motion.j
 // Globalne zmienne do kontroli pętli animacji preloadera i cleanup
 let preloaderAnimId = null;
 let preloaderResizeCleanup = null;
+const PRELOADER_SESSION_KEY = 'domindev:preloader-seen:v1';
+
+function rememberPreloaderVisit() {
+  try {
+    sessionStorage.setItem(PRELOADER_SESSION_KEY, '1');
+  } catch {
+    // Storage can be unavailable in hardened/private contexts. The page still works.
+  }
+}
 
 // === LEKKI PRELOADER MATRIX (CPU OPTIMIZED) ===
 function initPreloaderMatrix() {
@@ -114,6 +123,12 @@ function initPreloaderMatrix() {
 
 document.addEventListener("DOMContentLoaded", () => {
   const reducedMotion = prefersReducedMotion();
+  const preloader = document.getElementById("preloader");
+  const shouldShowPreloader = Boolean(
+    CONFIG.enablePreloader
+    && preloader
+    && !document.documentElement.classList.contains('preloader-skip')
+  );
 
   // === CORE INITIALIZATION ===
   initCursor();
@@ -142,7 +157,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Start preloader Matrix if enabled
-  if (CONFIG.enablePreloader) {
+  if (shouldShowPreloader) {
+    rememberPreloaderVisit();
     initPreloaderMatrix();
   }
 
@@ -158,10 +174,42 @@ document.addEventListener("DOMContentLoaded", () => {
   initAdaptiveImages();
 
   // === PRELOADER LOGIC (Optimized) ===
-  const preloader = document.getElementById("preloader");
+  let primaryUiStarted = false;
+
+  const startPrimaryUI = (hudDelay = 0) => {
+    if (primaryUiStarted) return;
+    primaryUiStarted = true;
+
+    initMatrix();
+    initUI();
+    initServiceNavigation();
+
+    // Check if we have a hash that needs scrolling
+    if (window.location.hash) {
+      const targetId = window.location.hash.substring(1);
+      const target = document.getElementById(targetId);
+      if (target) {
+        // Pre-activate reveal animations before jumping to a deep section.
+        const allReveals = document.querySelectorAll('.reveal:not(.active)');
+        allReveals.forEach(el => el.classList.add('active'));
+        document.body.offsetHeight;
+
+        setTimeout(() => {
+          const rect = target.getBoundingClientRect();
+          const offset = window.pageYOffset + rect.top - 80;
+          window.scrollTo({ top: offset, behavior: motionSafeScrollBehavior() });
+        }, 100);
+      }
+    }
+
+    setTimeout(initHud, hudDelay);
+  };
 
   const killPreloader = () => {
-    if (!preloader) return;
+    if (!preloader) {
+      startPrimaryUI();
+      return;
+    }
     if (preloader.classList.contains("hiding")) return;
 
     preloader.classList.add("hiding");
@@ -186,37 +234,13 @@ document.addEventListener("DOMContentLoaded", () => {
         preloaderResizeCleanup = null;
       }
 
-      // Start heavy operations (Matrix + UI)
-      initMatrix();
-      initUI();
-      initServiceNavigation();
-
-      // Check if we have a hash that needs scrolling
-      if (window.location.hash) {
-        const targetId = window.location.hash.substring(1);
-        const target = document.getElementById(targetId);
-        if (target) {
-          // CRITICAL FIX: Pre-activate ALL reveal animations BEFORE scroll
-          const allReveals = document.querySelectorAll('.reveal:not(.active)');
-          allReveals.forEach(el => el.classList.add('active'));
-          document.body.offsetHeight; // Force layout recalculation
-
-          setTimeout(() => {
-            const rect = target.getBoundingClientRect();
-            const offset = window.pageYOffset + rect.top - 80; // navbar height
-            window.scrollTo({ top: offset, behavior: motionSafeScrollBehavior() });
-          }, 100);
-        }
-      }
-
-      // Delayed HUD initialization to avoid blocking animations
-      setTimeout(initHud, 200);
+      startPrimaryUI(200);
     }, reducedMotion ? 0 : 550);
   };
 
   // Strategy: Hide preloader ~700ms after DOMContentLoaded
   // Don't wait for all images/fonts - Content First!
-  if (CONFIG.enablePreloader && preloader) {
+  if (shouldShowPreloader) {
     if (reducedMotion) {
       setTimeout(killPreloader, 0);
     } else if (document.readyState === 'complete') {
@@ -227,14 +251,11 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(killPreloader, 700);
     }
   } else {
-    // No preloader mode
+    // Returning/internal visit: no boot-screen flash and no artificial delay.
     if (preloader) preloader.style.display = "none";
     document.body.style.overflow = '';
     document.body.style.height = '';
-    initMatrix();
-    initUI();
-    initServiceNavigation();
-    initHud();
+    startPrimaryUI();
   }
 
   // === GLOBAL EVENT DELEGATION (Replace inline onclick) ===
