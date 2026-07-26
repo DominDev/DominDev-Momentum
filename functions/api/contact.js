@@ -91,7 +91,12 @@ export async function onRequestPost(context) {
       if (env.LEADS_KV) {
         const fallbackId = await saveLeadToKV(env, { name, email, message, budget, service }, new Error(leadResult.error));
         console.log("Lead saved to KV fallback:", fallbackId);
-        return jsonError("SERVER_ERROR", "Tymczasowy problem z wysyłką. Twoja wiadomość została zapisana.", 502);
+        return jsonError(
+          "DELIVERY_QUEUED",
+          "Wiadomość została bezpiecznie zapisana. Odpowiem po ręcznej weryfikacji.",
+          502,
+          { leadSaved: true }
+        );
       }
       return jsonError("SERVER_ERROR", "Błąd wysyłki powiadomienia.", 502);
     }

@@ -399,13 +399,33 @@ export function initContact() {
           throw new Error("Unknown mail provider");
         }
 
-        if (response.ok) {
-          btn.innerText = "POTWIERDZONO.";
+        const responseData = await response.json().catch(() => ({}));
+        const accepted = response.ok && responseData.ok !== false;
+        const queuedSafely = !response.ok && responseData.leadSaved === true;
+
+        if (accepted || queuedSafely) {
+          let confirmation = "Wiadomość dotarła. Potwierdzenie jest w drodze; odpowiem na podany adres w ciągu 24h.";
+          let closeDelay = 2800;
+
+          if (queuedSafely) {
+            confirmation = "Wiadomość została bezpiecznie zapisana. Odpowiem po ręcznej weryfikacji — nie musisz wysyłać jej ponownie.";
+            closeDelay = 4500;
+          } else if (responseData.briefEmailDelivery === "failed") {
+            confirmation = "Wiadomość dotarła. Automatyczny link do briefu może się opóźnić — wyślę go ręcznie na podany adres.";
+            closeDelay = 4200;
+          } else if (responseData.autoEmailDelivery === "failed") {
+            confirmation = "Wiadomość dotarła. Potwierdzenie e-mail może się opóźnić, ale odpowiem na podany adres.";
+            closeDelay = 3800;
+          } else if (responseData.mailType === "brief-link") {
+            confirmation = "Wiadomość dotarła. Link do briefu wysłałem na Twój e-mail — sprawdź też folder spam.";
+          }
+
+          btn.innerText = queuedSafely ? "ZAPISANO." : "POTWIERDZONO.";
           btn.classList.add("success");
           btn.style.opacity = "1";
 
           if (msgDiv) {
-            msgDiv.innerText = "Sygnał odebrany. Potwierdzam status.\nOczekuj zaszyfrowanej transmisji (e-maila) w ciągu 24h.";
+            msgDiv.innerText = confirmation;
             msgDiv.style.color = "#4ade80";
           }
 
@@ -418,10 +438,13 @@ export function initContact() {
               btn.style = "";
               if (msgDiv) msgDiv.innerText = "";
               form.reset();
+              if (window.turnstile?.reset) window.turnstile.reset();
             }, 500);
-          }, 2000);
+          }, closeDelay);
         } else {
-          throw new Error("Błąd transmisji danych.");
+          const error = new Error(responseData.message || "Nie udało się wysłać wiadomości.");
+          error.userMessage = responseData.message;
+          throw error;
         }
       } catch (error) {
         console.error(error);
@@ -433,7 +456,7 @@ export function initContact() {
         btn.style.background = "transparent";
 
         if (msgDiv) {
-          msgDiv.innerText = "Błąd połączenia. Spróbuj ponownie lub napisz bezpośrednio: ";
+          msgDiv.innerText = `${error.userMessage || "Błąd połączenia. Spróbuj ponownie"} lub napisz bezpośrednio: `;
           msgDiv.style.color = "#ff1f1f";
           
           const mailLink = document.createElement("a");
@@ -442,6 +465,8 @@ export function initContact() {
           mailLink.textContent = "contact@domindev.com";
           msgDiv.appendChild(mailLink);
         }
+
+        if (window.turnstile?.reset) window.turnstile.reset();
 
         setTimeout(() => {
           btn.innerText = originalText;

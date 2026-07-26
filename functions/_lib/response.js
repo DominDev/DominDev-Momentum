@@ -19,11 +19,12 @@ export function jsonOk(data, status = 200) {
  * @param {string} errorCode - Machine-readable error code
  * @param {string} message - Human-readable message (PL)
  * @param {number} status - HTTP status code
+ * @param {Object} [details] - Optional safe, machine-readable response details
  * @returns {Response}
  */
-export function jsonError(errorCode, message, status) {
+export function jsonError(errorCode, message, status, details = {}) {
   return new Response(
-    JSON.stringify({ ok: false, errorCode, message }),
+    JSON.stringify({ ok: false, errorCode, message, ...details }),
     { status, headers: responseHeaders() }
   );
 }
