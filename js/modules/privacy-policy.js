@@ -36,7 +36,7 @@ export function initPrivacyPolicy() {
       textContent: 'Ładuję politykę prywatności…',
     }));
 
-    contentPromise = import('./privacy-policy-content.js')
+    contentPromise = import('./privacy-policy-content.js?v=2')
       .then(({ PRIVACY_POLICY_HTML }) => {
         content.innerHTML = PRIVACY_POLICY_HTML;
         setupAccordions();
