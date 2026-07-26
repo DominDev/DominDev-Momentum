@@ -26,7 +26,8 @@ const projectsDB = {
       "Projekt badawczy interfejsu dla luksusowych nieruchomości. Celem było połączenie 'ciężkich' wizualnie zdjęć 4K z błyskawicznym czasem ładowania, nieosiągalnym dla standardowych stron.",
     solution:
       "Wykorzystano architekturę JAMstack (Next.js) z WordPressem jako backendem (Headless). Zastosowano format AVIF i pre-loading kluczowych zasobów.",
-    result: "⚡ Czas ładowania < 0.5s przy zdjęciach 4K.",
+    result:
+      "⚡ Założenie projektowe: kluczowy widok gotowy do działania w mniej niż 0,5 s — mimo fotografii 4K.",
   },
   techgear: {
     title: "TechGear Store",
@@ -37,7 +38,8 @@ const projectsDB = {
       "Symulacja architektury sklepu z elektroniką odpornego na duży ruch (np. Black Friday). Skupienie na optymalizacji ścieżki zakupowej (Checkout) i bezpieczeństwie.",
     solution:
       "Zoptymalizowany koszyk zakupowy, wdrożenie Redis Object Cache oraz zabezpieczeń anty-DDoS na poziomie aplikacji (Cloudflare Rules).",
-    result: "🛡️ Pełna odporność na skoki ruchu i 100/100 Security Score.",
+    result:
+      "🛡️ Cel architektury: stabilna ścieżka zakupowa także podczas gwałtownych skoków ruchu.",
   },
   boxing: {
     title: "OG Boxing Coach",
@@ -59,7 +61,8 @@ const projectsDB = {
       "Firma dekarsko-budowlana działająca w trzech krajach potrzebowała wielojęzycznej strony, która wyróżni się na tle konkurencji techniczną estetyką i zdobędzie klientów z Google.",
     solution:
       "Autorski design inspirowany rysunkami CAD z dynamicznym przełączaniem 3 języków bez przeładowania strony. Schema.org RoofingContractor + geo-meta tagi dla lokalnego SEO.",
-    result: "📐 Top 3 w Google na frazy lokalne w 3 miesiące.",
+    result:
+      "📐 Cel SEO: widoczność w TOP 3 na najważniejsze lokalne frazy usługowe.",
   },
   trainer: {
     title: "KICKBOXING TRENER",
@@ -70,7 +73,8 @@ const projectsDB = {
       "Trener kickboxingu i MMA potrzebował agresywnej, ciemnej strony z jednym celem: maksymalna liczba kontaktów telefonicznych i wiadomości WhatsApp od potencjalnych podopiecznych.",
     solution:
       "Ciemny motyw z akcentami acid lime, bento-grid dla oferty usług, floating WhatsApp button i sticky CTA. Animacje scroll-reveal z respektem dla prefers-reduced-motion.",
-    result: "💪 Średnio 12 nowych zapytań tygodniowo przez WhatsApp.",
+    result:
+      "💪 Cel konwersji: regularne zapytania przez WhatsApp dzięki maksymalnie krótkiej ścieżce kontaktu.",
   },
 };
 
