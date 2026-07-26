@@ -2,8 +2,9 @@
 // Brief wizard logic: Preloader, Matrix, fetch meta, step navigation, autosave, submit
 // Force rebuild for validation spacing fix
 
-import { initMatrix } from '../core/matrix.js';
-import { initCursor, initScrollbar } from '../core/ui.js';
+import { initMatrix } from '../core/matrix.js?v=2';
+import { initCursor, initScrollbar } from '../core/ui.js?v=3';
+import { motionSafeScrollBehavior, prefersReducedMotion } from '../utils/motion.js?v=1';
 
 const ALL_FIELDS = [
   "businessGoal", "audience", "projectType", "sections", "content",
@@ -57,6 +58,8 @@ function initPreloaderMatrix() {
   const canvas = document.getElementById("preloader-matrix");
   if (!canvas) return;
 
+  canvas.setAttribute('aria-hidden', 'true');
+
   const ctx = canvas.getContext("2d");
   let width = (canvas.width = window.innerWidth);
   let height = (canvas.height = window.innerHeight);
@@ -69,6 +72,26 @@ function initPreloaderMatrix() {
   let frameCount = 0;
   const fastLoadFrames = 60;
   const fastFPS = 30;
+
+  if (prefersReducedMotion()) {
+    ctx.fillStyle = "#050505";
+    ctx.fillRect(0, 0, width, height);
+    ctx.font = "15pt monospace";
+    const chars = "01DOMINDEVBRIEF";
+    for (let row = 1; row <= Math.ceil(height / 20); row++) {
+      for (let column = 0; column < Math.ceil(width / 20); column++) {
+        if ((row * 11 + column * 7) % 6 !== 0) continue;
+        ctx.fillStyle = (row + column) % 31 === 0
+          ? "rgba(255, 31, 31, 0.3)"
+          : "rgba(255, 255, 255, 0.08)";
+        ctx.fillText(chars[(row + column * 3) % chars.length], column * 20, row * 20);
+      }
+    }
+    canvas.dataset.motionState = 'static';
+    return;
+  }
+
+  canvas.dataset.motionState = 'animated';
 
   const resizeHandler = () => {
     width = canvas.width = window.innerWidth;
@@ -142,7 +165,11 @@ const killPreloader = () => {
     initMatrix();
     initCursor();
     
-  }, 550);
+  }, prefersReducedMotion() ? 0 : 550);
+};
+
+const scheduleKillPreloader = (delay) => {
+  setTimeout(killPreloader, prefersReducedMotion() ? 0 : delay);
 };
 
 function setSubmitEnabled(isEnabled) {
@@ -281,7 +308,7 @@ async function initBriefApp() {
     setupRetry();
     setupHints();
     
-    setTimeout(killPreloader, 500);
+    scheduleKillPreloader(500);
     return;
   }
 
@@ -290,7 +317,7 @@ async function initBriefApp() {
 
   if (!briefToken || !briefSig) {
     showState("expired");
-    setTimeout(killPreloader, 500);
+    scheduleKillPreloader(500);
     return;
   }
 
@@ -307,7 +334,7 @@ async function initBriefApp() {
       } else {
         showState("expired");
       }
-      setTimeout(killPreloader, 500);
+      scheduleKillPreloader(500);
       return;
     }
 
@@ -317,12 +344,12 @@ async function initBriefApp() {
     restoreDraft();
     showState("form");
     
-    setTimeout(killPreloader, 800);
+    scheduleKillPreloader(800);
 
   } catch (err) {
     console.error("Failed to load brief:", err);
     showState("expired");
-    setTimeout(killPreloader, 500);
+    scheduleKillPreloader(500);
   }
 
   setupStepNavigation();
@@ -416,7 +443,7 @@ function goToStep(step) {
   }
   
   const container = document.querySelector('.brief-container');
-  if(container) container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if(container) container.scrollIntoView({ behavior: motionSafeScrollBehavior(), block: 'start' });
 }
 
 function getCurrentStep() {

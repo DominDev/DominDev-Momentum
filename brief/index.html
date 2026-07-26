@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="/style.min.css">
+  <link rel="stylesheet" href="/style.min.css?v=10">
   <link rel="stylesheet" href="/css/brief.min.css?v=20260420-brief-turnstile-fix">
 
   <!-- Turnstile -->
@@ -30,9 +30,9 @@
   <div class="cursor-outline" id="cursor-outline"></div>
 
   <!-- PRELOADER (Boot Screen) -->
-  <div id="preloader">
-    <canvas id="preloader-matrix" class="preloader-canvas"></canvas>
-    <div class="screen-overlay"></div>
+  <div id="preloader" aria-hidden="true">
+    <canvas id="preloader-matrix" class="preloader-canvas" aria-hidden="true"></canvas>
+    <div class="screen-overlay" aria-hidden="true"></div>
     <div class="loader-content">
       <div class="loader-code-block">
         <div class="loader-label">SYSTEM_BOOT</div>
@@ -43,7 +43,7 @@
   </div>
 
   <!-- MATRIX BACKGROUND CANVAS -->
-  <canvas id="matrixCanvas"></canvas>
+  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
 
   <!-- Loading state (App level, after preloader) -->
   <div id="state-loading" class="brief-state" aria-live="polite">
@@ -392,6 +392,6 @@
   </noscript>
 
   <!-- Brief wizard logic (handles preloader & matrix) -->
-  <script type="module" src="/js/modules/brief-wizard.min.js?v=20260420-brief-turnstile-fix"></script>
+  <script type="module" src="/js/modules/brief-wizard.js?v=2"></script>
 </body>
 </html>

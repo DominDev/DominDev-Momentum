@@ -1,4 +1,5 @@
 // js/core/ui.js
+import { REDUCED_MOTION_MEDIA, motionSafeScrollBehavior } from '../utils/motion.js?v=1';
 
 // === CURSOR (Separate export for Maintenance mode) ===
 export function initCursor() {
@@ -8,6 +9,8 @@ export function initCursor() {
   // Custom cursor tylko na desktopie
   if (!cursorDot || !cursorOutline) return;
   if (!window.matchMedia("(min-width: 1024px)").matches) return;
+  const motionQuery = window.matchMedia(REDUCED_MOTION_MEDIA);
+  if (motionQuery.matches) return;
 
   // Pozycja startowa (środek ekranu – żeby nie "stał" w lewym górnym rogu)
   const initPosX = window.innerWidth / 2;
@@ -21,6 +24,7 @@ export function initCursor() {
   let mouseTicking = false;
 
   window.addEventListener("mousemove", (e) => {
+    if (motionQuery.matches) return;
     cursorX = e.clientX;
     cursorY = e.clientY;
 
@@ -250,7 +254,7 @@ export function initUI() {
 
     progressWrap.addEventListener("click", (e) => {
       e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: motionSafeScrollBehavior() });
     });
   }
 
@@ -259,44 +263,76 @@ export function initUI() {
   const cursorSpan = document.querySelector(".typewriter-cursor");
 
   if (typeTextSpan) {
-    // Keep a meaningful no-JS fallback in the static H1, then let the typewriter take over.
-    typeTextSpan.textContent = "";
     const words = ["BROŃ.", "PRZEWAGA.", "DOMINACJA.", "MASZYNA."];
     const typingDelay = 150;
     const erasingDelay = 80;
     const newWordDelay = 2500;
-    let wordIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
+    const motionQuery = window.matchMedia(REDUCED_MOTION_MEDIA);
+    let typeTimer = null;
+    let runId = 0;
 
-    const type = () => {
-      const currentWord = words[wordIndex];
-
-      if (isDeleting) {
-        typeTextSpan.textContent = currentWord.substring(0, charIndex - 1);
-        charIndex--;
-      } else {
-        typeTextSpan.textContent = currentWord.substring(0, charIndex + 1);
-        charIndex++;
-      }
-
-      let typeSpeed = isDeleting ? erasingDelay : typingDelay;
-
-      if (!isDeleting && charIndex === currentWord.length) {
-        typeSpeed = newWordDelay;
-        isDeleting = true;
-        if (cursorSpan) cursorSpan.style.animationPlayState = "paused";
-      } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        wordIndex = (wordIndex + 1) % words.length;
-        typeSpeed = 500;
-        if (cursorSpan) cursorSpan.style.animationPlayState = "running";
-      }
-
-      setTimeout(type, typeSpeed);
+    const stopTypewriter = () => {
+      runId += 1;
+      window.clearTimeout(typeTimer);
+      typeTimer = null;
     };
 
-    setTimeout(type, 1000);
+    const showStaticWord = () => {
+      stopTypewriter();
+      typeTextSpan.textContent = words[0];
+      if (cursorSpan) cursorSpan.hidden = true;
+    };
+
+    const startTypewriter = () => {
+      stopTypewriter();
+      const currentRun = runId;
+      let wordIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+
+      typeTextSpan.textContent = "";
+      if (cursorSpan) {
+        cursorSpan.hidden = false;
+        cursorSpan.style.animationPlayState = "running";
+      }
+
+      const type = () => {
+        if (currentRun !== runId || motionQuery.matches) return;
+        const currentWord = words[wordIndex];
+
+        if (isDeleting) {
+          typeTextSpan.textContent = currentWord.substring(0, charIndex - 1);
+          charIndex--;
+        } else {
+          typeTextSpan.textContent = currentWord.substring(0, charIndex + 1);
+          charIndex++;
+        }
+
+        let typeSpeed = isDeleting ? erasingDelay : typingDelay;
+        if (!isDeleting && charIndex === currentWord.length) {
+          typeSpeed = newWordDelay;
+          isDeleting = true;
+          if (cursorSpan) cursorSpan.style.animationPlayState = "paused";
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+          typeSpeed = 500;
+          if (cursorSpan) cursorSpan.style.animationPlayState = "running";
+        }
+
+        typeTimer = window.setTimeout(type, typeSpeed);
+      };
+
+      typeTimer = window.setTimeout(type, 1000);
+    };
+
+    const applyMotionPreference = () => {
+      if (motionQuery.matches) showStaticWord();
+      else startTypewriter();
+    };
+
+    motionQuery.addEventListener?.('change', applyMotionPreference);
+    applyMotionPreference();
   }
 
   // === FAQ ACCORDION (klik na CAŁĄ kartę) ===

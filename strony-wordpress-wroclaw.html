@@ -278,7 +278,7 @@
          ======================================== -->
 
     <!-- Core entry point -->
-    <link rel="modulepreload" href="js/main.js?v=5" />
+    <link rel="modulepreload" href="js/main.js?v=6" />
     <link rel="modulepreload" href="js/config.js" />
 
     <!-- Core modules (needed immediately) -->
@@ -307,7 +307,7 @@
 
             </noscript>
 
-    <link rel="stylesheet" href="style.min.css?v=9" />
+    <link rel="stylesheet" href="style.min.css?v=10" />
 
     <!-- Cloudflare Turnstile (anti-spam) is loaded on demand when the contact
          panel opens - see js/modules/contact.js. It pulled ~500 KB on every
@@ -319,11 +319,11 @@
     <a href="#hero" class="skip-link" id="skip-link-btn">Przejdź do treści</a>
 
     <!-- MATRIX BACKGROUND CANVAS -->
-    <canvas id="matrixCanvas"></canvas>
+    <canvas id="matrixCanvas" aria-hidden="true"></canvas>
 
     <!-- PRELOADER (Boot Screen) -->
-    <div id="preloader">
-      <canvas id="preloader-matrix" class="preloader-canvas"></canvas>
+    <div id="preloader" aria-hidden="true">
+      <canvas id="preloader-matrix" class="preloader-canvas" aria-hidden="true"></canvas>
       <div class="screen-overlay"></div>
 
       <div class="loader-content">
@@ -1547,7 +1547,7 @@
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-outline" id="cursor-outline"></div>
 
-    <script type="module" src="js/main.js?v=5"></script>
+    <script type="module" src="js/main.js?v=6"></script>
 
     <!-- Cloudflare Web Analytics -->
     <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ad2f7432f7c3448d9f18f3a1fc714ff2"}'></script>

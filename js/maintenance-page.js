@@ -23,9 +23,7 @@
   var fps = 15;
   var interval = 1000 / fps;
 
-  var reducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+  var motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   window.addEventListener("mousemove", function (e) {
     targetMouseX = e.clientX;
@@ -37,10 +35,33 @@
     height = canvas.height = window.innerHeight;
     var newCols = Math.floor(width / 20);
     while (ypos.length < newCols) ypos.push(0);
+    if (motionQuery.matches) drawStaticFrame();
   });
 
   var chars =
     "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+
+  function drawStaticFrame() {
+    var staticChars = "01DOMINDEV";
+    ctx.fillStyle = "#050505";
+    ctx.fillRect(0, 0, width, height);
+    ctx.font = "15pt monospace";
+
+    for (var row = 1; row <= Math.ceil(height / 20); row += 1) {
+      for (var column = 0; column < Math.ceil(width / 20); column += 1) {
+        if ((row * 13 + column * 7) % 5 !== 0) continue;
+        ctx.fillStyle = (row + column) % 29 === 0
+          ? "rgba(255, 31, 31, 0.28)"
+          : "rgba(255, 255, 255, 0.08)";
+        ctx.fillText(
+          staticChars[(row * 17 + column * 31) % staticChars.length],
+          column * 20,
+          row * 20
+        );
+      }
+    }
+    canvas.dataset.motionState = "static";
+  }
 
   function matrixLoop(currentTime) {
     requestAnimationFrame(matrixLoop);
@@ -78,7 +99,10 @@
     });
   }
 
-  if (!reducedMotion) {
+  if (motionQuery.matches) {
+    drawStaticFrame();
+  } else {
+    canvas.dataset.motionState = "animated";
     requestAnimationFrame(matrixLoop);
   }
 })();

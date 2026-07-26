@@ -1,13 +1,14 @@
 import { CONFIG } from './config.js';
-import { initMatrix } from './core/matrix.js';
-import { initUI, initCursor } from './core/ui.js?v=2';
+import { initMatrix } from './core/matrix.js?v=2';
+import { initUI, initCursor } from './core/ui.js?v=3';
 import { initPortfolio } from './modules/portfolio.js?v=2';
-import { initContact } from './modules/contact.js?v=2';
+import { initContact } from './modules/contact.js?v=3';
 import { initHud } from './modules/hud.js';
 import { initAdaptiveImages } from './modules/adaptive-images.js';
 import { initPrivacyPolicy } from './modules/privacy-policy.js?v=3';
 import { initPortfolioExpand } from './modules/portfolio-expand.js';
 import { initServiceNavigation } from './modules/service-navigation.js?v=2';
+import { motionSafeScrollBehavior, prefersReducedMotion } from './utils/motion.js?v=1';
 
 // Globalne zmienne do kontroli pętli animacji preloadera i cleanup
 let preloaderAnimId = null;
@@ -17,6 +18,8 @@ let preloaderResizeCleanup = null;
 function initPreloaderMatrix() {
   const canvas = document.getElementById("preloader-matrix");
   if (!canvas) return;
+
+  canvas.setAttribute('aria-hidden', 'true');
 
   const ctx = canvas.getContext("2d");
   let width = (canvas.width = window.innerWidth);
@@ -36,6 +39,26 @@ function initPreloaderMatrix() {
   const isSlowConnection = navigator.connection?.effectiveType === '2g' || navigator.connection?.saveData;
   const isLowEnd = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
   const fastFPS = (isSlowConnection || isLowEnd) ? 15 : 30; // 2x faster only on capable devices
+
+  if (prefersReducedMotion()) {
+    ctx.fillStyle = "#050505";
+    ctx.fillRect(0, 0, width, height);
+    ctx.font = "15pt monospace";
+    const chars = "01DOMINDEV";
+    for (let row = 1; row <= Math.ceil(height / 20); row++) {
+      for (let column = 0; column < Math.ceil(width / 20); column++) {
+        if ((row * 11 + column * 7) % 6 !== 0) continue;
+        ctx.fillStyle = (row + column) % 31 === 0
+          ? "rgba(255, 31, 31, 0.3)"
+          : "rgba(255, 255, 255, 0.08)";
+        ctx.fillText(chars[(row + column * 3) % chars.length], column * 20, row * 20);
+      }
+    }
+    canvas.dataset.motionState = 'static';
+    return;
+  }
+
+  canvas.dataset.motionState = 'animated';
 
   const resizeHandler = () => {
     width = canvas.width = window.innerWidth;
@@ -90,6 +113,8 @@ function initPreloaderMatrix() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  const reducedMotion = prefersReducedMotion();
+
   // === CORE INITIALIZATION ===
   initCursor();
 
@@ -105,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
           target.setAttribute('tabindex', '-1');
         }
         
-        target.scrollIntoView({ behavior: 'smooth' });
+        target.scrollIntoView({ behavior: motionSafeScrollBehavior() });
         target.focus({ preventScroll: true }); // preventScroll because we used smooth scroll above
       }
     });
@@ -179,20 +204,22 @@ document.addEventListener("DOMContentLoaded", () => {
           setTimeout(() => {
             const rect = target.getBoundingClientRect();
             const offset = window.pageYOffset + rect.top - 80; // navbar height
-            window.scrollTo({ top: offset, behavior: 'smooth' });
+            window.scrollTo({ top: offset, behavior: motionSafeScrollBehavior() });
           }, 100);
         }
       }
 
       // Delayed HUD initialization to avoid blocking animations
       setTimeout(initHud, 200);
-    }, 550);
+    }, reducedMotion ? 0 : 550);
   };
 
   // Strategy: Hide preloader ~700ms after DOMContentLoaded
   // Don't wait for all images/fonts - Content First!
   if (CONFIG.enablePreloader && preloader) {
-    if (document.readyState === 'complete') {
+    if (reducedMotion) {
+      setTimeout(killPreloader, 0);
+    } else if (document.readyState === 'complete') {
       // Page already loaded (cached)
       setTimeout(killPreloader, 300);
     } else {

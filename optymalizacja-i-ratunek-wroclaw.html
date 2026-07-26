@@ -71,7 +71,7 @@
 
     <link rel="preload" href="assets/fonts/outfit-400.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="modulepreload" href="js/main.js?v=5" />
+    <link rel="modulepreload" href="js/main.js?v=6" />
     <link rel="modulepreload" href="js/config.js" />
     <link rel="modulepreload" href="js/core/matrix.js" />
     <link rel="modulepreload" href="js/core/ui.js?v=2" />
@@ -82,16 +82,16 @@
     <link rel="preload" href="css/critical.min.css?v=4" as="style" />
     <link rel="stylesheet" href="css/critical.min.css?v=4" />
     <noscript><link rel="stylesheet" href="css/critical.min.css?v=4" /></noscript>
-    <link rel="stylesheet" href="style.min.css?v=9" />
+    <link rel="stylesheet" href="style.min.css?v=10" />
     <link rel="stylesheet" href="css/landing-page.min.css?v=3" />
   </head>
 
   <body class="landing-page recovery-page" style="overflow: hidden; height: 100vh">
     <a href="#hero" class="skip-link" id="skip-link-btn">Przejdź do treści</a>
-    <canvas id="matrixCanvas"></canvas>
+    <canvas id="matrixCanvas" aria-hidden="true"></canvas>
 
-    <div id="preloader">
-      <canvas id="preloader-matrix" class="preloader-canvas"></canvas>
+    <div id="preloader" aria-hidden="true">
+      <canvas id="preloader-matrix" class="preloader-canvas" aria-hidden="true"></canvas>
       <div class="screen-overlay"></div>
       <div class="loader-content"><div class="loader-code-block"><span class="loader-label">SYSTEM STATUS:</span><div class="glitch-logo" data-text="DominDev.">Domin<span>Dev</span>.</div></div><div class="loading-text">INITIALIZING SYSTEM<span class="blink-cursor">_</span></div></div>
     </div>
@@ -296,7 +296,7 @@
 
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-outline" id="cursor-outline"></div>
-    <script type="module" src="js/main.js?v=5"></script>
+    <script type="module" src="js/main.js?v=6"></script>
     <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ad2f7432f7c3448d9f18f3a1fc714ff2"}'></script>
   </body>
 </html>
