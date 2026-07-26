@@ -54,7 +54,6 @@ function getNetworkStrategy(connection, saveData) {
       type: "save-data",
       quality: "low",
       maxWidth: 800,
-      format: "webp", // AVIF może być za duży dla weak connection
       lazy: true,
       description: "Data Saver Mode - użytkownik oszczędza transfer",
     };
@@ -70,7 +69,6 @@ function getNetworkStrategy(connection, saveData) {
         type: "2g",
         quality: "low",
         maxWidth: 400,
-        format: "webp",
         lazy: true,
         description: "2G - bardzo wolne połączenie",
       };
@@ -80,7 +78,6 @@ function getNetworkStrategy(connection, saveData) {
         type: "3g",
         quality: "medium",
         maxWidth: 800,
-        format: "webp",
         lazy: true,
         description: "3G - średnie połączenie",
       };
@@ -90,7 +87,6 @@ function getNetworkStrategy(connection, saveData) {
         type: "4g",
         quality: "high",
         maxWidth: 1600,
-        format: "avif",
         lazy: false, // Można preloadować
         description: "4G - szybkie połączenie",
       };
@@ -101,7 +97,6 @@ function getNetworkStrategy(connection, saveData) {
         type: "wifi",
         quality: "high",
         maxWidth: 1600,
-        format: "avif",
         lazy: false,
         description: "WiFi/Unknown - zakładamy szybkie połączenie",
       };
@@ -112,14 +107,7 @@ function getNetworkStrategy(connection, saveData) {
  * Aplikuje strategię do wszystkich obrazów na stronie
  */
 function applyImageStrategy(strategy) {
-  // WAŻNE: Dla szybkich połączeń (4G, WiFi) NIE MODYFIKUJ srcset
-  // Pozwól przeglądarce samej wybrać optymalny rozmiar
   const shouldOptimize = strategy.type !== "4g" && strategy.type !== "wifi";
-
-  if (!shouldOptimize) {
-    // Fast connection - let browser handle image selection natively
-    return;
-  }
 
   // Znajdź wszystkie <picture> elementy
   const pictures = document.querySelectorAll("picture");
@@ -128,42 +116,41 @@ function applyImageStrategy(strategy) {
     const sources = picture.querySelectorAll("source");
     const img = picture.querySelector("img");
 
-    // Modyfikuj srcset TYLKO dla wolnych połączeń
-    sources.forEach((source) => {
-      const originalSrcset =
-        source.dataset.originalSrcset || source.getAttribute("srcset");
+    sources.forEach((source) => updateResponsiveCandidate(source, strategy, shouldOptimize));
 
-      // Zapisz oryginał (jeśli jeszcze nie)
-      if (!source.dataset.originalSrcset) {
-        source.dataset.originalSrcset = originalSrcset;
+    if (img) {
+      updateResponsiveCandidate(img, strategy, shouldOptimize);
+      if (!img.dataset.originalLoading) {
+        img.dataset.originalLoading = img.getAttribute("loading") || "auto";
       }
-
-      // Filtruj srcset do max width
-      const filteredSrcset = filterSrcsetByWidth(
-        originalSrcset,
-        strategy.maxWidth
-      );
-      source.setAttribute("srcset", filteredSrcset);
-
-      // Dla Save-Data: wyłącz AVIF, zostaw tylko WebP/JPEG
-      if (
-        strategy.format === "webp" &&
-        source.getAttribute("type") === "image/avif"
-      ) {
-        source.setAttribute("media", "(max-width: 0px)"); // Wyłącz bez usuwania
-      } else if (source.getAttribute("type") === "image/avif") {
-        source.removeAttribute("media"); // Przywróć jeśli potrzebne
+      if (strategy.lazy && img.dataset.imagePriority !== "high") {
+        img.setAttribute("loading", "lazy");
+      } else if (img.dataset.originalLoading === "auto") {
+        img.removeAttribute("loading");
+      } else {
+        img.setAttribute("loading", img.dataset.originalLoading);
       }
-    });
-
-    // Dodaj loading="lazy" dla wolnych połączeń
-    if (strategy.lazy && img) {
-      img.setAttribute("loading", "lazy");
     }
   });
 
   // Dodaj wskaźnik dla użytkownika (opcjonalnie)
   showNetworkIndicator(strategy);
+}
+
+function updateResponsiveCandidate(element, strategy, shouldOptimize) {
+  const currentSrcset = element.getAttribute("srcset");
+  if (!currentSrcset) return;
+
+  if (!element.dataset.originalSrcset) {
+    element.dataset.originalSrcset = currentSrcset;
+  }
+
+  element.setAttribute(
+    "srcset",
+    shouldOptimize
+      ? filterSrcsetByWidth(element.dataset.originalSrcset, strategy.maxWidth)
+      : element.dataset.originalSrcset
+  );
 }
 
 /**
