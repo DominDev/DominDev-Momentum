@@ -4145,24 +4145,40 @@ body {
   }
 
   .privacy-details::after {
+    content: none;
     display: none;
   }
 
   .privacy-summary {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) 20px;
     gap: 12px;
     padding: 14px 12px;
+  }
+
+  .privacy-summary::marker {
+    content: "";
   }
 
   .privacy-question-text {
     min-width: 0;
     line-height: 1.45;
+    align-items: flex-start;
+    overflow-wrap: anywhere;
   }
 
-  .privacy-question-text i,
-  .privacy-summary .chevron {
+  .privacy-question-text i {
     flex: 0 0 auto;
+    width: 1rem;
+    margin-top: 0.2em;
+    text-align: center;
+  }
+
+  .privacy-summary .chevron {
+    align-self: center;
+    justify-self: end;
+    width: 20px;
+    text-align: center;
   }
   
   .privacy-content h2 {
