@@ -35,7 +35,7 @@ Skrypt sam ostrzega, jesli ikona jest uzyta w HTML, ale nie ma reguly
 
 ZRODLA PRAWDY
 -------------
-  index.html                      -> ktore ikony i w jakiej rodzinie
+  publiczne HTML + dynamiczne moduly -> ktore ikony i w jakiej rodzinie
   assets/fonts/fontawesome.min.css -> kanoniczne kody unicode (pelna dystrybucja)
   assets/fonts/originals/*.woff2   -> pelne fonty, z nich tniemy
   css/critical.css        -> reguly content: uzywane przez strone
@@ -65,6 +65,13 @@ HTML_PAGES = [
 # + kazda podstrona uslugowa w roocie (strony-*.html, sklepy-*.html itd.)
 HTML_PAGES += [os.path.join(ROOT, f) for f in sorted(os.listdir(ROOT))
                if f.endswith('.html') and os.path.join(ROOT, f) not in HTML_PAGES]
+# Ikony renderowane dopiero przez JavaScript nie wystepuja w poczatkowym HTML.
+# Lista pozostaje jawna, aby subset nie zaczal przypadkiem zbierac nieuzywanych
+# nazw z narzedzi, testow lub pelnej dystrybucji Font Awesome.
+DYNAMIC_ICON_SOURCES = [
+    os.path.join(ROOT, 'js', 'modules', 'privacy-policy-content.js'),
+]
+ICON_SOURCES = HTML_PAGES + DYNAMIC_ICON_SOURCES
 FULL_CSS = os.path.join(ROOT, 'assets', 'fonts', 'fontawesome.min.css')
 CRIT_CSS = os.path.join(ROOT, 'css', 'critical.css')
 ORIG_DIR = os.path.join(ROOT, 'assets', 'fonts', 'originals')
@@ -91,9 +98,9 @@ def kanoniczne_kody():
 
 
 def uzyte_ikony(mapa):
-    """Klasa -> rodzina, na podstawie atrybutow class we wszystkich stronach."""
+    """Klasa -> rodzina, na podstawie publicznych HTML i jawnych modulow UI."""
     html = ''
-    for strona in HTML_PAGES:
+    for strona in ICON_SOURCES:
         if os.path.exists(strona):
             html += io.open(strona, encoding='utf-8').read()
     uzyte = {}
@@ -118,7 +125,8 @@ def main():
     uzyte = uzyte_ikony(mapa)
     zdef = zdefiniowane_w_critical()
 
-    print('Ikon uzytych na %d stronach: %d' % (len([x for x in HTML_PAGES if os.path.exists(x)]), len(uzyte)))
+    print('Ikon uzytych w %d zrodlach UI: %d'
+          % (len([x for x in ICON_SOURCES if os.path.exists(x)]), len(uzyte)))
 
     brak = sorted(k for k in uzyte if k not in zdef)
     if brak:
@@ -137,7 +145,7 @@ def main():
     if tylko_raport:
         print('')
         print('--check: nie zapisuje plikow.')
-        return 0
+        return 1 if brak else 0
 
     print('')
     for rodzina, (plik, _) in FAMILIES.items():

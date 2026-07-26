@@ -1,4 +1,5 @@
 // js/modules/portfolio.js
+import { createDialogController } from "../utils/dialog.js?v=1";
 
 // Responsive image configuration
 const IMAGE_SIZES = [400, 800, 1200, 1600];
@@ -145,7 +146,12 @@ export function initPortfolio() {
   const modalScrollHint = document.getElementById("modal-scroll-hint");
   const closeModalBtn = document.getElementById("modal-close-btn");
   const glitchOverlay = document.getElementById("system-glitch");
-  let lastFocusedElement = null;
+  const dialogController = createDialogController({
+    dialog: modal,
+    labelledBy: "modal-title",
+    initialFocus: closeModalBtn,
+    onEscape: () => window.closeModal?.(),
+  });
   let autoScrollRaf = null;
   let autoScrollResumeTimer = null;
   let autoScrollEndPauseTimer = null;
@@ -424,7 +430,7 @@ export function initPortfolio() {
     const data = projectsDB[projectId];
     if (!data) return;
 
-    lastFocusedElement = document.activeElement;
+    dialogController?.rememberTrigger();
     glitchOverlay.classList.add("active");
     document.body.classList.add("modal-open");
     document.documentElement.classList.add("modal-open");
@@ -534,19 +540,13 @@ export function initPortfolio() {
 
       glitchOverlay.classList.remove("active");
 
-      // Accessibility Fix:
-      // 1. Unhide modal for screen readers
       modal.setAttribute("aria-hidden", "false");
-      // 2. Show modal visually
       modal.classList.add("active");
       if (autoScrollPending) {
         debugLog();
         requestAutoScrollStart();
       }
-      // 3. Move focus to close button
-      if (closeModalBtn) {
-        requestAnimationFrame(() => closeModalBtn.focus());
-      }
+      dialogController?.activate();
     }, 300);
   };
 
@@ -559,14 +559,7 @@ export function initPortfolio() {
     clearHintTimers();
     hideHint();
 
-    // Accessibility Fix: Move focus OUT of modal BEFORE setting aria-hidden
-    if (lastFocusedElement && lastFocusedElement.focus) {
-      lastFocusedElement.focus();
-    } else {
-      // Fallback if no last focused element
-      document.body.focus();
-    }
-
+    dialogController?.deactivate();
     modal.setAttribute("aria-hidden", "true");
   };
 
@@ -615,14 +608,6 @@ export function initPortfolio() {
       { passive: true }
     );
   }
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      if (modal && modal.classList.contains("active")) {
-        window.closeModal();
-      }
-    }
-  });
 
   // Keyboard support for project cards
   const projectCards = document.querySelectorAll('.project-card[role="button"]');

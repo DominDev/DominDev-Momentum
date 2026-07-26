@@ -1,11 +1,11 @@
 import { CONFIG } from './config.js';
 import { initMatrix } from './core/matrix.js';
 import { initUI, initCursor } from './core/ui.js?v=2';
-import { initPortfolio } from './modules/portfolio.js';
-import { initContact } from './modules/contact.js';
+import { initPortfolio } from './modules/portfolio.js?v=2';
+import { initContact } from './modules/contact.js?v=2';
 import { initHud } from './modules/hud.js';
 import { initAdaptiveImages } from './modules/adaptive-images.js';
-import { initPrivacyPolicy } from './modules/privacy-policy.js?v=2';
+import { initPrivacyPolicy } from './modules/privacy-policy.js?v=3';
 import { initPortfolioExpand } from './modules/portfolio-expand.js';
 import { initServiceNavigation } from './modules/service-navigation.js?v=2';
 
