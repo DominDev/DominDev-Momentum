@@ -4837,6 +4837,10 @@ body {
   flex-direction: column;
 }
 
+.preloader-skip #preloader {
+  display: none;
+}
+
 #preloader.hiding {
   opacity: 0;
   transition: opacity 0.5s ease;
