@@ -1,6 +1,7 @@
 // js/modules/contact.js
 import { CONFIG } from "../config.js";
 import { createDialogController } from "../utils/dialog.js?v=1";
+import { motionSafeScrollBehavior } from "../utils/motion.js?v=1";
 
 // Load Cloudflare Turnstile's api.js on demand, the first time the contact
 // panel opens. The widget uses implicit rendering (the .cf-turnstile div is
@@ -353,7 +354,7 @@ export function initContact() {
           }
           validationSummary.focus();
           validationSummary.scrollIntoView({
-            behavior: "smooth",
+            behavior: motionSafeScrollBehavior(),
             block: "nearest",
           });
         }

@@ -1,8 +1,12 @@
 // js/core/matrix.js
 // Background Matrix with Intersection Observer & Visibility API optimization
+import { REDUCED_MOTION_MEDIA } from '../utils/motion.js?v=1';
+
 export function initMatrix() {
   const canvas = document.getElementById("matrixCanvas");
   if (!canvas) return;
+
+  canvas.setAttribute('aria-hidden', 'true');
 
   const ctx = canvas.getContext("2d");
   let width = (canvas.width = window.innerWidth);
@@ -29,6 +33,8 @@ export function initMatrix() {
 
   let animationId = null;
   let isVisible = true; // Internal flag for loop
+  const motionQuery = window.matchMedia(REDUCED_MOTION_MEDIA);
+  const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
   
   // State tracking
   let isIntersecting = false; 
@@ -45,11 +51,32 @@ export function initMatrix() {
     height = canvas.height = window.innerHeight;
     const newCols = Math.floor(width / 20);
     while (ypos.length < newCols) ypos.push(0);
+    if (motionQuery.matches) drawStaticFrame();
   };
+
+  function drawStaticFrame() {
+    ctx.fillStyle = "#050505";
+    ctx.fillRect(0, 0, width, height);
+    ctx.font = "15pt monospace";
+
+    const rows = Math.ceil(height / 20);
+    const columns = Math.ceil(width / 20);
+    for (let row = 1; row <= rows; row++) {
+      for (let column = 0; column < columns; column++) {
+        if ((row * 13 + column * 7) % 5 !== 0) continue;
+        const char = chars[(row * 17 + column * 31) % chars.length];
+        ctx.fillStyle = (row + column) % 29 === 0
+          ? "rgba(255, 31, 31, 0.28)"
+          : "rgba(255, 255, 255, 0.08)";
+        ctx.fillText(char, column * 20, row * 20);
+      }
+    }
+    canvas.dataset.motionState = 'static';
+  }
 
   function updateAnimationState() {
     // Run ONLY if intersecting AND document is visible
-    const shouldRun = isIntersecting && !document.hidden;
+    const shouldRun = isIntersecting && !document.hidden && !motionQuery.matches;
 
     if (shouldRun && !animationId) {
       isVisible = true;
@@ -63,6 +90,15 @@ export function initMatrix() {
 
   const handleVisibilityChange = () => {
     updateAnimationState();
+  };
+
+  const handleMotionChange = () => {
+    updateAnimationState();
+    if (motionQuery.matches) {
+      drawStaticFrame();
+    } else {
+      canvas.dataset.motionState = 'animated';
+    }
   };
 
   // Intersection Observer
@@ -81,6 +117,13 @@ export function initMatrix() {
   window.addEventListener("mousemove", mouseMoveHandler, { passive: true });
   window.addEventListener("resize", resizeHandler, { passive: true });
   document.addEventListener("visibilitychange", handleVisibilityChange);
+  motionQuery.addEventListener?.('change', handleMotionChange);
+
+  if (motionQuery.matches) {
+    drawStaticFrame();
+  } else {
+    canvas.dataset.motionState = 'animated';
+  }
 
   // --- Animation Loop ---
   function matrixLoop(currentTime) {
@@ -113,7 +156,6 @@ export function initMatrix() {
     ctx.font = "15pt monospace";
 
     ypos.forEach((y, ind) => {
-      const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
       const text = chars[Math.floor(Math.random() * chars.length)];
       const x = ind * 20;
 

@@ -3690,7 +3690,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #666;
+  color: #8f8f8f;
 }
 
 .sys-label {
@@ -5545,6 +5545,21 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    cursor: auto;
+  }
+
+  .cursor-dot,
+  .cursor-outline,
+  .typewriter-cursor {
+    display: none !important;
+  }
+
   *,
   *::before,
   *::after {
