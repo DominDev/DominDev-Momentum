@@ -2,6 +2,7 @@
  * @module PrivacyPolicy
  * @description Handles the Privacy Policy modal interactions.
  */
+import { createDialogController } from '../utils/dialog.js?v=1';
 
 export function initPrivacyPolicy() {
   const modal = document.getElementById('privacy-modal');
@@ -14,6 +15,13 @@ export function initPrivacyPolicy() {
     console.warn('Privacy Policy Modal or Close Button not found.');
     return;
   }
+
+  const dialogController = createDialogController({
+    dialog: modal,
+    labelledBy: 'privacy-title',
+    initialFocus: closeBtn,
+    onEscape: () => closeModal(),
+  });
 
   function setupAccordions() {
     const details = modal.querySelectorAll('.privacy-details');
@@ -54,16 +62,19 @@ export function initPrivacyPolicy() {
       e.stopPropagation();
     }
     
+    dialogController?.rememberTrigger();
     modal.classList.add('active');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    dialogController?.activate();
     await ensureContent();
   }
 
   function closeModal() {
     modal.classList.remove('active');
-    modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    dialogController?.deactivate();
+    modal.setAttribute('aria-hidden', 'true');
 
     const url = new URL(window.location.href);
     if (url.searchParams.get('privacy') === '1') {
@@ -84,12 +95,6 @@ export function initPrivacyPolicy() {
       return;
     }
     if (e.target === modal) {
-      closeModal();
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) {
       closeModal();
     }
   });

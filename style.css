@@ -4143,6 +4143,27 @@ body {
   .privacy-content {
     padding: 50px 25px 25px; /* Increased top padding for mobile */
   }
+
+  .privacy-details::after {
+    display: none;
+  }
+
+  .privacy-summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    padding: 14px 12px;
+  }
+
+  .privacy-question-text {
+    min-width: 0;
+    line-height: 1.45;
+  }
+
+  .privacy-question-text i,
+  .privacy-summary .chevron {
+    flex: 0 0 auto;
+  }
   
   .privacy-content h2 {
     font-size: 1.5rem;

@@ -1,5 +1,6 @@
 // js/modules/contact.js
 import { CONFIG } from "../config.js";
+import { createDialogController } from "../utils/dialog.js?v=1";
 
 // Load Cloudflare Turnstile's api.js on demand, the first time the contact
 // panel opens. The widget uses implicit rendering (the .cf-turnstile div is
@@ -20,9 +21,23 @@ export function initContact() {
   const contactPanel = document.getElementById("contact-panel");
   const contactCloseBtn = document.getElementById("contact-close-btn");
   const glitchOverlay = document.getElementById("system-glitch");
+  const panelTitle = contactPanel?.querySelector(".panel-title");
+  const panelDescription = contactPanel?.querySelector(".panel-desc");
+
+  if (panelTitle && !panelTitle.id) panelTitle.id = "contact-panel-title";
+  if (panelDescription && !panelDescription.id) panelDescription.id = "contact-panel-description";
+
+  const dialogController = createDialogController({
+    dialog: contactPanel,
+    labelledBy: panelTitle?.id,
+    describedBy: panelDescription?.id,
+    initialFocus: contactCloseBtn,
+    onEscape: () => window.closeContactPanel?.(),
+  });
 
   window.openContactPanel = function () {
     if (!contactPanel) return;
+    dialogController?.rememberTrigger();
 
     // Start fetching Turnstile as soon as the panel begins to open, so the
     // widget is ready by the time the user finishes the form.
@@ -38,37 +53,16 @@ export function initContact() {
         glitchOverlay.classList.remove("active");
       }
       contactPanel.classList.add("active");
-      // A11Y: Remove aria-hidden when modal is visible to prevent focus conflict
       contactPanel.setAttribute("aria-hidden", "false");
-      // Focus first interactive element for keyboard users
-      if (contactCloseBtn) {
-        contactCloseBtn.focus();
-      }
+      dialogController?.activate();
     }, 300);
-  };
-
-  // Store the element that opened the modal for focus restore
-  let lastFocusedElement = null;
-
-  const originalOpenContactPanel = window.openContactPanel;
-  window.openContactPanel = function () {
-    lastFocusedElement = document.activeElement;
-    originalOpenContactPanel();
   };
 
   window.closeContactPanel = function () {
     if (contactPanel) {
       contactPanel.classList.remove("active");
       document.body.style.overflow = "";
-
-      // A11Y: Move focus OUT of modal BEFORE setting aria-hidden
-      if (lastFocusedElement && lastFocusedElement.focus) {
-        lastFocusedElement.focus();
-      } else {
-        document.body.focus();
-      }
-
-      // A11Y: Now safe to hide from assistive technology
+      dialogController?.deactivate();
       contactPanel.setAttribute("aria-hidden", "true");
     }
   };
@@ -82,14 +76,6 @@ export function initContact() {
       if (e.target === contactPanel) window.closeContactPanel();
     });
   }
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      if (contactPanel && contactPanel.classList.contains("active")) {
-        window.closeContactPanel();
-      }
-    }
-  });
 
   window.prefillForm = function (serviceType, budgetValue) {
     window.openContactPanel();
