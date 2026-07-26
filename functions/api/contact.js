@@ -14,36 +14,135 @@ import { jsonOk, jsonError } from "../_lib/response.js";
 
 // --- Constants ---
 const FALLBACK_TTL_SECONDS = 60 * 60 * 24 * 7; // 7 days
+const MAX_BODY_BYTES = 16 * 1024;
+const ALLOWED_SERVICES = new Set([
+  "landing",
+  "business",
+  "ecommerce",
+  "webapp",
+  "audit",
+  "speed",
+  "integration",
+  "other",
+]);
+
+async function readBodyWithLimit(request) {
+  const declaredLength = Number(request.headers.get("Content-Length"));
+  if (Number.isFinite(declaredLength) && declaredLength > MAX_BODY_BYTES) {
+    return { ok: false, tooLarge: true };
+  }
+
+  if (!request.body) return { ok: false, invalidJson: true };
+
+  const reader = request.body.getReader();
+  const decoder = new TextDecoder();
+  let text = "";
+  let totalBytes = 0;
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    totalBytes += value.byteLength;
+    if (totalBytes > MAX_BODY_BYTES) {
+      await reader.cancel();
+      return { ok: false, tooLarge: true };
+    }
+    text += decoder.decode(value, { stream: true });
+  }
+
+  text += decoder.decode();
+  try {
+    return { ok: true, value: JSON.parse(text) };
+  } catch {
+    return { ok: false, invalidJson: true };
+  }
+}
+
+export function validateContactPayload(body) {
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return { ok: false, message: "Nieprawidłowe dane formularza." };
+  }
+
+  const honey = typeof body.honey === "string" ? body.honey.trim() : "";
+  if (honey) return { ok: true, bot: true };
+
+  if (
+    typeof body.name !== "string" ||
+    typeof body.email !== "string" ||
+    typeof body.message !== "string" ||
+    typeof body.service !== "string" ||
+    typeof body.turnstileToken !== "string"
+  ) {
+    return { ok: false, message: "Nieprawidłowe dane formularza." };
+  }
+
+  const name = body.name.trim();
+  const email = body.email.trim().toLowerCase();
+  const message = body.message.trim();
+  const service = body.service.trim().toLowerCase();
+  const turnstileToken = body.turnstileToken.trim();
+  const budget = body.budget === "" ? 0 : Number(body.budget);
+
+  if (name.length < 2 || name.length > 100) {
+    return { ok: false, message: "Imię lub nazwa powinny mieć od 2 do 100 znaków." };
+  }
+  if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return { ok: false, message: "Nieprawidłowy format e-mail." };
+  }
+  if (message.length < 10 || message.length > 5000) {
+    return { ok: false, message: "Wiadomość powinna mieć od 10 do 5000 znaków." };
+  }
+  if (!ALLOWED_SERVICES.has(service)) {
+    return { ok: false, message: "Wybierz usługę z listy." };
+  }
+  if (!Number.isInteger(budget) || budget < 0 || budget > 15000 || budget % 500 !== 0) {
+    return { ok: false, message: "Wybierz prawidłowy budżet." };
+  }
+  if (body.rodoAccepted !== true) {
+    return { ok: false, message: "Wymagana zgoda na przetwarzanie danych." };
+  }
+  if (!turnstileToken || turnstileToken.length > 2048) {
+    return { ok: false, message: "Dokończ weryfikację antyspamową." };
+  }
+
+  return {
+    ok: true,
+    value: { name, email, message, budget, service, rodoAccepted: true, honey: "", turnstileToken },
+  };
+}
 
 export async function onRequestPost(context) {
   try {
     const { request, env } = context;
 
-    // 1. Parse request body
-    const body = await request.json().catch(() => null);
-    if (!body) {
-      return jsonError("BAD_REQUEST", "Invalid JSON", 400);
+    // 1. Parse a bounded JSON request body
+    const contentType = request.headers.get("Content-Type") || "";
+    if (!contentType.toLowerCase().startsWith("application/json")) {
+      return jsonError("UNSUPPORTED_MEDIA_TYPE", "Formularz wymaga danych JSON.", 415);
     }
 
-    const { name, email, message, budget, service, rodoAccepted, honey, turnstileToken } = body;
-    const normalizedService = typeof service === "string" ? service.trim().toLowerCase() : "";
+    const parsedBody = await readBodyWithLimit(request);
+    if (parsedBody.tooLarge) {
+      return jsonError("PAYLOAD_TOO_LARGE", "Wiadomość jest zbyt duża.", 413);
+    }
+    if (!parsedBody.ok) {
+      return jsonError("BAD_REQUEST", "Nieprawidłowy format danych.", 400);
+    }
+
+    const validation = validateContactPayload(parsedBody.value);
 
     // 2. Honeypot check (silent acceptance for bots)
-    if (honey) {
+    if (validation.bot) {
       return jsonOk({});
     }
 
-    // 3. Basic validation
-    if (!name || !email || !message) {
-      return jsonError("VALIDATION_FAILED", "Wypełnij wymagane pola.", 400);
+    // 3. Strict server-side validation and normalization
+    if (!validation.ok) {
+      return jsonError("VALIDATION_FAILED", validation.message, 400);
     }
-    if (!rodoAccepted) {
-      return jsonError("VALIDATION_FAILED", "Wymagana zgoda RODO.", 400);
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return jsonError("VALIDATION_FAILED", "Nieprawidłowy format e-mail.", 400);
-    }
+    const { name, email, message, budget, service, turnstileToken } = validation.value;
+    const normalizedService = service;
 
     // 4. Turnstile verification
     const turnstileResult = await verifyTurnstile(
