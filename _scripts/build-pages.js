@@ -145,8 +145,12 @@ function main() {
     copyFile(path);
   }
 
-  copyTree("assets/images/about", (path) => IMAGE_EXTENSIONS.has(extname(path).toLowerCase()));
-  copyTree("assets/images/portfolio", (path) => IMAGE_EXTENSIONS.has(extname(path).toLowerCase()));
+  const isOptimizedImage = (path) =>
+    !path.split(/[\\/]/).includes("originals") &&
+    IMAGE_EXTENSIONS.has(extname(path).toLowerCase());
+
+  copyTree("assets/images/about", isOptimizedImage);
+  copyTree("assets/images/portfolio", isOptimizedImage);
   copyTree("js", (path) => path.endsWith(".js") && !path.endsWith(".min.js"));
 
   assertArtifactBoundary();
