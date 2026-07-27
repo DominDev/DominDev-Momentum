@@ -982,6 +982,15 @@ body.menu-open .progress-wrap {
   align-items: flex-start;
 }
 
+.project-card-title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
 .project-card:hover .project-overlay {
   transform: translateY(0);
 }
@@ -3247,7 +3256,8 @@ body.disable-transitions * {
     padding: 15px;
   }
 
-  .project-overlay h4 {
+  .project-overlay h4,
+  .project-card-title {
     font-size: 1rem;
     margin-bottom: 5px;
   }
