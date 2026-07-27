@@ -16,6 +16,46 @@
 const BYPASS_COOKIE = "dd_maint_bypass";
 const DEFAULT_RETRY_AFTER = "3600";
 
+// Repository support files must never become public assets. The build already
+// omits them, while this edge guard also cuts off responses cached by an older
+// deployment and protects future deployments from a configuration regression.
+const PRIVATE_PATHS = new Set([
+  "/.assetsignore",
+  "/.dev.vars",
+  "/.editorconfig",
+  "/.gitignore",
+  "/agents.md",
+  "/gemini.md",
+  "/license",
+  "/readme.md",
+  "/package-lock.json",
+  "/package.json",
+  "/wrangler.toml",
+  "/assets/fonts/claude.md",
+  "/assets/fonts/fontawesome.min.css",
+  "/assets/fonts/google-fonts-woff2.css",
+  "/assets/fonts/google-fonts.css",
+  "/assets/images/readme.md",
+]);
+
+const PRIVATE_PREFIXES = [
+  "/.codex-remote-attachments/",
+  "/.git/",
+  "/.github/",
+  "/.gitnexus/",
+  "/.vscode/",
+  "/.wrangler/",
+  "/_docs/",
+  "/_project_snapshots/",
+  "/_scripts/",
+  "/functions/",
+  "/node_modules/",
+  "/tests/",
+  "/assets/fonts/originals/",
+  "/assets/images/about/originals/",
+  "/assets/images/portfolio/originals/",
+];
+
 // Assets the maintenance page itself needs (plus favicons/fonts under /assets/).
 const ALLOWED_PREFIXES = [
   "/css/maintenance.css",
@@ -32,6 +72,9 @@ const MARKDOWN_ALTERNATES = {
 
 export async function onRequest(context) {
   const { request, env, next } = context;
+
+  const privatePathResponse = blockPrivatePath(request);
+  if (privatePathResponse) return privatePathResponse;
 
   let flag = null;
   const kv = env.MAINTENANCE_KV;
@@ -102,6 +145,32 @@ export async function onRequest(context) {
       "Retry-After": retryAfterFrom(flag),
       "Cache-Control": "no-store",
       "X-Robots-Tag": "noindex",
+    },
+  });
+}
+
+function blockPrivatePath(request) {
+  const url = new URL(request.url);
+  let path;
+
+  try {
+    path = decodeURIComponent(url.pathname).toLowerCase();
+  } catch {
+    path = url.pathname.toLowerCase();
+  }
+
+  const isPrivate =
+    PRIVATE_PATHS.has(path) ||
+    PRIVATE_PREFIXES.some((prefix) => path.startsWith(prefix));
+
+  if (!isPrivate) return null;
+
+  return new Response("Not Found", {
+    status: 404,
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Cache-Control": "no-store",
+      "X-Robots-Tag": "noindex, nofollow",
     },
   });
 }
