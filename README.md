@@ -266,7 +266,7 @@ This project prioritizes **performance and simplicity** over trendy frameworks:
 
 ```bash
 # Required
-Node.js 18+        # JavaScript runtime for build tools
+Node.js 22.22.x or 24.8+  # JavaScript runtime supported by the quality toolchain
 Modern Browser     # Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
 
 # Optional
@@ -282,13 +282,13 @@ git clone https://github.com/DominDev/DominDev-Momentum.git
 cd DominDev-Momentum
 
 # 2. Install dependencies
-npm install
+npm ci
 
-# 3. Open in browser (no server needed for static files)
-# Or use VS Code Live Server, or any local server
-
-# Build for production
+# 3. Build the controlled Cloudflare Pages artifact
 npm run build
+
+# 4. Run locally with Pages routing and Functions
+npm run dev:wrangler
 ```
 
 ---
@@ -297,17 +297,18 @@ npm run build
 
 | Command | Description |
 |---------|-------------|
-| `npm run build` | Full production build (images + CSS minification) |
+| `npm run build` | Create the controlled Cloudflare Pages artifact in `dist/` |
+| `npm run build:assets` | Regenerate images, minified CSS and sitemap data |
 | `npm run minify` | Minify CSS files only |
 | `npm run optimize:images` | Generate AVIF/WebP/JPEG variants via Sharp |
-| `npm run watch` | Watch for file changes during development |
+| `npm run watch` | Watch CSS files and regenerate their minified outputs |
+| `npm test` | Run HTML, E2E, accessibility and performance quality gates |
 | `npm run help` | Display available commands |
 
 ### Development Workflow
 
 1. **CSS Development**: Edit `style.css` → run `npm run minify` → generates `style.min.css`
 2. **Image Optimization**: Place originals in `assets/images/*/originals/` → run `npm run optimize:images`
-3. **Git Hooks**: Pre-commit hooks auto-minify CSS (setup via `_scripts/setup-git-hooks.js`)
 
 ---
 
@@ -347,20 +348,18 @@ domindev-momentum/
 │   └── chatbot-db.json     # Chatbot knowledge base
 │
 ├── _scripts/               # Build automation (Node.js)
+│   ├── build-pages.js      # Controlled Cloudflare Pages artifact
 │   ├── minify-css.js       # CSS minification
-│   ├── minify-js.js        # JS minification
 │   ├── optimize-images.js  # Sharp-based AVIF/WebP/JPEG pipeline
-│   ├── optimize-video.js   # Video optimization
-│   ├── auto-minify-css.js  # Auto-minify on file change
-│   ├── watch.js            # Development file watcher
-│   └── setup-git-hooks.js  # Pre-commit hook installer
+│   ├── run-browser-tests.cjs # Isolated Playwright quality runner
+│   └── watch.js            # Development CSS watcher
 │
 ├── _docs/                  # Project documentation & audit reports
 ├── sitemap.xml             # SEO sitemap
 └── robots.txt              # Crawler directives
 ```
 
-> Files with `.min` extension are auto-generated. **Edit source files only.**
+> CSS files with `.min.css` extension are auto-generated. **Edit source stylesheets only.**
 
 ---
 

@@ -1,6 +1,6 @@
 /**
  * Watcher Script
- * Monitors CSS and JS changes and runs minification automatically.
+ * Monitors CSS changes and runs minification automatically.
  */
 
 const fs = require('fs');
@@ -22,13 +22,6 @@ const WATCH_CONFIG = [
     ext: '.css',
     ignore: '.min.css',
     script: 'node _scripts/minify-css.js'
-  },
-  {
-    path: 'js',
-    recursive: true,
-    ext: '.js',
-    ignore: '.min.js',
-    script: 'node _scripts/minify-js.js'
   }
 ];
 

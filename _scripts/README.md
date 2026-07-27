@@ -1,52 +1,44 @@
 # _scripts
 
-Zestaw pomocniczych skryptów dla projektów HTML/CSS/JS (Vanilla).
+Zestaw pomocniczych skryptów dla DominDev Momentum.
 
 ## Wymagania (Node)
 
-Minimalnie: Node.js 18+.
+Obsługiwane wersje: Node.js 22.22.x lub 24.8+.
 
-Zależności używane przez skrypty:
-- `terser` (minify-js.js)
-- `sharp` (optimize-images.js)
-- `ffmpeg-static` (optimize-video.js)
+Główna zależność przetwarzania zasobów:
+- `sharp` (`optimize-images.js`)
 
 Instalacja (w root projektu):
 ```bash
-npm init -y
-npm i -D terser sharp ffmpeg-static
+npm ci
 ```
 
 ## Uruchamianie
 
-### Watcher (minifikacja CSS/JS przy zmianach)
+### Kontrolowany artefakt Cloudflare Pages
 ```bash
-node _scripts/watch.js
+npm run build
+```
+
+### Wszystkie bramki jakości
+```bash
+npm test
 ```
 
 ### Minifikacja CSS (jednorazowo)
 ```bash
-node _scripts/auto-minify-css.js
+npm run minify
 ```
 
-### Minifikacja CSS (watch)
+### Watcher CSS
 ```bash
-node _scripts/auto-minify-css.js --watch
-```
-
-### Minifikacja JS (lista plików w skrypcie)
-```bash
-node _scripts/minify-js.js
+npm run watch
 ```
 
 ### Optymalizacja obrazów
 ```bash
 node _scripts/optimize-images.js
-```
-
-### Optymalizacja wideo
-```bash
-node _scripts/optimize-video.js
 ```
 
 ### Snapshot (PowerShell)
