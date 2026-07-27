@@ -1,11 +1,11 @@
 {
   "name": "domindev-momentum",
   "version": "2.0.0",
-  "description": "High-Performance Landing Page - DominDev Portfolio",
+  "private": true,
+  "description": "High-performance portfolio and service website for DominDev",
   "scripts": {
     "minify:css": "node _scripts/minify-css.js",
-    "minify:js": "node _scripts/minify-js.js",
-    "minify": "npm run minify:css && npm run minify:js",
+    "minify": "npm run minify:css",
     "test:service-navigation": "node tests/service-navigation.e2e.cjs",
     "test:chatbot": "node tests/chatbot.e2e.cjs",
     "watch": "node _scripts/watch.js",
@@ -24,7 +24,7 @@
     "dev:leads": "npm run build && npx wrangler pages dev dist",
     "dev:brief": "npm run build && npx wrangler pages dev dist",
     "dev:wrangler": "npm run build && npx wrangler pages dev dist",
-    "help": "echo '\nAvailable commands:\n  npm run build           - Create the Cloudflare Pages artifact in dist/\n  npm run build:assets    - Regenerate images, minified assets and sitemap\n  npm run minify:css      - Minify CSS files\n  npm run minify:js       - Minify JS files\n  npm run minify          - Minify CSS + JS\n  npm run watch           - Watch CSS/JS changes and auto-minify\n  npm run optimize:images - Generate optimized image variants (AVIF, WebP, JPEG)\n'"
+    "help": "echo '\nAvailable commands:\n  npm run build           - Create the Cloudflare Pages artifact in dist/\n  npm run build:assets    - Regenerate images, minified CSS and sitemap\n  npm run minify:css      - Minify CSS files\n  npm run minify          - Minify CSS files\n  npm run watch           - Watch CSS changes and auto-minify\n  npm run optimize:images - Generate optimized image variants (AVIF, WebP, JPEG)\n  npm test                - Run all quality gates\n'"
   },
   "keywords": [
     "portfolio",
@@ -35,15 +35,22 @@
   ],
   "author": "DominDev",
   "license": "MIT",
+  "engines": {
+    "node": "^22.22.0 || >=24.8.0"
+  },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
     "html-validate": "^11.5.6",
     "playwright": "^1.62.0",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.3",
     "wrangler": "^4.114.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/domindev-momentum.git"
+    "url": "git+https://github.com/DominDev/DominDev-Momentum.git"
+  },
+  "homepage": "https://domindev.com",
+  "bugs": {
+    "url": "https://github.com/DominDev/DominDev-Momentum/issues"
   }
 }
