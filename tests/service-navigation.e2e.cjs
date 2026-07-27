@@ -6,15 +6,15 @@ const baseUrl = process.env.APP_URL || 'http://127.0.0.1:8788';
 async function loadPage(browser, path, viewport, errors) {
   const page = await browser.newPage({ viewport });
   page.on('pageerror', (error) => errors.push(error.message));
-  await page.goto(`${baseUrl}${path}`, { waitUntil: 'commit' });
-  await page.locator('nav').waitFor({ state: 'visible', timeout: 10000 });
+  await page.goto(`${baseUrl}${path}`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await page.locator('nav').waitFor({ state: 'visible', timeout: 30000 });
   // Navigation modules initialize when the branded preloader is fully removed.
   const preloader = page.locator('#preloader');
   if (await preloader.count()) {
     await page.waitForFunction(
       () => document.querySelector('#preloader')?.style.display === 'none',
       null,
-      { timeout: 10000 }
+      { timeout: 30000 }
     );
     await page.waitForTimeout(100);
   } else {

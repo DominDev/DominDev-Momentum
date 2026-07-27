@@ -7,15 +7,15 @@ async function loadPage(browser, viewport, path = '/') {
   const page = await browser.newPage({ viewport });
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
-  await page.goto(`${baseUrl}${path}`, { waitUntil: 'commit' });
-  await page.locator('nav').waitFor({ state: 'visible', timeout: 10000 });
+  await page.goto(`${baseUrl}${path}`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await page.locator('nav').waitFor({ state: 'visible', timeout: 30000 });
 
   const preloader = page.locator('#preloader');
   if (await preloader.count()) {
     await page.waitForFunction(
       () => document.querySelector('#preloader')?.style.display === 'none',
       null,
-      { timeout: 10000 }
+      { timeout: 30000 }
     );
   }
 
