@@ -13,6 +13,9 @@
     "update:sitemap": "node _scripts/update-sitemap.js",
     "build": "node _scripts/build-pages.js",
     "build:assets": "npm run optimize:images && npm run minify && npm run update:sitemap",
+    "test": "npm run test:e2e",
+    "test:e2e": "npm run test:service-navigation && npm run test:chatbot",
+    "test:e2e:install": "playwright install chromium",
     "dev": "echo 'Development server - just open index.html in browser'",
     "dev:leads": "npm run build && npx wrangler pages dev dist",
     "dev:brief": "npm run build && npx wrangler pages dev dist",
@@ -29,6 +32,7 @@
   "author": "DominDev",
   "license": "MIT",
   "devDependencies": {
+    "playwright": "^1.62.0",
     "sharp": "^0.34.5",
     "wrangler": "^4.61.0"
   },

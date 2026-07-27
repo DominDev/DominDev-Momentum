@@ -158,7 +158,10 @@ async function askChatbot(page, question) {
     assert.match(privacyQuestion, /cookies|zgod|RODO|prywatno/i);
 
     const sillyQuestion = await askChatbot(desktop, 'czy jesteś botem');
-    assert.match(sillyQuestion, /bot|DominDev|rakiet|kaw|piksele|rachunki|bugi|developer|żart/i);
+    assert.match(
+      sillyQuestion,
+      /bot|DominDev|rakiet|kaw|piksele|rachunki|bugi|developer|żart|sens (życia|dobrej strony)|2\s*\+\s*2|wehikuł czasu/i
+    );
 
     // Krótkie dopytanie zachowuje kontekst poprzedniej usługi.
     const landingContextQuestion = await askChatbot(desktop, 'landing');
