@@ -11,12 +11,13 @@
     "watch": "node _scripts/watch.js",
     "optimize:images": "node _scripts/optimize-images.js",
     "update:sitemap": "node _scripts/update-sitemap.js",
-    "build": "npm run optimize:images && npm run minify && npm run update:sitemap",
+    "build": "node _scripts/build-pages.js",
+    "build:assets": "npm run optimize:images && npm run minify && npm run update:sitemap",
     "dev": "echo 'Development server - just open index.html in browser'",
-    "dev:leads": "npx wrangler pages dev . --kv=LEADS_KV",
-    "dev:brief": "npx wrangler pages dev . --kv=BRIEF_KV",
-    "dev:wrangler": "npx wrangler pages dev . --kv=LEADS_KV --kv=BRIEF_KV",
-    "help": "echo '\nAvailable commands:\n  npm run minify:css      - Minify CSS files\n  npm run minify:js       - Minify JS files\n  npm run minify          - Minify CSS + JS\n  npm run watch           - Watch CSS/JS changes and auto-minify\n  npm run optimize:images - Generate optimized image variants (AVIF, WebP, JPEG)\n  npm run build           - Build for production (images + CSS + JS)\n'"
+    "dev:leads": "npm run build && npx wrangler pages dev dist",
+    "dev:brief": "npm run build && npx wrangler pages dev dist",
+    "dev:wrangler": "npm run build && npx wrangler pages dev dist",
+    "help": "echo '\nAvailable commands:\n  npm run build           - Create the Cloudflare Pages artifact in dist/\n  npm run build:assets    - Regenerate images, minified assets and sitemap\n  npm run minify:css      - Minify CSS files\n  npm run minify:js       - Minify JS files\n  npm run minify          - Minify CSS + JS\n  npm run watch           - Watch CSS/JS changes and auto-minify\n  npm run optimize:images - Generate optimized image variants (AVIF, WebP, JPEG)\n'"
   },
   "keywords": [
     "portfolio",

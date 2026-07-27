@@ -1,6 +1,6 @@
-name = "domindev-momentum"
+name = "domindev"
 compatibility_date = "2026-01-24"
-pages_build_output_dir = "."
+pages_build_output_dir = "./dist"
 
 [[kv_namespaces]]
 binding = "LEADS_KV"
