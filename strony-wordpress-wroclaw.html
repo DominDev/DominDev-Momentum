@@ -951,7 +951,7 @@
                   <li>
                     <i class="fa-solid fa-check" aria-hidden="true"></i> Copywriting sprzedażowy
                   </li>
-                  <li><i class="fa-solid fa-check" aria-hidden="true"></i> Szybkość < 1s</li>
+                  <li><i class="fa-solid fa-check" aria-hidden="true"></i> Szybkość &lt; 1s</li>
                 </ul>
                 <p class="service-desc">
                   Idealny do kampanii Ads i szybkich startów produktu.
@@ -1331,10 +1331,9 @@
             <div class="modal-body">
               <div class="modal-image-frame">
                 <div class="modal-image-container">
-                  <!-- src and alt are set per project in js/modules/portfolio.js.
-                       No src attribute here: an empty one resolves to the page URL
-                       and makes some browsers refetch the document. -->
-                  <img id="modal-img" alt="" decoding="async" />
+                  <!-- The non-network placeholder keeps the HTML valid; JS replaces it
+                       with the selected project image before the modal is displayed. -->
+                  <img id="modal-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="" decoding="async" />
                 </div>
                 <div class="modal-tech-stack" id="modal-tags"></div>
                 <div class="modal-scroll-hint" id="modal-scroll-hint" aria-hidden="true">
