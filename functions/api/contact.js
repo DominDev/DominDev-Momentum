@@ -148,7 +148,8 @@ export async function onRequestPost(context) {
     const turnstileResult = await verifyTurnstile(
       env.TURNSTILE_SECRET_KEY,
       turnstileToken,
-      request.headers.get("CF-Connecting-IP") || ""
+      request.headers.get("CF-Connecting-IP") || "",
+      new URL(request.url).hostname
     );
     if (!turnstileResult.success) {
       return jsonError("TURNSTILE_FAILED", "Weryfikacja anty-spam nieudana.", 403);

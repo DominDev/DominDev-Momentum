@@ -70,7 +70,8 @@ export async function onRequestPost(context) {
     const turnstileResult = await verifyTurnstile(
       env.TURNSTILE_SECRET_KEY,
       turnstileToken,
-      clientIp
+      clientIp,
+      new URL(request.url).hostname
     );
     if (!turnstileResult.success) {
       return jsonError("TURNSTILE_FAILED", "Weryfikacja anty-spam nieudana. Spróbuj ponownie.", 403);

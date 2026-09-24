@@ -374,17 +374,10 @@ export function initContact() {
       const data = Object.fromEntries(formData.entries());
 
       try {
-        let response;
-
-        if (CONFIG.mail.provider === "formspree") {
-          response = await sendViaFormspree(data);
-        } else if (CONFIG.mail.provider === "cloudflare") {
-          response = await sendViaCloudflare(data);
-        } else if (CONFIG.mail.provider === "custom") {
-          throw new Error("Custom provider not implemented yet");
-        } else {
+        if (CONFIG.mail.provider !== "cloudflare") {
           throw new Error("Unknown mail provider");
         }
+        const response = await sendViaCloudflare(data);
 
         const responseData = await response.json().catch(() => ({}));
         const accepted = response.ok && responseData.ok !== false;
@@ -462,19 +455,6 @@ export function initContact() {
       }
     });
   }
-}
-
-async function sendViaFormspree(data) {
-  const endpoint = `https://formspree.io/f/${CONFIG.mail.formspreeId}`;
-
-  return await fetch(endpoint, {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
 }
 
 async function sendViaCloudflare(data) {
