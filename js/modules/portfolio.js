@@ -65,17 +65,17 @@ const projectsDB = {
     result:
       "📐 Cel SEO: widoczność w TOP 3 na najważniejsze lokalne frazy usługowe.",
   },
-  trainer: {
-    title: "KICKBOXING TRENER",
-    type: "Concept / Landing Page",
-    imageBase: "portfolio-trainer",
-    tags: ["DARK THEME", "BENTO GRID", "WHATSAPP CTA"],
+  domindynamics: {
+    title: "DominDynamics",
+    type: "Realizacja / Strona wizytówka",
+    imageBase: "portfolio-domindynamics",
+    tags: ["REACT", "FRAMER MOTION", "TAILWIND"],
     challenge:
-      "Trener kickboxingu i MMA potrzebował agresywnej, ciemnej strony z jednym celem: maksymalna liczba kontaktów telefonicznych i wiadomości WhatsApp od potencjalnych podopiecznych.",
+      "Młody programista wchodzący na rynek potrzebował strony, która zrobi mocne pierwsze wrażenie na rekruterach i pierwszych klientach. W kilka sekund miała pokazać, kim jest, jak pracuje i jak się z nim skontaktować, a przy tym wyglądać jak dopracowany produkt, nie jak kolejny szablon. To typowa potrzeba freelancera, specjalisty czy konsultanta, który sprzedaje przede wszystkim siebie.",
     solution:
-      "Ciemny motyw z akcentami acid lime, bento-grid dla oferty usług, floating WhatsApp button i sticky CTA. Animacje scroll-reveal z respektem dla prefers-reduced-motion.",
+      "Jednostronicowa wizytówka w React, w której animacje Framer Motion prowadzą odwiedzającego od prezentacji, przez zasady pracy, po kontakt i CV do pobrania jednym kliknięciem. Strona w pełni działa na telefonie, ogranicza ruch dla osób, które tego potrzebują, a dane strukturalne pomagają Google poprawnie ją zrozumieć. Wszystkie treści siedzą w jednym pliku, więc właściciel aktualizuje je sam, bez grzebania w kodzie.",
     result:
-      "💪 Cel konwersji: regularne zapytania przez WhatsApp dzięki maksymalnie krótkiej ścieżce kontaktu.",
+      "⚡ Wydajność w PageSpeed Insights: 99/100 na telefonie i 100/100 na komputerze. Strona otwiera się od razu, także na słabym zasięgu, więc odwiedzający widzi treść, a nie ekran ładowania.",
   },
 };
 
