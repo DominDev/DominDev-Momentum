@@ -7,6 +7,18 @@ const IMAGE_FORMATS = ["avif", "webp", "jpg"];
 const BASE_PATH = "assets/images/portfolio/";
 
 const projectsDB = {
+  aom: {
+    title: "Anatomy of Mercy",
+    type: "Realizacja / Strona gry",
+    imageBase: "portfolio-aom",
+    tags: ["ELEVENTY", "CLOUDFLARE WORKERS", "i18n PL/EN"],
+    challenge:
+      "Twórcy gry dark fantasy potrzebowali oficjalnej strony, zanim powstał gameplay czy trailer. Typografia, ilustracje i tekst musiały od pierwszego ekranu zbudować klimat i wiarygodność marki, w dwóch językach i bez kompromisu w szybkości mimo ciężkich, ciemnych grafik.",
+    solution:
+      "Statyczna strona w Eleventy i Sass (BEM), a JavaScript tylko jako warstwa progresywna, więc każda podstrona działa także bez niego. Wersje PL/EN połączone przez hreflang, Schema.org VideoGame, hosting na Cloudflare Workers i automatyczna kontrola każdego builda: dostępność, CSP i dane strukturalne.",
+    result:
+      "🕯️ PageSpeed Insights: 100/100/100/100 na desktopie i 99/100/100/100 na telefonie.",
+  },
   kraft: {
     title: "Kraft Daily Pub",
     type: "Realizacja / WordPress",
@@ -29,18 +41,6 @@ const projectsDB = {
       "Wykorzystano architekturę JAMstack (Next.js) z WordPressem jako backendem (Headless). Zastosowano format AVIF i pre-loading kluczowych zasobów.",
     result:
       "⚡ Założenie projektowe: kluczowy widok gotowy do działania w mniej niż 0,5 s — mimo fotografii 4K.",
-  },
-  techgear: {
-    title: "TechGear Store",
-    type: "Concept / E-Commerce",
-    imageBase: "portfolio-techgear",
-    tags: ["WOOCOMMERCE", "REDIS", "SECURITY"],
-    challenge:
-      "Symulacja architektury sklepu z elektroniką odpornego na duży ruch (np. Black Friday). Skupienie na optymalizacji ścieżki zakupowej (Checkout) i bezpieczeństwie.",
-    solution:
-      "Zoptymalizowany koszyk zakupowy, wdrożenie Redis Object Cache oraz zabezpieczeń anty-DDoS na poziomie aplikacji (Cloudflare Rules).",
-    result:
-      "🛡️ Cel architektury: stabilna ścieżka zakupowa także podczas gwałtownych skoków ruchu.",
   },
   boxing: {
     title: "OG Boxing Coach",

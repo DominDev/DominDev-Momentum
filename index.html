@@ -321,7 +321,7 @@
          ======================================== -->
 
     <!-- Core entry point -->
-    <link rel="modulepreload" href="js/main.js?v=8" />
+    <link rel="modulepreload" href="js/main.js?v=9" />
     <link rel="modulepreload" href="js/config.js" />
 
     <!-- Core modules (needed immediately) -->
@@ -330,7 +330,7 @@
 
     <!-- Feature modules (needed for DOMContentLoaded) -->
     <link rel="modulepreload" href="js/modules/adaptive-images.js?v=2" />
-    <link rel="modulepreload" href="js/modules/portfolio.js?v=2" />
+    <link rel="modulepreload" href="js/modules/portfolio.js?v=3" />
     <link rel="modulepreload" href="js/modules/contact.js?v=3" />
     <link rel="modulepreload" href="js/modules/hud.js" />
 
@@ -840,6 +840,47 @@
           </h3>
 
           <div class="portfolio-grid" id="portfolio-grid">
+            <div class="project-card reveal" data-action="open-modal" data-target="aom" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu Anatomy of Mercy">
+              <picture>
+                <source
+                  type="image/avif"
+                  srcset="
+                    assets/images/portfolio/portfolio-aom-thumb-400.avif   400w,
+                    assets/images/portfolio/portfolio-aom-thumb-800.avif   800w,
+                    assets/images/portfolio/portfolio-aom-thumb-1200.avif 1200w
+                  "
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
+                />
+                <source
+                  type="image/webp"
+                  srcset="
+                    assets/images/portfolio/portfolio-aom-thumb-400.webp   400w,
+                    assets/images/portfolio/portfolio-aom-thumb-800.webp   800w,
+                    assets/images/portfolio/portfolio-aom-thumb-1200.webp 1200w
+                  "
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
+                />
+                <img
+                  src="assets/images/portfolio/portfolio-aom-thumb-800.jpg"
+                  srcset="
+                    assets/images/portfolio/portfolio-aom-thumb-400.jpg   400w,
+                    assets/images/portfolio/portfolio-aom-thumb-800.jpg   800w,
+                    assets/images/portfolio/portfolio-aom-thumb-1200.jpg 1200w
+                  "
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
+                  alt="Anatomy of Mercy - Dark Fantasy Game Website"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="450"
+                />
+              </picture>
+              <div class="project-overlay">
+                <span class="project-card-title">Anatomy of Mercy</span>
+                <p class="accent">Realizacja / Strona gry</p>
+              </div>
+            </div>
+
             <div class="project-card reveal" data-action="open-modal" data-target="kraft" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu Kraft Daily Pub">
               <picture>
                 <source
@@ -881,106 +922,7 @@
               </div>
             </div>
 
-            <div class="project-card reveal" data-action="open-modal" data-target="neon" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu Neon Estate">
-              <picture>
-                <source
-                  type="image/avif"
-                  srcset="
-                    assets/images/portfolio/portfolio-neon-thumb-400.avif   400w,
-                    assets/images/portfolio/portfolio-neon-thumb-800.avif   800w,
-                    assets/images/portfolio/portfolio-neon-thumb-1200.avif 1200w
-                  "
-                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
-                />
-                <source
-                  type="image/webp"
-                  srcset="
-                    assets/images/portfolio/portfolio-neon-thumb-400.webp   400w,
-                    assets/images/portfolio/portfolio-neon-thumb-800.webp   800w,
-                    assets/images/portfolio/portfolio-neon-thumb-1200.webp 1200w
-                  "
-                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
-                />
-                <img
-                  src="assets/images/portfolio/portfolio-neon-thumb-800.jpg"
-                  srcset="
-                    assets/images/portfolio/portfolio-neon-thumb-400.jpg   400w,
-                    assets/images/portfolio/portfolio-neon-thumb-800.jpg   800w,
-                    assets/images/portfolio/portfolio-neon-thumb-1200.jpg 1200w
-                  "
-                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
-                  alt="Neon Estate - Real Estate Project"
-                  loading="lazy"
-                  decoding="async"
-                  width="600"
-                  height="450"
-                />
-              </picture>
-              <div class="project-overlay">
-                <span class="project-card-title">Neon Estate</span>
-                <p class="accent">Concept / Next.js</p>
-              </div>
-            </div>
-
-            <div class="project-card reveal" data-action="open-modal" data-target="techgear" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu TechGear Store">
-              <picture>
-                <source
-                  type="image/avif"
-                  srcset="
-                    assets/images/portfolio/portfolio-techgear-thumb-400.avif   400w,
-                    assets/images/portfolio/portfolio-techgear-thumb-800.avif   800w,
-                    assets/images/portfolio/portfolio-techgear-thumb-1200.avif 1200w
-                  "
-                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
-                />
-                <source
-                  type="image/webp"
-                  srcset="
-                    assets/images/portfolio/portfolio-techgear-thumb-400.webp   400w,
-                    assets/images/portfolio/portfolio-techgear-thumb-800.webp   800w,
-                    assets/images/portfolio/portfolio-techgear-thumb-1200.webp 1200w
-                  "
-                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
-                />
-                <img
-                  src="assets/images/portfolio/portfolio-techgear-thumb-800.jpg"
-                  srcset="
-                    assets/images/portfolio/portfolio-techgear-thumb-400.jpg   400w,
-                    assets/images/portfolio/portfolio-techgear-thumb-800.jpg   800w,
-                    assets/images/portfolio/portfolio-techgear-thumb-1200.jpg 1200w
-                  "
-                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
-                  alt="TechGear Store - E-Commerce Project"
-                  loading="lazy"
-                  decoding="async"
-                  width="600"
-                  height="450"
-                />
-              </picture>
-              <div class="project-overlay">
-                <span class="project-card-title">TechGear Store</span>
-                <p class="accent">Concept / E-Commerce</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Load More Button -->
-          <div class="portfolio-actions">
-            <button
-              type="button"
-              class="btn portfolio-load-more"
-              id="portfolio-load-more"
-              aria-expanded="false"
-              aria-controls="portfolio-grid"
-            >
-              <span class="btn__text">WIĘCEJ REALIZACJI</span>
-              <span class="btn__icon" aria-hidden="true">↓</span>
-            </button>
-          </div>
-
-          <!-- Hidden template for additional projects -->
-          <template id="portfolio-template">
-            <div class="project-card" data-action="open-modal" data-target="boxing" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu OG Boxing Coach">
+            <div class="project-card reveal" data-action="open-modal" data-target="boxing" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu OG Boxing Coach">
               <picture>
                 <source
                   type="image/avif"
@@ -1018,6 +960,64 @@
               <div class="project-overlay">
                 <span class="project-card-title">OG Boxing Coach</span>
                 <p class="accent">Realizacja / Landing Page</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Load More Button -->
+          <div class="portfolio-actions">
+            <button
+              type="button"
+              class="btn portfolio-load-more"
+              id="portfolio-load-more"
+              aria-expanded="false"
+              aria-controls="portfolio-grid"
+            >
+              <span class="btn__text">WIĘCEJ REALIZACJI</span>
+              <span class="btn__icon" aria-hidden="true">↓</span>
+            </button>
+          </div>
+
+          <!-- Hidden template for additional projects -->
+          <template id="portfolio-template">
+            <div class="project-card" data-action="open-modal" data-target="neon" role="button" tabindex="0" aria-label="Otwórz szczegóły projektu Neon Estate">
+              <picture>
+                <source
+                  type="image/avif"
+                  srcset="
+                    assets/images/portfolio/portfolio-neon-thumb-400.avif   400w,
+                    assets/images/portfolio/portfolio-neon-thumb-800.avif   800w,
+                    assets/images/portfolio/portfolio-neon-thumb-1200.avif 1200w
+                  "
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
+                />
+                <source
+                  type="image/webp"
+                  srcset="
+                    assets/images/portfolio/portfolio-neon-thumb-400.webp   400w,
+                    assets/images/portfolio/portfolio-neon-thumb-800.webp   800w,
+                    assets/images/portfolio/portfolio-neon-thumb-1200.webp 1200w
+                  "
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
+                />
+                <img
+                  src="assets/images/portfolio/portfolio-neon-thumb-800.jpg"
+                  srcset="
+                    assets/images/portfolio/portfolio-neon-thumb-400.jpg   400w,
+                    assets/images/portfolio/portfolio-neon-thumb-800.jpg   800w,
+                    assets/images/portfolio/portfolio-neon-thumb-1200.jpg 1200w
+                  "
+                  sizes="(max-width: 810px) 90vw, (max-width: 1234px) 43vw, (max-width: 1333px) 28vw, 380px"
+                  alt="Neon Estate - Real Estate Project"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="450"
+                />
+              </picture>
+              <div class="project-overlay">
+                <span class="project-card-title">Neon Estate</span>
+                <p class="accent">Concept / Next.js</p>
               </div>
             </div>
 
@@ -1934,7 +1934,7 @@
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-outline" id="cursor-outline"></div>
 
-    <script type="module" src="js/main.js?v=8"></script>
+    <script type="module" src="js/main.js?v=9"></script>
 
     <!-- Cloudflare Web Analytics -->
     <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "ad2f7432f7c3448d9f18f3a1fc714ff2"}'></script>
