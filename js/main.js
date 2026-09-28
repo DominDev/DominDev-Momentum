@@ -1,7 +1,7 @@
 import { CONFIG } from './config.js';
 import { initMatrix } from './core/matrix.js?v=2';
 import { initUI, initCursor } from './core/ui.js?v=3';
-import { initPortfolio } from './modules/portfolio.js?v=2';
+import { initPortfolio } from './modules/portfolio.js?v=3';
 import { initContact } from './modules/contact.js?v=3';
 import { initHud } from './modules/hud.js';
 import { initAdaptiveImages } from './modules/adaptive-images.js?v=2';

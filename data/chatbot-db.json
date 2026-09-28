@@ -345,8 +345,11 @@
     "kraft daily": "portfolio",
     "neon estate": "portfolio",
     "neon": "portfolio",
-    "techgear": "portfolio",
-    "tech gear": "portfolio",
+    "techgear": "ecommerce",
+    "tech gear": "ecommerce",
+    "anatomy of mercy": "portfolio",
+    "anatomyofmercy": "portfolio",
+    "strona gry": "portfolio",
     "malware": "audit",
     "wirus na stronie": "audit",
     "zhackowana strona": "audit",
@@ -645,7 +648,7 @@
       "💻 Głównie <strong>WordPress High-Performance</strong> (custom themes bez zbędnych pluginów) + <strong>React</strong> do aplikacji. Backend: PHP 8.2, frontend: czysty JS/CSS bez frameworków-monstrum. Stack to jedno - ważniejsze jest <strong>jak</strong> koduję. Zero bałaganu, maksymalna wydajność. 🔥"
     ],
     "portfolio": [
-      "<p>🎨 <strong>REALIZACJE:</strong><br><a href='#portfolio' class='chatbot-link'>Zobacz w sekcji Portfolio</a> - tam znajdziesz case studies:</p><ul><li>• Kraft Daily Pub (WordPress)</li><li>• Neon Estate (Next.js)</li><li>• TechGear Store (E-commerce)</li></ul><p>Kliknij w projekt, żeby zobaczyć detale: wyzwanie, rozwiązanie, wyniki. 📊</p>",
+      "<p>🎨 <strong>REALIZACJE:</strong><br><a href='#portfolio' class='chatbot-link'>Zobacz w sekcji Portfolio</a> - tam znajdziesz case studies:</p><ul><li>• Anatomy of Mercy (strona gry)</li><li>• Kraft Daily Pub (WordPress)</li><li>• OG Boxing Coach (landing page)</li></ul><p>Kliknij w projekt, żeby zobaczyć detale: wyzwanie, rozwiązanie, wyniki. 📊</p>",
       "🚀 Robiłem różne projekty: od landing pages dla startupów po sklepy e-commerce dla dużych firm. <a href='#portfolio' class='chatbot-link'>Sprawdź sekcję Realizacje</a> - tam masz przykłady + case study. Każdy projekt to lekcja - i żadnego kopiuj-wklej! 💪"
     ],
     "about": [

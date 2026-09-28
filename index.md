@@ -24,10 +24,10 @@ Nie marnuję zasobów - ani serwera, ani Twoich.
 
 Portfolio: strony WordPress i aplikacje webowe.
 
+- Anatomy of Mercy - realizacja, strona gry
 - Kraft Daily Pub - realizacja, WordPress
-- Neon Estate - concept, Next.js
-- TechGear Store - concept, e-commerce
 - OG Boxing Coach - realizacja, landing page
+- Neon Estate - concept, Next.js
 - Precision Roofing - concept, wielojęzyczny
 - Kickboxing Trener - concept, landing page
 

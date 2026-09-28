@@ -46,7 +46,7 @@ async function waitForServer(baseUrl) {
     try {
       const [pageResponse, scriptResponse] = await Promise.all([
         fetch(`${baseUrl}/`, { signal: AbortSignal.timeout(2_000) }),
-        fetch(`${baseUrl}/js/main.js?v=8`, { signal: AbortSignal.timeout(2_000) }),
+        fetch(`${baseUrl}/js/main.js?v=9`, { signal: AbortSignal.timeout(2_000) }),
       ]);
       if (pageResponse.ok && scriptResponse.ok) return;
     } catch (error) {
